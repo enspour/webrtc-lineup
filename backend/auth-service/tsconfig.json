@@ -5,7 +5,11 @@
     "rootDir": "./",
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {},
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@configs/*": ["configs/*"],
+      "@loaders/*": ["loaders/*"]
+    },
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "./build",

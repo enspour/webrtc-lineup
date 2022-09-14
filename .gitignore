@@ -1,5 +1,6 @@
 backend/auth-service/node_modules
 backend/auth-service/build
+backend/auth-service/keys
 
 
 backend/main-service/node_modules
