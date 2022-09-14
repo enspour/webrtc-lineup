@@ -1,3 +1,4 @@
+const { default: logger } = require("@logger");
 const fs = require("node:fs");
 const util = require("node:util"); 
 
@@ -17,6 +18,8 @@ module.exports.loadKeysAccessJWT = async () => {
         privateKey,
         publicKey
     }
+
+    logger.log("Keys of access token has been loaded.");
 }
 
 module.exports.loadKeysRefreshJWT = async () => {
@@ -25,4 +28,6 @@ module.exports.loadKeysRefreshJWT = async () => {
         privateKey,
         publicKey
     }
+
+    logger.log("Keys of refresh token has been loaded.");
 }
