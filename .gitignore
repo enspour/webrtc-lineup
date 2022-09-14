@@ -1,0 +1,9 @@
+backend/auth-service/node_modules
+backend/auth-service/build
+
+
+backend/main-service/node_modules
+backend/main-service/build
+
+backend/signal-service/node_modules
+backend/signal-service/build
