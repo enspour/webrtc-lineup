@@ -8,7 +8,9 @@
     "paths": {
       "@utils/*": ["utils/*"],
       "@configs/*": ["configs/*"],
-      "@loaders/*": ["loaders/*"]
+      "@loaders/*": ["loaders/*"],
+      "@routes/*": ["routes/*"],
+      "@logger": ["logger"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
