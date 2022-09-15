@@ -1,10 +1,13 @@
 backend/auth-service/node_modules
 backend/auth-service/build
 backend/auth-service/keys
+backend/auth-service/.env
 
 
 backend/main-service/node_modules
 backend/main-service/build
+backend/main-service/.env
 
 backend/signal-service/node_modules
 backend/signal-service/build
+backend/signal-service/.env
