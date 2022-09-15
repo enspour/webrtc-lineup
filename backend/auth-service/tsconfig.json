@@ -10,7 +10,9 @@
       "@configs/*": ["configs/*"],
       "@loaders/*": ["loaders/*"],
       "@routes/*": ["routes/*"],
-      "@logger": ["logger"]
+      "@logger": ["logger"],
+      "@controllers": ["controllers"],
+      "@middlewares/*": ["middlewares/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
