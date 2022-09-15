@@ -1,6 +1,7 @@
-const { default: logger } = require("@logger");
 const fs = require("node:fs");
 const util = require("node:util"); 
+
+const logger = require("@logger").default;
 
 const JWTConfig = require("@configs/jwt.config").default;
 

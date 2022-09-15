@@ -1,6 +1,5 @@
+import Logger from "core/logger/Logger";
 
-export default {
-    log: (message: string) => {
-        console.log(`[Auth-Service] ${message}`);
-    }
-}
+const logger = new Logger("Auth-service");
+
+export default logger;
