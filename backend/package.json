@@ -1,0 +1,12 @@
+{
+    "name": "app",
+    "version": "1.0.0",
+    "workspaces": [
+        "auth-service",
+        "main-service",
+        "signal-service",
+        "core"
+    ],
+    "author": "",
+    "license": "ISC"
+}
