@@ -1,7 +1,8 @@
 import { loadKeysAccessJWT, loadKeysRefreshJWT } from "@loaders/jwt.keys";
-import createApp from "@loaders/app";
 import createServer from "@loaders/http";
-import connectToDataBase from "@loaders/db";
+import createApp from "@loaders/app";
+
+import { connect } from "core/database/src/connection";
 
 import logger from "@logger";
 
@@ -11,7 +12,8 @@ import serverConfig from "@configs/server.config";
     await loadKeysAccessJWT();
     await loadKeysRefreshJWT();
 
-    await connectToDataBase();
+    await connect();
+    logger.log("Connect to database is successful.");
     
     const app = createApp();
     const server = createServer(app);
