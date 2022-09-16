@@ -2,11 +2,13 @@ backend/auth-service/build
 backend/auth-service/keys
 backend/auth-service/.env
 
-
 backend/main-service/build
 backend/main-service/.env
 
 backend/signal-service/build
 backend/signal-service/.env
+
+backend/core/database/.env
+backend/core/database/prisma/migrations
 
 backend/node_modules
