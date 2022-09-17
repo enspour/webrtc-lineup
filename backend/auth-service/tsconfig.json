@@ -12,7 +12,8 @@
       "@routes/*": ["routes/*"],
       "@logger": ["logger"],
       "@controllers": ["controllers"],
-      "@middlewares/*": ["middlewares/*"]
+      "@middlewares/*": ["middlewares/*"],
+      "@services/*": ["services/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
