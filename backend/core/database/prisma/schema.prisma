@@ -11,6 +11,65 @@ datasource db {
 }
 
 model User {
-  id BigInt @id @default(autoincrement())
-  name String
+  id          BigInt    @id @default(autoincrement())
+  name        String
+  created_at  DateTime  @default(now())
+  modified_at DateTime  @default(now())
+  auth        UserAuth?
+  assets      UserAssets?
+  rooms       Room[]
+  fav_rooms   Room[]    @relation("users_favorites_rooms")
+
+  @@map("users")
+}
+
+model UserAuth {
+  id        BigInt  @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  user_id   BigInt  @unique
+  user      User    @relation(fields: [user_id], references: [id])
+  
+  @@map("users_auth")
+}
+
+model UserAssets {
+  id        BigInt  @id @default(autoincrement())
+  avatar    String
+  user_id   BigInt  @unique
+  user      User    @relation(fields: [user_id], references: [id])
+
+  @@map("users_assets")
+}
+
+model Room {
+  id          BigInt        @id @default(autoincrement())
+  name        String
+  status      Boolean
+  owned_id    BigInt        @unique
+  created_at  DateTime      @default(now())
+  settings    RoomSettings?
+  owner       User          @relation(fields: [owned_id], references: [id])
+  tags        Tag[]
+  users       User[]        @relation("users_favorites_rooms")
+
+  @@map("rooms")
+}
+
+model RoomSettings {
+  id            BigInt  @id @default(autoincrement())
+  has_password  Boolean
+  password      String?
+  room_id       BigInt  @unique
+  room          Room    @relation(fields: [room_id], references: [id])
+
+  @@map("rooms_settings")
+}
+
+model Tag {
+  id      BigInt @id @default(autoincrement())
+  name    String
+  rooms   Room[]
+
+  @@map("tags")
 }
