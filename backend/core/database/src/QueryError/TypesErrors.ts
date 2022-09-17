@@ -1,5 +1,6 @@
 enum TypesErrors {
-    DUPLICATE
+    DUPLICATE,
+    UNKNOW
 }
 
 export default TypesErrors;
