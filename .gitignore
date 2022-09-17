@@ -1,0 +1,10 @@
+# dependencies
+client/node_modules
+
+# next.js
+client/.next/
+client/out/
+
+# production
+client/build
+
