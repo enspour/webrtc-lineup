@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser')
 
 const createApp = () => {
     const useRoutes = require("@routes/useRoutes").default;
