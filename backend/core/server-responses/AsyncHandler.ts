@@ -7,6 +7,7 @@ export default (handler: (req: Request, res: Response) => Promise<any>) => {
         try {
             await handler(req, res);            
         } catch (error) { 
+            console.error(error);
             new ServerErrorResponse("Server error 500").send(res);
         }
     }
