@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import styles from "./TextInput.module.scss";
+import styles from "./InputControl.module.scss";
 
-const TextInput = ({ type, placeholder, value, setValue }) => {
+const InputControl = ({ type, placeholder, value, setValue }) => {
     return (
         <div className={styles.input}>
             <input 
-                className={styles.text}
+                className={styles.input__control}
                 type={type} 
                 value={value}
                 required
@@ -16,11 +16,11 @@ const TextInput = ({ type, placeholder, value, setValue }) => {
     )
 }
 
-TextInput.propTypes = {
+InputControl.propTypes = {
     type: PropTypes.oneOf(["text", "password"]).isRequired,
     placeholder: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     setValue: PropTypes.func.isRequired,
 }
 
-export default TextInput;
+export default InputControl;
