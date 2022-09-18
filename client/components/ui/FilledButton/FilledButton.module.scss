@@ -1,0 +1,12 @@
+.btn {
+    width: 100%;
+    outline: none;
+    border: .1rem solid var(--theme-bg-tertiary);
+    border-radius: 2rem;
+    background-color: var(--theme-bg-tertiary);
+    color: var(--theme-color-secondary);
+    height: 4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+}

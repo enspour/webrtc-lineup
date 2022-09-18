@@ -1,0 +1,11 @@
+.btn {
+    width: 100%;
+    outline: none;
+    border: .1rem solid var(--theme-border-primary);
+    border-radius: 2rem;
+    background-color: var(--theme-bg-secondary);
+    height: 4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+}
