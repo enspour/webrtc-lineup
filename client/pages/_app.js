@@ -1,5 +1,7 @@
-import "@styles/globals.css";
-import "@assets/fonts/lato/stylesheet.css";
+import "@assets/fonts/stylesheet.css";
+import "@styles/reset.scss";
+import "@styles/base.scss";
+import "@styles/variables.scss";
 
 function MyApp({ Component, pageProps }) {
     return <Component {...pageProps} />
