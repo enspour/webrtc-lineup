@@ -1,3 +1,5 @@
+import React from "react";
+
 import styles from "./Panel.module.scss";
 
 const Panel = ({ children }) => {
@@ -8,4 +10,4 @@ const Panel = ({ children }) => {
     )
 }
 
-export default Panel;
+export default React.memo(Panel);

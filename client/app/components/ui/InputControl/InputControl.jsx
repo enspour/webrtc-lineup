@@ -1,4 +1,6 @@
+import React from "react";
 import PropTypes from "prop-types";
+
 import styles from "./InputControl.module.scss";
 
 const InputControl = ({ type, placeholder, value, setValue }) => {
@@ -23,4 +25,4 @@ InputControl.propTypes = {
     setValue: PropTypes.func.isRequired,
 }
 
-export default InputControl;
+export default React.memo(InputControl);

@@ -14,4 +14,4 @@ const CheckBox = ({ label, setValue }) => {
     )
 }
 
-export default CheckBox;
+export default React.memo(CheckBox);

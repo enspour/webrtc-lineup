@@ -1,3 +1,5 @@
+import React from "react";
+
 import Svg from "../Svg/Svg";
 
 import SearchSVG from "@assets/images/search/search.svg";
@@ -25,4 +27,4 @@ const SearchInput = ({ placeholder, value, setValue, onClear }) => {
     )
 }
 
-export default SearchInput;
+export default React.memo(SearchInput);

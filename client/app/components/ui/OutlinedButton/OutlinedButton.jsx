@@ -1,4 +1,6 @@
+import React from "react";
 import PropTypes from "prop-types";
+
 import styles from "./OutlinedButton.module.scss";
 
 const OutlinedButton = ({ value, onClick }) => {
@@ -12,4 +14,4 @@ OutlinedButton.propTypes = {
     onClick: PropTypes.func.isRequired,
 }
 
-export default OutlinedButton;
+export default React.memo(OutlinedButton);

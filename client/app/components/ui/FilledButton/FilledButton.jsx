@@ -1,4 +1,6 @@
+import React from "react";
 import PropTypes from "prop-types";
+
 import styles from "./FilledButton.module.scss";
 
 const FilledButton = ({ value, onClick }) => {
@@ -12,4 +14,4 @@ FilledButton.propTypes = {
     onClick: PropTypes.func.isRequired,
 }
 
-export default FilledButton;
+export default React.memo(FilledButton);
