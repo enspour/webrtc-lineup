@@ -19,7 +19,7 @@
     }
 
     &:focus, &:valid {
-        &+.placeholder {
+        &~.placeholder {
             font-size: 1.2rem;
             padding: 0 0.5rem;
             top: 0;
@@ -40,4 +40,5 @@
     transition: all .4s ease;
     color: var(--theme-color-placeholder);
     background-color: var(--theme-bg-secondary);
+    pointer-events: none;
 }
