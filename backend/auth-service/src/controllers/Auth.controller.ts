@@ -33,8 +33,7 @@ export default class AuthController {
             }
         }
 
-        return new BadRequestResponse("User does not exist with email").send(res);
-
+        return new BadRequestResponse("Email or password is invalid").send(res);
     }
 
     async signup(req: Request, res: Response) {
