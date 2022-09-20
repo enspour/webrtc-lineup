@@ -14,6 +14,7 @@ const authRoute = Router();
 authRoute.post("/login", loginValidator, validatorMiddleware, asyncHandler(controllers.auth.login));
 authRoute.post("/signup", signupValidator, validatorMiddleware, asyncHandler(controllers.auth.signup));
 authRoute.post("/logout", asyncHandler(controllers.auth.logout));
-authRoute.post("/refresh", asyncHandler(controllers.auth.refresh));
+
+authRoute.get("/me", asyncHandler(controllers.auth.me));
 
 export default authRoute;

@@ -1,13 +1,15 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { nanoid } from "nanoid";
 
 import {
     issueAccessJWT,
     issueRefreshJWT, 
     JWTAccessOptions,
+    verifyAccessJWT,
+    decodeAccessJWT
 } from "@utils/jwt";
 
-import { saveInSecureCookie, resetCookie } from "@utils/cookie";
+import { saveInSecureCookie, resetCookie, getCookie } from "@utils/cookie";
 
 import { convertTimeToMs } from "@utils/convertTimeToMs";
 
@@ -53,6 +55,17 @@ class JWTService {
         resetCookie("accessToken", res);
         resetCookie("refreshToken", res);
     }
+
+    verifyAndDecodeAccessToken(req: Request) {
+        const token = getCookie("accessToken", req);
+        const verified = verifyAccessJWT(token);
+
+        if (verified) {
+            return decodeAccessJWT(token);
+        }
+
+        return null;
+    } 
 }
 
 export default new JWTService();

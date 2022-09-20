@@ -6,6 +6,7 @@ import JWTService from "@services/JWT.service";
 import { validatePassowrd, hashPassword } from "@utils/bcrypt";
 
 import BadRequestResponse from "core/server-responses/responses/BadRequest.response";
+import UnauthorizedResponse from "core/server-responses/responses/Unauthorized.response";
 import SuccessResponse from "core/server-responses/responses/Success.response";
 import CreatedResponse from "core/server-responses/responses/Created.response";
 
@@ -65,7 +66,16 @@ export default class AuthController {
         new SuccessResponse("Logout is successful.").send(res);
     }
 
-    async refresh(req: Request, res: Response) {
-        
+    async me(req: Request, res: Response) {
+        console.log(req.cookies);
+        const payload = JWTService.verifyAndDecodeAccessToken(req);
+
+        if (payload) {
+            return new SuccessResponse(payload).send(res);
+        }
+
+        // try refresh tokens
+
+        new UnauthorizedResponse("Please authorize.").send(res);
     }
 }
