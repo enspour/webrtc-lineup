@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require('cookie-parser');
 
 const createApp = () => {
     const useRoutes = require("@routes/useRoutes").default;
@@ -6,6 +7,7 @@ const createApp = () => {
     const app = express();
 
     app.use(express.json());
+    app.use(cookieParser())
 
     useRoutes(app);
 
