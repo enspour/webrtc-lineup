@@ -67,7 +67,6 @@ export default class AuthController {
     }
 
     async me(req: Request, res: Response) {
-        console.log(req.cookies);
         const payload = JWTService.verifyAndDecodeAccessToken(req);
 
         if (payload) {
