@@ -58,7 +58,6 @@ model Room {
 
 model RoomSettings {
   id            BigInt  @id @default(autoincrement())
-  has_password  Boolean
   password      String?
   room_id       BigInt  @unique
   room          Room    @relation(fields: [room_id], references: [id])
