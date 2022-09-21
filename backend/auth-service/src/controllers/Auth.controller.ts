@@ -9,9 +9,9 @@ import { validatePassowrd, hashPassword } from "@utils/bcrypt";
 import { decodeAccessJWT } from "@utils/jwt";
 import { getCookie } from "@utils/cookie";
 
-import BadRequestResponse from "core/server-responses/responses/BadRequest.response";
-import SuccessResponse from "core/server-responses/responses/Success.response";
-import CreatedResponse from "core/server-responses/responses/Created.response";
+import BadRequestResponse from "core/server/responses/BadRequest.response";
+import SuccessResponse from "core/server/responses/Success.response";
+import CreatedResponse from "core/server/responses/Created.response";
 
 export default class AuthController {
     async login(req: Request, res: Response) {
@@ -70,7 +70,15 @@ export default class AuthController {
     }
 
     async refresh(req: Request, res: Response) {
-        new SuccessResponse("Refresh is successful.").send(res);
+        const refreshToken = getCookie("refreshToken", req);
+        if (refreshToken) {
+            const isRefreshTokens = JWTService.refreshTokens(refreshToken, res);
+            if (isRefreshTokens) {
+                return new SuccessResponse("Refresh is successful.").send(res);
+            }
+        }
+
+        return new BadRequestResponse("Refresh token is invalid").send(res);
     }
 
     async me(req: Request, res: Response) {
