@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { nanoid } from "nanoid";
 
 import {
     issueAccessJWT,
     issueRefreshJWT, 
     JWTAccessOptions,
-    verifyAccessJWT,
-    decodeAccessJWT
+    verifyRefreshJWT,
+    decodeRefreshJWT
 } from "@utils/jwt";
 
-import { saveInSecureCookie, resetCookie, getCookie } from "@utils/cookie";
+import { saveInSecureCookie, resetCookie } from "@utils/cookie";
 
 import { convertTimeToMs } from "@utils/convertTimeToMs";
 
@@ -17,11 +17,11 @@ import jwtConfig from "@configs/jwt.config";
 
 class JWTService {
     setTokens(options: JWTAccessOptions, res: Response) {
-        this.setAccessToken(options, res);
-        this.setRefreshToken(options, res);
+        this.#setAccessToken(options, res);
+        this.#setRefreshToken(options, res);
     }
 
-    setAccessToken(options: JWTAccessOptions, res: Response) {
+    #setAccessToken(options: JWTAccessOptions, res: Response) {
         const token = issueAccessJWT(options);
         const expiresAccessTokenMs = convertTimeToMs(jwtConfig.accessToken.expiresIn) || 0;
         const expiresAccessToken = new Date(Date.now() + expiresAccessTokenMs);
@@ -34,7 +34,7 @@ class JWTService {
         }, res);
     }
 
-    setRefreshToken(options: JWTAccessOptions, res: Response) {
+    #setRefreshToken(options: JWTAccessOptions, res: Response) {
         const jti = nanoid();
         const { user } = options;
 
@@ -56,16 +56,16 @@ class JWTService {
         resetCookie("refreshToken", res);
     }
 
-    verifyAndDecodeAccessToken(req: Request) {
-        const token = getCookie("accessToken", req);
-        const verified = verifyAccessJWT(token);
-
+    refreshTokens(refreshToken: string, res: Response) {
+        const verified = verifyRefreshJWT(refreshToken);
         if (verified) {
-            return decodeAccessJWT(token);
+            const payload = decodeRefreshJWT(refreshToken);
+            this.setTokens(payload, res);
+            return true;
         }
 
-        return null;
-    } 
+        return false;
+    }
 }
 
 export default new JWTService();
