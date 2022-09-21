@@ -45,11 +45,11 @@ model UserAssets {
 model Room {
   id          BigInt        @id @default(autoincrement())
   name        String
-  status      Boolean
-  owned_id    BigInt        @unique
+  status      Boolean       @default(false)
+  owner_id    BigInt        @unique
   created_at  DateTime      @default(now())
   settings    RoomSettings?
-  owner       User          @relation(fields: [owned_id], references: [id])
+  owner       User          @relation(fields: [owner_id], references: [id])
   tags        Tag[]
   users       User[]        @relation("users_favorites_rooms")
 
@@ -67,7 +67,7 @@ model RoomSettings {
 
 model Tag {
   id      BigInt @id @default(autoincrement())
-  name    String
+  name    String @unique
   rooms   Room[]
 
   @@map("tags")
