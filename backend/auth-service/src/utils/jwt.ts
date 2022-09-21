@@ -7,7 +7,7 @@ import {
     JWTAccessPayload, 
     verifyAccessToken, 
     decodeAccessToken 
-} from "core/jwt/AccessToken";
+} from "core/utils/jwt";
 
 export {
     JWTAccessPayload

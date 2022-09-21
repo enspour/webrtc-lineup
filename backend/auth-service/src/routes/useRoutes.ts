@@ -1,6 +1,6 @@
 import { Router, Application } from "express";
 
-import NotFound from "core/server-responses/responses/NotFound.response";
+import NotFound from "core/server/responses/NotFound.response";
 
 import authRoute from "./auth/auth.route";
 

@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import fetch from "node-fetch";
 
-import { verifyAccessToken } from "./AccessToken";
+import { verifyAccessToken } from "../../utils/jwt";
 
-import UnauthorizedResponse from "../server-responses/responses/Unauthorized.response";
+import UnauthorizedResponse from "../responses/Unauthorized.response";
 
 const validJWTMiddleware = (domain: string, publicKeyAccessToken: string) => 
     async (req: Request, res: Response, next: NextFunction) => {

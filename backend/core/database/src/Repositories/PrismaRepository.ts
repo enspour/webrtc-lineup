@@ -1,6 +1,9 @@
-import { PrismaClient, User, UserAuth } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import { IRepository } from "./Repository";
+
+import { User, UserAuth, Room, Tag } from "../types"
 
 import DuplicateError from "../QueryError/DuplicateError";
 import UnknowError from "../QueryError/UnknowError";
@@ -48,5 +51,58 @@ export default class PrismaRepository implements IRepository {
         }
         
         throw new UnknowError("Error creating user");
+    }
+
+    async createRoom(name: string, password: string, owner_id: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})> {
+        const room = await this.prismaClient.room.create({
+            data: {
+                name,
+                owner_id,
+
+                settings: {
+                    create: { password }
+                },
+                tags: {
+                    connectOrCreate: tags.map(tag => ({
+                        where: { name: tag },
+                        create: { name: tag }
+                    }))
+                }
+            },
+            
+            include: { settings: true, tags: true }
+        });
+
+        if (room.settings) {
+            const clone = { 
+                id: room.id,
+                name: room.name,
+                status: room.status,
+                owner_id: room.owner_id,
+                tags: room.tags,
+                created_at: room.created_at,
+            }
+
+            return clone;
+        }
+
+        throw new UnknowError("Error creating room");
+    } 
+
+    async deleteRoom(id: bigint): Promise<(Room & { tags: Tag[] }) | null> {
+        try {
+            return await this.prismaClient.room.delete({
+                where: { id },
+                include: { tags: true }
+            });
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                if (err.code === "P2025") {
+                    return null;
+                }
+            }
+
+            throw err;
+        }
     }
 }

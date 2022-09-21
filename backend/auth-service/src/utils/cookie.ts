@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
+import { getCookie as getCookieCore } from "core/utils/cookie";
 
 import serverConfig from "@configs/server.config";
 
@@ -6,18 +8,17 @@ export interface ICookie {
     name: string,
     value: any,
     expires: Date,
-    maxAge: number
+    maxAge: number,
 }
 
 export const saveInSecureCookie = (cookie: ICookie, res: Response) => {
     const { name, value, expires, maxAge } = cookie;
-
     res.cookie(name, JSON.stringify(value), {
         secure: serverConfig.environment === "production",
         httpOnly: true,
         expires,
-        maxAge 
-    })
+        maxAge
+    });
 }
 
 export const resetCookie = (name: string, res: Response) => {
@@ -27,12 +28,4 @@ export const resetCookie = (name: string, res: Response) => {
     })
 }
 
-export const getCookie = (name: string, req: Request) => {
-    const cookie = req.cookies[name];
-
-    if (cookie) {
-        return JSON.parse(cookie);
-    }
-
-    return null;
-}
+export const getCookie = getCookieCore;
