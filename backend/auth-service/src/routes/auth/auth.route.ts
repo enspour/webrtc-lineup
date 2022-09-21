@@ -18,5 +18,6 @@ authRoute.post("/logout", guardMiddleware, asyncHandler(controllers.auth.logout)
 authRoute.post("/refresh", guardMiddleware, asyncHandler(controllers.auth.refresh));
 
 authRoute.get("/me", guardMiddleware, asyncHandler(controllers.auth.me));
+authRoute.get("/access-token/public-key", asyncHandler(controllers.auth.accessTokenPublicKey));
 
 export default authRoute;
