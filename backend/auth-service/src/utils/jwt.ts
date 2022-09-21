@@ -3,6 +3,16 @@ import jwt from "jsonwebtoken";
 import JWTConfig from "@configs/jwt.config";
 import JWTKeys from "@loaders/jwt.keys";
 
+import { 
+    JWTAccessPayload, 
+    verifyAccessToken, 
+    decodeAccessToken 
+} from "core/jwt/AccessToken";
+
+export {
+    JWTAccessPayload
+}
+
 export interface JWTAccessOptions {
     user: {
         id: string,
@@ -13,15 +23,6 @@ export interface JWTAccessOptions {
 
 export interface JWTRefreshOptions extends JWTAccessOptions {
     jti: string
-}
-
-export interface JWTAccessPayload {
-    user: {
-        id: string,
-        name: string,
-        email: string
-    },
-    iat: number,
 }
 
 export interface JWTRefreshPayload extends JWTAccessPayload {
@@ -47,17 +48,11 @@ export const issueAccessJWT = (options: JWTAccessOptions) => {
 
 export const verifyAccessJWT = (token: string) => {
     const publicKey = JWTKeys.accessTokenKeys.publicKey;
-
-    try {
-        jwt.verify(token, publicKey, { algorithms: ["RS256"] });
-        return true;
-    } catch {
-        return false;
-    }
+    return verifyAccessToken(token, publicKey);
 }
 
 export const decodeAccessJWT = (token: string) => {
-    return jwt.decode(token) as JWTAccessPayload;
+    return decodeAccessToken(token);
 }
 
 export const issueRefreshJWT = (options: JWTRefreshOptions) => {
