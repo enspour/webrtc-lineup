@@ -20,4 +20,8 @@ export default class AuthAPIService extends APIService {
 
         return this.createRequest(makeRequest);
     }
+
+    async refresh() {
+        return await axios.post("/api/v1/auth-service/refresh");
+    }
 }

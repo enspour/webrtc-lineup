@@ -32,6 +32,14 @@ const useRequest = (action) => {
         } catch (err) {
             countRequests.current -= 1;
             if (countRequests.current === 0) {
+
+                if (err.response && err.response.status === 401) {
+                    const res = await services.authAPI.refresh();
+                    if (res.status === 200) {
+                        return make(data);
+                    }
+                }
+
                 error.current = err;
                 setIsLoading(false);
             }
