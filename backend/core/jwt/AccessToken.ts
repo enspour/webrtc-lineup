@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import fetch from "node-fetch";
 
 export interface JWTAccessPayload {
     user: {
@@ -19,5 +20,18 @@ export const verifyAccessToken = (token: string, key: string) => {
         return true;
     } catch {
         return false;
+    }
+}
+
+export const loadPublicKeyAccessToken = async (domain: string) => {
+    try {
+        const response = await fetch(`${domain}/api/v1/auth-service/access-token/public-key`);
+    
+        if (response.status === 200) {
+            const data = await response.json();
+            return data.body.key;
+        }
+    } catch {
+        throw new Error("Error loading public key of access token");
     }
 }

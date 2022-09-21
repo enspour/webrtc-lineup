@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
+import fetch from "node-fetch";
+
 import { verifyAccessToken } from "./AccessToken";
 
 import UnauthorizedResponse from "../server-responses/responses/Unauthorized.response";
 
-const domain = process.env.DOMAIN || "http://localhost:3000";
-
-const validJWTMiddleware = (publicKeyAccessToken: string) => 
+const validJWTMiddleware = (domain: string, publicKeyAccessToken: string) => 
     async (req: Request, res: Response, next: NextFunction) => {
         const cookie = req.cookies["accessToken"];
 
@@ -20,10 +20,16 @@ const validJWTMiddleware = (publicKeyAccessToken: string) =>
 
         try {
             const response = await fetch(`${domain}/api/v1/auth-service/refresh`, {
+                method: "POST",
                 headers: [ createHeaderCookies(req) ]
             });
 
             if (response.status === 200) {
+                const setCookieHeader = response.headers.get("set-cookie");
+                if (setCookieHeader) {
+                    res.setHeader("set-cookie", setCookieHeader);
+                }
+
                 return next();
             }
         } catch {}
