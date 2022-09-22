@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { useRouter } from "next/router";
 
@@ -104,7 +105,9 @@ const Login = () => {
 
                     <div className={styles.signup}>
                         <span>Don't have account? </span>
-                        <span className={styles.signup__link}>Signup</span>
+                        <Link href="/signup">
+                            <span className={styles.signup__link}>Signup</span>
+                        </Link>
                     </div>
                 </div>
             </Panel>
