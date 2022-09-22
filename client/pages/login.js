@@ -40,7 +40,7 @@ const LoginWithEmail = React.memo(() => {
     const [password, setPassword] = React.useState("");
     const [rememberMe, setRememberMe] = React.useState(false);
 
-    const Login = React.useCallback(() => {
+    const login = React.useCallback(() => {
         const body = {
             email,
             password,
@@ -81,7 +81,7 @@ const LoginWithEmail = React.memo(() => {
             </div>
 
             <div className={styles.login_with_email__btn}>
-                <FilledButton value="Login" onClick={Login}/>
+                <FilledButton value="Login" onClick={login}/>
             </div>
         </div>
     )
