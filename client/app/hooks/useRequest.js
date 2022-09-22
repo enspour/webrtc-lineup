@@ -4,6 +4,7 @@ import services from "@services";
 
 export const Actions = {
     LOGIN: () => services.authAPI.createLoginRequest(),
+    SIGNUP: () => services.authAPI.createSignupRequest(),
 }
 
 const useRequest = (action) => {
