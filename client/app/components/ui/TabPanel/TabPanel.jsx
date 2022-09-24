@@ -24,11 +24,9 @@ const Tab = React.memo(({ name, active, setTab }) => {
     )
 })
 
-const TabPanel = observer(() => {
+const TabPanel = observer(({ tab, setTab }) => {
     const tabsRef = React.useRef();
     
-    const [tab, setTab] = React.useState({ name: "Library" });
-
     const searchedText = services.search.SearchedText;
     const setSearchedText = (text) => services.search.SearchedText = text;
 
