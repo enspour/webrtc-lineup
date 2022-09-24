@@ -1,0 +1,19 @@
+.dropdown {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    padding: 1.5rem 0;
+    background-color: var(--theme-bg-secondary);
+    border-radius: 0 0 2rem 2rem;
+}
+
+.dropdown__item {
+    font-weight: 500;
+    padding: .7rem 2rem;
+    
+    &:hover {
+        background-color: var(--theme-bg-tertiary);
+    }
+}
