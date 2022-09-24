@@ -1,0 +1,36 @@
+.header {
+    height: 6rem;
+    max-width: 122rem;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    font-size: 1.4rem;
+}
+
+.header__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+
+
+.account {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.account__avatar {
+    width: 4rem;
+    height: 4rem;
+    background-color: #696969;
+    border-radius: 50%;
+}
