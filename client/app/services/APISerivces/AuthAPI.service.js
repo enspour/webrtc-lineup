@@ -22,4 +22,8 @@ export default class AuthAPIService {
             signal
         });
     }
+
+    async logout() {
+        return await axios.post("/api/v1/auth-service/logout")
+    }
 }
