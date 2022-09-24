@@ -30,7 +30,7 @@ class Request {
             this.count -= 1;
 
             if (this.count === 0) {
-                const isRefreshTokens = this.#tryRefreshTokens(error);
+                const isRefreshTokens = this.#tryRefreshTokens(err);
                 if (isRefreshTokens) {
                     return await this.start(data);
                 }
