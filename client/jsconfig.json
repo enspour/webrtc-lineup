@@ -6,7 +6,8 @@
           "@assets/*": ["app/assets/*"],
           "@styles/*": ["app/styles/*"],
           "@services": ["app/services"],
-          "@hooks/*": ["app/hooks/*"]
+          "@hooks/*": ["app/hooks/*"],
+          "@store/*": ["app/store/*"]
       }
     }
 }
