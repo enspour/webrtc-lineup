@@ -28,7 +28,10 @@ const TabPanel = observer(({ tab, setTab }) => {
     const tabsRef = React.useRef();
     
     const searchedText = services.search.SearchedText;
-    const setSearchedText = (text) => services.search.SearchedText = text;
+    const setSearchedText = React.useCallback(
+        (text) => services.search.SearchedText = text,
+        []
+    );
 
     const gotoSearch = React.useCallback(() => {
         tabsRef.current.classList.add(styles.tabs__goto_search);
