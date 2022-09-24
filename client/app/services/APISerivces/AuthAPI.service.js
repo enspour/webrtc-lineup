@@ -16,4 +16,10 @@ export default class AuthAPIService {
     async refresh() {
         return await axios.post("/api/v1/auth-service/refresh");
     }
+
+    async me(_, signal) {
+        return await axios.get("/api/v1/auth-service/me", {
+            signal
+        });
+    }
 }
