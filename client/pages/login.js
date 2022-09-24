@@ -9,8 +9,10 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 
-import useRequest, { Actions } from "@hooks/useRequest";
+import useRequest from "@hooks/useRequest";
 import useResponse from "@hooks/useResponse";
+
+import services from "@services";
 
 import styles from "@styles/pages/login.module.scss";
 
@@ -33,7 +35,7 @@ const LoginWithGoogle = React.memo(() => {
 const LoginWithEmail = React.memo(() => {
     const router = useRouter();
 
-    const request = useRequest(Actions.LOGIN);
+    const request = useRequest(services.authAPI.login);
     const { data } = useResponse(request);
 
     const [email, setEmail] = React.useState("");
@@ -47,7 +49,7 @@ const LoginWithEmail = React.memo(() => {
             remember_me: rememberMe,
         }
 
-        request.make({ body });
+        request.start({ body });
     }, [email, password, rememberMe]);
 
     React.useEffect(() => {

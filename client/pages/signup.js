@@ -8,8 +8,10 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
-import useRequest, { Actions } from "@hooks/useRequest";
+import useRequest from "@hooks/useRequest";
 import useResponse from "@hooks/useResponse";
+
+import services from "@services";
 
 import styles from "@styles/pages/signup.module.scss";
 
@@ -24,7 +26,7 @@ const SignupWithGoogle = () => {
 const SignupWithEmail = () => {
     const router = useRouter();
 
-    const request = useRequest(Actions.SIGNUP);
+    const request = useRequest(services.authAPI.signup);
     const { data } = useResponse(request);
 
     const [name, setName] = React.useState("");
@@ -41,7 +43,7 @@ const SignupWithEmail = () => {
             remember_me: rememberMe,
         }
 
-        request.make({ body });
+        request.start({ body });
     }, [name, email, password, rememberMe]);
 
     React.useEffect(() => {
