@@ -1,0 +1,13 @@
+{
+    "--theme-bg-primary": "#F8F8F8",
+    "--theme-bg-secondary": "#FFFFFF",
+    "--theme-bg-tertiary": "#ECF6FF",
+    "--theme-color-primary": "#000000",
+    "--theme-color-secondary": "#00529E",
+    "--theme-color-link": "#858585",
+    "--theme-color-icon": "#000000",
+    "--theme-color-placeholder": "#A0A0A0",
+    "--theme-border-primary": "#EDEDED",
+    "--theme-border-secondary": "#00529E",
+    "--theme-shadow-primary": "#00529e1a"
+}
