@@ -5,6 +5,8 @@ import { observer } from "mobx-react-lite";
 
 import Dropdown from "@components/ui/Dropdown/Dropdown";
 
+import useLogout from "@hooks/useLogout";
+
 import services from "@services";
 
 import styles from "./Header.module.scss";
@@ -12,14 +14,8 @@ import styles from "./Header.module.scss";
 const AccountMenu = ({ isOpen }) => {
     const router = useRouter();
 
-    const gotoAccount = () => {
-        router.push("/account");
-    }
-
-    const logout = async () => {
-        await services.authAPI.logout();
-        router.push("/login");
-    }
+    const logout = () => useLogout();
+    const gotoAccount = () => router.push("/account");
 
     const AccountMenuItems = [
         { id: 1, name: "Account", onClick: gotoAccount},
@@ -30,7 +26,7 @@ const AccountMenu = ({ isOpen }) => {
 }
 
 const Account = observer(() => {
-    const user = services.user.User;
+    const name = services.user.Name;
 
     const accountRef = React.useRef();
     const [isOpen, setIsOpen] = React.useState(false);
@@ -46,13 +42,13 @@ const Account = observer(() => {
     return (
         <div className={styles.account} ref={accountRef} onClick={() => setIsOpen((prev) => !prev)}>
             <div className={styles.account__avatar}></div>
-            <div> {user.name} </div>
+            <div> {name} </div>
             <AccountMenu isOpen={isOpen}/>
         </div>
     )
 })
 
-const Header = observer(() => { 
+const Header = () => { 
     return (
         <header className={styles.header}>
             <Link href="/">
@@ -62,6 +58,6 @@ const Header = observer(() => {
             <Account />
         </header>
     )
-});
+};
 
-export default Header;
+export default React.memo(Header);
