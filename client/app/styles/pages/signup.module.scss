@@ -1,3 +1,9 @@
+.main {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--theme-bg-primary);
+}
+
 .container {
     width: 60rem;
     height: 73rem;
@@ -16,12 +22,14 @@
     font-weight: 600;
     padding: 4rem 0;
     text-align: center;
+    color: var(--theme-color-primary);
 }
 
 .title {
     margin-bottom: 3rem;
     font-size: 2rem;
     font-weight: 600;
+    color: var(--theme-color-primary);
 }
 
 .singup_with_email {
@@ -57,6 +65,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     text-align: center; 
+    color: var(--theme-color-primary);
 }
 
 .login__link {

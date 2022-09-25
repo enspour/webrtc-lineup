@@ -91,29 +91,31 @@ const LoginWithEmail = React.memo(() => {
 
 const Login = () => {
     return (
-        <div className={styles.container}>
-            <Panel>
-                <div className={styles.wrapper}>
-                    <div className={styles.logo}>Lineup</div>
+        <main className={styles.main}>
+            <div className={styles.container}>
+                <Panel>
+                    <div className={styles.wrapper}>
+                        <div className={styles.logo}>Lineup</div>
 
-                    <div className={styles.title}>Login</div>
-                    
-                    <div className={styles.login_another_way}>
-                        <LoginAsGuest />
-                        <LoginWithGoogle />
+                        <div className={styles.title}>Login</div>
+                        
+                        <div className={styles.login_another_way}>
+                            <LoginAsGuest />
+                            <LoginWithGoogle />
+                        </div>
+
+                        <LoginWithEmail />
+
+                        <div className={styles.signup}>
+                            <span>Don't have account? </span>
+                            <Link href="/signup">
+                                <span className={styles.signup__link}>Signup</span>
+                            </Link>
+                        </div>
                     </div>
-
-                    <LoginWithEmail />
-
-                    <div className={styles.signup}>
-                        <span>Don't have account? </span>
-                        <Link href="/signup">
-                            <span className={styles.signup__link}>Signup</span>
-                        </Link>
-                    </div>
-                </div>
-            </Panel>
-        </div>
+                </Panel>
+            </div>
+        </main>
     );
 }
 

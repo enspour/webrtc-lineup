@@ -97,25 +97,27 @@ const SignupWithEmail = () => {
 
 const Signup = () => {
     return (
-        <div className={styles.container}>
-            <Panel>
-                <div className={styles.wrapper}>
-                    <div className={styles.logo}>Lineup</div>
+        <div className={styles.main}>
+            <div className={styles.container}>
+                <Panel>
+                    <div className={styles.wrapper}>
+                        <div className={styles.logo}>Lineup</div>
 
-                    <div className={styles.title}>Signup</div>
-                    
-                    <SignupWithGoogle />
+                        <div className={styles.title}>Signup</div>
+                        
+                        <SignupWithGoogle />
 
-                    <SignupWithEmail />
+                        <SignupWithEmail />
 
-                    <div className={styles.login}>
-                        <span>Do have account? </span>
-                        <Link href="/login">
-                            <span className={styles.login__link}>Login</span>
-                        </Link>
+                        <div className={styles.login}>
+                            <span>Do have account? </span>
+                            <Link href="/login">
+                                <span className={styles.login__link}>Login</span>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            </Panel>
+                </Panel>
+            </div>
         </div>
     );
 }
