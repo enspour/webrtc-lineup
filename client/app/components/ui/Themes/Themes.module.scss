@@ -1,0 +1,31 @@
+.themes {
+    padding: 3rem;
+    display: flex;
+    gap: 3rem;
+}
+
+.theme {
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.theme__secondary {
+    position: absolute;
+    top: -.2rem;
+    left: -.2rem;
+    width: 0;
+    height: 0;
+    border-left: 6rem solid transparent;
+}
+
+.theme__primary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 6rem solid transparent;
+}
