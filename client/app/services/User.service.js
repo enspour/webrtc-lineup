@@ -11,7 +11,15 @@ export default class UserService {
         }
     }
 
-    get User() {
-        return this.#store.user;
+    get Name() {
+        return this.#store.name;
+    }
+
+    get Email() {
+        return this.#store.email;
+    }
+
+    get Id() {
+        return this.#store.id;
     }
 }

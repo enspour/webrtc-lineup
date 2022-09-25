@@ -1,16 +1,22 @@
 import { action, makeAutoObservable, observable } from "mobx"
 
 export default class UserStore {
-    user = {}
+    id = 0;
+    name = "";
+    email = "";
     
     constructor() {
         makeAutoObservable(this, {
-            user: observable,
-            setUser: action
+            id: observable,
+            name: observable,
+            email: observable,
+            setUser: action, 
         })
     }
 
     setUser(user) {
-        this.user = user
+        this.id = user.id;
+        this.name = user.name;
+        this.email = user.email;
     }
 }
