@@ -13,8 +13,8 @@ import styles from "./Header.module.scss";
 
 const AccountMenu = ({ isOpen }) => {
     const router = useRouter();
+    const logout = useLogout();
 
-    const logout = () => useLogout();
     const gotoAccount = () => router.push("/account");
 
     const AccountMenuItems = [
@@ -42,7 +42,7 @@ const Account = observer(() => {
     return (
         <div className={styles.account} ref={accountRef} onClick={() => setIsOpen((prev) => !prev)}>
             <div className={styles.account__avatar}></div>
-            <div> {name} </div>
+            <div className="c-p"> {name} </div>
             <AccountMenu isOpen={isOpen}/>
         </div>
     )

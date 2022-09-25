@@ -12,6 +12,7 @@
 .dropdown__item {
     font-weight: 500;
     padding: .7rem 2rem;
+    color: var(--theme-color-primary);
     
     &:hover {
         background-color: var(--theme-bg-tertiary);
