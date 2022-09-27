@@ -11,11 +11,6 @@ import Storage from "./Storage";
 const searchStore = new SearchStore();
 const userStore = new UserStore();
 
-const themes = new ThemesService();
-
-const localStorage = new Storage();
-const sessionStorage = new Storage();
-
 const services = {
     API: new APIService,
     authAPI: new AuthAPIService(),
@@ -23,15 +18,15 @@ const services = {
     search: new SearchService(searchStore),
     user: new UserService(userStore),
 
-    themes,
+    themes: new ThemesService(),
 
-    localStorage,
-    sessionStorage,
+    localStorage: new Storage(),
+    sessionStorage: new Storage(),
 
-    initialize: () => {
-        themes.initialize();  
-        localStorage.initialize("local"),
-        sessionStorage.initialize("session")
+    initialize: function () {
+        this.themes.initialize();  
+        this.localStorage.initialize("local"),
+        this.zsessionStorage.initialize("session")
     }
 }
 
