@@ -29,6 +29,15 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
+    async findUserRooms(user_id: bigint): Promise<Room[]> {
+        return await this.prismaClient.room.findMany({
+            where: {
+                owner_id: user_id
+            },
+            include: { tags: true }
+        });
+    }
+
     async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {
         const user = await this.prismaClient.user.create({
             data: {
