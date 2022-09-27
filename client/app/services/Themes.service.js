@@ -1,33 +1,23 @@
-import light from "@assets/themes/light.json";
-import dark from "@assets/themes/dark.json";
-
 const themes = [
-    { id: 1, name: "light", theme: light },
-    { id: 2, name: "dark", theme: dark }
-];
+    { id: 1, name: "light", primary: "#F8F8F8", tertiary: "#ECF6FF" },
+    { id: 2, name: "dark", primary: "#474747", tertiary: "#656565"  }
+]
 
 export default class ThemesService {
-    initialize() {
-        this.html = document.querySelector("html");
-    }
-
-    getTheme(id) {
-        const theme = themes.find(item => item.id === id);
-
-        if (theme) {
-            return theme;
-        } 
-
-        return null;
-    }
-
-    setTheme(theme) {
-        for (let property in theme) {
-            this.html.style.setProperty(property, theme[property]);
-        }
+    switch(oldTheme, newTheme) {
+        document.body.classList.remove(oldTheme.name);
+        document.body.classList.add(newTheme.name);
     } 
 
-    all() {
+    set(theme) {
+        document.body.classList.add(theme.name); 
+    }
+
+    default() {
+        return themes[0];
+    } 
+
+    get Themes() {
         return themes;
     }
 }

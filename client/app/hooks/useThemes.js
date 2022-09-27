@@ -1,17 +1,16 @@
-import React from "react";
-
 import useLocalStorage from "./useLocalStorage";
 
 import services from "@services";
 
 const useThemes = () => {
-    const [storageTheme, setStorageTheme] = useLocalStorage("__theme", {});
+    const [storageTheme, setStorageTheme] = useLocalStorage("__theme", services.themes.default());
 
-    React.useEffect(() => {
-        services.themes.setTheme(storageTheme.theme);
-    }, [storageTheme]);
+    const setTheme = (theme) => {
+        services.themes.switch(storageTheme, theme);
+        setStorageTheme(theme);
+    }
 
-    return [storageTheme, setStorageTheme, services.themes.all()];
+    return [storageTheme, setTheme, services.themes.Themes];
 }
 
 export default useThemes;

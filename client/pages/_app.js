@@ -8,6 +8,9 @@ import "@styles/reset.scss";
 import "@styles/base.scss";
 import "@styles/helpers.scss"; 
 
+import "@styles/themes/dark.scss";
+import "@styles/themes/light.scss";
+
 function MyApp({ Component, pageProps }) {
     useInitializeServices();
     useLoaderTheme();

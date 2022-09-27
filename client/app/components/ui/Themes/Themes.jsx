@@ -15,11 +15,11 @@ const ThemeItem = ({ active, theme, setTheme }) => {
         >
             <div 
                 className={styles.theme__primary} 
-                style={{ borderLeft: `6rem solid ${theme.theme["--theme-bg-primary"]}` }}
+                style={{ borderLeft: `6rem solid ${theme.primary}` }}
             />
             <div 
-                className={styles.theme__secondary} 
-                style={{ borderBottom: `6rem solid ${theme.theme["--theme-bg-tertiary"]}` }}
+                className={styles.theme__tertiary} 
+                style={{ borderBottom: `6rem solid ${theme.tertiary}` }}
             />
         </div>
     )
@@ -31,14 +31,16 @@ const Themes = () => {
 
     return (
         <div className={styles.themes}>
-            { themes.map(item => 
-                <ThemeItem 
-                    key={item.id} 
-                    active={theme.id === item.id} 
-                    theme={item} 
-                    setTheme={setTheme}
-                />
-            ) }
+            {   
+                themes.map(item => 
+                    <ThemeItem 
+                        key={item.id} 
+                        active={theme.id === item.id} 
+                        theme={item} 
+                        setTheme={setTheme}
+                    />
+                ) 
+            }
         </div>
     )
 }
