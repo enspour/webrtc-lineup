@@ -6,6 +6,7 @@ import { getUser } from "core/utils/user";
 
 import SuccessResponse from "core/server/responses/Success.response";
 import NotFoundResponse from "core/server/responses/NotFound.response";
+import BadRequestResponse from "core/server/responses/BadRequest.response";
 
 class RoomsController {
     async create(req: Request, res: Response) {
@@ -45,7 +46,7 @@ class RoomsController {
     async getCreatedRooms(req: Request, res: Response) {
         const user = getUser(req);
 
-        const list = await RoomsService.getCreatedRooms(user.id);
+        const list = await RoomsService.getCreated(user.id);
 
         const rooms = list.map(item => ({
             ...item,
@@ -54,6 +55,58 @@ class RoomsController {
         }))
 
         new SuccessResponse({ rooms }).send(res);
+    }
+
+    async getFavoritesRooms(req: Request, res: Response) {
+        const user = getUser(req);
+
+        const list = await RoomsService.getFavorites(user.id);
+
+        const rooms = list.map(item => ({
+            ...item,
+            id: item.id.toString(),
+            owner_id: item.owner_id.toString(),
+        }))
+
+        new SuccessResponse({ rooms }).send(res);
+    }
+
+    async addRoomToFavorites(req: Request, res: Response) {
+        const id = BigInt(req.params.id);
+        const user = getUser(req);
+
+        const room = await RoomsService.addToFavorites(id, user.id);
+
+        if (room) {
+            return new SuccessResponse({
+                room: { 
+                    ...room, 
+                    id: room.id.toString(), 
+                    owner_id: room.owner_id.toString() 
+                }
+            }).send(res);
+        }
+
+        new BadRequestResponse("Room is not found.").send(res);
+    }
+
+    async deleteRoomFromFavorites(req: Request, res: Response) {
+        const id = BigInt(req.params.id);
+        const user = getUser(req);
+
+        const room = await RoomsService.deleteFromFavorites(id, user.id);
+
+        if (room) {
+            return new SuccessResponse({ 
+                room: { 
+                    ...room, 
+                    id: room.id.toString(), 
+                    owner_id: room.owner_id.toString() 
+                } 
+            }).send(res);
+        }
+
+        new BadRequestResponse("Room is not found.").send(res);
     }
 }
 

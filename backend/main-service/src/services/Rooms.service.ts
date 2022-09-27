@@ -15,8 +15,34 @@ class RoomsService {
         return null;
     }
 
-    async getCreatedRooms(userId: bigint) {
+    async getCreated(userId: bigint) {
         return await repository.findUserRooms(userId);
+    }
+
+    async getFavorites(userId: bigint) {
+        return await repository.findFavoritesRooms(userId);
+    }
+
+    async addToFavorites(id: bigint, userId: bigint) {
+        const room = await repository.findRoomById(id);
+
+        if (room) {
+            await repository.addRoomToFavorites(id, userId);
+            return room;
+        }
+
+        return null
+    }
+
+    async deleteFromFavorites(id: bigint, userId: bigint) {
+        const room = await repository.findRoomById(id);
+
+        if (room) {
+            await repository.deleteRoomFromFavorites(id, userId);
+            return room;
+        }
+
+        return null;
     }
 }
 
