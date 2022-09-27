@@ -1,3 +1,4 @@
+import { loadPublicKeyAccessJWT } from "@loaders/jwt.keys";
 import createServer from "@loaders/http";
 import createApp from "@loaders/app";
 
@@ -11,6 +12,8 @@ import serverConfig from "@configs/server.config";
     await connect();
     logger.log("Connect to database is successful.");
     
+    await loadPublicKeyAccessJWT();
+
     const app = createApp();
     const server = createServer(app);
 
