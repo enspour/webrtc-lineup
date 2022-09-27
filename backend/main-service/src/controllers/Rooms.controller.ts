@@ -39,7 +39,21 @@ class RoomsController {
             }).send(res);
         }
 
-        return new NotFoundResponse("Room is not found.").send(res);
+        new NotFoundResponse("Room is not found.").send(res);
+    }
+
+    async getCreatedRooms(req: Request, res: Response) {
+        const user = getUser(req);
+
+        const list = await RoomsService.getCreatedRooms(user.id);
+
+        const rooms = list.map(item => ({
+            ...item,
+            id: item.id.toString(),
+            owner_id: item.owner_id.toString(),
+        }))
+
+        new SuccessResponse({ rooms }).send(res);
     }
 }
 

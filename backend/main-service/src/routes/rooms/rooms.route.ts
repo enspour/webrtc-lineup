@@ -26,4 +26,9 @@ router.delete("/:id",
     asyncHandler(RoomsController.delete)
 );
 
+router.get("/list-created",
+    guardMiddleware,
+    asyncHandler(RoomsController.getCreatedRooms)
+)
+
 export default router;
