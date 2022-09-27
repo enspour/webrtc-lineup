@@ -51,7 +51,7 @@ model Room {
   settings    RoomSettings?
   owner       User          @relation(fields: [owner_id], references: [id])
   tags        Tag[]
-  users       User[]        @relation("users_favorites_rooms")
+  subs       User[]        @relation("users_favorites_rooms")
 
   @@map("rooms")
 }
