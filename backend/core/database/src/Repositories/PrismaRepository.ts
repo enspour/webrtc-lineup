@@ -5,29 +5,31 @@ import { IRepository } from "./Repository";
 
 import { User, UserAuth, Room, Tag } from "../types"
 
-import DuplicateError from "../QueryError/DuplicateError";
 import UnknowError from "../QueryError/UnknowError";
 
 export default class PrismaRepository implements IRepository {
     constructor(private prismaClient: PrismaClient) {}
 
-
-    async findUserAuthByEmail(email: string): Promise<(UserAuth & { user: User }) | null> {
+    async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null> {
         return await this.prismaClient.userAuth.findUnique({
             where: { email },
             include: { user: true }
         })
     }
 
-    async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {
-        const foundedUser = await this.prismaClient.userAuth.findUnique({
+    async findUserAuthByEmail(email: string): Promise<UserAuth | null> {
+        return await this.prismaClient.userAuth.findUnique({
             where: { email }
-        });
+        }); 
+    }
 
-        if (foundedUser) {
-            throw new DuplicateError("User with email is exists", "email");
-        }
-        
+    async findRoomById(id: bigint): Promise<Room | null> {
+        return await this.prismaClient.room.findFirst({
+            where: { id }
+        });
+    }
+
+    async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {
         const user = await this.prismaClient.user.create({
             data: {
                 name,
@@ -54,7 +56,7 @@ export default class PrismaRepository implements IRepository {
     }
 
     async createRoom(name: string, password: string, owner_id: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})> {
-        const room = await this.prismaClient.room.create({
+        return await this.prismaClient.room.create({
             data: {
                 name,
                 owner_id,
@@ -70,30 +72,14 @@ export default class PrismaRepository implements IRepository {
                 }
             },
             
-            include: { settings: true, tags: true }
+            include: { tags: true }
         });
+    }
 
-        if (room.settings) {
-            const clone = { 
-                id: room.id,
-                name: room.name,
-                status: room.status,
-                owner_id: room.owner_id,
-                tags: room.tags,
-                created_at: room.created_at,
-            }
-
-            return clone;
-        }
-
-        throw new UnknowError("Error creating room");
-    } 
-
-    async deleteRoom(id: bigint): Promise<(Room & { tags: Tag[] }) | null> {
+    async deleteRoom(id: bigint): Promise<Room | null> {
         try {
             return await this.prismaClient.room.delete({
-                where: { id },
-                include: { tags: true }
+                where: { id }
             });
         } catch (err) {
             if (err instanceof Prisma.PrismaClientKnownRequestError) {
