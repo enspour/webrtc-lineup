@@ -1,11 +1,13 @@
 import { Router, Application } from "express";
 
-import NotFound from "core/server-responses/responses/NotFound.response";
+import roomsRoute from "./rooms/rooms.route";
+
+import NotFound from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.get("/", (req, res) => res.end("hello world!"));
+    router.use("/api/v1/main-service/rooms", roomsRoute);
 
     router.use("*", (req, res) => 
         new NotFound(`URL: ${req.originalUrl} is not found.`).send(res));
