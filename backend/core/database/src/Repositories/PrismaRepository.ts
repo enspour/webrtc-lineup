@@ -31,11 +31,18 @@ export default class PrismaRepository implements IRepository {
 
     async findUserRooms(user_id: bigint): Promise<Room[]> {
         return await this.prismaClient.room.findMany({
-            where: {
-                owner_id: user_id
-            },
+            where: { owner_id: user_id },
             include: { tags: true }
         });
+    }
+
+    async findFavoritesRooms(user_id: bigint): Promise<Room[]> {
+        const user = await this.prismaClient.user.findUnique({
+            where: { id: user_id },
+            include: { fav_rooms: true }
+        })
+
+        return user?.fav_rooms || [];
     }
 
     async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {
@@ -99,5 +106,27 @@ export default class PrismaRepository implements IRepository {
 
             throw err;
         }
+    }
+
+    async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<User> {
+        return await this.prismaClient.user.update({
+            where: { id: user_id },
+            data: {
+                fav_rooms: {
+                    disconnect: { id: room_id }
+                }
+            }
+        })
+    }
+
+    async addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<User> {
+        return await this.prismaClient.user.update({
+            where: { id: user_id },
+            data: {
+                fav_rooms: {
+                    connect: { id: room_id }
+                }
+            }
+        })
     }
 }
