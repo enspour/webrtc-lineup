@@ -26,7 +26,7 @@ const services = {
     initialize: function () {
         this.themes.initialize();  
         this.localStorage.initialize("local"),
-        this.zsessionStorage.initialize("session")
+        this.sessionStorage.initialize("session")
     }
 }
 
