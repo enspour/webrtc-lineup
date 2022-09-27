@@ -2,10 +2,16 @@ import { repository } from "core/database/src/connection";
 
 class AuthService {
     async findByEmail(email: string) {
-        return await repository.findUserAuthByEmail(email);
+        return await repository.findUserAuthByEmailWithUser(email);
     }
 
     async create(name: string, email: string, password: string) {
+        const user = await repository.findUserAuthByEmail(email);
+
+        if (user) {
+            return null;
+        }
+        
         return await repository.createUser(name, email, password);
     }
 }

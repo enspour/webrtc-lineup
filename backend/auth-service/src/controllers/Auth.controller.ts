@@ -50,17 +50,20 @@ export default class AuthController {
 
         const user = await AuthService.create(name, email, hashedPassword);
         
-        const options = {
-            user: {
-                id: user.id.toString(),
-                name: user.name,
-                email: user.email
+        if (user) {
+            const options = {
+                user: {
+                    id: user.id.toString(),
+                    name: user.name,
+                    email: user.email
+                }
             }
+
+            JWTService.setTokens(options, res);
+            return new CreatedResponse("Signup is successfull").send(res);
         }
 
-        JWTService.setTokens(options, res);
-
-        new CreatedResponse("Signup is successfull").send(res);
+        new BadRequestResponse("Email or password is invalid").send(res);
     }
 
     async logout(req: Request, res: Response) {
