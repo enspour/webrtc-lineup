@@ -54,7 +54,7 @@ const TabPanel = observer(({ tab, setTab }) => {
                     <Svg url={SearchIcon} width="1.8" height="1.8" onClick={gotoSearch}/>
                     
                     <div className={styles.tabs__items}>
-                        <Tab name="Library" active={tab.name === "Library"} setTab={setTab}/>
+                        <Tab name="Store" active={tab.name === "Store"} setTab={setTab}/>
                         <Tab name="Favorites" active={tab.name === "Favorites"} setTab={setTab}/> 
                     </div>
                     

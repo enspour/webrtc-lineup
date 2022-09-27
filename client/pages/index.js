@@ -6,7 +6,7 @@ import TabPanel from "@components/ui/TabPanel/TabPanel";
 import styles from "@styles/pages/index.module.scss";
 
 const Home = () => { 
-    const [tab, setTab] = React.useState({ name: "Library" });
+    const [tab, setTab] = React.useState({ name: "Store" });
 
     return (
         <MainLayout> 
