@@ -29,20 +29,24 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findUserRooms(user_id: bigint): Promise<Room[]> {
+    async findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
         return await this.prismaClient.room.findMany({
             where: { owner_id: user_id },
             include: { tags: true }
         });
     }
 
-    async findFavoritesRooms(user_id: bigint): Promise<Room[]> {
-        const user = await this.prismaClient.user.findUnique({
-            where: { id: user_id },
-            include: { fav_rooms: true }
-        })
-
-        return user?.fav_rooms || [];
+    async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
+        return await this.prismaClient.room.findMany({
+            where: { 
+                subs: {
+                    some: {
+                        id: user_id
+                    }
+                } 
+            },
+            include: { subs: true, tags: true},
+        }) 
     }
 
     async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {
