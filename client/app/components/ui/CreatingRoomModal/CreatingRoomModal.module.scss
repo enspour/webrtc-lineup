@@ -1,0 +1,57 @@
+.private {
+    margin: 3rem 0 2rem 2rem;
+}
+
+.password {
+    max-height: 4rem;
+    transition: max-height .4s ease-out;
+}
+
+.hidden {
+    max-height: 0;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden; 
+}
+
+.tag {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.tag__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+}
+
+.tags {
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem 4rem 2rem;
+}
+
+.tags__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--theme-color-primary);
+}
+
+.tags__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tags__item {
+    background-color: var(--theme-bg-tertiary);
+    color: var(--theme-color-primary);
+    border-radius: .5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    height: 2rem;
+    padding: 0 1.5rem;
+    cursor: pointer;
+}
