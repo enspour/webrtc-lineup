@@ -3,6 +3,7 @@ import AuthAPIService from "./APISerivces/AuthAPI.service";
 import SearchService from "./Search.service";
 import UserService from "./User.service";
 import ThemesService from "./Themes.service";
+import RoomAPIService from "./APISerivces/RoomAPI.service";
 import Storage from "./Storage.service";
 
 import SearchStore from "@store/Search.store";
@@ -14,6 +15,7 @@ const userStore = new UserStore();
 const services = {
     API: new APIService,
     authAPI: new AuthAPIService(),
+    roomAPI: new RoomAPIService(),
     
     search: new SearchService(searchStore),
     user: new UserService(userStore),
