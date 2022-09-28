@@ -24,7 +24,7 @@ const Tab = React.memo(({ name, active, setTab }) => {
     )
 })
 
-const TabPanel = observer(({ tab, setTab }) => {
+const TabPanel = observer(({ tab, setTab, tabs }) => {
     const tabsRef = React.useRef();
     
     const searchedText = services.search.SearchedText;
@@ -54,8 +54,16 @@ const TabPanel = observer(({ tab, setTab }) => {
                     <Svg url={SearchIcon} width="1.8" height="1.8" onClick={gotoSearch}/>
                     
                     <div className={styles.tabs__items}>
-                        <Tab name="Store" active={tab.name === "Store"} setTab={setTab}/>
-                        <Tab name="Favorites" active={tab.name === "Favorites"} setTab={setTab}/> 
+                        {
+                            tabs.map(item => 
+                                <Tab 
+                                    key={item.id} 
+                                    name={item.name} 
+                                    active={item.name === tab.name} 
+                                    setTab={setTab} 
+                                />
+                            )
+                        } 
                     </div>
                     
                     <Svg url={AddIcon} width="1.4" height="1.4"/>
