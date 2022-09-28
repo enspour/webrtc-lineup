@@ -2,9 +2,9 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 import CreatingRoomModal from "../CreatingRoomModal/CreatingRoomModal";
-import SearchInput from "../SearchInput/SearchInput";
-import Panel from "../Panel/Panel";
-import Svg from "../Svg/Svg";
+import SearchInput from "../../../ui/SearchInput/SearchInput";
+import Panel from "../../../ui/Panel/Panel";
+import Svg from "../../../ui/Svg/Svg";
 
 import useManualCssAnimation from "@hooks/css/useManualCssAnimation";
 

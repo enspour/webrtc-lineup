@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
 import SimpleInput from "@components/ui/SimpleInput/SimpleInput";
-import Themes from "@components/ui/Themes/Themes";
+import Themes from "@components/pages/account/Themes/Themes";
 import Panel from "@components/ui/Panel/Panel";
 
 import useLogout from "@hooks/useLogout";

@@ -1,7 +1,7 @@
 import React from "react"; 
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
-import TabPanel from "@components/ui/TabPanel/TabPanel";
+import TabPanel from "@components/pages/index/TabPanel/TabPanel";
 
 import styles from "@styles/pages/index.module.scss";
 

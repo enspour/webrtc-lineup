@@ -1,10 +1,10 @@
 import React from "react";
 
-import Modal from "../Modal/Modal";
-import InputControl from "../InputControl/InputControl";
-import CheckBox from "../CheckBox/CheckBox";
-import FilledButton from "../FilledButton/FilledButton";
-import Svg from "../Svg/Svg";
+import Modal from "@components/ui/Modal/Modal";
+import InputControl from "@components/ui/InputControl/InputControl";
+import CheckBox from "@components/ui/CheckBox/CheckBox";
+import FilledButton from "@components/ui/FilledButton/FilledButton";
+import Svg from "@components/ui/Svg/Svg";
 
 import useCssAnimation from "@hooks/css/useCssAnimation";
 import useRequest from "@hooks/useRequest";
