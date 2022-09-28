@@ -22,6 +22,12 @@ class RoomsController {
             ...room,
             id: room.id.toString(),
             owner_id: room.owner_id.toString(),
+            tags: room.tags.map(item => 
+                ({
+                    ...item,
+                    id: item.id.toString()
+                })
+            )
         }).send(res);
     }
 
@@ -52,6 +58,10 @@ class RoomsController {
             ...item,
             id: item.id.toString(),
             owner_id: item.owner_id.toString(),
+            tags: item.tags.map(tag => ({
+                id: tag.id.toString(),
+                name: tag.name
+            }))
         }))
 
         new SuccessResponse({ rooms }).send(res);
@@ -63,9 +73,15 @@ class RoomsController {
         const list = await RoomsService.getFavorites(user.id);
 
         const rooms = list.map(item => ({
-            ...item,
             id: item.id.toString(),
+            name: item.name,
+            status: item.status,
+            created_at: item.created_at,
             owner_id: item.owner_id.toString(),
+            tags: item.tags.map(tag => ({
+                id: tag.id.toString(),
+                name: tag.name,
+            }))
         }))
 
         new SuccessResponse({ rooms }).send(res);
