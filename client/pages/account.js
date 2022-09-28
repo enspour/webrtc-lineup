@@ -39,7 +39,7 @@ const AccountCredentials = React.memo(({
 
                 <div className="w-100">
                     <div className="mb-1 c-p">Password</div>
-                    <FilledButton value="Change" onClick={changePassword}/>
+                    <FilledButton onClick={changePassword}> Change </FilledButton>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@ const AccountProfile = observer(() => {
 
 const AccountLogout = () => { 
     const logout = useLogout(); 
-    return <FilledButton value="Logout" onClick={logout}/>
+    return <FilledButton onClick={logout}> Logout </FilledButton>
 }
 
 const ThemesTitle = () => {

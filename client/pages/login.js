@@ -21,7 +21,7 @@ const LoginAsGuest = React.memo(() => {
         console.log("Login as guest");
     }
 
-    return <OutlinedButton value="Sign in as Guest" onClick={LoginAsGuest}/>
+    return <OutlinedButton onClick={LoginAsGuest}> Sign in as Guest </OutlinedButton>
 });
 
 const LoginWithGoogle = React.memo(() => {
@@ -29,7 +29,7 @@ const LoginWithGoogle = React.memo(() => {
         console.log("Login with google");
     };
     
-    return <OutlinedButton value="Sign in with Google" onClick={LoginWithGoogle}/>
+    return <OutlinedButton onClick={LoginWithGoogle}> Sign in with Google </OutlinedButton>
 });
 
 const LoginWithEmail = React.memo(() => {
@@ -79,11 +79,11 @@ const LoginWithEmail = React.memo(() => {
             <div className={styles.login_with_email__recovery}>Recovery Password</div>
             
             <div className={styles.login_with_email__remember_me}>
-                <CheckBox label="Remember me" setValue={setRememberMe}/>
+                <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
             <div className={styles.login_with_email__btn}>
-                <FilledButton value="Login" onClick={login}/>
+                <FilledButton onClick={login}> Login </FilledButton>
             </div>
         </div>
     )

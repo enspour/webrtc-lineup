@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 
 import styles from "./FilledButton.module.scss";
 
-const FilledButton = ({ value, onClick }) => {
+const FilledButton = ({ children, onClick }) => {
     return (
-        <button className={styles.btn} onClick={e => onClick(e)}> {value} </button>
+        <button className={styles.btn} onClick={e => onClick(e)}> {children} </button>
     );
 }
 
 FilledButton.propTypes = {
-    value: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
 }
 

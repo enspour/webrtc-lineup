@@ -20,7 +20,7 @@ const SignupWithGoogle = () => {
         console.log("Signup with google");
     };
     
-    return <OutlinedButton value="Sign up with Google" onClick={SignupWithGoogle}/>
+    return <OutlinedButton onClick={SignupWithGoogle}> Sign up with Google </OutlinedButton>
 }
 
 const SignupWithEmail = () => {
@@ -85,11 +85,11 @@ const SignupWithEmail = () => {
             </div>
 
             <div className={styles.singup_with_email__remember_me}>
-                <CheckBox label="Remember me" setValue={setRememberMe}/>
+                <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
             <div className={styles.signup_with_email__btn}>
-                <FilledButton value="Signup" onClick={signup}/>
+                <FilledButton onClick={signup}> Signup </FilledButton>
             </div>
         </div>
     )
