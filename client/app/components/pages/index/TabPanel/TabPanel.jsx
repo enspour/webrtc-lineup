@@ -2,17 +2,17 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 import CreatingRoomModal from "../CreatingRoomModal/CreatingRoomModal";
-import SearchInput from "../../../ui/SearchInput/SearchInput";
-import Panel from "../../../ui/Panel/Panel";
-import Svg from "../../../ui/Svg/Svg";
+import SearchInput from "@components/ui/SearchInput/SearchInput";
+import Panel from "@components/ui/Panel/Panel";
+import Svg from "@components/ui/Svg/Svg";
 
 import useManualCssAnimation from "@hooks/css/useManualCssAnimation";
 
 import services from "@services";
 
-import SearchIcon from "@assets/images/tab_panel/search.svg";
-import AddIcon from "@assets/images/tab_panel/add.svg";
-import BackIcon from "@assets/images/tab_panel/back.svg";
+import SearchIcon from "@assets/images/tabPanel/search.svg";
+import AddIcon from "@assets/images/tabPanel/add.svg";
+import BackIcon from "@assets/images/tabPanel/back.svg";
 
 import styles from "./TabPanel.module.scss";
 
