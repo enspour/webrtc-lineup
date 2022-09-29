@@ -14,9 +14,13 @@ import SearchIcon from "@assets/images/tabPanel/search.svg";
 import AddIcon from "@assets/images/tabPanel/add.svg";
 import BackIcon from "@assets/images/tabPanel/back.svg";
 
-import styles from "./TabPanel.module.scss";
+import styles from "./IslandPanel.module.scss"; 
 
-const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
+const classes = (...classes) => {
+    return classes.join(" ");
+}
+
+const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActive }) => {
     const searchedText = services.search.SearchedText;
     const setSearchedText = React.useCallback(
         (text) => services.search.SearchedText = text,
@@ -25,12 +29,13 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
 
     const gotoBack = React.useCallback(() => {
         removeStyleSearchActive();
-        removeStyleGotoSearch(400); 
+        removeStyleGotoSearch(400);
+        manager.undo();
     }, []);
 
     return (
-        <div className={styles.tabs__search}>
-            <div className={styles.tabs__search__btn}>
+        <div className={styles.island__search}>
+            <div className={styles.island__search__btn}>
                 <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
             </div>
 
@@ -39,55 +44,68 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
     )
 })
 
-const Tabs = React.memo(({ tab, setTab, tabs }) => (
-    <div className={styles.tabs__items}>
-        {
-            tabs.map(item => 
-                <div 
-                    key={item.id}
-                    className={`${styles.tabs__item} ${tab.id === item.id ? styles.tabs__item__active : ""}`}
-                    onClick={() => setTab({ ...item })}
-                >
-                    {item.name}
-                </div>
-            )
-        } 
-    </div> 
-));
+const Tabs = React.memo(({ manager }) => {
+    const { tabs, activeTabId, setActiveTabId } = manager;
 
-const TabPanel = ({ tab, setTab, tabs }) => {
-    const tabsRef = React.useRef();
+    return (
+        <div className={styles.tabs}>
+            {
+                tabs.map(item => 
+                    <div 
+                        key={item.id}
+                        className={
+                            classes(styles.tab, activeTabId === item.id ? styles.tab__active : "")
+                        }
+                        onClick={() => setActiveTabId(item.id)}
+                    >
+                        {item.name}
+                    </div>
+                )
+            } 
+        </div> 
+    )
+});
+
+const IslandPanel = ({ manager }) => {
+    const islandRef = React.useRef();
 
     const [isOpenModal, setIsOpenModal] = React.useState(false);
 
     const [addStyleGotoSearch, removeStyleGotoSearch] 
-        = useManualCssAnimation(tabsRef, styles.tabs__goto_search);
+        = useManualCssAnimation(islandRef, styles.island__goto_search);
     const [addStyleSearchActive, removeStyleSearchActive] 
-        = useManualCssAnimation(tabsRef, styles.tabs__search__active);
+        = useManualCssAnimation(islandRef, styles.island__search__active);
 
     const gotoSearch = React.useCallback(() => {
         addStyleGotoSearch();
         addStyleSearchActive(400); 
-    }, []);
+        setTimeout(manager.setActiveTabId, 400, manager.searchTab.id);
+    }, []); 
 
     return (
         <>
-            <div className={styles.tabs} ref={tabsRef}>
+            <div className={styles.island} ref={islandRef}>
                 <Panel>
                     <div className={styles.wrapper}>
-                        <Svg url={SearchIcon} width="1.8" height="1.8" onClick={gotoSearch}/>
+                        <Svg 
+                            url={SearchIcon}
+                            width="1.8" 
+                            height="1.8" 
+                            onClick={gotoSearch}
+                        />
                         
-                        <Tabs tab={tab} setTab={setTab} tabs={tabs}/>
+                        <Tabs manager={manager}/>
                         
                         <Svg 
-                            url={AddIcon} 
-                            width="1.4" 
-                            height="1.4" 
+                            url={AddIcon}
+                            width="1.4"
+                            height="1.4"
                             onClick={() => setIsOpenModal(true)}
                         />
                     </div>
 
                     <Search 
+                        manager={manager}
                         removeStyleGotoSearch={removeStyleGotoSearch} 
                         removeStyleSearchActive={removeStyleSearchActive}
                     />
@@ -99,4 +117,4 @@ const TabPanel = ({ tab, setTab, tabs }) => {
     )
 };
 
-export default TabPanel;
+export default IslandPanel;

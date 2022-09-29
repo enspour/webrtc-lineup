@@ -1,22 +1,23 @@
 import React from "react"; 
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
-import TabPanel from "@components/pages/index/TabPanel/TabPanel";
+import IslandPanel from "@components/pages/index/IslandPanel/IslandPanel";
+
+import useIslandManager from "@hooks/useIslandManager";
 
 import styles from "@styles/pages/index.module.scss";
 
-const tabs = [
-    { id: 1, name: "Store" },
-    { id: 2, name: "Favorites" }
-]
-
-const Home = () => { 
-    const [tab, setTab] = React.useState(tabs[0]);
+const Home = () => {
+    const manager = useIslandManager();
 
     return (
         <MainLayout> 
-            <div className={styles.tabPanel}>
-                <TabPanel tab={tab} setTab={setTab} tabs={tabs}/>
+            <div className={styles.island}>
+                <IslandPanel manager={manager}/>
+            </div>
+
+            <div>
+                { manager.component }
             </div>
         </MainLayout>
     );
