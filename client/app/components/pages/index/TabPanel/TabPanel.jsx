@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import CreatingRoomModal from "../CreatingRoomModal/CreatingRoomModal";
+import AddRoomModal from "../AddRoomModal/AddRoomModal";
 import SearchInput from "@components/ui/SearchInput/SearchInput";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
@@ -16,41 +16,58 @@ import BackIcon from "@assets/images/tabPanel/back.svg";
 
 import styles from "./TabPanel.module.scss";
 
-const Tab = React.memo(({ name, active, setTab }) => {
-    return (
-        <div 
-            className={`${styles.tabs__item} ${active ? styles.tabs__item__active : ""}`}
-            onClick={() => setTab({ name })}
-        >
-            {name}
-        </div>
-    )
-})
-
-const TabPanel = observer(({ tab, setTab, tabs }) => {
-    const tabsRef = React.useRef();
-
-    const [visibleModal, setVisibleModal] = React.useState(false);
-
-    const [addStyleGotoSearch, removeStyleGotoSearch] 
-        = useManualCssAnimation(tabsRef, styles.tabs__goto_search);
-    const [addStyleSearchActive, removeStyleSearchActive] 
-        = useManualCssAnimation(tabsRef, styles.tabs__search__active);
-
+const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
     const searchedText = services.search.SearchedText;
     const setSearchedText = React.useCallback(
         (text) => services.search.SearchedText = text,
         []
     );
 
-    const gotoSearch = React.useCallback(() => {
-        addStyleGotoSearch();
-        addStyleSearchActive(400); 
-    }, []);
-
     const gotoBack = React.useCallback(() => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400); 
+    }, []);
+
+    return (
+        <div className={styles.tabs__search}>
+            <div className={styles.tabs__search__btn}>
+                <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
+            </div>
+
+            <SearchInput placeholder="Search" value={searchedText} setValue={setSearchedText}/>
+        </div>
+    )
+})
+
+const Tabs = React.memo(({ tab, setTab, tabs }) => (
+    <div className={styles.tabs__items}>
+        {
+            tabs.map(item => 
+                <div 
+                    key={item.id}
+                    className={`${styles.tabs__item} ${tab.id === item.id ? styles.tabs__item__active : ""}`}
+                    onClick={() => setTab({ ...item })}
+                >
+                    {item.name}
+                </div>
+            )
+        } 
+    </div> 
+));
+
+const TabPanel = ({ tab, setTab, tabs }) => {
+    const tabsRef = React.useRef();
+
+    const [isOpenModal, setIsOpenModal] = React.useState(false);
+
+    const [addStyleGotoSearch, removeStyleGotoSearch] 
+        = useManualCssAnimation(tabsRef, styles.tabs__goto_search);
+    const [addStyleSearchActive, removeStyleSearchActive] 
+        = useManualCssAnimation(tabsRef, styles.tabs__search__active);
+
+    const gotoSearch = React.useCallback(() => {
+        addStyleGotoSearch();
+        addStyleSearchActive(400); 
     }, []);
 
     return (
@@ -60,40 +77,26 @@ const TabPanel = observer(({ tab, setTab, tabs }) => {
                     <div className={styles.wrapper}>
                         <Svg url={SearchIcon} width="1.8" height="1.8" onClick={gotoSearch}/>
                         
-                        <div className={styles.tabs__items}>
-                            {
-                                tabs.map(item => 
-                                    <Tab 
-                                        key={item.id} 
-                                        name={item.name} 
-                                        active={item.name === tab.name} 
-                                        setTab={setTab} 
-                                    />
-                                )
-                            } 
-                        </div>
+                        <Tabs tab={tab} setTab={setTab} tabs={tabs}/>
                         
                         <Svg 
                             url={AddIcon} 
                             width="1.4" 
                             height="1.4" 
-                            onClick={() => setVisibleModal(true)}
+                            onClick={() => setIsOpenModal(true)}
                         />
                     </div>
 
-                    <div className={styles.tabs__search}>
-                        <div className={styles.tabs__search__btn}>
-                            <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
-                        </div>
-
-                        <SearchInput placeholder="Search" value={searchedText} setValue={setSearchedText}/>
-                    </div>
+                    <Search 
+                        removeStyleGotoSearch={removeStyleGotoSearch} 
+                        removeStyleSearchActive={removeStyleSearchActive}
+                    />
                 </Panel>
             </div>
 
-            <CreatingRoomModal visible={visibleModal} setVisible={setVisibleModal}/>
+            <AddRoomModal isOpen={isOpenModal} setIsOpen={setIsOpenModal}/>
         </>
     )
-});
+};
 
 export default TabPanel;

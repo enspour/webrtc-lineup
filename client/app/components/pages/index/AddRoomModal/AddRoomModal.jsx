@@ -13,7 +13,7 @@ import AddIcon from "@assets/images/createRoomModal/add.svg";
 
 import services from "@services";
 
-import styles from "./CreatingRoomModal.module.scss";
+import styles from "./AddRoomModal.module.scss";
 
 const ListTags = ({ tags, setTags }) => {
     const removeTag = (name) => setTags(prev => prev.filter(item => item !== name)); 
@@ -38,7 +38,7 @@ const ListTags = ({ tags, setTags }) => {
     )
 }
 
-const TagControl = ({ tags, setTags }) => {
+const InputTags = ({ tags, setTags }) => {
     const [tag, setTag] = React.useState("");
 
     const pushTag = () => {
@@ -64,7 +64,7 @@ const TagControl = ({ tags, setTags }) => {
 }
 
 
-const CreatingRoomModal = ({ visible, setVisible }) => {
+const AddRoomModal = ({ isOpen, setIsOpen }) => {
     const request = useRequest(services.roomAPI.create);
 
     const [name, setName] = React.useState("");
@@ -74,18 +74,18 @@ const CreatingRoomModal = ({ visible, setVisible }) => {
 
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
 
-    const createRoom = () => {
+    const addRoom = () => {
         setName("");
         setPassword("");
         request.start({ body: { name, password, tags } });
-        setVisible(false);
+        setIsOpen(false);
     }
 
     return (
         <Modal 
             title="Room"
-            visible={visible}
-            setVisible={setVisible}
+            isOpen={isOpen} 
+            setIsOpen={setIsOpen}
         >
             <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
             
@@ -102,12 +102,12 @@ const CreatingRoomModal = ({ visible, setVisible }) => {
                 />
             </div>
 
-            <TagControl tags={tags} setTags={setTags}/>
+            <InputTags tags={tags} setTags={setTags}/>
             <ListTags tags={tags} setTags={setTags}/>
 
-            <FilledButton onClick={createRoom}> Create </FilledButton>
+            <FilledButton onClick={addRoom}> Create </FilledButton>
         </Modal>
     );
 }
 
-export default CreatingRoomModal;
+export default AddRoomModal;
