@@ -7,6 +7,7 @@ import "@assets/fonts/stylesheet.css";
 import "@styles/reset.scss";
 import "@styles/base.scss";
 import "@styles/helpers.scss"; 
+import "@styles/loader.scss";
 
 import "@styles/themes/dark.scss";
 import "@styles/themes/light.scss";
