@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 
 import Dropdown from "@components/ui/Dropdown/Dropdown";
 
+import useOutsideAlerter from "@hooks/useOutsideAlerter";
 import useLogout from "@hooks/useLogout";
 
 import services from "@services";
@@ -29,7 +30,8 @@ const Account = observer(() => {
     const name = services.user.Name;
 
     const accountRef = React.useRef();
-    const [isOpen, setIsOpen] = React.useState(false);
+
+    const [alerterRef, isOpen, setIsOpen] = useOutsideAlerter(false);
 
     React.useEffect(() => {
         if (isOpen) {
@@ -40,7 +42,14 @@ const Account = observer(() => {
     }, [isOpen]);
 
     return (
-        <div className={styles.account} ref={accountRef} onClick={() => setIsOpen((prev) => !prev)}>
+        <div 
+            className={styles.account} 
+            ref={node => {
+                accountRef.current = node;
+                alerterRef.current = node;
+            }} 
+            onClick={() => setIsOpen((prev) => !prev)}
+        >
             <div className={styles.account__avatar}></div>
             <div className="c-p"> {name} </div>
             <AccountMenu isOpen={isOpen}/>
