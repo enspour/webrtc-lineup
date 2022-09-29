@@ -1,5 +1,7 @@
 import React from "react";
 
+import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
+
 import services from "@services";
 
 const useLocalStorage = (key, initial) => {
@@ -12,7 +14,7 @@ const useLocalStorage = (key, initial) => {
         setStoragedValue(_value);
     }
 
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const value = services.localStorage.get(key);
         if (value) setStoragedValue(value);
     }, []);

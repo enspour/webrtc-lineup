@@ -1,9 +1,9 @@
-import React from "react";
+import useIsomorphicLayoutEffect from "@hooks/useIsomorphicLayoutEffect";
 
 import services from "@services";
 
 const useLoaderTheme = () => {
-    React.useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const theme = services.localStorage.get("__theme");
 
         if (theme) {

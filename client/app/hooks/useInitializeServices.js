@@ -1,13 +1,11 @@
-import { useLayoutEffect, useEffect, useRef } from "react";
+import React from "react";
+
+import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 
 import services from "@services";
 
 const useInitializeServices = () => {
-    const isInitRef = useRef(false);
-
-    const canUseDOM = typeof window !== 'undefined';
-
-    const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
+    const isInitRef = React.useRef(false); 
 
     useIsomorphicLayoutEffect(() => {
         if (typeof window !== 'undefined' && !isInitRef.current) {
