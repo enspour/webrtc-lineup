@@ -19,23 +19,26 @@ const items = [
 ]
 
 const useIslandManager = () => {
-    const [activeTabId, setActiveTabId] = useLocalStorage("__tab", 1);
+    const [history, setHistory] = useLocalStorage("__tab_history", [1, 1]); // [current, previous]
 
-    const previousTabIds = React.useRef([1, 1]);
+    const currentId = React.useMemo(() => history[0], [history]);
+    const component = React.useMemo(() => items.find(item => item.id === history[0]).component, [history]);
 
-    const component = React.useMemo(() => items.find(item => item.id === activeTabId).component, [activeTabId]);
+    const setCurrentId = (id) => {
+        if (typeof id === "function") id = id(history[0]);
 
-    const undo = () => {
-        setActiveTabId(previousTabIds.current[1]);
+        if (history[0] !== id) {
+            setHistory([ id, history[0] ]);
+        }
     }
 
-    React.useEffect(() => {
-        previousTabIds.current = [ activeTabId, previousTabIds.current[0] ];
-    }, [activeTabId])
+    const undo = () => {
+        setCurrentId(history[1]);
+    }
 
     return {
-        activeTabId,
-        setActiveTabId, 
+        currentId,
+        setCurrentId, 
         tabs,
         searchTab,
         component,

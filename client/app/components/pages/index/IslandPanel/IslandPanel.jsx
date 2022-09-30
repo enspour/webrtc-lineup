@@ -27,11 +27,11 @@ const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActi
         []
     );
 
-    const gotoBack = React.useCallback(() => {
+    const gotoBack = () => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400);
         manager.undo();
-    }, []);
+    };
 
     return (
         <div className={styles.island__search}>
@@ -45,7 +45,7 @@ const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActi
 })
 
 const Tabs = React.memo(({ manager }) => {
-    const { tabs, activeTabId, setActiveTabId } = manager;
+    const { tabs, currentId, setCurrentId } = manager;
 
     return (
         <div className={styles.tabs}>
@@ -54,9 +54,9 @@ const Tabs = React.memo(({ manager }) => {
                     <div 
                         key={item.id}
                         className={
-                            classes(styles.tab, activeTabId === item.id ? styles.tab__active : "")
+                            classes(styles.tab, currentId === item.id ? styles.tab__active : "")
                         }
-                        onClick={() => setActiveTabId(item.id)}
+                        onClick={() => setCurrentId(item.id)}
                     >
                         {item.name}
                     </div>
@@ -76,11 +76,16 @@ const IslandPanel = ({ manager }) => {
     const [addStyleSearchActive, removeStyleSearchActive] 
         = useManualCssAnimation(islandRef, styles.island__search__active);
 
-    const gotoSearch = React.useCallback(() => {
-        addStyleGotoSearch();
-        addStyleSearchActive(400); 
-        setTimeout(manager.setActiveTabId, 400, manager.searchTab.id);
-    }, []); 
+    const gotoSearch = () => {
+        manager.setCurrentId(manager.searchTab.id);
+    };
+
+    React.useEffect(() => {
+        if (manager.currentId === manager.searchTab.id) {
+            addStyleGotoSearch();
+            addStyleSearchActive(400); 
+        }
+    }, [manager.currentId])
 
     return (
         <>
