@@ -8,8 +8,8 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 

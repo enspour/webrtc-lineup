@@ -1,7 +1,7 @@
 import React from "react";
 
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 

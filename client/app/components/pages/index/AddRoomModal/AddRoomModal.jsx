@@ -7,8 +7,8 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import Svg from "@components/ui/Svg/Svg";
 
 import useCssAnimation from "@hooks/css/useCssAnimation";
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import { IslandStoreTab } from "@features/Island/Island.states";
 

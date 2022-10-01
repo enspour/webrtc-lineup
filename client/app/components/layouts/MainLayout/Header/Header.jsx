@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 import Dropdown from "@components/ui/Dropdown/Dropdown";
 
 import useOutsideAlerter from "@hooks/useOutsideAlerter";
-import useLogout from "@hooks/useLogout";
+import useLogout from "@hooks/api/useLogout";
 
 import services from "@services";
 

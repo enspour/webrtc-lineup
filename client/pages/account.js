@@ -8,7 +8,7 @@ import SimpleInput from "@components/ui/SimpleInput/SimpleInput";
 import Themes from "@components/pages/account/Themes/Themes";
 import Panel from "@components/ui/Panel/Panel";
 
-import useLogout from "@hooks/useLogout";
+import useLogout from "@hooks/api/useLogout";
 
 import services from "@services";
 

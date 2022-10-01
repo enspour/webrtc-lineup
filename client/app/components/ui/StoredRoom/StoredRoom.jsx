@@ -5,8 +5,8 @@ import { observer } from "mobx-react-lite";
 import Panel from "../Panel/Panel";
 import Svg from "../Svg/Svg";
 
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import moreIcon from "@assets/images/room/more.svg";
 import removeIcon from "@assets/images/room/remove.svg";

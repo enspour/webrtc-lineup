@@ -9,8 +9,8 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 
