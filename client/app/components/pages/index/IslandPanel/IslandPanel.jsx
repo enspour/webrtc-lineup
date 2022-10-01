@@ -1,5 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
+import { autorun } from "mobx";
+
+import { IslandSearchTab, IslandViewTabs } from "@features/Island/Island.states";
 
 import AddRoomModal from "../AddRoomModal/AddRoomModal";
 import SearchInput from "@components/ui/SearchInput/SearchInput";
@@ -7,6 +10,7 @@ import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
 
 import useManualCssAnimation from "@hooks/css/useManualCssAnimation";
+import useSaveStateIsland from "@features/Island/hooks/useSaveStateIsland";
 
 import services from "@services";
 
@@ -20,7 +24,7 @@ const classes = (...classes) => {
     return classes.join(" ");
 }
 
-const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActive }) => {
+const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
     const searchedText = services.search.SearchedText;
     const setSearchedText = React.useCallback(
         (text) => services.search.SearchedText = text,
@@ -30,7 +34,7 @@ const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActi
     const gotoBack = () => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400);
-        manager.undo();
+        services.island.undo();
     };
 
     return (
@@ -44,29 +48,27 @@ const Search = observer(({ manager, removeStyleGotoSearch, removeStyleSearchActi
     )
 })
 
-const Tabs = React.memo(({ manager }) => {
-    const { tabs, currentId, setCurrentId } = manager;
+const Tabs = observer(() => (
+    <div className={styles.tabs}>
+        {
+            IslandViewTabs.map(item => 
+                <div 
+                    key={item.id}
+                    className={
+                        classes(styles.tab, services.island.CurrentId === item.id ? styles.tab__active : "")
+                    }
+                    onClick={() => services.island.CurrentId = item.id}
+                >
+                    {item.name}
+                </div>
+            )
+        } 
+    </div> 
+));
 
-    return (
-        <div className={styles.tabs}>
-            {
-                tabs.map(item => 
-                    <div 
-                        key={item.id}
-                        className={
-                            classes(styles.tab, currentId === item.id ? styles.tab__active : "")
-                        }
-                        onClick={() => setCurrentId(item.id)}
-                    >
-                        {item.name}
-                    </div>
-                )
-            } 
-        </div> 
-    )
-});
-
-const IslandPanel = ({ manager }) => {
+const IslandPanel = observer(() => {   
+    useSaveStateIsland();
+    
     const islandRef = React.useRef();
 
     const [isOpenModal, setIsOpenModal] = React.useState(false);
@@ -77,15 +79,19 @@ const IslandPanel = ({ manager }) => {
         = useManualCssAnimation(islandRef, styles.island__search__active);
 
     const gotoSearch = () => {
-        manager.setCurrentId(manager.searchTab.id);
+        services.island.CurrentId = IslandSearchTab.id;
     };
 
-    React.useEffect(() => {
-        if (manager.currentId === manager.searchTab.id) {
-            addStyleGotoSearch();
-            addStyleSearchActive(400); 
-        }
-    }, [manager.currentId])
+    React.useEffect(
+        () => 
+            autorun(() => {
+                if (services.island.CurrentId === IslandSearchTab.id) {
+                    addStyleGotoSearch();
+                    addStyleSearchActive(400); 
+                }
+            }) 
+        , []
+    )
 
     return (
         <>
@@ -99,7 +105,7 @@ const IslandPanel = ({ manager }) => {
                             onClick={gotoSearch}
                         />
                         
-                        <Tabs manager={manager}/>
+                        <Tabs/>
                         
                         <Svg 
                             url={AddIcon}
@@ -110,7 +116,6 @@ const IslandPanel = ({ manager }) => {
                     </div>
 
                     <Search 
-                        manager={manager}
                         removeStyleGotoSearch={removeStyleGotoSearch} 
                         removeStyleSearchActive={removeStyleSearchActive}
                     />
@@ -120,6 +125,6 @@ const IslandPanel = ({ manager }) => {
             <AddRoomModal isOpen={isOpenModal} setIsOpen={setIsOpenModal}/>
         </>
     )
-};
+});
 
 export default IslandPanel;
