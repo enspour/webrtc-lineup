@@ -1,0 +1,25 @@
+.loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+}
+
+.store {
+    padding-top: 6rem;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}
+
+.items {
+    padding: 2rem;
+    padding-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3.5rem 4rem;
+}

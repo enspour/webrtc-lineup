@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import Modal from "@components/ui/Modal/Modal";
 import InputControl from "@components/ui/InputControl/InputControl";
@@ -8,6 +9,9 @@ import Svg from "@components/ui/Svg/Svg";
 
 import useCssAnimation from "@hooks/css/useCssAnimation";
 import useRequest from "@hooks/useRequest";
+import useResponse from "@hooks/useResponse";
+
+import { IslandStoreTab } from "@features/Island/Island.states";
 
 import AddIcon from "@assets/images/createRoomModal/add.svg";
 
@@ -64,8 +68,11 @@ const InputTags = ({ tags, setTags }) => {
 }
 
 
-const AddRoomModal = ({ isOpen, setIsOpen }) => {
+const AddRoomModal = observer(({ isOpen, setIsOpen }) => {
+    const islandCurrentId = services.island.CurrentId;
+
     const request = useRequest(services.roomAPI.create);
+    const { data } = useResponse(request);
 
     const [name, setName] = React.useState("");
     const [password, setPassword] = React.useState(""); 
@@ -75,11 +82,18 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
 
     const addRoom = () => {
+        request.start({ body: { name, password, tags } });
         setName("");
         setPassword("");
-        request.start({ body: { name, password, tags } });
+        setTags([]);
         setIsOpen(false);
     }
+
+    React.useEffect(() => {
+        if (data && islandCurrentId === IslandStoreTab.id) {
+            services.userRooms.update();
+        }
+    }, [data]);
 
     return (
         <Modal 
@@ -108,6 +122,6 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
             <FilledButton onClick={addRoom}> Create </FilledButton>
         </Modal>
     );
-}
+})
 
 export default AddRoomModal;

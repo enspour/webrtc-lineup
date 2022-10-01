@@ -1,27 +1,45 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
-import useRequest from "@hooks/useRequest";
-import useResponse from "@hooks/useResponse";
+import StoredRoom from "@components/ui/StoredRoom/StoredRoom";
+
 import services from "@services";
 
-const Store = () => {
-    // const request = useRequest(services.roomAPI.getCreated);
-    // const { data } = useResponse(request);
+import styles from "./Store.module.scss";
 
-    // React.useEffect(() => {
-    //     request.start({});
-    // }, [])
+const Store = observer(() => {
+    const rooms = services.userRooms.Rooms;
+    const state = services.userRooms.State;
 
-    // React.useEffect(() => {
-    //     console.log(data);
-    // }, [data])
+    const [items, setItems] = React.useState([]);
 
+    React.useEffect(() => {
+        services.userRooms.update();
+    }, []);
 
-    // if (request.isLoading) {
-    //     return <div className="loader"></div>
-    // }
+    React.useEffect(() => {
+        if (rooms) {
+            setItems([...rooms].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)))
+        }
+    }, [rooms])
 
-    return <div> store </div>
-}
+    if (state === "pending") {
+        return (
+            <div className={styles.loader}>
+                <div className="loader"></div>
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.store}>
+            <div className={styles.title}>My rooms</div>
+
+            <div className={styles.items}>
+                { items.map(room => <StoredRoom key={room.id} room={room} />) }
+            </div>
+        </div>
+    )
+});
 
 export default Store;
