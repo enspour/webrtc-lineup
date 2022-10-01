@@ -10,7 +10,9 @@ export default class IslandService {
     }
 
     set CurrentId(id) {
-        this.#store.setCurrentId(id);
+        if (this.#store.history[0] !== id) {
+            this.#store.setCurrentId(id);
+        }
     }
 
     get History() {

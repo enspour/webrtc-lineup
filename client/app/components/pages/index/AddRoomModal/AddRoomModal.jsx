@@ -1,5 +1,4 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
 
 import Modal from "@components/ui/Modal/Modal";
 import InputControl from "@components/ui/InputControl/InputControl";
@@ -68,7 +67,7 @@ const InputTags = ({ tags, setTags }) => {
 }
 
 
-const AddRoomModal = observer(({ isOpen, setIsOpen }) => {
+const AddRoomModal = ({ isOpen, setIsOpen }) => {
     const islandCurrentId = services.island.CurrentId;
 
     const request = useRequest(services.roomAPI.create);
@@ -122,6 +121,6 @@ const AddRoomModal = observer(({ isOpen, setIsOpen }) => {
             <FilledButton onClick={addRoom}> Create </FilledButton>
         </Modal>
     );
-})
+}
 
 export default AddRoomModal;

@@ -16,7 +16,7 @@ const useSaveStateIsland = () => {
     React.useEffect(
         () => 
             autorun(() => {
-                if (history) {
+                if (history && history[0] !== history[1]) {
                     services.localStorage.set("__tab_history", history);
                 }
             })
