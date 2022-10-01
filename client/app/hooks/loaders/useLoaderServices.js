@@ -1,10 +1,10 @@
 import React from "react";
 
-import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
+import useIsomorphicLayoutEffect from "../useIsomorphicLayoutEffect";
 
 import services from "@services";
 
-const useInitializeServices = () => {
+const useLoaderServices = () => {
     const isInitRef = React.useRef(false); 
 
     useIsomorphicLayoutEffect(() => {
@@ -15,4 +15,4 @@ const useInitializeServices = () => {
     }, []); 
 }
 
-export default useInitializeServices;
+export default useLoaderServices;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import useInitializeServices from "@hooks/useInitializeServices";
+import useLoaderServices from "@hooks/loaders/useLoaderServices";
 import useLoaderTheme from "@hooks/loaders/useLoaderTheme";
 
 import "@assets/fonts/stylesheet.css";
@@ -13,7 +13,7 @@ import "@styles/themes/dark.scss";
 import "@styles/themes/light.scss";
 
 function MyApp({ Component, pageProps }) {
-    useInitializeServices();
+    useLoaderServices();
     useLoaderTheme();
 
     return <Component {...pageProps} />
