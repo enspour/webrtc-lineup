@@ -31,6 +31,14 @@ const Store = observer(() => {
         );
     }
 
+    if (items.length === 0) {
+        return (
+            <div className={styles.store__empty}>
+                You don't have created room.
+            </div>
+        )
+    }
+
     return (
         <div className={styles.store}>
             <div className={styles.title}>My rooms</div>
