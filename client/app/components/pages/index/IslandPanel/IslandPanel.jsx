@@ -34,7 +34,9 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
     const gotoBack = () => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400);
-        services.island.undo();
+        setTimeout(() => {
+            services.island.undo();
+        }, 200)
     };
 
     return (
