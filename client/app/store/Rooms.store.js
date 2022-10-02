@@ -8,13 +8,13 @@ export default class RoomsStore {
         makeAutoObservable(this);
     }
 
-    async update(request, start) {
+    async update(request, data) {
         runInAction(() => {
             this.rooms = [];
             this.state = "pending";
         })
 
-        await start();
+        await request.start(data);
 
         const { response } = request;
 

@@ -26,11 +26,13 @@ export default class SearchService {
     }
 
     async update() {
-        const start = async () => {
-            await this.#request.start({ params: { name: this.SearchedText }});
-        }
+        const data = {
+            params: {
+                name: this.SearchedText
+            }
+        } 
 
-        await this.#roomsStore.update(this.#request, start);
+        await this.#roomsStore.update(this.#request, data);
     }
 
     clear() {
