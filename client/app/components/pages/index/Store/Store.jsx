@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import StoredRoom from "@components/ui/StoredRoom/StoredRoom";
+import StoredRoomCard from "@components/ui/StoredRoomCard/StoredRoomCard";
 
 import services from "@services";
 
@@ -46,7 +46,7 @@ const Store = observer(() => {
             <div className={styles.title}>My rooms</div>
 
             <div className={styles.items}>
-                { items.map(room => <StoredRoom key={room.id} room={room} />) }
+                { items.map(room => <StoredRoomCard key={room.id} room={room} />) }
             </div>
         </div>
     )

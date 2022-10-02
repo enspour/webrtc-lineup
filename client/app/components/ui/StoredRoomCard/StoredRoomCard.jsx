@@ -13,9 +13,9 @@ import removeIcon from "@assets/images/room/remove.svg";
 
 import services from "@services";
 
-import styles from "./StoredRoom.module.scss";
+import styles from "./StoredRoomCard.module.scss";
 
-const StoredRoom = observer(({ room }) => {
+const StoredRoomCard = observer(({ room }) => {
     const username = services.user.Name;
     
     const request = useRequest(services.roomAPI.delete);
@@ -63,7 +63,7 @@ const StoredRoom = observer(({ room }) => {
     )
 });
 
-StoredRoom.propTypes = {
+StoredRoomCard.propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
@@ -76,4 +76,4 @@ StoredRoom.propTypes = {
     }).isRequired,
 }
 
-export default StoredRoom;
+export default StoredRoomCard;
