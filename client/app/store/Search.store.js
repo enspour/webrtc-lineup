@@ -1,10 +1,13 @@
-import { makeAutoObservable, runInAction } from "mobx"
+import { action, makeAutoObservable, observable } from "mobx"
 
 export default class SearchStore {
     searchedText = ""; 
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this, {
+            searchedText: observable,
+            setSearchedText: action
+        });
     }
 
     setSearchedText(text) {

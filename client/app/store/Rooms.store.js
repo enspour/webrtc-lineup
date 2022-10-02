@@ -1,11 +1,15 @@
-import { makeAutoObservable, runInAction } from "mobx"
+import { action, makeAutoObservable, observable, runInAction } from "mobx"
 
 export default class RoomsStore {
     rooms = [];
     state = "pending"; // "pending", "done" or "error"
 
     constructor() {
-        makeAutoObservable(this);
+        makeAutoObservable(this, {
+            rooms: observable,
+            state: observable,
+            clear: action,
+        });
     }
 
     async update(request, data) {
