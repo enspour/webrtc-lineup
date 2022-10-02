@@ -30,4 +30,9 @@ export default class UserRoomsStore {
             })
         }
     }
+
+    clear() {
+        this.rooms = [];
+        this.state = "done"
+    }
 }

@@ -15,6 +15,8 @@ const Store = observer(() => {
 
     React.useEffect(() => {
         services.userRooms.update();
+
+        return () => services.userRooms.clear();
     }, []);
 
     React.useEffect(() => {

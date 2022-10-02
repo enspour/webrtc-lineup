@@ -16,4 +16,8 @@ export default class UserRoomsService {
     async update() {
         await this.#store.update();
     }
+
+    clear() {
+        this.#store.clear();
+    }
 }
