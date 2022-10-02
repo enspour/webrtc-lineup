@@ -26,8 +26,8 @@ export default class SearchService {
     }
 
     async update() {
-        const start = () => {
-            this.#request.start({ params: { name: this.SearchedText }});
+        const start = async () => {
+            await this.#request.start({ params: { name: this.SearchedText }});
         }
 
         await this.#roomsStore.update(this.#request, start);

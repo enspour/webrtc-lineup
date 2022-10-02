@@ -16,8 +16,8 @@ export default class UserRoomsService {
     }
 
     async update() {
-        const start = () => {
-            this.#request.start({});
+        const start = async () => {
+            await this.#request.start({});
         }
 
         await this.#roomsStore.update(this.#request, start);
