@@ -32,8 +32,8 @@ const StoredRoomCard = observer(({ room }) => {
     return (
         <div className={styles.card}>
             <Panel>
-                <div className={styles.wrapper}>
-                    <div className={styles.room}>
+                <div className={styles.room}>
+                    <div className={styles.wrapper}>
                         <div className={styles.room__info}>
                             <span> {room.name} </span>
                             <span className={styles.dash}></span>
