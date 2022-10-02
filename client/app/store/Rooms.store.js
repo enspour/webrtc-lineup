@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx"
 
-export default class UserRoomsStore {
+export default class RoomsStore {
     rooms = [];
     state = "pending"; // "pending", "done" or "error"
 
@@ -8,11 +8,13 @@ export default class UserRoomsStore {
         makeAutoObservable(this);
     }
 
-    async update(request) {
-        this.rooms = [];
-        this.state = "pending";
+    async update(request, start) {
+        runInAction(() => {
+            this.rooms = [];
+            this.state = "pending";
+        })
 
-        await request.start({});
+        await start();
 
         const { response } = request;
 

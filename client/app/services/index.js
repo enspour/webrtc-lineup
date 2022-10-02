@@ -9,10 +9,10 @@ import UserRoomsService from "./UserRooms.service";
 
 import SearchStore from "@store/Search.store";
 import UserStore from "@store/User.store";
-import UserRoomsStore from "@store/UserRooms.store";
 
 import IslandService from "../features/Island/Island.service";
 import IslandStore from "../features/Island/Island.store";
+import RoomsStore from "@store/Rooms.store";
 
 const API = new APIService();
 const roomAPI = new RoomAPIService();
@@ -22,7 +22,7 @@ const services = {
     authAPI: new AuthAPIService(),
     roomAPI,
     
-    search: new SearchService(new SearchStore(), API, roomAPI),
+    search: new SearchService(new RoomsStore(), new SearchStore(), API, roomAPI),
     user: new UserService(new UserStore()),
 
     themes: new ThemesService(),
@@ -30,7 +30,7 @@ const services = {
     localStorage: new Storage(),
     sessionStorage: new Storage(),
 
-    userRooms: new UserRoomsService(new UserRoomsStore(), API, roomAPI),
+    userRooms: new UserRoomsService(new RoomsStore(), API, roomAPI),
 
     island: new IslandService(new IslandStore()),
 

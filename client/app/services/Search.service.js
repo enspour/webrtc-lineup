@@ -1,33 +1,40 @@
 export default class SearchService {
-    #store;
+    #roomsStore;
+    #searchStore;
     #request;
 
-    constructor(store, api, roomAPI) {
-        this.#store = store;
+    constructor(roomsStore, searchStore, api, roomAPI) {
+        this.#roomsStore = roomsStore;
+        this.#searchStore = searchStore;
         this.#request = api.createRequest(roomAPI.search);
     }
 
     get SearchedText() {
-        return this.#store.searchedText;
+        return this.#searchStore.searchedText;
     }
 
     set SearchedText(text) {
         if (typeof text === "string") {
-            return this.#store.setSearchedText(text);
+            return this.#searchStore.setSearchedText(text);
         }
 
         throw new Error("Text is invalid. It's must be string.")
     }
 
     get Rooms() {
-        return this.#store.rooms;
+        return this.#roomsStore.rooms;
     }
 
     async update() {
-        await this.#store.update(this.#request);
+        const start = () => {
+            this.#request.start({ params: { name: this.SearchedText }});
+        }
+
+        await this.#roomsStore.update(this.#request, start);
     }
 
     clear() {
-        this.#store.clear();
+        this.#roomsStore.clear();
+        this.#searchStore.setSearchedText("");
     }
 }

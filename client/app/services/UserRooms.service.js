@@ -1,25 +1,29 @@
 export default class UserRoomsService {
-    #store;
+    #roomsStore;
     #request;
 
-    constructor(store, api, roomAPI) {
-        this.#store = store;
+    constructor(roomsStore, api, roomAPI) {
+        this.#roomsStore = roomsStore;
         this.#request = api.createRequest(roomAPI.getCreated);
     }
 
     get Rooms() {
-        return this.#store.rooms;
+        return this.#roomsStore.rooms;
     }
 
     get State() {
-        return this.#store.state;
+        return this.#roomsStore.state;
     }
 
     async update() {
-        await this.#store.update(this.#request);
+        const start = () => {
+            this.#request.start({});
+        }
+
+        await this.#roomsStore.update(this.#request, start);
     }
 
     clear() {
-        this.#store.clear();
+        this.#roomsStore.clear();
     }
 }
