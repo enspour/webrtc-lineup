@@ -47,19 +47,19 @@ const AccountCredentials = React.memo(({
 });
 
 const AccountProfile = observer(() => {
-    const username = services.user.Name;
-    const useremail = services.user.Email; 
-
     const [email, setEmail] = React.useState("");
     const [name, setName] = React.useState("");
 
     React.useEffect(
         () =>
             autorun(() => {
+                const username = services.user.Name;
+                const useremail = services.user.Email; 
+
                 setName(username);
                 setEmail(useremail);
             }),
-        [username, useremail]
+        []
     );
 
     return (

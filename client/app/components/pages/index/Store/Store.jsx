@@ -1,4 +1,5 @@
 import React from "react";
+import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import StoredRoomCard from "@components/ui/StoredRoomCard/StoredRoomCard";
@@ -8,7 +9,6 @@ import services from "@services";
 import styles from "./Store.module.scss";
 
 const Store = observer(() => {
-    const rooms = services.userRooms.Rooms;
     const state = services.userRooms.State;
 
     const [items, setItems] = React.useState([]);
@@ -19,11 +19,18 @@ const Store = observer(() => {
         return () => services.userRooms.clear();
     }, []);
 
-    React.useEffect(() => {
-        if (rooms) {
-            setItems([...rooms].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)))
-        }
-    }, [rooms])
+    React.useEffect(
+        () =>
+            autorun(() => {
+                const rooms = services.userRooms.Rooms
+                if (rooms) {
+                    setItems(
+                        [...rooms].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                    );
+                }
+            })
+        , []
+    )
 
     if (state === "pending") {
         return (
