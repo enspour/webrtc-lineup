@@ -1,8 +1,10 @@
 export default class UserRoomsService {
     #store;
+    #request;
 
-    constructor(store) {
+    constructor(store, api, roomAPI) {
         this.#store = store;
+        this.#request = api.createRequest(roomAPI.getCreated);
     }
 
     get Rooms() {
@@ -14,7 +16,7 @@ export default class UserRoomsService {
     }
 
     async update() {
-        await this.#store.update();
+        await this.#store.update(this.#request);
     }
 
     clear() {

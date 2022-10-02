@@ -75,4 +75,21 @@ export default class RoomAPI {
             signal
         });
     }
+
+    /**
+     * @param {{
+     *  params: {
+     *      name: string,
+     *      tags: string[]
+     *  } 
+     * }} data 
+     * @param {AbortSignal} signal 
+     * @returns 
+     */
+    async search(data, signal) {
+        return await axios.get(`/api/v1/main-service/rooms/search`, {
+            params: data.params,
+            signal
+        })
+    }
 }

@@ -14,12 +14,15 @@ import UserRoomsStore from "@store/UserRooms.store";
 import IslandService from "../features/Island/Island.service";
 import IslandStore from "../features/Island/Island.store";
 
+const API = new APIService();
+const roomAPI = new RoomAPIService();
+
 const services = {
-    API: new APIService,
+    API,
     authAPI: new AuthAPIService(),
-    roomAPI: new RoomAPIService(),
+    roomAPI,
     
-    search: new SearchService(new SearchStore()),
+    search: new SearchService(new SearchStore(), API, roomAPI),
     user: new UserService(new UserStore()),
 
     themes: new ThemesService(),
@@ -27,7 +30,7 @@ const services = {
     localStorage: new Storage(),
     sessionStorage: new Storage(),
 
-    userRooms: new UserRoomsService(new UserRoomsStore()),
+    userRooms: new UserRoomsService(new UserRoomsStore(), API, roomAPI),
 
     island: new IslandService(new IslandStore()),
 

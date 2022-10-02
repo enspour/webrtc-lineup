@@ -1,8 +1,10 @@
 export default class SearchService {
     #store;
+    #request;
 
-    constructor(searchStore) {
-        this.#store = searchStore;
+    constructor(store, api, roomAPI) {
+        this.#store = store;
+        this.#request = api.createRequest(roomAPI.search);
     }
 
     get SearchedText() {
@@ -17,15 +19,15 @@ export default class SearchService {
         throw new Error("Text is invalid. It's must be string.")
     }
 
-    get Items() {
-        return this.#store.items;
+    get Rooms() {
+        return this.#store.rooms;
     }
 
-    set Items(items) {
-        if (Array.isArray(items)) {
-            return this.#store.setItems(items);
-        }
+    async update() {
+        await this.#store.update(this.#request);
+    }
 
-        throw new Error("Items is invalid. It's must be array")
+    clear() {
+        this.#store.clear();
     }
 }
