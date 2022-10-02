@@ -30,17 +30,17 @@ const StoredRoomCard = observer(({ room }) => {
     }, [data]);
 
     return (
-        <div className={styles.room}>
+        <div className={styles.card}>
             <Panel>
                 <div className={styles.wrapper}>
-                    <div className={styles.info}>
-                        <div className={styles.info__name}>
+                    <div className={styles.room}>
+                        <div className={styles.room__info}>
                             <span> {room.name} </span>
-                            <span className={styles.info__line}></span>
-                            <span className={styles.info__username}> {username} </span>
+                            <span className={styles.dash}></span>
+                            <span className={styles.room__info__user}> {username} </span>
                         </div>
 
-                        <div className={styles.controls}>
+                        <div className={styles.room__controls}>
                             <Svg url={removeIcon} width="1.4" height="1.4" onClick={remove}/>
                             <Svg url={moreIcon} width="1.6" height=".4"/>
                         </div>
