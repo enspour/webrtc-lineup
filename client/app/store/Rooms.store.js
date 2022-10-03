@@ -4,34 +4,42 @@ export default class RoomsStore {
     rooms = [];
     state = "pending"; // "pending", "done" or "error"
 
-    constructor() {
+    constructor(request) {
+        this.request = request;
+
         makeAutoObservable(this, {
             rooms: observable,
             state: observable,
             clear: action,
         });
-    }
 
-    async update(request, data) {
-        runInAction(() => {
-            this.rooms = [];
-            this.state = "pending";
+        this.request.onStart(() => {
+            runInAction(() => {
+                this.rooms = [];
+                this.state = "pending";
+            })
         })
 
-        await request.start(data);
+        this.request.onResponse(response => {
+            if (response && response.status === 200) {
+                runInAction(() => {
+                    this.rooms = response.data.body.rooms;
+                    this.state = "done";
+                })
+            }
+        })
 
-        const { response } = request;
+        this.request.onError(error => {
+            if (error) {
+                runInAction(() => {
+                    this.state = "error";
+                })
+            }
+        });
+    }
 
-        if (response && response.status === 200) {
-            runInAction(() => {
-                this.rooms = response.data.body.rooms;
-                this.state = "done"
-            })
-        } else {
-            runInAction(() => {
-                this.state = "error"
-            })
-        }
+    async update(data) {
+        await this.request.start(data);
     }
 
     clear() {
