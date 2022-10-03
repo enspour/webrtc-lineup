@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { PrismaClient } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
@@ -47,6 +49,60 @@ export default class PrismaRepository implements IRepository {
             },
             include: { subs: true, tags: true},
         }) 
+    }
+
+    async findRoomsByName(name: string): Promise<(Room & { tags: Tag[], owner: User })[]> {
+        return await this.prismaClient.room.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive',
+                }
+            },
+            include: { tags: true, owner: true }
+        })
+    }
+
+    async findRoomsByNameTags(name: string, tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+        const chunkedTags = _.chunk(tags, 1);
+
+        return await this.prismaClient.room.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: 'insensitive',
+                },
+                AND: [
+                    ...chunkedTags.map(item => ({
+                        tags: {
+                            some: {
+                                name: { in: item }
+                            }
+                        }
+                    }))
+                ]
+            },
+            include: { tags: true, owner: true }
+        });
+    }
+
+    async findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+        const chunkedTags = _.chunk(tags, 1);
+
+        return await this.prismaClient.room.findMany({
+            where: { 
+                AND: [
+                    ...chunkedTags.map(item => ({
+                        tags: {
+                            some: {
+                                name: { in: item }
+                            }
+                        }
+                    }))
+                ]
+            },
+            include: { tags: true, owner: true }
+        });
     }
 
     async createUser(name: string, email: string, password: string): Promise<User & { email: string }> {

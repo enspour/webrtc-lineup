@@ -44,6 +44,22 @@ class RoomsService {
 
         return null;
     }
+
+    async search(name: string, tags: string[]) {
+        if (name) {
+            if (tags.length === 0) {
+                return await repository.findRoomsByName(name);
+            } else {
+                return await repository.findRoomsByNameTags(name, tags);
+            }
+        }
+
+        if (tags.length !== 0) {
+            return await repository.findRoomsByTags(tags);
+        }
+
+        return [];
+    }
 }
 
 export default new RoomsService();

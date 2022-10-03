@@ -124,6 +124,29 @@ class RoomsController {
 
         new BadRequestResponse("Room is not found.").send(res);
     }
+
+    async search(req: Request, res: Response) {
+        const name = req.query.name as string;
+        const tags = req.query.tags as string[];
+
+        const rooms = await RoomsService.search(name, tags);
+
+        new SuccessResponse({
+            rooms: rooms.map(item => ({
+                ...item,
+                id: item.id.toString(),
+                owner_id: item.owner_id.toString(),
+                owner: {
+                    ...item.owner,
+                    id: item.owner.id.toString()
+                },
+                tags: item.tags.map(tag => ({
+                    ...tag,
+                    id: tag.id.toString()
+                }))
+            }))
+        }).send(res);
+    }
 }
 
 export default new RoomsController();
