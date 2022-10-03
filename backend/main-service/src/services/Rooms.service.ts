@@ -45,16 +45,16 @@ class RoomsService {
         return null;
     }
 
-    async search(name: string, tags: string[]) {
-        if (name) {
-            if (tags.length === 0) {
-                return await repository.findRoomsByName(name);
+    async search(words: string[], tags: string[]) {
+        if (words.length) {
+            if (tags.length) {
+                return await repository.findRoomsByWordsTags(words, tags);
             } else {
-                return await repository.findRoomsByNameTags(name, tags);
+                return await repository.findRoomsByWords(words);
             }
         }
 
-        if (tags.length !== 0) {
+        if (tags.length) {
             return await repository.findRoomsByTags(tags);
         }
 

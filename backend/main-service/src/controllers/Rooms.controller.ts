@@ -126,10 +126,10 @@ class RoomsController {
     }
 
     async search(req: Request, res: Response) {
-        const name = req.query.name as string;
+        const words = req.query.words as string[];
         const tags = req.query.tags as string[];
 
-        const rooms = await RoomsService.search(name, tags);
+        const rooms = await RoomsService.search(words, tags);
 
         new SuccessResponse({
             rooms: rooms.map(item => ({

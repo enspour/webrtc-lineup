@@ -51,28 +51,35 @@ export default class PrismaRepository implements IRepository {
         }) 
     }
 
-    async findRoomsByName(name: string): Promise<(Room & { tags: Tag[], owner: User })[]> {
+// 
+
+    async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this.prismaClient.room.findMany({
-            where: {
-                name: {
-                    contains: name,
-                    mode: 'insensitive',
-                }
+            where: { 
+                AND: words.map(item => ({
+                    name: {
+                        contains: item,
+                        mode: "insensitive"
+                    }
+                }))
             },
             include: { tags: true, owner: true }
         })
     }
 
-    async findRoomsByNameTags(name: string, tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+    async findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
         const chunkedTags = _.chunk(tags, 1);
 
         return await this.prismaClient.room.findMany({
-            where: {
-                name: {
-                    contains: name,
-                    mode: 'insensitive',
-                },
+            where: {  
                 AND: [
+                    ...(words.map(item => ({
+                        name: {
+                            contains: item,
+                            mode: "insensitive"
+                        }
+                    })) as []),
+
                     ...chunkedTags.map(item => ({
                         tags: {
                             some: {
