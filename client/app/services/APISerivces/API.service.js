@@ -64,7 +64,7 @@ class Request {
         return () => this.eventTarget.removeEventListener(RequestEvents.START, _event);
     } 
 
-    onEnd(handler) {
+    onResponse(handler) {
         const _event = () => handler(this.response);
         this.eventTarget.addEventListener(RequestEvents.END, _event);
         return () => this.eventTarget.removeEventListener(RequestEvents.END, _event);

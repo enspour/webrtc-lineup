@@ -1,10 +1,11 @@
+import RoomsStore from "@store/Rooms.store";
+
 export default class UserRoomsService {
     #roomsStore;
-    #request;
 
-    constructor(roomsStore, api, roomAPI) {
-        this.#roomsStore = roomsStore;
-        this.#request = api.createRequest(roomAPI.getCreated);
+    constructor(api, roomAPI) {
+        const request = api.createRequest(roomAPI.getCreated);
+        this.#roomsStore = new RoomsStore(request);
     }
 
     get Rooms() {
@@ -16,9 +17,7 @@ export default class UserRoomsService {
     }
 
     async update() {
-        const data = {};
-
-        await this.#roomsStore.update(this.#request, data);
+        await this.#roomsStore.update({});
     }
 
     clear() {

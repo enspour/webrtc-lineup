@@ -1,25 +1,27 @@
-export default class UserService {
-    #store;
+import UserStore from "@store/User.store";
 
-    constructor(store) {
-        this.#store = store;
+export default class UserService {
+    #userStore;
+
+    constructor() {
+        this.#userStore = new UserStore();
     }
 
     set User(user) {
         if (user && user.name && user.email && user.id) {
-            this.#store.setUser(user);
+            this.#userStore.setUser(user);
         }
     }
 
     get Name() {
-        return this.#store.name;
+        return this.#userStore.name;
     }
 
     get Email() {
-        return this.#store.email;
+        return this.#userStore.email;
     }
 
     get Id() {
-        return this.#store.id;
+        return this.#userStore.id;
     }
 }

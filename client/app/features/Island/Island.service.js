@@ -1,29 +1,31 @@
-export default class IslandService {
-    #store;
+import IslandStore from "./Island.store";
 
-    constructor(store) {
-        this.#store = store;
+export default class IslandService {
+    #islandStore;
+
+    constructor() {
+        this.#islandStore = new IslandStore();
     }
 
     get CurrentId() {
-        return this.#store.currentId;
+        return this.#islandStore.currentId;
     }
 
     set CurrentId(id) {
-        if (this.#store.history[0] !== id) {
-            this.#store.setCurrentId(id);
+        if (this.#islandStore.history[0] !== id) {
+            this.#islandStore.setCurrentId(id);
         }
     }
 
     get History() {
-        return this.#store.history;
+        return this.#islandStore.history;
     }
 
     set History(history) {
-        this.#store.setHistory(history);
+        this.#islandStore.setHistory(history);
     }
 
     undo() {
-        this.#store.undo();
+        this.#islandStore.undo();
     }
 }

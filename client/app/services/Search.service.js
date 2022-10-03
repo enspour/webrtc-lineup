@@ -1,12 +1,14 @@
+import RoomsStore from "@store/Rooms.store";
+import SearchStore from "@store/Search.store";
+
 export default class SearchService {
     #roomsStore;
     #searchStore;
-    #request;
 
-    constructor(roomsStore, searchStore, api, roomAPI) {
-        this.#roomsStore = roomsStore;
-        this.#searchStore = searchStore;
-        this.#request = api.createRequest(roomAPI.search);
+    constructor(api, roomAPI) {
+        const request = api.createRequest(roomAPI.search);
+        this.#roomsStore = new RoomsStore(request);
+        this.#searchStore = new SearchStore();
     }
 
     get SearchedText() {
@@ -25,6 +27,10 @@ export default class SearchService {
         return this.#roomsStore.rooms;
     }
 
+    get State() {
+        return this.#roomsStore.state;
+    }
+
     async update() {
         const splitedText = this.SearchedText.split(" ");
         const tags = splitedText
@@ -41,7 +47,7 @@ export default class SearchService {
             params: { tags, name }
         }
 
-        await this.#roomsStore.update(this.#request, data);
+        await this.#roomsStore.update(data);
     }
 
     clear() {

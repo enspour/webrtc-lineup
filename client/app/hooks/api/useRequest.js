@@ -12,7 +12,7 @@ const useRequest = (requestMethod) => {
     }, []);
 
     React.useEffect(() => {
-        return request.current.onEnd(() => { setIsLoading(false); });
+        return request.current.onResponse(() => { setIsLoading(false); });
     }, []);
 
     React.useEffect(() => {
