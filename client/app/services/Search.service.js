@@ -35,7 +35,7 @@ export default class SearchService {
         const splitedText = this.SearchedText.split(" ");
         const tags = splitedText
             .filter(item => item.startsWith("#"))
-            .map(item => item.slice(1))
+            .map(item => item.slice(1).toLowerCase())
             .filter(item => item)
             .join(",");
 
