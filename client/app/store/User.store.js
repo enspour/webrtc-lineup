@@ -1,7 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx"
 
 export default class UserStore {
-    id = 0;
+    id = "";
     name = "";
     email = "";
     

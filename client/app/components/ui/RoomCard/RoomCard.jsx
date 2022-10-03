@@ -8,16 +8,15 @@ import Svg from "../Svg/Svg";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
 
-import moreIcon from "@assets/images/room/more.svg";
-import removeIcon from "@assets/images/room/remove.svg";
+import MoreIcon from "@assets/images/room/more.svg";
+import RemoveIcon from "@assets/images/room/remove.svg";
+import AddToFavoritesIcon from "@assets/images/room/addToFavorites.svg";
 
 import services from "@services";
 
-import styles from "./StoredRoomCard.module.scss";
+import styles from "./RoomCard.module.scss";
 
-const StoredRoomCard = observer(({ room }) => {
-    const username = services.user.Name;
-    
+const RemoveControl = ({ room }) => {
     const request = useRequest(services.roomAPI.delete);
     const { data } = useResponse(request);
 
@@ -29,6 +28,24 @@ const StoredRoomCard = observer(({ room }) => {
         if (data) services.userRooms.update();
     }, [data]);
 
+    return <Svg url={RemoveIcon} width="1.4" height="1.4" onClick={remove}/>;
+}
+
+const AddToFavoritesControl = ({ room }) => {
+    return <Svg url={AddToFavoritesIcon} width="2" height="1.8"/>
+} 
+
+const MultipleControl = observer(({ room }) => {
+    const userId = services.user.Id;
+
+    if (room.owner.id === userId) {
+        return <RemoveControl room={room}/>
+    } else {
+        return <AddToFavoritesControl room={room}/>
+    }
+});
+
+const RoomCard = ({ room }) => {
     return (
         <div className={styles.card}>
             <Panel>
@@ -37,12 +54,12 @@ const StoredRoomCard = observer(({ room }) => {
                         <div className={styles.room__info}>
                             <span> {room.name} </span>
                             <span className={styles.dash}></span>
-                            <span className={styles.room__info__user}> {username} </span>
+                            <span className={styles.room__info__user}> {room.owner.name} </span>
                         </div>
 
                         <div className={styles.room__controls}>
-                            <Svg url={removeIcon} width="1.4" height="1.4" onClick={remove}/>
-                            <Svg url={moreIcon} width="1.6" height=".4"/>
+                            <MultipleControl room={room}/>
+                            <Svg url={MoreIcon} width="1.6" height=".4"/>
                         </div>
                     </div>
                     
@@ -61,19 +78,25 @@ const StoredRoomCard = observer(({ room }) => {
             </Panel>
         </div>
     )
-});
+};
 
-StoredRoomCard.propTypes = {
+RoomCard.propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+
         tags: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
                 name: PropTypes.string.isRequired,
             }).isRequired
-        ).isRequired
+        ).isRequired,
+        
+        owner: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+        }).isRequired,
     }).isRequired,
 }
 
-export default StoredRoomCard;
+export default React.memo(RoomCard);
