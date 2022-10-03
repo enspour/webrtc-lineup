@@ -26,11 +26,20 @@ export default class SearchService {
     }
 
     async update() {
+        const splitedText = this.SearchedText.split(" ");
+        const tags = splitedText
+            .filter(item => item.startsWith("#"))
+            .map(item => item.slice(1))
+            .filter(item => item)
+            .join(",");
+
+        const name = splitedText
+            .filter(item => !item.startsWith("#"))
+            .join(" ");
+
         const data = {
-            params: {
-                name: this.SearchedText
-            }
-        } 
+            params: { tags, name }
+        }
 
         await this.#roomsStore.update(this.#request, data);
     }
