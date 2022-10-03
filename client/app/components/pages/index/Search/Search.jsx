@@ -9,6 +9,7 @@ import services from "@services";
 import styles from "./Search.module.scss";
 
 const Search = observer(() => {
+    const state = services.search.State;
     const rooms = services.search.Rooms;
 
     React.useEffect(() => {
@@ -26,6 +27,14 @@ const Search = observer(() => {
             })
         , []
     )
+
+    if (state === "pending") {
+        return (
+            <div className={styles.loader}>
+                <div className="loader"></div>
+            </div>
+        )
+    }
 
     return (
         <div className={styles.search}>
