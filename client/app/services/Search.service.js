@@ -39,12 +39,13 @@ export default class SearchService {
             .filter(item => item)
             .join(",");
 
-        const name = splitedText
+        const words = splitedText
             .filter(item => !item.startsWith("#"))
-            .join(" ");
+            .filter(item => item)
+            .join(",");
 
         const data = {
-            params: { tags, name }
+            params: { tags, words }
         }
 
         await this.#roomsStore.update(data);
