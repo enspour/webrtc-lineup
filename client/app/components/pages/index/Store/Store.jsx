@@ -2,7 +2,7 @@ import React from "react";
 import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
-import StoredRoomCard from "@components/ui/StoredRoomCard/StoredRoomCard";
+import RoomCard from "@components/ui/RoomCard/RoomCard";
 
 import services from "@services";
 
@@ -21,10 +21,15 @@ const Store = observer(() => {
     React.useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userRooms.Rooms
+                const rooms = services.userRooms.Rooms;
+                const userId = services.user.Id;
+                const userName = services.user.Name;
+
                 if (rooms) {
                     setItems(
-                        [...rooms].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                        [...rooms]
+                            .map(item => ({ ...item, owner: { id: userId, name: userName } }))
+                            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                     );
                 }
             })
@@ -52,7 +57,7 @@ const Store = observer(() => {
             <div className={styles.title}>My rooms</div>
 
             <div className={styles.items}>
-                { items.map(room => <StoredRoomCard key={room.id} room={room} />) }
+                { items.map(room => <RoomCard key={room.id} room={room} />) }
             </div>
         </div>
     )
