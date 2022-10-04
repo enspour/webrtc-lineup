@@ -53,6 +53,5 @@ export default class SearchService {
 
     clear() {
         this.#roomsStore.clear();
-        this.#searchStore.setSearchedText("");
     }
 }

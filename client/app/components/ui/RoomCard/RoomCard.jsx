@@ -16,6 +16,7 @@ import RemoveToFavoritesIcon from "@assets/images/room/removeFromFavorites.svg";
 import services from "@services";
 
 import styles from "./RoomCard.module.scss";
+import { IslandSearchTab } from "@features/Island/Island.states";
 
 const RemoveControl = ({ room }) => {
     const request = useRequest(services.roomAPI.delete);
@@ -71,6 +72,19 @@ const MultipleControl = observer(({ room }) => {
     return <AddToFavoritesControl room={room}/>
 });
 
+const Tags = ({ tags }) => {
+    const searchByTags = (name) => {
+        services.island.CurrentId = IslandSearchTab.id;
+        services.search.SearchedText = `#${name}`;
+    }
+
+    return tags.map(tag => (
+        <div key={tag.id} className={styles.tag} onClick={() => searchByTags(tag.name)}>
+            {tag.name}
+        </div>
+    ))
+}
+
 const RoomCard = ({ room }) => {
     return (
         <div className={styles.card}>
@@ -92,13 +106,7 @@ const RoomCard = ({ room }) => {
                     <div className={styles.line}></div>
 
                     <div className={styles.tags}>
-                        {
-                            room.tags.map(tag => (
-                                <div key={tag.id} className={styles.tag}>
-                                    {tag.name}
-                                </div>
-                            ))
-                        }
+                        <Tags tags={room.tags}/>
                     </div>
                 </div>
             </Panel>
