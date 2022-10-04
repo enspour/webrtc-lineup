@@ -78,6 +78,10 @@ class RoomsController {
             status: item.status,
             created_at: item.created_at,
             owner_id: item.owner_id.toString(),
+            owner: {
+                ...item.owner,
+                id: item.owner.id.toString()
+            },
             tags: item.tags.map(tag => ({
                 id: tag.id.toString(),
                 name: tag.name,

@@ -38,7 +38,7 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
+    async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this.prismaClient.room.findMany({
             where: { 
                 subs: {
@@ -47,7 +47,7 @@ export default class PrismaRepository implements IRepository {
                     }
                 } 
             },
-            include: { subs: true, tags: true},
+            include: { subs: true, tags: true, owner: true },
         }) 
     }
 

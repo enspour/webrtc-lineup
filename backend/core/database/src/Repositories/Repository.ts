@@ -5,7 +5,7 @@ export interface IRepository {
     findUserAuthByEmail(email: string): Promise<UserAuth | null>;
     findRoomById(id: bigint): Promise<Room | null>;
     findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
-    findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
+    findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
@@ -38,7 +38,7 @@ export default class Repository implements IRepository {
         return await this._repository.findUserRooms(user_id);
     }
 
-    async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
+    async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this._repository.findFavoritesRooms(user_id);
     }
 
