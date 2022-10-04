@@ -10,8 +10,6 @@ import useCssAnimation from "@hooks/css/useCssAnimation";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
 
-import { IslandStoreTab } from "@features/Island/Island.states";
-
 import AddIcon from "@assets/images/createRoomModal/add.svg";
 
 import services from "@services";
@@ -68,8 +66,6 @@ const InputTags = ({ tags, setTags }) => {
 
 
 const AddRoomModal = ({ isOpen, setIsOpen }) => {
-    const islandCurrentId = services.island.CurrentId;
-
     const request = useRequest(services.roomAPI.create);
     const { data } = useResponse(request);
 
@@ -89,7 +85,7 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
     }
 
     React.useEffect(() => {
-        if (data && islandCurrentId === IslandStoreTab.id) {
+        if (data) {
             services.userRooms.update();
         }
     }, [data]);

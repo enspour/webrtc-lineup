@@ -11,6 +11,7 @@ import useResponse from "@hooks/api/useResponse";
 import MoreIcon from "@assets/images/room/more.svg";
 import RemoveIcon from "@assets/images/room/remove.svg";
 import AddToFavoritesIcon from "@assets/images/room/addToFavorites.svg";
+import RemoveToFavoritesIcon from "@assets/images/room/removeFromFavorites.svg";
 
 import services from "@services";
 
@@ -20,9 +21,7 @@ const RemoveControl = ({ room }) => {
     const request = useRequest(services.roomAPI.delete);
     const { data } = useResponse(request);
 
-    const remove = () => {
-        request.start({ params: { id: room.id } });
-    }
+    const remove = () => request.start({ params: { id: room.id } });
 
     React.useEffect(() => {
         if (data) services.userRooms.update();
@@ -32,17 +31,44 @@ const RemoveControl = ({ room }) => {
 }
 
 const AddToFavoritesControl = ({ room }) => {
-    return <Svg url={AddToFavoritesIcon} width="2" height="1.8"/>
-} 
+    const request = useRequest(services.roomAPI.addToFavorites);
+    const { data } = useResponse(request);
+
+    const add = () => request.start({ params: { id: room.id } });
+
+    React.useEffect(() => {
+        if (data) services.favoritesRooms.update();
+    }, [data])
+
+    return <Svg url={AddToFavoritesIcon} width="2" height="1.8" onClick={add}/>
+}
+
+const RemoveFromFavoritesControl = ({ room }) => {
+    const request = useRequest(services.roomAPI.deleteFromFavorites);
+    const { data } = useResponse(request);
+
+    const remove = () => request.start({ params: { id: room.id } });
+
+    React.useEffect(() => {
+        if (data) services.favoritesRooms.update();
+    }, [data])
+
+    return <Svg url={RemoveToFavoritesIcon} width="2" height="1.8" onClick={remove}/>
+}
 
 const MultipleControl = observer(({ room }) => {
     const userId = services.user.Id;
+    const favorites = services.favoritesRooms.Rooms;
 
     if (room.owner.id === userId) {
         return <RemoveControl room={room}/>
-    } else {
-        return <AddToFavoritesControl room={room}/>
     }
+    
+    if (favorites.find(item => item.id === room.id)) {
+        return <RemoveFromFavoritesControl room={room}/>
+    }
+
+    return <AddToFavoritesControl room={room}/>
 });
 
 const RoomCard = ({ room }) => {

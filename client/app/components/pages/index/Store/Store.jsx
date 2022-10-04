@@ -13,11 +13,6 @@ const Store = observer(() => {
 
     const [items, setItems] = React.useState([]);
 
-    React.useEffect(() => {
-        services.userRooms.update();
-        return () => services.userRooms.clear();
-    }, []);
-
     React.useEffect(
         () =>
             autorun(() => {

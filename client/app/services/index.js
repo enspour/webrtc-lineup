@@ -6,6 +6,7 @@ import ThemesService from "./Themes.service";
 import RoomAPIService from "./APISerivces/RoomAPI.service";
 import UserRoomsService from "./UserRooms.service";
 import IslandService from "../features/Island/Island.service";
+import FavoritesRoomsService from "./FavoritesRooms.service";
 
 import Storage from "./Storage.service";
 
@@ -27,6 +28,7 @@ const services = {
     sessionStorage: new Storage(),
 
     userRooms: new UserRoomsService(API, roomAPI),
+    favoritesRooms: new FavoritesRoomsService(API, roomAPI),
 
     island: new IslandService(),
 
