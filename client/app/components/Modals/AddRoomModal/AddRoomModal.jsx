@@ -10,7 +10,7 @@ import useCssAnimation from "@hooks/css/useCssAnimation";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
 
-import AddIcon from "@assets/images/createRoomModal/add.svg";
+import AddIcon from "@assets/images/create-room-modal/add.svg";
 
 import services from "@services";
 

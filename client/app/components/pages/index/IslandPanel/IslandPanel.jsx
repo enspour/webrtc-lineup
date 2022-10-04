@@ -4,7 +4,7 @@ import { autorun } from "mobx";
 
 import { IslandSearchTab, IslandViewTabs } from "@features/Island/Island.states";
 
-import AddRoomModal from "../AddRoomModal/AddRoomModal";
+import AddRoomModal from "../../../Modals/AddRoomModal/AddRoomModal";
 import SearchInput from "@components/ui/SearchInput/SearchInput";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
@@ -14,9 +14,9 @@ import useSaveStateIsland from "@features/Island/hooks/useSaveStateIsland";
 
 import services from "@services";
 
-import SearchIcon from "@assets/images/tabPanel/search.svg";
-import AddIcon from "@assets/images/tabPanel/add.svg";
-import BackIcon from "@assets/images/tabPanel/back.svg";
+import SearchIcon from "@assets/images/island/search.svg";
+import AddIcon from "@assets/images/island/add.svg";
+import BackIcon from "@assets/images/island/back.svg";
 
 import styles from "./IslandPanel.module.scss"; 
 
