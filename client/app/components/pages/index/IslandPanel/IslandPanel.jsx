@@ -4,7 +4,7 @@ import { autorun } from "mobx";
 
 import { IslandSearchTab, IslandViewTabs } from "@features/Island/Island.states";
 
-import AddRoomModal from "../../../Modals/AddRoomModal/AddRoomModal";
+import AddRoomModal from "@components/modals/AddRoomModal/AddRoomModal";
 import SearchInput from "@components/ui/SearchInput/SearchInput";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";

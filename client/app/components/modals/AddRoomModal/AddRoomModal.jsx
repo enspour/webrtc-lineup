@@ -42,6 +42,11 @@ const ListTags = ({ tags, setTags }) => {
 const InputTags = ({ tags, setTags }) => {
     const [tag, setTag] = React.useState("");
 
+    const customSetTag = (value) => {
+        const splited = value.replace("#", "").split(" ");
+        setTag(splited.join(""));
+    }
+
     const pushTag = () => {
         if (tag && !tags.includes(tag)) {
             setTags(prev => [...prev, tag]);
@@ -51,7 +56,7 @@ const InputTags = ({ tags, setTags }) => {
 
     return (
         <div className={styles.tag}>
-            <InputControl type="text" placeholder="Tag" value={tag} setValue={setTag}/>
+            <InputControl type="text" placeholder="Tag" value={tag} setValue={customSetTag}/>
             
             <div>
                 <FilledButton onClick={pushTag}>
