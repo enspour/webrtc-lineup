@@ -36,7 +36,7 @@ const Favorites = observer(() => {
     if (items.length === 0) {
         return (
             <div className={styles.favorites__empty}>
-                
+                Your favorite rooms will be stored here.
             </div>
         )
     }

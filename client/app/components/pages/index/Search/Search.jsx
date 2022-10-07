@@ -9,8 +9,13 @@ import services from "@services";
 import styles from "./Search.module.scss";
 
 const Search = observer(() => {
+    const text = services.search.SearchedText;
     const state = services.search.State;
     const rooms = services.search.Rooms;
+
+    const runExample = () => {
+        services.search.SearchedText = "#example #lineup Lineup";
+    }
 
     React.useEffect(() => {
         return () => services.search.clear();
@@ -32,6 +37,26 @@ const Search = observer(() => {
         return (
             <div className={styles.loader}>
                 <div className="loader"></div>
+            </div>
+        )
+    }
+
+    if (!text) {
+        return (
+            <div className={styles.search__empty}>
+                <div>Type in some text to find rooms. You can also use tags for a more precise search.</div>
+                <div>
+                    <span>Example:&nbsp;</span> 
+                    <span className={styles.search__example} onClick={runExample}>#example #lineup Lineup</span>
+                </div>
+            </div>
+        )
+    }
+
+    if (rooms.length === 0) {
+        return (
+            <div className={styles.rooms__empty}>
+                <div>We can't find rooms, please be more specific.</div>
             </div>
         )
     }

@@ -42,7 +42,7 @@ const Store = observer(() => {
     if (items.length === 0) {
         return (
             <div className={styles.store__empty}>
-                You don't have created room.
+                Your rooms will be stored here.
             </div>
         )
     }

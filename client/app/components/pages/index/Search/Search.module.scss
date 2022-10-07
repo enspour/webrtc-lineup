@@ -1,6 +1,21 @@
 .search {
+    padding: 2rem;
     padding-top: 6rem;
 }
+
+.search__empty, .rooms__empty {
+    padding: 2rem;
+    padding-top: 6rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--theme-color-secondary);
+    text-align: center;
+}
+
+.search__example {
+    cursor: pointer;
+    text-decoration: underline;
+} 
 
 .items {
     padding: 2rem;

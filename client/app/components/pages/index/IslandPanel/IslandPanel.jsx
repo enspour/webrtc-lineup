@@ -45,7 +45,7 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
                 <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
             </div>
 
-            <SearchInput placeholder="Search" value={searchedText} setValue={setSearchedText}/>
+            <SearchInput placeholder="Type here" value={searchedText} setValue={setSearchedText}/>
         </div>
     )
 })
