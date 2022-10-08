@@ -51,8 +51,6 @@ export default class PrismaRepository implements IRepository {
         }) 
     }
 
-// 
-
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this.prismaClient.room.findMany({
             where: { 
