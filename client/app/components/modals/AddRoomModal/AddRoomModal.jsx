@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import Modal from "@components/ui/Modal/Modal";
 import InputControl from "@components/ui/InputControl/InputControl";
@@ -70,7 +71,9 @@ const InputTags = ({ tags, setTags }) => {
 }
 
 
-const AddRoomModal = ({ isOpen, setIsOpen }) => {
+const AddRoomModal = observer(() => {
+    const isOpenAddRoom = services.modals.IsOpenAddRoom;
+
     const request = useRequest(services.roomAPI.create);
     const { data } = useResponse(request);
 
@@ -81,12 +84,16 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
 
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
 
+    const setIsOpenAddRoom = (value) => {
+        services.modals.IsOpenAddRoom = value;
+    }
+
     const addRoom = () => {
         request.start({ body: { name, password, tags } });
         setName("");
         setPassword("");
         setTags([]);
-        setIsOpen(false);
+        setIsOpenAddRoom(false);
     }
 
     React.useEffect(() => {
@@ -98,8 +105,8 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
     return (
         <Modal 
             title="Room"
-            isOpen={isOpen} 
-            setIsOpen={setIsOpen}
+            isOpen={isOpenAddRoom} 
+            setIsOpen={setIsOpenAddRoom}
         >
             <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
             
@@ -122,6 +129,6 @@ const AddRoomModal = ({ isOpen, setIsOpen }) => {
             <FilledButton onClick={addRoom}> Create </FilledButton>
         </Modal>
     );
-}
+})
 
 export default AddRoomModal;

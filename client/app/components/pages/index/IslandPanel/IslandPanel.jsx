@@ -73,8 +73,6 @@ const IslandPanel = observer(() => {
     
     const islandRef = React.useRef();
 
-    const [isOpenModal, setIsOpenModal] = React.useState(false);
-
     const [addStyleGotoSearch, removeStyleGotoSearch] 
         = useManualCssAnimation(islandRef, styles.island__goto_search);
     const [addStyleSearchActive, removeStyleSearchActive] 
@@ -83,6 +81,10 @@ const IslandPanel = observer(() => {
     const gotoSearch = () => {
         services.island.CurrentId = IslandSearchTab.id;
     };
+
+    const setIsOpenAddRoom = (value) => {
+        services.modals.IsOpenAddRoom = value;
+    }
 
     React.useEffect(
         () => 
@@ -96,36 +98,32 @@ const IslandPanel = observer(() => {
     )
 
     return (
-        <>
-            <div className={styles.island} ref={islandRef}>
-                <Panel>
-                    <div className={styles.wrapper}>
-                        <Svg 
-                            url={SearchIcon}
-                            width="1.8" 
-                            height="1.8" 
-                            onClick={gotoSearch}
-                        />
-                        
-                        <Tabs/>
-                        
-                        <Svg 
-                            url={AddIcon}
-                            width="1.4"
-                            height="1.4"
-                            onClick={() => setIsOpenModal(true)}
-                        />
-                    </div>
-
-                    <Search 
-                        removeStyleGotoSearch={removeStyleGotoSearch} 
-                        removeStyleSearchActive={removeStyleSearchActive}
+        <div className={styles.island} ref={islandRef}>
+            <Panel>
+                <div className={styles.wrapper}>
+                    <Svg 
+                        url={SearchIcon}
+                        width="1.8" 
+                        height="1.8" 
+                        onClick={gotoSearch}
                     />
-                </Panel>
-            </div>
+                    
+                    <Tabs/>
+                    
+                    <Svg 
+                        url={AddIcon}
+                        width="1.4"
+                        height="1.4"
+                        onClick={() => setIsOpenAddRoom(true)}
+                    />
+                </div>
 
-            <AddRoomModal isOpen={isOpenModal} setIsOpen={setIsOpenModal}/>
-        </>
+                <Search 
+                    removeStyleGotoSearch={removeStyleGotoSearch} 
+                    removeStyleSearchActive={removeStyleSearchActive}
+                />
+            </Panel>
+        </div>  
     )
 });
 
