@@ -95,6 +95,7 @@ const Login = () => {
         <main className={styles.main}>
             <Head>
                 <title>Lineup | Login</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
 
             <div className={styles.container}>
