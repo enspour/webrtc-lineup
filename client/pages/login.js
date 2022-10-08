@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 import { useRouter } from "next/router";
 
@@ -92,6 +93,10 @@ const LoginWithEmail = React.memo(() => {
 const Login = () => {
     return (
         <main className={styles.main}>
+            <Head>
+                <title>Lineup | Login</title>
+            </Head>
+
             <div className={styles.container}>
                 <Panel>
                     <div className={styles.wrapper}>

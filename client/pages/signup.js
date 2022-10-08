@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import Panel from "@components/ui/Panel/Panel";
@@ -98,6 +99,10 @@ const SignupWithEmail = () => {
 const Signup = () => {
     return (
         <div className={styles.main}>
+            <Head>
+                <title> Lineup | Signup </title>
+            </Head>
+
             <div className={styles.container}>
                 <Panel>
                     <div className={styles.wrapper}>

@@ -95,7 +95,7 @@ const ThemesTitle = () => {
 
 const Account = () => {
     return (
-        <MainLayout>
+        <MainLayout title="Lineup | Account">
             <div className={styles.container}>
                 <Panel>
                     <div className={styles.wrapper}>

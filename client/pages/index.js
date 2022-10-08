@@ -1,4 +1,3 @@
-import React from "react"; 
 import { observer } from "mobx-react-lite";
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
@@ -12,9 +11,10 @@ import styles from "@styles/pages/index.module.scss";
 
 const Home = observer(() => {
     const IslandTabId = services.island.CurrentId;
+    const IslandTabName = IslandTabs.find(item => item.id === services.island.CurrentId).name;
 
     return (
-        <MainLayout> 
+        <MainLayout title={`Lineup | ${IslandTabName}`}> 
             <div className={styles.island}>
                 <IslandPanel />
             </div>
