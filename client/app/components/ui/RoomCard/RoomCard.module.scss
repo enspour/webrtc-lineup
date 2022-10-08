@@ -8,7 +8,7 @@
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 1.3rem;
 }
 
 .wrapper {
@@ -25,10 +25,21 @@
     display: flex;
     align-items: center;
     gap: .5rem;
+    max-width: 26.5rem;
+    overflow: hidden;
+}
+
+.room__info__name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .room__info__user {
     color: var(--theme-color-link);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .room__controls {
