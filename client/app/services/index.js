@@ -1,36 +1,41 @@
 import APIService from "./APISerivces/API.service";
-import AuthAPIService from "./APISerivces/AuthAPI.service";
-import SearchService from "./Search.service";
-import UserService from "./User.service";
-import ThemesService from "./Themes.service";
-import RoomAPIService from "./APISerivces/RoomAPI.service";
-import UserRoomsService from "./UserRooms.service";
-import IslandService from "../features/Island/Island.service";
-import FavoritesRoomsService from "./FavoritesRooms.service";
-
+import AuthAPI from "./APISerivces/AuthAPI.service";
+import Search from "./Search.service";
+import User from "./User.service";
+import Themes from "./Themes.service";
+import RoomAPI from "./APISerivces/RoomAPI.service";
+import UserRooms from "./UserRooms.service";
+import Island from "../features/Island/Island.service";
+import FavoritesRooms from "./FavoritesRooms.service";
 import Storage from "./Storage.service";
+import Connection from "./Connection.service";
+import Modals from "./Modals.service";
 
 
 const API = new APIService();
-const roomAPI = new RoomAPIService();
+const roomAPI = new RoomAPI();
 
 const services = {
     API,
-    authAPI: new AuthAPIService(),
+    authAPI: new AuthAPI(),
     roomAPI,
     
-    search: new SearchService(API, roomAPI),
-    user: new UserService(),
+    search: new Search(API, roomAPI),
+    user: new User(),
 
-    themes: new ThemesService(),
+    themes: new Themes(),
 
     localStorage: new Storage(),
     sessionStorage: new Storage(),
 
-    userRooms: new UserRoomsService(API, roomAPI),
-    favoritesRooms: new FavoritesRoomsService(API, roomAPI),
+    userRooms: new UserRooms(API, roomAPI),
+    favoritesRooms: new FavoritesRooms(API, roomAPI),
 
-    island: new IslandService(),
+    island: new Island(),
+
+    connection: new Connection(),
+    
+    modals: new Modals(),
 
     initialize: function () {
         this.localStorage.initialize("local"),

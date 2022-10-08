@@ -22,7 +22,10 @@ const RemoveControl = ({ room }) => {
     const request = useRequest(services.roomAPI.delete);
     const { data } = useResponse(request);
 
-    const remove = () => request.start({ params: { id: room.id } });
+    const remove = (e) => {
+        e.stopPropagation();
+        request.start({ params: { id: room.id } });
+    }
 
     React.useEffect(() => {
         if (data) services.userRooms.update();
@@ -35,7 +38,10 @@ const AddToFavoritesControl = ({ room }) => {
     const request = useRequest(services.roomAPI.addToFavorites);
     const { data } = useResponse(request);
 
-    const add = () => request.start({ params: { id: room.id } });
+    const add = (e) => {
+        e.stopPropagation();
+        request.start({ params: { id: room.id } });
+    }
 
     React.useEffect(() => {
         if (data) services.favoritesRooms.update();
@@ -48,7 +54,10 @@ const RemoveFromFavoritesControl = ({ room }) => {
     const request = useRequest(services.roomAPI.deleteFromFavorites);
     const { data } = useResponse(request);
 
-    const remove = () => request.start({ params: { id: room.id } });
+    const remove = (e) => {
+        e.stopPropagation();
+        request.start({ params: { id: room.id } });
+    }
 
     React.useEffect(() => {
         if (data) services.favoritesRooms.update();
@@ -73,21 +82,26 @@ const MultipleControl = observer(({ room }) => {
 });
 
 const Tags = ({ tags }) => {
-    const searchByTags = (name) => {
+    const searchByTags = (e, name) => {
+        e.stopPropagation();
         services.island.CurrentId = IslandSearchTab.id;
         services.search.SearchedText = `#${name}`;
     }
 
     return tags.map(tag => (
-        <div key={tag.id} className={styles.tag} onClick={() => searchByTags(tag.name)}>
+        <div key={tag.id} className={styles.tag} onClick={(e) => searchByTags(e, tag.name)}>
             {tag.name}
         </div>
     ))
 }
 
 const RoomCard = ({ room }) => {
+    const connect = () => {
+        services.connection.connect(room)
+    }
+    
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={connect}>
             <Panel>
                 <div className={styles.room}>
                     <div className={styles.wrapper}>
