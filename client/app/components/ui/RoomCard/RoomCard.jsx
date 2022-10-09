@@ -13,10 +13,11 @@ import RemoveIcon from "@assets/images/room/remove.svg";
 import AddToFavoritesIcon from "@assets/images/room/addToFavorites.svg";
 import RemoveToFavoritesIcon from "@assets/images/room/removeFromFavorites.svg";
 
+import { IslandSearchTab } from "@features/Island/Island.states";
+
 import services from "@services";
 
 import styles from "./RoomCard.module.scss";
-import { IslandSearchTab } from "@features/Island/Island.states";
 
 const RemoveControl = ({ room }) => {
     const request = useRequest(services.roomAPI.delete);
@@ -96,12 +97,13 @@ const Tags = ({ tags }) => {
 }
 
 const RoomCard = ({ room }) => {
-    const connect = () => {
-        services.connection.connect(room)
+    const openRoomModal = () => {
+        services.modals.room.IsOpen = true;
+        services.modals.room.Room = room;
     }
     
     return (
-        <div className={styles.card} onClick={connect}>
+        <div className={styles.card} onClick={openRoomModal}>
             <Panel>
                 <div className={styles.room}>
                     <div className={styles.wrapper}>
@@ -132,6 +134,7 @@ RoomCard.propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
+        status: PropTypes.bool.isRequired,
 
         tags: PropTypes.arrayOf(
             PropTypes.shape({
@@ -144,6 +147,8 @@ RoomCard.propTypes = {
             id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
         }).isRequired,
+
+        createdAt: PropTypes.string.isRequired,
     }).isRequired,
 }
 

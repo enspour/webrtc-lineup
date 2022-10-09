@@ -72,7 +72,7 @@ const InputTags = ({ tags, setTags }) => {
 
 
 const AddRoomModal = observer(() => {
-    const isOpenAddRoom = services.modals.IsOpenAddRoom;
+    const isOpenAddRoom = services.modals.addRoom.IsOpen;
 
     const request = useRequest(services.roomAPI.create);
     const { data } = useResponse(request);
@@ -85,7 +85,7 @@ const AddRoomModal = observer(() => {
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
 
     const setIsOpenAddRoom = (value) => {
-        services.modals.IsOpenAddRoom = value;
+        services.modals.addRoom.IsOpen = value;
     }
 
     const addRoom = () => {
@@ -102,31 +102,35 @@ const AddRoomModal = observer(() => {
         }
     }, [data]);
 
+    if (!isOpenAddRoom) return "";
+
     return (
         <Modal 
             title="Room"
             isOpen={isOpenAddRoom} 
             setIsOpen={setIsOpenAddRoom}
         >
-            <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
-            
-            <div className={styles.private}>
-                <CheckBox label="Private room" value={privateRoom} setValue={setPrivateRoom}/>
+            <div className={styles.wrapper}>
+                <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
+                
+                <div className={styles.private}>
+                    <CheckBox label="Private room" value={privateRoom} setValue={setPrivateRoom}/>
+                </div>
+
+                <div className={styles.password} ref={passwordRef}>
+                    <InputControl 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password} 
+                        setValue={setPassword}
+                    />
+                </div>
+
+                <InputTags tags={tags} setTags={setTags}/>
+                <ListTags tags={tags} setTags={setTags}/>
+
+                <FilledButton onClick={addRoom}> Create </FilledButton>
             </div>
-
-            <div className={styles.password} ref={passwordRef}>
-                <InputControl 
-                    type="password" 
-                    placeholder="Password" 
-                    value={password} 
-                    setValue={setPassword}
-                />
-            </div>
-
-            <InputTags tags={tags} setTags={setTags}/>
-            <ListTags tags={tags} setTags={setTags}/>
-
-            <FilledButton onClick={addRoom}> Create </FilledButton>
         </Modal>
     );
 })

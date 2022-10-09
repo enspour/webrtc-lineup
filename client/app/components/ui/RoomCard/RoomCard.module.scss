@@ -1,6 +1,7 @@
 .card {
     width: 40rem;
     height: 11rem;
+    cursor: pointer;
 }
 
 .room {
@@ -58,7 +59,7 @@
 .tag {
     background-color: var(--theme-bg-tertiary);
     border-radius: .7rem;
-    padding: .2rem .8rem;
+    padding: .1rem .8rem;
     color: var(--theme-color-secondary);
     font-size: 1.2rem;
     font-weight: 600;

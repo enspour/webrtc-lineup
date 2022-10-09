@@ -1,17 +1,62 @@
-import ModalsStore from "@store/Modals.store";
+import ModalStore from "@store/Modal.store";
+import RoomStore from "@store/Room.store";
 
-export default class Modals {
-    #modalsStore;
+class Modal {
+    #store;
 
     constructor() {
-        this.#modalsStore = new ModalsStore();
+        this.#store = new ModalStore();
     }
 
-    get IsOpenAddRoom() {
-        return this.#modalsStore.isOpenAddRoom;
+    get IsOpen() {
+        return this.#store.isOpenModal;
     }
 
-    set IsOpenAddRoom(value) {
-        return this.#modalsStore.setIsOpenAddRoom(value);
+    set IsOpen(value) {
+        return this.#store.setIsOpenModal(value);
     }
+}
+
+class RoomModal extends Modal {
+    #roomStore;
+
+    constructor() {
+        super();
+        this.#roomStore = new RoomStore();
+    } 
+
+    get Id() {
+        return this.#roomStore.id;
+    }
+
+    get Name() {
+        return this.#roomStore.name;
+    }
+
+    get Status() {
+        return this.#roomStore.status;
+    }
+
+    get Owner() {
+        return this.#roomStore.owner;
+    }
+
+    get Tags() {
+        return this.#roomStore.tags;
+    }
+
+    get CreatedAt() {
+        return this.#roomStore.createdAt;
+    }
+
+    set Room(room) {
+        this.#roomStore.setRoom(room);
+    }
+}
+
+export default class Modals {
+    constructor() {
+        this.addRoom = new Modal();
+        this.room = new RoomModal();    
+    } 
 }
