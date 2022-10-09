@@ -1,5 +1,12 @@
 import { action, makeAutoObservable, observable, runInAction } from "mobx"
 
+const handlerRooms = rooms => {
+    return rooms.map(item => ({
+        ...item,
+        createdAt: item.created_at,
+    }))
+}
+
 export default class RoomsStore {
     rooms = [];
     state = "pending"; // "pending", "done" or "error"
@@ -23,7 +30,7 @@ export default class RoomsStore {
         this.request.onResponse(response => {
             if (response && response.status === 200) {
                 runInAction(() => {
-                    this.rooms = response.data.body.rooms;
+                    this.rooms = handlerRooms(response.data.body.rooms);
                     this.state = "done";
                 })
             }
