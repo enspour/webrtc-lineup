@@ -24,7 +24,7 @@ const Store = observer(() => {
                     setItems(
                         [...rooms]
                             .map(item => ({ ...item, owner: { id: userId, name: userName } }))
-                            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     );
                 }
             })
