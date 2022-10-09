@@ -51,7 +51,7 @@ const Account = observer(() => {
             onClick={() => setIsOpen((prev) => !prev)}
         >
             <div className={styles.account__avatar}></div>
-            <div className="c-p"> {name} </div>
+            <div className="text-primary"> {name} </div>
             <AccountMenu isOpen={isOpen}/>
         </div>
     )

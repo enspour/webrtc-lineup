@@ -2,10 +2,14 @@
     display: flex;
 }
 
-
-.g-1 {
-    gap: 1rem;
+.al-center {
+    align-items: center;
 }
+
+.jf-between {
+    justify-content: space-between;
+}
+
 
 .g-3 {
     gap: 3rem
@@ -24,25 +28,31 @@
 .mb-1 {
     margin-bottom: 1rem;
 }
+ 
+.p-r {
+    position: relative;
+}
 
+.text-al-center {
+    text-align: center;
+}
 
-.c-p {
+.text-semibold {
+    font-weight: 600;
+}
+
+.text-16 {
+    font-size: 1.6rem;
+}
+
+.text-14 {
+    font-size: 1.4rem;
+}
+
+.text-primary {
     color: var(--theme-color-primary);
 }
 
-.c-s {
+.text-secondary {
     color: var(--theme-color-secondry);
-}
- 
-
-.d-n {
-    display: none;
-}
-
-.d-f {
-    display: flex;
-}
-
-.p-r {
-    position: relative;
 }

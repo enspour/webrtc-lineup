@@ -27,18 +27,18 @@ const AccountCredentials = React.memo(({
     return (
         <div className={styles.account__credentials}>
             <div>
-                <div className="mb-1 c-p">Email address</div>
+                <div className="mb-1 text-primary">Email address</div>
                 <SimpleInput value={email} setValue={setEmail} placeholder="Email"/>
             </div>
 
             <div className="fl g-3">
                 <div className="w-140">
-                    <div className="mb-1 c-p">Name</div>
+                    <div className="mb-1 text-primary">Name</div>
                     <SimpleInput value={name} setValue={setName} placeholder="Name"/>
                 </div>
 
                 <div className="w-100">
-                    <div className="mb-1 c-p">Password</div>
+                    <div className="mb-1 text-primary">Password</div>
                     <FilledButton onClick={changePassword}> Change </FilledButton>
                 </div>
             </div>
@@ -64,7 +64,7 @@ const AccountProfile = observer(() => {
 
     return (
         <div className="w-100">
-            <div className="c-p">Account</div>
+            <div className="text-primary">Account</div>
             <div className={styles.account__title__helper}>
                 Here you can edit your public information and password.
             </div>
@@ -85,7 +85,7 @@ const AccountLogout = () => {
 const ThemesTitle = () => {
     return (
         <div className="w-100">
-            <div className="c-p">Theme</div>
+            <div className="text-primary">Theme</div>
             <div className={styles.themes__title__helper}>
                 Choose a theme that interests you.
             </div>
