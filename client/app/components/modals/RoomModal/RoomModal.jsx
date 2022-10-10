@@ -2,12 +2,15 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 import Modal from "@components/ui/Modal/Modal";
-import FilledButton from "@components/ui/FilledButton/FilledButton";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
+import CenterInput from "@components/ui/CenterInput/CenterInput";
+import Svg from "@components/ui/Svg/Svg";
 
 import { IslandSearchTab } from "@features/Island/Island.states";
 
 import services from "@services";
+
+import JoinIcon from "@assets/images/room-modal/join.svg";
 
 import styles from "./RoomModal.module.scss";
 
@@ -86,6 +89,8 @@ const CreatedAt = observer(() => {
 });
 
 const RoomModal = observer(() => {
+    const [password, setPassword] = React.useState("");
+
     const isOpenRoom = services.modals.room.IsOpen;
 
     const setIsOpenRoom = (value) => {
@@ -106,8 +111,9 @@ const RoomModal = observer(() => {
                 <div className="fl jf-between">
                     <Information />
 
-                    <div className={styles.room__connect__btn}>
-                        <FilledButton onClick={connect}>Connect</FilledButton>
+                    <div className={styles.room__connect}>
+                        <CenterInput type="password" placeholder="Password" value={password} setValue={setPassword}/>
+                        <Svg url={JoinIcon} width="1.2" height="2" onClick={connect}/>
                     </div>
                 </div> 
 
