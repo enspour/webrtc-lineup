@@ -17,7 +17,7 @@ import services from "@services";
 
 import styles from "./AddRoomModal.module.scss";
 
-const Tags = ({ tags, setTags }) => {
+const Tags = React.memo(({ tags, setTags }) => {
     const removeTag = (name) => setTags(prev => prev.filter(item => item !== name)); 
 
     return (
@@ -38,9 +38,9 @@ const Tags = ({ tags, setTags }) => {
             </div>
         </div>
     )
-}
+});
 
-const InputTags = ({ tags, setTags }) => {
+const InputTags = React.memo(({ tags, setTags }) => {
     const [tag, setTag] = React.useState("");
 
     const customSetTag = (value) => {
@@ -68,7 +68,7 @@ const InputTags = ({ tags, setTags }) => {
             </div>
         </div>
     )
-}
+});
 
 
 const AddRoomModal = observer(() => {

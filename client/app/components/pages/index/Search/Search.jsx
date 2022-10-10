@@ -13,9 +13,9 @@ const Search = observer(() => {
     const state = services.search.State;
     const rooms = services.search.Rooms;
 
-    const runExample = () => {
+    const runExample = React.useCallback(() => {
         services.search.SearchedText = "#example #lineup Lineup";
-    }
+    }, []);
 
     React.useEffect(() => {
         return () => services.search.clear();

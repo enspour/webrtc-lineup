@@ -20,9 +20,9 @@ const AccountCredentials = React.memo(({
     name,
     setName
 }) => {
-    const changePassword = React.useCallback(() => {
+    const changePassword = () => {
         console.log("Change password")
-    }, [])
+    }
 
     return (
         <div className={styles.account__credentials}>
@@ -69,7 +69,7 @@ const AccountProfile = observer(() => {
                 Here you can edit your public information and password.
             </div>
 
-            <AccountCredentials 
+            <AccountCredentials
                 email={email} setEmail={setEmail} 
                 name={name} setName={setName}
             />

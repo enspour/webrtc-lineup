@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import styles from "./CheckBox.module.scss";
 
@@ -17,6 +18,12 @@ const CheckBox = ({ label, value, setValue }) => {
             </label>
         </div>
     )
+}
+
+CheckBox.propTypes = {
+    label: PropTypes.string.isRequired,
+    value: PropTypes.bool.isRequired,
+    setValue: PropTypes.func.isRequired,
 }
 
 export default React.memo(CheckBox);

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import styles from "./Dropdown.module.scss";
 
@@ -19,6 +20,17 @@ const Dropdown = ({ isOpen, items }) => {
             { items.map(item => <Item key={item.id} item={item}/>) }
         </div>
     );
+}
+
+Dropdown.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+            name: PropTypes.string.isRequired,
+            onClick: PropTypes.func.isRequired,
+        }).isRequired
+    ).isRequired,
 }
 
 export default React.memo(Dropdown);

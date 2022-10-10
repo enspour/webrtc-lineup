@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Panel from "../Panel/Panel";
 
@@ -31,6 +32,12 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
             </div>
         </div>
     );
+}
+
+Modal.propTypes = {
+    title: PropTypes.string.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    setIsOpen: PropTypes.func.isRequired,
 }
 
 export default React.memo(Modal);

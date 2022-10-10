@@ -26,15 +26,15 @@ const Information = observer(() => {
     )
 });
 
-const ConnectedUsers = () => {
+const ConnectedUsers = React.memo(() => {
     return (
         <div className={styles.room__users}>
             <div className="loader"></div>
         </div>
     )
-}
+});
 
-const VoiceVideo = () => {
+const VoiceVideo = React.memo(() => {
     const [enableVoice, setEnableVoice] = React.useState(true);
     const [enableCamera, setEnableCamera] = React.useState(false);
 
@@ -44,7 +44,7 @@ const VoiceVideo = () => {
             <CheckBox label="Camera" value={enableCamera} setValue={setEnableCamera}/>
         </div>
     )
-}
+});
 
 const Tags = observer(() => { 
     const tags = services.modals.room.Tags;

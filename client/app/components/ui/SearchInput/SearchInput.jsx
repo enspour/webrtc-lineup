@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Svg from "../Svg/Svg";
 
@@ -21,6 +22,13 @@ const SearchInput = ({ placeholder, value, setValue }) => {
             <Svg url={ClearSVG} height="1.4" width="1.4" onClick={() => setValue("")}/>
         </div>
     )
+}
+
+
+SearchInput.propTypes = {
+    value: PropTypes.string.isRequired,
+    setValue: PropTypes.func.isRequired,
+    placeholder: PropTypes.string,
 }
 
 export default React.memo(SearchInput);

@@ -25,18 +25,17 @@ const classes = (...classes) => {
 
 const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
     const searchedText = services.search.SearchedText;
-    const setSearchedText = React.useCallback(
-        (text) => services.search.SearchedText = text,
-        []
-    );
+    const setSearchedText = React.useCallback(text => {
+        services.search.SearchedText = text
+    }, []);
 
-    const gotoBack = () => {
+    const gotoBack = React.useCallback(() => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400);
         setTimeout(() => {
             services.island.undo();
         }, 400)
-    };
+    }, []);
 
     return (
         <div className={styles.island__search}>
@@ -72,14 +71,14 @@ const IslandPanel = observer(() => {
     
     const islandRef = React.useRef();
 
-    const [addStyleGotoSearch, removeStyleGotoSearch] 
+    const [addStyleGotoSearch, removeStyleGotoSearch]
         = useManualCssAnimation(islandRef, styles.island__goto_search);
     const [addStyleSearchActive, removeStyleSearchActive] 
         = useManualCssAnimation(islandRef, styles.island__search__active);
 
     const gotoSearch = () => {
         services.island.CurrentId = IslandSearchTab.id;
-    };
+    }
 
     const setIsOpenAddRoom = (value) => {
         services.modals.addRoom.IsOpen = value;
