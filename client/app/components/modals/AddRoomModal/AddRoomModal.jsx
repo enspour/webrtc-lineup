@@ -17,7 +17,7 @@ import services from "@services";
 
 import styles from "./AddRoomModal.module.scss";
 
-const ListTags = ({ tags, setTags }) => {
+const Tags = ({ tags, setTags }) => {
     const removeTag = (name) => setTags(prev => prev.filter(item => item !== name)); 
 
     return (
@@ -127,7 +127,7 @@ const AddRoomModal = observer(() => {
                 </div>
 
                 <InputTags tags={tags} setTags={setTags}/>
-                <ListTags tags={tags} setTags={setTags}/>
+                <Tags tags={tags} setTags={setTags}/>
 
                 <FilledButton onClick={addRoom}> Create </FilledButton>
             </div>

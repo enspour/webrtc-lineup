@@ -1,5 +1,3 @@
-import React from "react";
-
 import useLoaderServices from "@hooks/loaders/useLoaderServices";
 import useLoaderTheme from "@hooks/loaders/useLoaderTheme";
 
