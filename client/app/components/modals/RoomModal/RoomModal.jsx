@@ -19,7 +19,7 @@ const Information = observer(() => {
     const owner = services.modals.room.Owner;
 
     return (
-        <div>
+        <div className="w-65">
             <div className={styles.room__name}>{name}</div>
             <div className={styles.room__owner__name}>{owner.name}</div>
         </div>

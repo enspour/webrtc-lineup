@@ -37,6 +37,7 @@
 
 .room__tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin: 0 1rem; 
     overflow: hidden;
