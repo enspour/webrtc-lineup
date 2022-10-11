@@ -3,14 +3,9 @@ import UserStore from "@store/User.store";
 export default class UserService {
     #userStore;
 
-    constructor() {
-        this.#userStore = new UserStore();
-    }
-
-    set User(user) {
-        if (user && user.name && user.email && user.id) {
-            this.#userStore.setUser(user);
-        }
+    constructor(api, authAPI) {
+        const request = api.createRequest(authAPI.me);
+        this.#userStore = new UserStore(request);
     }
 
     get Name() {
@@ -23,5 +18,9 @@ export default class UserService {
 
     get Id() {
         return this.#userStore.id;
+    }
+
+    async update() {
+        await this.#userStore.update();
     }
 }

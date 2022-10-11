@@ -1,17 +1,18 @@
 import React from "react";
+import { autorun } from "mobx";
 
 import services from "@services";
 
 const useLoaderStore = () => {
-    React.useEffect(() => {
-        services.userRooms.update();
-        services.favoritesRooms.update();
-
-        return () => {
-            services.userRooms.clear();
-            services.favoritesRooms.clear();
-        }
-    }, []);
+    React.useEffect(() => 
+        autorun(() => {
+            const userId = services.user.Id;
+            if (userId) {
+                services.userRooms.update();
+                services.favoritesRooms.update();
+            }
+        })
+    , []);
 }
 
 export default useLoaderStore;

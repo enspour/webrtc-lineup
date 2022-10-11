@@ -54,7 +54,10 @@ const LoginWithEmail = React.memo(() => {
     }, [email, password, rememberMe]);
 
     React.useEffect(() => {
-        if (data) router.push("/");
+        if (data) {
+            services.user.update();
+            router.push("/");
+        }
     }, [data]);
 
     return (

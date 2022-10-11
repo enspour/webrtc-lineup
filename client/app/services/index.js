@@ -14,14 +14,15 @@ import Modals from "./Modals.service";
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
+const authAPI = new AuthAPI();
 
 const services = {
     API,
-    authAPI: new AuthAPI(),
+    authAPI,
     roomAPI,
     
     search: new Search(API, roomAPI),
-    user: new User(),
+    user: new User(API, authAPI),
 
     themes: new Themes(),
 
