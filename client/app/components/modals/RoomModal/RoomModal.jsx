@@ -57,7 +57,7 @@ const Tags = observer(() => {
     }
 
     return (
-        <div className="fl">
+        <div className="fl mt-4 mb-4">
             <span className="text-semibold text-14 text-primary">Tags:</span>
             <span className={styles.room__tags}>
                 {
