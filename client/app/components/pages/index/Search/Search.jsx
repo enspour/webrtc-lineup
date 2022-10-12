@@ -56,7 +56,7 @@ const Search = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.rooms__empty}>
-                <div>We can't find rooms, please be more specific.</div>
+                ¯\_(ツ)_/¯
             </div>
         )
     }
