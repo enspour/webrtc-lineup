@@ -5,7 +5,7 @@ import styles from "./CheckBox.module.scss";
 
 const CheckBox = ({ label, value, setValue }) => {
     return (
-        <div>
+        <div className={styles.container}>
             <label className={styles.wrapper}>
                 <input 
                     type="checkbox" 

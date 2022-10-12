@@ -1,3 +1,8 @@
+.container {
+    height: 2rem;
+    width: fit-content;
+}
+
 .wrapper {
     display: flex;
     align-items: center;
@@ -20,8 +25,8 @@
 .checkbox {
     position: relative;
     display: inline-block;
-    width: 4.3rem;
-    height: 1.8rem;
+    width: 4rem;
+    height: 1.7rem;
     cursor: pointer;
 
     &::before {
@@ -53,5 +58,6 @@
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--theme-color-primary);
+    cursor: pointer;
 }
  
