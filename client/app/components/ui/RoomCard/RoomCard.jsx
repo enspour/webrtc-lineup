@@ -13,8 +13,6 @@ import RemoveIcon from "@assets/images/room/remove.svg";
 import AddToFavoritesIcon from "@assets/images/room/addToFavorites.svg";
 import RemoveToFavoritesIcon from "@assets/images/room/removeFromFavorites.svg";
 
-import { IslandSearchTab } from "@features/Island/Island.states";
-
 import services from "@services";
 
 import styles from "./RoomCard.module.scss";
@@ -85,7 +83,7 @@ const MultipleControl = observer(({ room }) => {
 const Tags = ({ tags }) => {
     const searchByTags = (e, name) => {
         e.stopPropagation();
-        services.island.CurrentId = IslandSearchTab.id;
+        services.island.goSearch();
         services.search.SearchedText = `#${name}`;
     }
 

@@ -41,6 +41,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    min-width: 5rem;
 }
 
 .room__controls {
@@ -74,7 +75,7 @@
 
 .dash {
     background-color: var(--theme-color-primary);
-    width: 1rem;
+    min-width: 1rem;
     height: .1rem;
     display: inline-block;
 }

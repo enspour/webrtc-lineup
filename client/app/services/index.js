@@ -1,12 +1,15 @@
 import APIService from "./APISerivces/API.service";
 import AuthAPI from "./APISerivces/AuthAPI.service";
+import RoomAPI from "./APISerivces/RoomAPI.service";
+
+import { IslandService } from "../features/Island";
+
 import Search from "./Search.service";
 import User from "./User.service";
-import Themes from "./Themes.service";
-import RoomAPI from "./APISerivces/RoomAPI.service";
 import UserRooms from "./UserRooms.service";
-import Island from "../features/Island/Island.service";
 import FavoritesRooms from "./FavoritesRooms.service";
+import Themes from "./Themes.service";
+
 import Storage from "./Storage.service";
 import Connection from "./Connection.service";
 import Modals from "./Modals.service";
@@ -32,7 +35,7 @@ const services = {
     userRooms: new UserRooms(API, roomAPI),
     favoritesRooms: new FavoritesRooms(API, roomAPI),
 
-    island: new Island(),
+    island: new IslandService(),
 
     connection: new Connection(),
     

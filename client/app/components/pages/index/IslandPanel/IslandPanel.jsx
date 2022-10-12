@@ -2,14 +2,13 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
-import { IslandSearchTab, IslandViewTabs } from "@features/Island/Island.states";
+import { IslandSearchTab, IslandViewTabs, useSaveStateIsland } from "@features/Island";
 
 import SearchInput from "@components/ui/SearchInput/SearchInput";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
 
 import useManualCssAnimation from "@hooks/css/useManualCssAnimation";
-import useSaveStateIsland from "@features/Island/hooks/useSaveStateIsland";
 
 import services from "@services";
 

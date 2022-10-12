@@ -6,8 +6,6 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 import CenterInput from "@components/ui/CenterInput/CenterInput";
 import Svg from "@components/ui/Svg/Svg";
 
-import { IslandSearchTab } from "@features/Island/Island.states";
-
 import services from "@services";
 
 import JoinIcon from "@assets/images/room-modal/join.svg";
@@ -52,7 +50,7 @@ const Tags = observer(() => {
     const searchByTags = (e, name) => {
         e.stopPropagation();
         services.modals.room.IsOpen = false;
-        services.island.CurrentId = IslandSearchTab.id;
+        services.island.goSearch();
         services.search.SearchedText = `#${name}`;
     }
 
