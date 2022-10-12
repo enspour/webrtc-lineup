@@ -1,4 +1,5 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
+import { IslandTabs } from "./Island.states";
 
 export default class IslandStore {
     history = [1, 1]
@@ -7,6 +8,7 @@ export default class IslandStore {
         makeAutoObservable(this, {
             history: observable,
             currentId: computed,
+            current: computed,
             setCurrentId: action,
             setHistory: action,
             undo: action,
@@ -15,6 +17,10 @@ export default class IslandStore {
 
     get currentId() {
         return this.history[0];
+    }
+
+    get current() {
+        return IslandTabs.find(item => item.id === this.currentId);
     }
 
     setCurrentId(id) {

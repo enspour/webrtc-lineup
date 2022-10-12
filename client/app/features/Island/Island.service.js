@@ -1,3 +1,4 @@
+import { IslandSearchTab } from "./Island.states";
 import IslandStore from "./Island.store";
 
 export default class IslandService {
@@ -5,6 +6,10 @@ export default class IslandService {
 
     constructor() {
         this.#islandStore = new IslandStore();
+    }
+
+    get Current() {
+        return this.#islandStore.current;
     }
 
     get CurrentId() {
@@ -27,5 +32,9 @@ export default class IslandService {
 
     undo() {
         this.#islandStore.undo();
+    }
+
+    goSearch() {
+        this.CurrentId = IslandSearchTab.id;
     }
 }
