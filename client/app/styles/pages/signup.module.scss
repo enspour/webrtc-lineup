@@ -5,16 +5,18 @@
 }
 
 .container {
-    width: 60rem;
-    height: 73rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 100vh;
 }
 
 .wrapper {
     padding: 0 10rem;
+    width: 60rem;
+    height: 73rem;
 }
 
 .logo {
