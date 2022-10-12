@@ -24,6 +24,7 @@
 .account {
     height: 5rem;
     min-width: 18rem;
+    max-width: 22rem;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -48,8 +49,16 @@
 }
 
 .account__avatar {
-    width: 3.5rem;
-    height: 3.5rem;
+    min-width: 3.5rem;
+    min-height: 3.5rem;
     background-color: #696969;
     border-radius: 50%;
+}
+
+.account__name {
+    color: var(--theme-color-primary);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
