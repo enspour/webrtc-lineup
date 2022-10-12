@@ -65,19 +65,25 @@ const RemoveFromFavoritesControl = ({ room }) => {
     return <Svg url={RemoveToFavoritesIcon} width="2" height="1.8" onClick={remove}/>
 }
 
+const FavoritesControl = observer(({ room }) => {
+    const favorites = services.favoritesRooms.Rooms;
+    const isFavorites = favorites.find(item => item.id === room.id);
+
+    if (isFavorites) {
+        return <RemoveFromFavoritesControl room={room}/>
+    }
+
+    return <AddToFavoritesControl room={room}/>
+});
+
 const MultipleControl = observer(({ room }) => {
     const userId = services.user.Id;
-    const favorites = services.favoritesRooms.Rooms;
 
     if (room.owner.id === userId) {
         return <RemoveControl room={room}/>
     }
     
-    if (favorites.find(item => item.id === room.id)) {
-        return <RemoveFromFavoritesControl room={room}/>
-    }
-
-    return <AddToFavoritesControl room={room}/>
+    return <FavoritesControl room={room}/>
 });
 
 const Tags = ({ tags }) => {
