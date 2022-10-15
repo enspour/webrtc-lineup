@@ -1,7 +1,5 @@
 const { loadPublicKeyAccessToken } = require("core/utils/jwt");
 
-const logger = require("@logger").default;
-
 const serverConfig = require("@configs/server.config").default;
 
 const domain = serverConfig.domain;

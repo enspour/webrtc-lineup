@@ -13,6 +13,7 @@ import serverConfig from "@configs/server.config";
     logger.log("Connect to database is successful.");
     
     await loadPublicKeyAccessJWT();
+    logger.log("Public Key is success loaded");
 
     const app = createApp();
     const server = createServer(app);

@@ -10,7 +10,10 @@ import serverConfig from "@configs/server.config";
 
 (async () => {
     await loadKeysAccessJWT();
+    logger.log("Keys of access token has been loaded.");
+
     await loadKeysRefreshJWT();
+    logger.log("Keys of refresh token has been loaded.");
 
     await connect();
     logger.log("Connect to database is successful.");

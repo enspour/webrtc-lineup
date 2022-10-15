@@ -1,8 +1,6 @@
 const fs = require("node:fs");
 const util = require("node:util"); 
 
-const logger = require("@logger").default;
-
 const JWTConfig = require("@configs/jwt.config").default;
 
 const readFile = util.promisify(fs.readFile);
@@ -19,8 +17,6 @@ module.exports.loadKeysAccessJWT = async () => {
         privateKey,
         publicKey
     }
-
-    logger.log("Keys of access token has been loaded.");
 }
 
 module.exports.loadKeysRefreshJWT = async () => {
@@ -29,6 +25,4 @@ module.exports.loadKeysRefreshJWT = async () => {
         privateKey,
         publicKey
     }
-
-    logger.log("Keys of refresh token has been loaded.");
 }
