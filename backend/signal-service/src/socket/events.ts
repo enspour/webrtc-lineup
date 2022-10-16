@@ -7,18 +7,18 @@ import { Actions } from "./actions";
 import logger from "@logger";
 
 const initEvents = (_io: Server) => {
-    const disconnectAfter3sec = (socket: Socket) => {
+    const disconnectAfterSeconds = (socket: Socket) => {
         setTimeout(() => {
             if (socket.rooms.size === 1) {
                 socket.disconnect();
             }
-        }, 3000);
+        }, 5000);
     }
 
     _io.on("connection", (socket: Socket) => {
         logger.log(`Connect socket: ${socket.id}`)
 
-        disconnectAfter3sec(socket)
+        disconnectAfterSeconds(socket)
 
         socket.on("disconnecting", _ => {
             const rooms = [...socket.rooms].filter(item => socket.id !== item);
