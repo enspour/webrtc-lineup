@@ -1,11 +1,12 @@
-import { User, UserAuth, Room, Tag } from "../types"
+import { User, UserAuth, Room, RoomSettings, Tag } from "../types"
 
 export interface IRepository {
     findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null>;
     findUserAuthByEmail(email: string): Promise<UserAuth | null>;
-    findRoomById(id: bigint): Promise<Room | null>;
     findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
     findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]>;
+    findRoomById(id: bigint): Promise<Room | null>;
+    findRoomSettingsById(id: bigint): Promise<RoomSettings | null>;
     findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
@@ -22,10 +23,6 @@ export interface IRepository {
 export default class Repository implements IRepository {
     constructor(private _repository: IRepository) {}
 
-    async findRoomById(id: bigint): Promise<Room | null> {
-        return await this._repository.findRoomById(id);
-    }
-
     async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User; }) | null> {
         return await this._repository.findUserAuthByEmailWithUser(email); 
     }
@@ -40,6 +37,14 @@ export default class Repository implements IRepository {
 
     async findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this._repository.findFavoritesRooms(user_id);
+    }
+
+    async findRoomById(id: bigint): Promise<Room | null> {
+        return await this._repository.findRoomById(id);
+    }
+
+    async findRoomSettingsById(id: bigint): Promise<RoomSettings | null> {
+        return await this._repository.findRoomSettingsById(id);
     }
 
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {

@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, RoomSettings } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
 import { IRepository } from "./Repository";
@@ -25,12 +25,6 @@ export default class PrismaRepository implements IRepository {
         }); 
     }
 
-    async findRoomById(id: bigint): Promise<Room | null> {
-        return await this.prismaClient.room.findFirst({
-            where: { id }
-        });
-    }
-
     async findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
         return await this.prismaClient.room.findMany({
             where: { owner_id: user_id },
@@ -49,6 +43,18 @@ export default class PrismaRepository implements IRepository {
             },
             include: { subs: true, tags: true, owner: true },
         }) 
+    }
+
+    async findRoomById(id: bigint): Promise<Room | null> {
+        return await this.prismaClient.room.findFirst({
+            where: { id }
+        });
+    }
+
+    async findRoomSettingsById(id: bigint): Promise<RoomSettings | null> {
+        return await this.prismaClient.roomSettings.findUnique({
+            where: { id }
+        });
     }
 
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
