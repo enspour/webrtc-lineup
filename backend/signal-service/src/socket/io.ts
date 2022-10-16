@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 
-let io;
+let io: Server;
 
 const initIO = (_io: Server) => {
     io = _io;
