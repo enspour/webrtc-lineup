@@ -10,6 +10,8 @@
       "@loaders/*": ["loaders/*"],
       "@socket/*": ["socket/*"],
       "@middlewares/*": ["middlewares/*"],
+      "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"],
       "@logger": ["logger"],
       "@routes": ["routes/useRoutes"],
     },
