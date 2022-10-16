@@ -51,10 +51,20 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findRoomSettingsById(id: bigint): Promise<RoomSettings | null> {
-        return await this.prismaClient.roomSettings.findUnique({
-            where: { id }
+    async findRoomWithSettingsById(id: bigint): Promise<(Room & { settings: RoomSettings }) | null> {
+        const room = await this.prismaClient.room.findUnique({
+            where: { id },
+            include: { settings: true }
         });
+
+        if (room && room.settings) {
+            return {
+                ...room,
+                settings: room.settings
+            }
+        }
+
+        return null;
     }
 
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
