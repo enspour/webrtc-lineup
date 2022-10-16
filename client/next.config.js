@@ -27,6 +27,10 @@ const nextConfig = {
             {
                 source: '/api/v1/main-service/:path*',
                 destination: 'http://localhost:3020/api/v1/main-service/:path*',
+            },
+            {
+                source: '/api/v1/signal-service/:path*',
+                destination: 'http://localhost:3030/api/v1/signal-service/:path*',
             }
         ]
     },
