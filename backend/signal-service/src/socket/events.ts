@@ -1,20 +1,33 @@
 import { Server, Socket } from "socket.io"
 
+import Broadcast from "./notifications/Broadcast.notification";
+
+import { Actions } from "./actions";
+
 import logger from "@logger";
 
 const initEvents = (_io: Server) => {
-    _io.on("connection", (socket: Socket) => {
-        logger.log(`Connect socket: ${socket.id}`)
-
+    const disconnectAfter3sec = (socket: Socket) => {
         setTimeout(() => {
             if (socket.rooms.size === 1) {
                 socket.disconnect();
             }
         }, 3000);
-    })
+    }
 
     _io.on("connection", (socket: Socket) => {
-        socket.on("disconnect", (reason) => {
+        logger.log(`Connect socket: ${socket.id}`)
+
+        disconnectAfter3sec(socket)
+
+        socket.on("disconnecting", _ => {
+            const rooms = [...socket.rooms].filter(item => socket.id !== item);
+            for (const roomId of rooms) {
+                new Broadcast(Actions.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
+            }
+        })
+
+        socket.on("disconnect", _ => {
             logger.log(`Disconnect socket: ${socket.id}`)
         })
     })
