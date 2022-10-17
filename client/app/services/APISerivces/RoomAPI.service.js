@@ -14,7 +14,7 @@ export default class RoomAPI {
      * @returns 
      */
     async create(data, signal) {
-        return await axios.post("/api/v1/main-service/rooms/", data.body, {
+        return await axios.post("/api/v1/room-service/rooms/", data.body, {
             signal
         });
     }
@@ -29,19 +29,19 @@ export default class RoomAPI {
      * @returns 
      */
     async delete(data, signal) {
-        return await axios.delete(`/api/v1/main-service/rooms/${data.params.id}`, {
+        return await axios.delete(`/api/v1/room-service/rooms/${data.params.id}`, {
             signal
         });
     }
 
     async getCreated(_, signal) {
-        return await axios.get("/api/v1/main-service/rooms", {
+        return await axios.get("/api/v1/room-service/rooms", {
             signal
         });
     }
 
     async getFavorites(_, signal) {
-        return await axios.get("/api/v1/main-service/rooms/favorites", {
+        return await axios.get("/api/v1/room-service/rooms/favorites", {
             signal
         });
     }
@@ -56,7 +56,7 @@ export default class RoomAPI {
      * @returns 
      */
     async addToFavorites(data, signal) {
-        return await axios.post(`/api/v1/main-service/rooms/favorites/${data.params.id}`, {
+        return await axios.post(`/api/v1/room-service/rooms/favorites/${data.params.id}`, {
             signal
         });
     }
@@ -71,7 +71,7 @@ export default class RoomAPI {
      * @returns 
      */
     async deleteFromFavorites(data, signal) {
-        return await axios.delete(`/api/v1/main-service/rooms/favorites/${data.params.id}`, {
+        return await axios.delete(`/api/v1/room-service/rooms/favorites/${data.params.id}`, {
             signal
         });
     }
@@ -87,7 +87,7 @@ export default class RoomAPI {
      * @returns 
      */
     async search(data, signal) {
-        return await axios.get(`/api/v1/main-service/rooms/search`, {
+        return await axios.get(`/api/v1/room-service/rooms/search`, {
             params: data.params,
             signal
         })

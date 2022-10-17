@@ -25,8 +25,8 @@ const nextConfig = {
                 destination: 'http://localhost:3010/api/v1/auth-service/:path*',
             },
             {
-                source: '/api/v1/main-service/:path*',
-                destination: 'http://localhost:3020/api/v1/main-service/:path*',
+                source: '/api/v1/room-service/:path*',
+                destination: 'http://localhost:3020/api/v1/room-service/:path*',
             },
             {
                 source: '/api/v1/signal-service/:path*',
