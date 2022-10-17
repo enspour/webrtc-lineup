@@ -7,7 +7,7 @@ import NotFound from "core/server/responses/NotFound.response";
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.use("/api/v1/main-service/rooms", roomsRoute);
+    router.use("/api/v1/room-service/rooms", roomsRoute);
 
     router.use("*", (req, res) => 
         new NotFound(`URL: ${req.originalUrl} is not found.`).send(res));

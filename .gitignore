@@ -2,8 +2,8 @@ backend/auth-service/build
 backend/auth-service/keys
 backend/auth-service/.env
 
-backend/main-service/build
-backend/main-service/.env
+backend/room-service/build
+backend/room-service/.env
 
 backend/signal-service/build
 backend/signal-service/.env
