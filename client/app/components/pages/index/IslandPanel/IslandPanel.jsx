@@ -4,7 +4,7 @@ import { autorun } from "mobx";
 
 import { IslandSearchTab, IslandViewTabs, useSaveStateIsland } from "@features/Island";
 
-import SearchInput from "@components/ui/SearchInput/SearchInput";
+import SearchControl from "@components/ui/SearchControl/SearchControl";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
 
@@ -23,6 +23,7 @@ const classes = (...classes) => {
 }
 
 const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
+    const history = services.search.History;
     const searchedText = services.search.SearchedText;
     const setSearchedText = React.useCallback(text => {
         services.search.SearchedText = text
@@ -36,13 +37,29 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
         }, 400)
     }, []);
 
+    const onClickHistoryItem = React.useCallback(text => {
+        services.search.SearchedText = text
+        services.search.pushHistoryItem(text);
+    }, []);
+
+    const removeHistoryItem = React.useCallback(text => {
+        services.search.removeHistoryItem(text);
+    }, []);
+
     return (
         <div className={styles.island__search}>
             <div className={styles.island__search__btn}>
                 <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
             </div>
 
-            <SearchInput placeholder="Type here" value={searchedText} setValue={setSearchedText}/>
+            <SearchControl 
+                placeholder="Type here" 
+                value={searchedText} 
+                setValue={setSearchedText}
+                history={history}
+                onClickHistoryItem={onClickHistoryItem}
+                removeHistoryItem={removeHistoryItem}
+            />
         </div>
     )
 })

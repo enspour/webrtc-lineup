@@ -11,9 +11,9 @@ import FavoritesRooms from "./FavoritesRooms.service";
 import Themes from "./Themes.service";
 
 import Storage from "./Storage.service";
-import Connection from "./Connection.service";
 import Modals from "./Modals.service";
 
+import Signal from "../features/webRTC/services/SignalService/Signal.service";
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
@@ -37,13 +37,15 @@ const services = {
 
     island: new IslandService(),
 
-    connection: new Connection(),
+    signal: new Signal(),
     
     modals: new Modals(),
 
     initialize: function () {
-        this.localStorage.initialize("local"),
-        this.sessionStorage.initialize("session")
+        this.localStorage.initialize("local");
+        this.sessionStorage.initialize("session");
+
+        this.search.initialize(this.localStorage);
     }
 }
 

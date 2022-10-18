@@ -1,5 +1,9 @@
+import { autorun } from "mobx";
+
 import RoomsStore from "@store/Rooms.store";
 import SearchStore from "@store/Search.store";
+
+import removeDuplicates from "@utils/removeDuplicates";
 
 export default class SearchService {
     #roomsStore;
@@ -8,7 +12,11 @@ export default class SearchService {
     constructor(api, roomAPI) {
         const request = api.createRequest(roomAPI.search);
         this.#roomsStore = new RoomsStore(request);
-        this.#searchStore = new SearchStore();
+        this.#searchStore = new SearchStore(20);
+    }
+
+    get History() {
+        return this.#searchStore.history;
     }
 
     get SearchedText() {
@@ -29,6 +37,24 @@ export default class SearchService {
 
     get State() {
         return this.#roomsStore.state;
+    }
+
+    initialize(localStorage) {
+        const history = localStorage.get("__history") || [];
+        this.#searchStore.setHistory(removeDuplicates(history));
+
+        autorun(() => {
+            const history = this.#searchStore.history;
+            localStorage.set("__history", history);
+        })
+    }
+
+    pushHistoryItem(text) {
+        this.#searchStore.pushHistoryItem(text);
+    }
+
+    removeHistoryItem(text) {
+        this.#searchStore.removeHistoryItem(text);
     }
 
     async update() {

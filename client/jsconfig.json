@@ -8,7 +8,8 @@
           "@services": ["app/services"],
           "@hooks/*": ["app/hooks/*"],
           "@store/*": ["app/store/*"],
-          "@features/*": ["app/features/*"]
+          "@features/*": ["app/features/*"],
+          "@utils/*": ["app/utils/*"]
       }
     }
 }
