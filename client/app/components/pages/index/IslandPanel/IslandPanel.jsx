@@ -23,11 +23,20 @@ const classes = (...classes) => {
 }
 
 const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
-    const history = services.search.History;
     const searchedText = services.search.SearchedText;
-    const setSearchedText = React.useCallback(text => {
-        services.search.SearchedText = text
-    }, []);
+    const history = services.search.History;
+
+    const setSearchedText = React.useCallback(
+        text => services.search.SearchedText = text
+    , []);
+
+    const pushHistoryItem = React.useCallback(
+        text => services.search.pushHistoryItem(text)
+    , []);
+
+    const removeHistoryItem = React.useCallback(
+        text => services.search.removeHistoryItem(text)
+    ,[]);
 
     const gotoBack = React.useCallback(() => {
         removeStyleSearchActive();
@@ -35,15 +44,6 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
         setTimeout(() => {
             services.island.undo();
         }, 400)
-    }, []);
-
-    const onClickHistoryItem = React.useCallback(text => {
-        services.search.SearchedText = text
-        services.search.pushHistoryItem(text);
-    }, []);
-
-    const removeHistoryItem = React.useCallback(text => {
-        services.search.removeHistoryItem(text);
     }, []);
 
     return (
@@ -57,7 +57,7 @@ const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => 
                 value={searchedText} 
                 setValue={setSearchedText}
                 history={history}
-                onClickHistoryItem={onClickHistoryItem}
+                pushHistoryItem={pushHistoryItem}
                 removeHistoryItem={removeHistoryItem}
             />
         </div>

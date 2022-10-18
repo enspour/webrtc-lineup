@@ -40,17 +40,20 @@
     max-height: 30vh;
     overflow: auto;
 
-    &__item {
-        cursor: pointer;
-        padding: 1rem 2rem;
-        color: var(--theme-color-primary);
-
-        &:hover {
-            background-color: var(--theme-bg-tertiary);
-        }
-    }
-
     &::-webkit-scrollbar {
         display: none;
+    }
+}
+
+.search__helper__item {
+    cursor: pointer;
+    padding: 1rem 2rem;
+    color: var(--theme-color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+        background-color: var(--theme-bg-tertiary);
     }
 }

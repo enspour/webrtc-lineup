@@ -6,13 +6,17 @@ import SearchStore from "@store/Search.store";
 import removeDuplicates from "@utils/removeDuplicates";
 
 export default class SearchService {
+    #size = 20;
+    #delay = 2000;
+    #timeout;
+
     #roomsStore;
     #searchStore;
 
     constructor(api, roomAPI) {
         const request = api.createRequest(roomAPI.search);
         this.#roomsStore = new RoomsStore(request);
-        this.#searchStore = new SearchStore(20);
+        this.#searchStore = new SearchStore();
     }
 
     get History() {
@@ -47,14 +51,32 @@ export default class SearchService {
             const history = this.#searchStore.history;
             localStorage.set("__history", history);
         })
+
+        autorun(() => {
+            if (this.SearchedText) {
+                clearTimeout(this.#timeout);
+                this.#timeout = setTimeout(() => this.pushHistoryItem(this.SearchedText), this.#delay)
+            } else {
+                clearTimeout(this.#timeout);
+            }
+        })
     }
 
     pushHistoryItem(text) {
-        this.#searchStore.pushHistoryItem(text);
+        this.removeHistoryItem(text);
+
+        this.#searchStore.setHistory([text, ...this.History])
+
+        while (this.History.length > this.#size) {
+            this.#searchStore.setHistory(this.History.slice(0, this.History.length - 1))
+        }
     }
 
     removeHistoryItem(text) {
-        this.#searchStore.removeHistoryItem(text);
+        const index = this.History.findIndex(item => item === text);
+        if (index !== -1) {
+            this.#searchStore.setHistory([...this.History.slice(0, index), ...this.History.slice(index + 1)])
+        }
     }
 
     async update() {
