@@ -26,7 +26,7 @@
     }
 }
 
-.search__helper {
+.helper {
     z-index: 50;
     position: absolute;
     top: 6rem;
@@ -41,7 +41,7 @@
     overflow: hidden;
 }
 
-.search__helper__items {
+.helper__items {
     max-height: 27vh;
     overflow: auto; 
 
@@ -50,7 +50,7 @@
     }
 }
 
-.search__helper__item {
+.helper__item {
     cursor: pointer;
     padding: 1rem 2rem;
     color: var(--theme-color-primary);
@@ -61,4 +61,9 @@
     &:hover {
         background-color: var(--theme-bg-tertiary);
     }
+}
+
+.helper__item__body {
+    display: flex;
+    gap: 3rem;
 }

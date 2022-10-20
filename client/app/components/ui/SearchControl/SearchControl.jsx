@@ -6,8 +6,45 @@ import useOutsideAlerter from "@hooks/useOutsideAlerter";
 import Svg from "../Svg/Svg";
 
 import ClearIcon from "@assets/images/search/clear.svg";
+import HistoryIcon from "@assets/images/search/history.svg";
 
 import styles from "./SearchControl.module.scss";
+
+const HelperItem = ({ item, setText, setIsOpen, removeHistoryItem, pushHistoryItem }) => {
+    const push = (text) => {
+        setTimeout(() => {
+            setText(text);
+            pushHistoryItem(text);
+            setIsOpen(false);
+        }, 0)
+    }
+
+    const remove = (e, text) => {
+        e.stopPropagation();
+        removeHistoryItem(text);
+    }
+
+    return (
+        <div className={styles.helper__item} onClick={() => push(item)}>
+            <div className={styles.helper__item__body}>
+                <Svg
+                    url={HistoryIcon} 
+                    height="1.8" 
+                    width="2.1" 
+                />
+
+                <span>{item}</span>
+            </div>
+
+            <Svg
+                url={ClearIcon} 
+                height="1.4" 
+                width="1.4" 
+                onClick={e => remove(e, item)}
+            />
+        </div>
+    )
+}
 
 const SearchHelper = ({ 
     isOpen, 
@@ -22,40 +59,21 @@ const SearchHelper = ({
         history.filter(item => item.startsWith(text) && item !== text)
     , [text, history])
 
-    const remove = (e, text) => {
-        e.stopPropagation();
-        removeHistoryItem(text);
-    }
-
-    const push = (text) => {
-        setTimeout(() => {
-            setText(text);
-            pushHistoryItem(text);
-            setIsOpen(false);
-        }, 0)
-    }
-
     if (!isOpen || items.length === 0) return ""; 
     
     return (
-        <div className={styles.search__helper}>
-            <div className={styles.search__helper__items}>
+        <div className={styles.helper}>
+            <div className={styles.helper__items}>
                 {
                     items.map(item => 
-                        <div 
-                            key={item}
-                            className={styles.search__helper__item} 
-                            onClick={() => push(item)}
-                        >
-                            <span>{item}</span>
-
-                            <Svg
-                                url={ClearIcon} 
-                                height="1.4" 
-                                width="1.4" 
-                                onClick={e => remove(e, item)}
-                            />
-                        </div>
+                        <HelperItem 
+                            key={item} 
+                            item={item} 
+                            setText={setText} 
+                            setIsOpen={setIsOpen} 
+                            pushHistoryItem={pushHistoryItem}
+                            removeHistoryItem={removeHistoryItem}
+                        />
                     )
                 }
             </div>
