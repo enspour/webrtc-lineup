@@ -38,7 +38,12 @@
     font-size: 1.6rem;
     font-weight: 500;
     max-height: 30vh;
-    overflow: auto;
+    overflow: hidden;
+}
+
+.search__helper__items {
+    max-height: 27vh;
+    overflow: auto; 
 
     &::-webkit-scrollbar {
         display: none;

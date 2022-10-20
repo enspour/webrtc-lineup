@@ -39,24 +39,26 @@ const SearchHelper = ({
     
     return (
         <div className={styles.search__helper}>
-            {
-                items.map(item => 
-                    <div 
-                        key={item}
-                        className={styles.search__helper__item} 
-                        onClick={() => push(item)}
-                    >
-                        <span>{item}</span>
+            <div className={styles.search__helper__items}>
+                {
+                    items.map(item => 
+                        <div 
+                            key={item}
+                            className={styles.search__helper__item} 
+                            onClick={() => push(item)}
+                        >
+                            <span>{item}</span>
 
-                        <Svg
-                            url={ClearIcon} 
-                            height="1.4" 
-                            width="1.4" 
-                            onClick={e => remove(e, item)}
-                        />
-                    </div>
-                )
-            }
+                            <Svg
+                                url={ClearIcon} 
+                                height="1.4" 
+                                width="1.4" 
+                                onClick={e => remove(e, item)}
+                            />
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }
