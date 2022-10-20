@@ -1,12 +1,12 @@
 .container {
-    height: 2rem;
-    width: fit-content;
+    display: flex;
+    height: 2.35rem;
 }
 
 .wrapper {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .input {
@@ -24,20 +24,18 @@
 
 .checkbox {
     position: relative;
-    display: inline-block;
-    width: 4.2rem;
-    height: 2.1rem;
+    width: 3.6rem;
+    height: 2.2rem;
     cursor: pointer;
 
     &::before {
         content: "";
-        position: absolute;
-        display: inline-block;
+        position: absolute; 
         width: 3.2rem;
         height: 1.8rem;
         border: .2rem solid var(--theme-border-primary);
         border-radius: 2rem;
-        transition: all .4s;
+        transition: all .3s linear;
     }
 
     &::after {
@@ -45,12 +43,11 @@
         position: absolute;
         top: .3rem;
         left: .3rem;
-        display: inline-block;
         width: 1.6rem;
         height: 1.6rem;
         background-color: var(--theme-border-primary);
         border-radius: 2rem;
-        transition: all .4s;
+        transition: all .3s linear;
     }
 }
 

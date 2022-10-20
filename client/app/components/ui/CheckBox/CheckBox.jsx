@@ -13,8 +13,8 @@ const CheckBox = ({ label, value, setValue }) => {
                     checked={value}
                     onChange={e => setValue(e.target.checked)}
                 />
-                <span className={styles.checkbox}></span>
-                <span className={styles.label}>{label}</span>
+                <div className={styles.checkbox}></div>
+                <div className={styles.label}>{label}</div>
             </label>
         </div>
     )
