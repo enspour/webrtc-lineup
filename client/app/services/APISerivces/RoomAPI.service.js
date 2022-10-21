@@ -92,4 +92,18 @@ export default class RoomAPI {
             signal
         })
     }
+
+    /**
+     * @param {{ 
+     *  params: { roomId: string }
+     * }} data
+     * @param {AbortSignal} signal 
+     * @returns 
+     */
+    async getUsersInRoom(data, signal) {
+        return await axios.get(
+            `/api/v1/signal-service/rooms/${data.params.roomId}/users`, 
+            { signal },
+        );
+    }
 }

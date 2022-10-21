@@ -13,7 +13,7 @@ import Themes from "./Themes.service";
 import Storage from "./Storage.service";
 import Modals from "./Modals.service";
 
-import Signal from "../features/webRTC/services/SignalService/Signal.service";
+import { RoomConnection } from "@features/webRTC";
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
@@ -37,7 +37,7 @@ const services = {
 
     island: new IslandService(),
 
-    signal: new Signal(),
+    roomConnection: new RoomConnection(),
     
     modals: new Modals(),
 
