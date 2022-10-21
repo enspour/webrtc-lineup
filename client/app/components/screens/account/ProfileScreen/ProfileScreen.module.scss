@@ -1,0 +1,25 @@
+.profile {
+    display: flex;
+    gap: 5.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.profile__title {
+    color: var(--theme-color-placeholder);
+}
+
+.profile__avatar {
+    margin-top: 5rem;
+    width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    background-color: #696969;
+}
+
+.profile__credentials {
+    padding: 3rem;   
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}

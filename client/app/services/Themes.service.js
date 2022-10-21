@@ -1,7 +1,6 @@
 const themes = [
     { id: 1, name: "light", primary: "#F8F8F8", tertiary: "#ECF6FF" },
     { id: 2, name: "dark", primary: "#282828", tertiary: "#606060" },
-    { id: 3, name: "gray", primary: "#474747", tertiary: "#656565" },
 ]
 
 export default class ThemesService {

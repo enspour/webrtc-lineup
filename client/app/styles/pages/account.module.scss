@@ -8,36 +8,4 @@
 .wrapper {
     padding: 5rem;
     padding-right: 8.5rem;
-    font-size: 1.6rem;
-    font-weight: 600;
 }
-
-.account {
-    display: flex;
-    gap: 5.5rem;
-}
-
-.account__title__helper, .themes__title__helper {
-    color: var(--theme-color-placeholder);
-}
-
-.account__avatar {
-    margin-top: 5rem;
-    width: 15rem;
-    height: 15rem;
-    border-radius: 50%;
-    background-color: #696969;
-}
-
-.account__credentials {
-    padding: 3rem;   
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-}
- 
-.themes {
-    margin-top: 3rem;
-}
-
-

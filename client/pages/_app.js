@@ -11,7 +11,6 @@ import "@styles/loader.scss";
 
 import "@styles/themes/light.scss";
 import "@styles/themes/dark.scss";
-import "@styles/themes/gray.scss";
 
 function MyApp({ Component, pageProps }) {
     useLoaderServices();

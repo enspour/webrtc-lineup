@@ -1,11 +1,21 @@
 .themes {
+    margin-top: 3rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.themes__title {
+    color: var(--theme-color-placeholder);
+}
+
+.themes__items {
     padding: 0 3rem;
     padding-top: 3rem;
     display: flex;
     gap: 3rem;
 }
 
-.theme {
+.themes__item {
     position: relative;
     width: 6rem;
     height: 6rem;
@@ -13,7 +23,7 @@
     overflow: hidden;
 }
 
-.theme__tertiary {
+.themes__item__tertiary {
     position: absolute;
     top: -.2rem;
     left: -.2rem;
@@ -22,7 +32,7 @@
     border-left: 6rem solid transparent;
 }
 
-.theme__primary {
+.themes__item__primary {
     position: absolute;
     top: 0;
     left: 0;

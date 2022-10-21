@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
+import { autorun } from "mobx";
 
 import Modal from "@components/ui/Modal/Modal";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
@@ -14,7 +15,6 @@ import JoinIcon from "@assets/images/room-modal/join.svg";
 import styles from "./RoomModal.module.scss";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
-import { autorun } from "mobx";
 
 const Information = observer(() => {
     const name = services.modals.room.Name;
