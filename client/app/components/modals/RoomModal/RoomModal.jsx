@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
 import Modal from "@components/ui/Modal/Modal";
@@ -11,6 +12,9 @@ import services from "@services";
 import JoinIcon from "@assets/images/room-modal/join.svg";
 
 import styles from "./RoomModal.module.scss";
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
+import { autorun } from "mobx";
 
 const Information = observer(() => {
     const name = services.modals.room.Name;
@@ -24,10 +28,44 @@ const Information = observer(() => {
     )
 });
 
-const ConnectedUsers = React.memo(() => {
+const ConnectedUsers = observer(() => {
+    const [users, setUsers] = React.useState([]);
+
+    const request = useRequest(services.roomAPI.getUsersInRoom);
+    const { data } = useResponse(request);
+
+    React.useEffect(() => 
+        autorun(() => {
+            const id = services.modals.room.Id;
+            request.start({ params: { roomId: id }});
+        })
+    , []);
+
+    React.useEffect(() => {
+        if (data) setUsers([...new Set(data.body.users)]);
+    }, [data])
+
+    if (request.isLoading) {
+        return (
+            <div className={styles.room__connected__users}>
+                <div className="loader"></div>
+            </div>
+        )
+    }
+
+    if (users.length === 0) {
+        return (
+            <div className={styles.room__connected__users__empty}></div>
+        )
+    }
+
     return (
-        <div className={styles.room__users}>
-            <div className="loader"></div>
+        <div className={styles.room__connected__users}>
+            {
+                users.map(item => 
+                    <div key={item} className={styles.room__connected__user}/>
+                )
+            }
         </div>
     )
 });
@@ -87,6 +125,8 @@ const CreatedAt = observer(() => {
 });
 
 const RoomModal = observer(() => {
+    const router = useRouter();
+
     const [password, setPassword] = React.useState("");
 
     const isOpenRoom = services.modals.room.IsOpen;
@@ -95,7 +135,14 @@ const RoomModal = observer(() => {
         services.modals.room.IsOpen = value;
     }
 
-    const connect = () => {}
+    const join = async () => {
+        const id = services.modals.room.Id;
+        const response = await services.roomConnection.join(id, password)
+        
+        console.log(response);
+
+        if (response.status === 200) router.push(`/room/${id}`); 
+    }
 
     if (!isOpenRoom) return "";
 
@@ -111,7 +158,7 @@ const RoomModal = observer(() => {
 
                     <div className={styles.room__connect}>
                         <CenterInput type="password" placeholder="Password" value={password} setValue={setPassword}/>
-                        <Svg url={JoinIcon} width="1.2" height="2" onClick={connect}/>
+                        <Svg url={JoinIcon} width="1.2" height="2" onClick={join}/>
                     </div>
                 </div> 
 
