@@ -12,6 +12,7 @@
       "@middlewares/*": ["middlewares/*"],
       "@utils/*": ["utils/*"],
       "@services/*": ["services/*"],
+      "@controllers/*": ["controllers/*"],
       "@logger": ["logger"],
       "@routes": ["routes/useRoutes"],
     },
