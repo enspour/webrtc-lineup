@@ -23,7 +23,7 @@ class Clients {
         }
     }
 
-    get UserIds() {
+    get UsersIds() {
         return this.clients.map(item => item.userId);
     }
 

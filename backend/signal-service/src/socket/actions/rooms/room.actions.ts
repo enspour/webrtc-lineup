@@ -11,8 +11,8 @@ import Success from "@socket/notifications/Success.notification";
 import BadRequest from "@socket/notifications/BadRequest.notification";
 import NotFound from "@socket/notifications/NotFound.notification";
 import Broadcast from "@socket/notifications/Broadcast.notification";
-import parseId from "@utils/parseId";
-import stores from "@socket/stores";
+
+import services from "@socket/services";
 
 interface JoinPayload {
     id: string
@@ -41,10 +41,7 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
     }
 
     if (room.settings.password === password) {
-        socket.join(id);
-        
-        const userId = parseId(socket.request);
-        stores.rooms.addClient(id, { socketId: socket.id, userId });
+        services.sockets.join(socket, id);
 
         const data = {
             id: room.id.toString(),

@@ -39,7 +39,7 @@ class Rooms {
     getUserIds(roomId: string) {
         const index = this.rooms.findIndex(item => item.id === roomId)
         if (index !== -1) {
-            return this.rooms[index].clients.UserIds;
+            return this.rooms[index].clients.UsersIds;
         }
 
         return [];
