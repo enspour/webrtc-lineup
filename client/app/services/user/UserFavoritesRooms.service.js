@@ -1,6 +1,6 @@
 import RoomsStore from "@store/Rooms.store";
 
-export default class FavoritesRooms {
+export default class UserFavoritesRooms {
     #roomsStore;
 
     constructor(api, roomAPI) {

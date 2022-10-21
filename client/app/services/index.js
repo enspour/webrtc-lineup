@@ -4,14 +4,15 @@ import RoomAPI from "./APISerivces/RoomAPI.service";
 
 import { IslandService } from "../features/Island";
 
-import Search from "./Search.service";
-import User from "./User.service";
-import UserRooms from "./UserRooms.service";
-import FavoritesRooms from "./FavoritesRooms.service";
-import Themes from "./Themes.service";
+import User from "./user/User.service";
+import UserRooms from "./user/UserRooms.service";
+import UserFavoritesRooms from "./user/UserFavoritesRooms.service";
 
-import Storage from "./Storage.service";
+import Search from "./Search.service";
 import Modals from "./Modals.service";
+import Storage from "./Storage.service";
+
+import Themes from "./Themes.service";
 
 import { RoomConnection } from "@features/webRTC";
 
@@ -25,21 +26,20 @@ const services = {
     roomAPI,
     
     search: new Search(API, roomAPI),
-    user: new User(API, authAPI),
-
-    themes: new Themes(),
+    modals: new Modals(),
 
     localStorage: new Storage(),
     sessionStorage: new Storage(),
+    
+    themes: new Themes(),
 
+    user: new User(API, authAPI),
     userRooms: new UserRooms(API, roomAPI),
-    favoritesRooms: new FavoritesRooms(API, roomAPI),
+    userFavoritesRooms: new UserFavoritesRooms(API, roomAPI),
 
     island: new IslandService(),
 
     roomConnection: new RoomConnection(),
-    
-    modals: new Modals(),
 
     initialize: function () {
         this.localStorage.initialize("local");

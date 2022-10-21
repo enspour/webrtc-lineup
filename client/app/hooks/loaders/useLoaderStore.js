@@ -9,7 +9,7 @@ const useLoaderStore = () => {
             const userId = services.user.Id;
             if (userId) {
                 services.userRooms.update();
-                services.favoritesRooms.update();
+                services.userFavoritesRooms.update();
             }
         })
     , []);

@@ -9,14 +9,14 @@ import services from "@services";
 import styles from "./Favorites.module.scss";
 
 const Favorites = observer(() => {
-    const state = services.favoritesRooms.State;
+    const state = services.userFavoritesRooms.State;
 
     const [items, setItems] = React.useState([]);
 
     React.useEffect(
         () =>
             autorun(() => {
-                const rooms = services.favoritesRooms.Rooms;
+                const rooms = services.userFavoritesRooms.Rooms;
 
                 if (rooms) {
                     setItems([...rooms]);

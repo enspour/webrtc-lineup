@@ -43,7 +43,7 @@ const AddToFavoritesControl = ({ room }) => {
     }
 
     React.useEffect(() => {
-        if (data) services.favoritesRooms.update();
+        if (data) services.userFavoritesRooms.update();
     }, [data])
 
     return <Svg url={AddToFavoritesIcon} width="2" height="1.8" onClick={add}/>
@@ -59,14 +59,14 @@ const RemoveFromFavoritesControl = ({ room }) => {
     }
 
     React.useEffect(() => {
-        if (data) services.favoritesRooms.update();
+        if (data) services.userFavoritesRooms.update();
     }, [data])
 
     return <Svg url={RemoveToFavoritesIcon} width="2" height="1.8" onClick={remove}/>
 }
 
 const FavoritesControl = observer(({ room }) => {
-    const favorites = services.favoritesRooms.Rooms;
+    const favorites = services.userFavoritesRooms.Rooms;
     const isFavorites = favorites.find(item => item.id === room.id);
 
     if (isFavorites) {
