@@ -1,5 +1,5 @@
-import { IslandSearchTab } from "./Island.states";
-import IslandStore from "./Island.store";
+import { IslandSearchTab } from "../stores/Island.states";
+import IslandStore from "../stores/Island.store";
 
 export default class IslandService {
     #islandStore;
