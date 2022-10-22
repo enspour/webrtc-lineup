@@ -1,7 +1,6 @@
 import React from "react";
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
-
 import Panel from "@components/ui/Panel/Panel";
 
 import ThemesScreen from "@components/screens/account/ThemesScreen/ThemesScreen";
