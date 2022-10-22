@@ -22,7 +22,7 @@ const ProfileCredentials = React.memo(({
     return (
         <div className={styles.profile__credentials}>
             <div>
-                <div className="mb-1 text-primary">Email address</div>
+                <div className="mb-1 text-primary">Email Address</div>
                 <SimpleInput value={email} setValue={setEmail} placeholder="Email"/>
             </div>
 
@@ -34,7 +34,7 @@ const ProfileCredentials = React.memo(({
 
                 <div className="w-100">
                     <div className="mb-1 text-primary">Password</div>
-                    <FilledButton onClick={changePassword}> Change </FilledButton>
+                    <FilledButton onClick={changePassword}> Reset </FilledButton>
                 </div>
             </div>
         </div>
