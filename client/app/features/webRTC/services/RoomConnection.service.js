@@ -63,10 +63,12 @@ export default class RoomConnection {
         return new Error("You are connecting");
     }
 
-    async leave(id) {
+    async leave() {
         let waiter;
 
         if (this.#state === States.JOINED) {
+            const id = this.#roomstore.id;
+
             this.#signal.leave(id);
 
             const clear = this.#signal.onLeaveRoom((status, message, data) => {
@@ -81,5 +83,17 @@ export default class RoomConnection {
         }
 
         return new Error("You are not connected yet");
+    }
+
+    async getUsers() {
+        const id = this.#roomstore.id;
+        
+        return new Promise((resolve, reject) => {
+            this.#signal.onceUsers((status, message, data) => {
+                resolve({ status, message, data });
+            })
+            
+            this.#signal.getUsers(id)
+        });
     }
 }

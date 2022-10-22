@@ -25,6 +25,10 @@ export default class Signal {
         this.#socket.emit(SignalActions.LEAVE_ROOM, { id })
     }
 
+    getUsers(id) {
+        this.#socket.emit(SignalActions.GET_USERS, { id });
+    }
+
     /**
      * @param {(status: number, message: string, data: any) => Promise<void>} handler 
      * @returns 
@@ -84,5 +88,15 @@ export default class Signal {
     onDisconnect(handler) {
         this.#socket.on("disconnect", handler);
         return () => this.#socket.off("disconnect", handler);
+    }
+
+
+    /**
+     * @param {(status: number, message: string, data: any) => Promise<void>} handler 
+     * @returns 
+     */
+     onceUsers(handler) {
+        const event = async ({ status, message, data }) => await handler(status, message, data);
+        this.#socket.once(SignalActions.NOTIFY_GET_USERS, event);
     }
 }

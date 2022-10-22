@@ -6,18 +6,26 @@ import services from "@services";
 
 const Room = () => {
     const router = useRouter();
-    const { id } = router.query;
 
     const leave = async () => {
-        const response = await services.roomConnection.leave(id);
+        const response = await services.roomConnection.leave();
         console.log(response)
         router.push("/");
+    }
+
+    const getClients = async () => {
+        const response = await services.roomConnection.getUsers();
+        console.log(response);
     }
 
     return (
         <div>
             <OutlinedButton onClick={leave}>
                 Leave
+            </OutlinedButton>
+
+            <OutlinedButton onClick={getClients}>
+                getClients
             </OutlinedButton>
         </div>
     )
