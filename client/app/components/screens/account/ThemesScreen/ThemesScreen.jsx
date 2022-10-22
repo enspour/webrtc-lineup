@@ -50,7 +50,7 @@ const ThemesTitle = () => {
     return (
         <div className="w-100">
             <div className="text-primary">Theme</div>
-            <div className={styles.themes__title}>
+            <div className="text-placeholder">
                 Choose a theme that interests you.
             </div>
         </div>

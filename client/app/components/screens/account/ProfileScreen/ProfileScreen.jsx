@@ -60,7 +60,7 @@ const ProfileInformation = observer(() => {
     return (
         <div className="w-100">
             <div className="text-primary">Account</div>
-            <div className={styles.profile__title}>
+            <div className="text-placeholder">
                 Here you can edit your public information and password.
             </div>
 
