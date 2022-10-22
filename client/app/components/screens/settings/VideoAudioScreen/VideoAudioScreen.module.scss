@@ -1,0 +1,26 @@
+.videoaudio {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}
+
+.selections {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+.inputs__section {
+    display: flex;
+    gap: 1rem;
+}
+
+.inputs__section__select {
+    min-width: 75%;
+}
+
+.inputs__section__title {
+    margin-bottom: 1rem;
+}

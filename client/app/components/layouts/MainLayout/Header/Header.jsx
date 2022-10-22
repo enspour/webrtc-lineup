@@ -16,11 +16,13 @@ const AccountMenu = ({ isOpen }) => {
     const router = useRouter();
     const logout = useLogout();
 
-    const gotoAccount = () => router.push("/account");
+    const openAccount = () => router.push("/account");
+    const openSettings = () => router.push("/settings");
 
     const AccountMenuItems = [
-        { id: 1, name: "Account", onClick: gotoAccount},
-        { id: 2, name: "Logout", onClick: logout}
+        { id: 1, name: "Account", onClick: openAccount },
+        { id: 2, name: "Settings", onClick: openSettings },
+        { id: 3, name: "Logout", onClick: logout },
     ];
 
     return <Dropdown isOpen={isOpen} items={AccountMenuItems}/>;
