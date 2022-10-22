@@ -1,6 +1,6 @@
 export default {
-    GET_USERS: "room:get_sockets",
-    NOTIFY_GET_USERS: "notify:room:get_sockets",
+    GET_USERS: "room:get_users",
+    NOTIFY_GET_USERS: "notify:room:get_users",
 
     JOIN_ROOM: "room:join",
     NOTIFY_JOIN: "notify:room:join",
