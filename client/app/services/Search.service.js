@@ -19,6 +19,19 @@ export default class SearchService {
         this.#searchStore = new SearchStore();
     }
 
+    initialize(localStorage) {
+        const history = localStorage.get("__history") || [];
+        this.#searchStore.setHistory(removeDuplicates(history));
+
+        const offSavingHistory = this.#onSavingHistory(localStorage);
+        const offPushingInHistory = this.#onPushingInHistory();
+
+        return () => {
+            offSavingHistory();
+            offPushingInHistory();
+        }
+    }
+
     get History() {
         return this.#searchStore.history;
     }
@@ -41,25 +54,6 @@ export default class SearchService {
 
     get State() {
         return this.#roomsStore.state;
-    }
-
-    initialize(localStorage) {
-        const history = localStorage.get("__history") || [];
-        this.#searchStore.setHistory(removeDuplicates(history));
-
-        autorun(() => {
-            const history = this.#searchStore.history;
-            localStorage.set("__history", history);
-        })
-
-        autorun(() => {
-            if (this.SearchedText) {
-                clearTimeout(this.#timeout);
-                this.#timeout = setTimeout(() => this.pushHistoryItem(this.SearchedText), this.#delay)
-            } else {
-                clearTimeout(this.#timeout);
-            }
-        })
     }
 
     pushHistoryItem(text) {
@@ -101,5 +95,23 @@ export default class SearchService {
 
     clear() {
         this.#roomsStore.clear();
+    }
+
+    #onSavingHistory(localStorage) {
+        return autorun(() => {
+            const history = this.#searchStore.history;
+            localStorage.set("__history", history);
+        })
+    }
+
+    #onPushingInHistory() {
+        return autorun(() => {
+            if (this.SearchedText) {
+                clearTimeout(this.#timeout);
+                this.#timeout = setTimeout(() => this.pushHistoryItem(this.SearchedText), this.#delay)
+            } else {
+                clearTimeout(this.#timeout);
+            }
+        })
     }
 }
