@@ -1,11 +1,11 @@
-import Clients, { Client } from "./clients.store";
+import ClientsStore, { Client } from "./clients.store";
 
 interface Room {
     id: string
-    clients: Clients
+    clients: ClientsStore
 }
 
-class Rooms {
+class RoomsStore {
     private rooms: Room[];
 
     constructor() {
@@ -15,7 +15,7 @@ class Rooms {
     addClient(roomId: string, client: Client) {
         const index = this.rooms.findIndex(item => item.id === roomId)
         if (index === -1) {
-            const room = { id: roomId, clients: new Clients(client) }
+            const room = { id: roomId, clients: new ClientsStore(client) }
             this.rooms.push(room)
         } else {
             const room = this.rooms[index];
@@ -36,14 +36,14 @@ class Rooms {
         }
     }
 
-    getUserIds(roomId: string) {
+    getClients(roomId: string) {
         const index = this.rooms.findIndex(item => item.id === roomId)
         if (index !== -1) {
-            return this.rooms[index].clients.UsersIds;
+            return this.rooms[index].clients.Clients;
         }
 
         return [];
     }
 }
 
-export default Rooms;
+export default RoomsStore;

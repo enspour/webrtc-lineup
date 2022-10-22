@@ -3,7 +3,7 @@ export interface Client {
     userId: string
 }
 
-class Clients {
+class ClientsStore {
     private clients: Client[];
 
     constructor(...clients: Client[]) {
@@ -23,8 +23,8 @@ class Clients {
         }
     }
 
-    get UsersIds() {
-        return this.clients.map(item => item.userId);
+    get Clients() {
+        return this.clients;
     }
 
     get length() {
@@ -32,4 +32,4 @@ class Clients {
     }
 }
 
-export default Clients;
+export default ClientsStore;

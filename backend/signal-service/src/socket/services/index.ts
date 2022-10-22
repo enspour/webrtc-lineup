@@ -1,5 +1,5 @@
-import SocketsService from "./Sockets.service";
+import RoomsService from "./Rooms.service";
 
 export default {
-    sockets: new SocketsService()
+    rooms: new RoomsService()
 }

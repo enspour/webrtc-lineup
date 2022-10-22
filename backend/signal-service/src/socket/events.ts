@@ -25,7 +25,7 @@ const initEvents = (_io: Server) => {
         socket.on("disconnecting", _ => {
             const rooms = [...socket.rooms].filter(item => socket.id !== item);
             for (const roomId of rooms) {
-                services.sockets.remove(socket, roomId);
+                services.rooms.remove(socket, roomId);
                 new Broadcast(Actions.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
             }
         })

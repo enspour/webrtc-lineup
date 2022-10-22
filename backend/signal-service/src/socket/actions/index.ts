@@ -1,8 +1,11 @@
 import { Server, Socket } from "socket.io"
 
-import { initJoinRoom, initLeaveRoom } from "./rooms/room.actions";
+import { initGetUsersRoom, initJoinRoom, initLeaveRoom } from "./rooms/room.actions";
 
 export const Actions = {
+    GET_USERS: "room:get_users",
+    NOTIFY_GET_USERS: "notify:room:get_users",
+
     JOIN_ROOM: "room:join",
     NOTIFY_JOIN: "notify:room:join",
 
@@ -15,8 +18,9 @@ export const Actions = {
 
 const initActions = (io: Server) => {
     io.on("connection", (socket: Socket) => {
-        socket.on(Actions.JOIN_ROOM, initJoinRoom(socket))
-        socket.on(Actions.LEAVE_ROOM, initLeaveRoom(socket))
+        socket.on(Actions.JOIN_ROOM, initJoinRoom(socket));
+        socket.on(Actions.LEAVE_ROOM, initLeaveRoom(socket));
+        socket.on(Actions.GET_USERS, initGetUsersRoom(socket));
     })
 }
 
