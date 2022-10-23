@@ -56,7 +56,7 @@ const SearchHelper = ({
     removeHistoryItem 
 }) => {
     const items = React.useMemo(() =>
-        history.filter(item => item.startsWith(text) && item !== text)
+        history.filter(item => item.startsWith(text) && item !== text).slice(0, 20)
     , [text, history])
 
     if (!isOpen || items.length === 0) return ""; 

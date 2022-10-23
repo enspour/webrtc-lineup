@@ -6,7 +6,7 @@ import SearchStore from "@store/Search.store";
 import removeDuplicates from "@utils/removeDuplicates";
 
 export default class SearchService {
-    #size = 20;
+    #size = 50;
     #delay = 2000;
     #timeout;
 
@@ -20,8 +20,7 @@ export default class SearchService {
     }
 
     initialize(localStorage) {
-        const history = localStorage.get("__history") || [];
-        this.#searchStore.setHistory(removeDuplicates(history));
+        this.#loadHistory(localStorage);
 
         const offSavingHistory = this.#onSavingHistory(localStorage);
         const offPushingInHistory = this.#onPushingInHistory();
@@ -95,6 +94,11 @@ export default class SearchService {
 
     clear() {
         this.#roomsStore.clear();
+    }
+
+    #loadHistory(localStorage) {
+        const history = localStorage.get("__history") || [];
+        this.#searchStore.setHistory(removeDuplicates(history));
     }
 
     #onSavingHistory(localStorage) {
