@@ -33,11 +33,13 @@ export default class RoomConnection {
             this.#state = States.IDLE;
         })
 
-        this.#signal.onLeaveRoom((status) => {
-            if (status === 200) {
-                this.#state = States.IDLE;
-            }
+        this.#signal.onDisconnect(() => {
+            this.#state = States.IDLE;
         })
+    }
+
+    get Name() {
+        return this.#roomstore.name;
     }
 
     async join(id, password) {
@@ -88,7 +90,7 @@ export default class RoomConnection {
     async getUsers() {
         const id = this.#roomstore.id;
         
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, _) => {
             this.#signal.onceUsers((status, message, data) => {
                 resolve({ status, message, data });
             })

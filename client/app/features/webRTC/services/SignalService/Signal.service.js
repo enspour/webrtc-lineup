@@ -6,7 +6,10 @@ export default class Signal {
     #socket;
 
     constructor() {
-        this.#socket = io({ path: "/api/v1/signal-service/socket/socket.io", autoConnect: false });
+        this.#socket = io({ 
+            path: "/api/v1/signal-service/socket/socket.io", 
+            autoConnect: false
+        });
     }
 
     get socketId() {
