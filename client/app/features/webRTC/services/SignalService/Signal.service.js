@@ -16,12 +16,20 @@ export default class Signal {
         return this.#socket.id;
     }
 
+    get Active() {
+        return this.#socket.active;
+    }
+
     get Connected() {
         return this.#socket.connected;
     }
 
     connect() {
         this.#socket.connect();
+    }
+
+    disconnect() {
+        this.#socket.disconnect();
     }
 
     join(id, password) {

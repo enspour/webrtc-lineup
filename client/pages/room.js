@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { observer } from "mobx-react-lite";
 
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 import CardsScreen from "@components/screens/room/CardsScreen/CardsScreen";
@@ -7,7 +8,7 @@ import services from "@services";
 
 import styles from "@styles/pages/room.module.scss";
 
-const Room = () => {
+const Room = observer(() => {
     const name = services.roomConnection.Name;
 
     const router = useRouter();
@@ -35,6 +36,6 @@ const Room = () => {
             </div>
         </div>
     )
-}
+})
 
 export default Room;

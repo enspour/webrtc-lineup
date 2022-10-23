@@ -16,8 +16,11 @@ export default class RoomConnection {
     initialize() {
         this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
-                this.#roomstore.setRoom(data);
-            } 
+                if (data) this.#roomstore.setRoom(data);
+                return;
+            }
+
+            this.#signal.disconnect();
         })
     }
 
@@ -28,7 +31,7 @@ export default class RoomConnection {
     async join(id, password) {
         let waiter;
 
-        if (!this.#signal.Connected) {
+        if (!this.#signal.Active) {
             this.#signal.connect();
             this.#signal.join(id, password);
 
@@ -49,7 +52,7 @@ export default class RoomConnection {
     async leave() {
         let waiter;
 
-        if (this.#signal.Connected) {
+        if (this.#signal.Active) {
             const id = this.#roomstore.id;
             this.#signal.leave(id);
 
