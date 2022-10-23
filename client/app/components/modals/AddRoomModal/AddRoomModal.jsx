@@ -119,7 +119,7 @@ const AddRoomModal = observer(() => {
 
                 <div className={styles.password} ref={passwordRef}>
                     <InputControl 
-                        type="password" 
+                        type="password"
                         placeholder="Password" 
                         value={password} 
                         setValue={setPassword}
@@ -129,7 +129,9 @@ const AddRoomModal = observer(() => {
                 <InputTags tags={tags} setTags={setTags}/>
                 <Tags tags={tags} setTags={setTags}/>
 
-                <FilledButton onClick={addRoom}> Create </FilledButton>
+                <div className="w-80 m-auto">
+                    <FilledButton onClick={addRoom}> Create </FilledButton>
+                </div>
             </div>
         </Modal>
     );

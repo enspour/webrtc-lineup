@@ -142,7 +142,7 @@ const RoomModal = observer(() => {
                 <div className="fl jf-between">
                     <Information />
 
-                    <div className={styles.room__connect}>
+                    <div className={styles.room__connection}>
                         <CenterInput type="password" placeholder="Password" value={password} setValue={setPassword}/>
                         <Svg url={JoinIcon} width="1.2" height="2" onClick={join}/>
                     </div>
