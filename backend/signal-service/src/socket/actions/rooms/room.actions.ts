@@ -34,10 +34,6 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
     }
     
     const { id, password } = payload;
-        
-    if (socket.rooms.size > 1) { 
-        return new Success(Actions.NOTIFY_JOIN, "Already connected", { id }).notify(socket);
-    }
 
     const room = await RoomsService.findRoomWithSettingsById(BigInt(id));
 
@@ -45,7 +41,12 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
         return new NotFound(Actions.NOTIFY_JOIN, "Room is not found").notify(socket);
     }
 
-    if (room.settings.password === password) {
+    if (room.settings.password !== password) {
+        return new BadRequest(Actions.NOTIFY_JOIN, "Incorrect password").notify(socket);
+    }
+    
+    if (socket.rooms.size === 1) {
+        await socket.join(id);
         services.rooms.join(socket, id);
 
         const data = {
@@ -58,9 +59,9 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
 
         new Success(Actions.NOTIFY_JOIN, "Success join", data).notify(socket);
         return new Broadcast(Actions.NOTIFY_USER_JOIN, { socketId: socket.id }).notify(socket, id);
+    } else {
+        return new Success(Actions.NOTIFY_JOIN, "Already connected").notify(socket);
     }
-
-    new BadRequest(Actions.NOTIFY_JOIN, "Incorrect password").notify(socket)
 }
 
 export const initLeaveRoom = (socket: Socket) => (payload: LeavePayload) => {
@@ -75,7 +76,7 @@ export const initLeaveRoom = (socket: Socket) => (payload: LeavePayload) => {
         return socket.disconnect();
     }
 
-    new BadRequest(Actions.NOTIFY_LEAVE, "Already leaved").notify(socket);
+    new Success(Actions.NOTIFY_LEAVE, "Already leaved").notify(socket);
 }
 
 export const initGetUsersRoom = (socket: Socket) => (payload: GetSocketsPayload) => {

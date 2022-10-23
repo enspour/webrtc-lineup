@@ -11,8 +11,6 @@ export default class RoomsService {
     }
 
     join(socket: Socket, roomId: string) {
-        socket.join(roomId);
-        
         const userId = parseId(socket.request);
         this.rooms.addClient(roomId, { socketId: socket.id, userId });
     }
