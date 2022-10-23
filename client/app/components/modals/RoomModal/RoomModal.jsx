@@ -4,17 +4,17 @@ import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
 import Modal from "@components/ui/Modal/Modal";
-import CheckBox from "@components/ui/CheckBox/CheckBox";
 import CenterInput from "@components/ui/CenterInput/CenterInput";
 import Svg from "@components/ui/Svg/Svg";
+
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 
 import JoinIcon from "@assets/images/room-modal/join.svg";
 
 import styles from "./RoomModal.module.scss";
-import useRequest from "@hooks/api/useRequest";
-import useResponse from "@hooks/api/useResponse";
 
 const Information = observer(() => {
     const name = services.modals.room.Name;
@@ -54,9 +54,7 @@ const ConnectedUsers = observer(() => {
     }
 
     if (users.length === 0) {
-        return (
-            <div className={styles.room__connected__users__empty}></div>
-        )
+        return "";
     }
 
     return (
@@ -66,18 +64,6 @@ const ConnectedUsers = observer(() => {
                     <div key={item} className={styles.room__connected__user}/>
                 )
             }
-        </div>
-    )
-});
-
-const VoiceVideo = React.memo(() => {
-    const [enableVoice, setEnableVoice] = React.useState(true);
-    const [enableCamera, setEnableCamera] = React.useState(false);
-
-    return (
-        <div className={styles.room__voicevideo}>
-            <CheckBox label="Voice" value={enableVoice} setValue={setEnableVoice}/>
-            <CheckBox label="Camera" value={enableCamera} setValue={setEnableCamera}/>
         </div>
     )
 });
@@ -114,7 +100,7 @@ const CreatedAt = observer(() => {
     const options = {
         month: "long", 
         day: "numeric", 
-        year: "numeric" 
+        year: "numeric",
     }
 
     return (
@@ -163,7 +149,6 @@ const RoomModal = observer(() => {
                 </div> 
 
                 <ConnectedUsers />
-                <VoiceVideo />
                 <Tags />
                 <CreatedAt />
             </div>
