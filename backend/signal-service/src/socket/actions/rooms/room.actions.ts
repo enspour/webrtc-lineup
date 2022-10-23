@@ -5,8 +5,7 @@ import { Actions } from "..";
 import RoomsService from "@services/Rooms.service";
 
 import joinValidator from "./validators/join.validator";
-import leaveValidator from "./validators/leave.validator";
-import getSocketsValidator from "./validators/getSockets.validator";
+import checkIdValidator from "./validators/checkId.validator";
 
 import Success from "@socket/notifications/Success.notification";
 import BadRequest from "@socket/notifications/BadRequest.notification";
@@ -65,7 +64,7 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
 }
 
 export const initLeaveRoom = (socket: Socket) => (payload: LeavePayload) => {
-    if (leaveValidator(payload).length) {
+    if (checkIdValidator(payload).length) {
         return new BadRequest(Actions.NOTIFY_JOIN, "Bad request").notify(socket)
     }
 
@@ -80,7 +79,7 @@ export const initLeaveRoom = (socket: Socket) => (payload: LeavePayload) => {
 }
 
 export const initGetUsersRoom = (socket: Socket) => (payload: GetSocketsPayload) => {
-    if (getSocketsValidator(payload).length) {
+    if (checkIdValidator(payload).length) {
         return new BadRequest(Actions.NOTIFY_GET_USERS, "Bad request").notify(socket)
     }
 
