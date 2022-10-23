@@ -1,32 +1,38 @@
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
+import CardsScreen from "@components/screens/room/CardsScreen/CardsScreen";
 
 import services from "@services";
 
+import styles from "@styles/pages/room.module.scss";
+
 const Room = () => {
+    const name = services.roomConnection.Name;
+
     const router = useRouter();
 
     const leave = async () => {
         const response = await services.roomConnection.leave();
-        console.log(response)
+        console.log(response);
         router.push("/");
     }
 
-    const getClients = async () => {
-        const response = await services.roomConnection.getUsers();
-        console.log(response);
-    }
-
     return (
-        <div>
-            <OutlinedButton onClick={leave}>
-                Leave
-            </OutlinedButton>
+        <div className={styles.room}>
+            <div className="fl jf-between al-center g-2">
+                <div className={styles.room__title}> {name} </div>
 
-            <OutlinedButton onClick={getClients}>
-                getClients
-            </OutlinedButton>
+                <div className={styles.room__btn__leave}>
+                    <OutlinedButton onClick={leave}>
+                        Leave
+                    </OutlinedButton>
+                </div>
+            </div>
+
+            <div className={styles.room__cards}>
+                <CardsScreen />
+            </div>
         </div>
     )
 }
