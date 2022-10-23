@@ -10,11 +10,15 @@ import logger from "@logger";
 
 const initEvents = (_io: Server) => {
     const disconnectNotJoinedSocket = (socket: Socket) => {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             if (socket.rooms.size === 1) {
                 socket.disconnect();
             }
         }, 5000);
+
+        socket.on("disconnect", _ => {
+            clearTimeout(timeout);
+        });
     }
 
     _io.on("connection", (socket: Socket) => {
@@ -31,7 +35,7 @@ const initEvents = (_io: Server) => {
         })
 
         socket.on("disconnect", _ => {
-            logger.log(`Disconnect socket: ${socket.id}`)
+            logger.log(`Disconnect socket: ${socket.id}`);
         })
     })
 }
