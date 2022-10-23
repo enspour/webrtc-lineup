@@ -141,7 +141,7 @@ const RoomModal = observer(() => {
         
         console.log(response);
 
-        if (response.status === 200) router.push(`/room/${id}`); 
+        if (response.status === 200) router.push("/room"); 
     }
 
     if (!isOpenRoom) return "";
