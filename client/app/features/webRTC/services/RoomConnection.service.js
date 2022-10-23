@@ -1,23 +1,14 @@
-import RoomStore from "@store/Room.store";
 import Signal from "./SignalService/Signal.service";
 
-const States = {
-    IDLE: "idle",
-    PENDING: "pending",
-    JOINED: "joined",
-}
+import RoomStore from "@store/Room.store";
 
 export default class RoomConnection {
     #signal;
     #roomstore;
 
-    #state;
-
     constructor() {
         this.#signal = new Signal();
         this.#roomstore = new RoomStore();
-
-        this.#state = States.IDLE;
 
         this.initialize();
     }
@@ -25,16 +16,8 @@ export default class RoomConnection {
     initialize() {
         this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
-                this.#state = States.JOINED;
                 this.#roomstore.setRoom(data);
-                return;
-            }
-
-            this.#state = States.IDLE;
-        })
-
-        this.#signal.onDisconnect(() => {
-            this.#state = States.IDLE;
+            } 
         })
     }
 
@@ -45,9 +28,7 @@ export default class RoomConnection {
     async join(id, password) {
         let waiter;
 
-        if (this.#state === States.IDLE) {
-            this.#state = States.PENDING;
-
+        if (!this.#signal.Connected) {
             this.#signal.connect();
             this.#signal.join(id, password);
 
@@ -68,9 +49,8 @@ export default class RoomConnection {
     async leave() {
         let waiter;
 
-        if (this.#state === States.JOINED) {
+        if (this.#signal.Connected) {
             const id = this.#roomstore.id;
-
             this.#signal.leave(id);
 
             const clear = this.#signal.onLeaveRoom((status, message, data) => {

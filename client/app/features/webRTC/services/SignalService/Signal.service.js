@@ -16,6 +16,10 @@ export default class Signal {
         return this.#socket.id;
     }
 
+    get Connected() {
+        return this.#socket.connected;
+    }
+
     connect() {
         this.#socket.connect();
     }
