@@ -5,7 +5,7 @@ import { Actions } from "..";
 import RoomsService from "@services/Rooms.service";
 
 import joinValidator from "./validators/join.validator";
-import checkIdValidator from "./validators/checkId.validator";
+import idValidator from "./validators/id.validator";
 
 import Success from "@socket/notifications/Success.notification";
 import BadRequest from "@socket/notifications/BadRequest.notification";
@@ -27,7 +27,7 @@ interface GetSocketsPayload {
     id: string
 }
 
-export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => {
+export const JoinAction = (socket: Socket) => async (payload: JoinPayload) => {
     if (joinValidator(payload).length) {
         return new BadRequest(Actions.NOTIFY_JOIN, "Bad request").notify(socket)
     }
@@ -44,9 +44,18 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
         return new BadRequest(Actions.NOTIFY_JOIN, "Incorrect password").notify(socket);
     }
     
+    const client = services.clients.createClient(socket);
+
     if (socket.rooms.size === 1) {
-        await socket.join(id);
-        services.rooms.join(socket, id);
+        await client.join(id);
+
+        socket.once("disconnecting", _ => {
+            const rooms = [...socket.rooms].filter(item => socket.id !== item);
+            for (const roomId of rooms) {
+                services.rooms.removeClient(roomId, socket.id);
+                new Broadcast(Actions.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
+            }
+        });
 
         const data = {
             id: room.id.toString(),
@@ -54,7 +63,7 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
             status: room.status,
             owner_id: room.owner_id.toString(),
             created_at: room.created_at,
-        }
+        };
 
         new Success(Actions.NOTIFY_JOIN, "Success join", data).notify(socket);
         return new Broadcast(Actions.NOTIFY_USER_JOIN, { socketId: socket.id }).notify(socket, id);
@@ -63,31 +72,35 @@ export const initJoinRoom = (socket: Socket) => async (payload: JoinPayload) => 
     }
 }
 
-export const initLeaveRoom = (socket: Socket) => (payload: LeavePayload) => {
-    if (checkIdValidator(payload).length) {
+export const LeaveAction = (socket: Socket) => (payload: LeavePayload) => {
+    if (idValidator(payload).length) {
         return new BadRequest(Actions.NOTIFY_JOIN, "Bad request").notify(socket)
     }
 
     const { id } = payload;
 
-    if (socket.rooms.has(id)) {
+    const client = services.clients.createClient(socket);
+
+    if (client.has(id)) {
         new Success(Actions.NOTIFY_LEAVE, "Success leave", { id }).notify(socket)
-        return socket.disconnect();
+        return client.disconnect();
     }
 
     new Success(Actions.NOTIFY_LEAVE, "Already leaved").notify(socket);
 }
 
-export const initGetUsersRoom = (socket: Socket) => (payload: GetSocketsPayload) => {
-    if (checkIdValidator(payload).length) {
+export const GetClientsAction = (socket: Socket) => (payload: GetSocketsPayload) => {
+    if (idValidator(payload).length) {
         return new BadRequest(Actions.NOTIFY_GET_USERS, "Bad request").notify(socket)
     }
 
     const { id } = payload;
 
-    if (socket.rooms.has(id)) {
-        const users = services.rooms.getUsers(id);
-        return new Success(Actions.NOTIFY_GET_USERS, "Success send sockets", { users }).notify(socket)
+    const client = services.clients.createClient(socket);
+
+    if (client.has(id)) {
+        const clients = services.rooms.getClients(id);
+        return new Success(Actions.NOTIFY_GET_USERS, "Success send sockets", { users: clients }).notify(socket)
     }
 
     new BadRequest(Actions.NOTIFY_GET_USERS, "Bad request").notify(socket);

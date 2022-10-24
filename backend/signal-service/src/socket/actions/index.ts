@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io"
 
-import { initGetUsersRoom, initJoinRoom, initLeaveRoom } from "./rooms/room.actions";
+import { GetClientsAction, JoinAction, LeaveAction } from "./rooms/room.actions";
 
 export const Actions = {
     GET_USERS: "room:get_users",
@@ -18,9 +18,9 @@ export const Actions = {
 
 const initActions = (io: Server) => {
     io.on("connection", (socket: Socket) => {
-        socket.on(Actions.JOIN_ROOM, initJoinRoom(socket));
-        socket.on(Actions.LEAVE_ROOM, initLeaveRoom(socket));
-        socket.on(Actions.GET_USERS, initGetUsersRoom(socket));
+        socket.on(Actions.JOIN_ROOM, JoinAction(socket));
+        socket.on(Actions.LEAVE_ROOM, LeaveAction(socket));
+        socket.on(Actions.GET_USERS, GetClientsAction(socket));
     })
 }
 

@@ -8,7 +8,7 @@ class RoomsService {
     }
 
     getUsersIdInRoom(roomId: string) {
-        return services.rooms.getUsers(roomId).map(item => item.userId);
+        return services.rooms.getClients(roomId).map(item => item.userId);
     }
 }
 
