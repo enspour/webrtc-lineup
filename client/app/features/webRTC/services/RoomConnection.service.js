@@ -22,6 +22,13 @@ export default class RoomConnection {
 
             this.#signal.disconnect();
         })
+
+        this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
+        this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
+        this.#signal.onUserJoinRoom((socketId) => console.log("user connected to room", socketId))
+        this.#signal.onUserLeaveRoom((socketId) => console.log("user leaved from room", socketId))
+        this.#signal.onConnectionError((err) => console.log("unknow error", err));
+        this.#signal.onDisconnect((reason) => console.log("unknow error, reason:", reason))
     }
 
     get Name() {

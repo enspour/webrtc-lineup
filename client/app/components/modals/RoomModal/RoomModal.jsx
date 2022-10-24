@@ -124,9 +124,6 @@ const RoomModal = observer(() => {
     const join = async () => {
         const id = services.modals.room.Id;
         const response = await services.roomConnection.join(id, password)
-        
-        console.log(response);
-
         if (response.status === 200) router.push("/room"); 
     }
 

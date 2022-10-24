@@ -15,7 +15,6 @@ const Room = observer(() => {
 
     const leave = async () => {
         const response = await services.roomConnection.leave();
-        console.log(response);
         router.push("/");
     }
 
