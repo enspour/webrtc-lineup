@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { ErrorObject } from "ajv";
 
-import RoomsService from "../services/Rooms.service";
+import RoomsService from "./Rooms.service";
 
 import { Actions } from "@socket/actions";
 import BadRequest from "@socket/notifications/BadRequest.notification";
@@ -80,7 +80,7 @@ export class ActionContext<T> {
     }
 }
 
-class ActionsManager {
+export default class ActionsService {
     constructor(private roomsService: RoomsService) {}
 
     create<T>(
@@ -100,5 +100,3 @@ class ActionsManager {
         }
     }
 }
-
-export default new ActionsManager(services.rooms);
