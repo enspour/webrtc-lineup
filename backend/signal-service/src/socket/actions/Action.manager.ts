@@ -1,13 +1,15 @@
 import { Socket } from "socket.io";
 import { ErrorObject } from "ajv";
 
-import RoomsService from "./Rooms.service";
+import RoomsService from "../services/Rooms.service";
 
 import { Actions } from "@socket/actions";
 import BadRequest from "@socket/notifications/BadRequest.notification";
 import Broadcast from "@socket/notifications/Broadcast.notification";
 import NotFound from "@socket/notifications/NotFound.notification";
 import Success from "@socket/notifications/Success.notification";
+
+import services from "@socket/services";
 
 import parseId from "@utils/parseId";
 
@@ -78,23 +80,25 @@ export class ActionContext<T> {
     }
 }
 
-export default class ActionsService {
+class ActionsManager {
     constructor(private roomsService: RoomsService) {}
 
     create<T>(
         socket: Socket, 
         handler: (context: ActionContext<T>) => any, 
         validator?: (payload: T) => ErrorObject[],
-        notifyError?: string,
+        errorAction?: string
     ) {
         return (payload: T) => {
             const context = new ActionContext(socket, payload, this.roomsService);
 
-            if (validator && validator(payload).length && notifyError) {
-                return context.badRequest(notifyError, "Bad request. Invalid payload");
+            if (validator && validator(payload).length && errorAction) {
+                return context.badRequest(errorAction, "Payload is invalid");
             }
 
             handler(context);
         }
     }
 }
+
+export default new ActionsManager(services.rooms);

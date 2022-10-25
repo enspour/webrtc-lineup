@@ -4,7 +4,7 @@ import roomActions from "./rooms/room.actions";
 import idValidator from "./rooms/validators/id.validator";
 import joinValidator from "./rooms/validators/join.validator";
 
-import services from "@socket/services";
+import ActionManager from "./Action.manager";
 
 export const Actions = {
     GET_USERS: "room:get_users",
@@ -43,17 +43,17 @@ const initActions = (io: Server) => {
     io.on("connection", (socket: Socket) => { 
         socket.on(
             Actions.JOIN_ROOM,
-            services.actions.create(socket, roomActions.join, joinValidator, Actions.NOTIFY_JOIN)    
+            ActionManager.create(socket, roomActions.join, joinValidator, Actions.NOTIFY_JOIN)    
         );
 
         socket.on(
             Actions.LEAVE_ROOM,
-            services.actions.create(socket, roomActions.leave, idValidator, Actions.NOTIFY_LEAVE)
+            ActionManager.create(socket, roomActions.leave, idValidator, Actions.NOTIFY_LEAVE)
         );
 
         socket.on(
             Actions.GET_USERS,
-            services.actions.create(socket, roomActions.getClients, idValidator, Actions.NOTIFY_GET_USERS)
+            ActionManager.create(socket, roomActions.getClients, idValidator, Actions.NOTIFY_GET_USERS)
         );
     })
 }

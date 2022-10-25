@@ -1,6 +1,6 @@
 import { Actions } from "..";
 
-import { ActionContext } from "@socket/services/Action.service";
+import { ActionContext } from "@socket/actions/Action.manager";
 
 import RoomsService from "@services/Rooms.service";
 
