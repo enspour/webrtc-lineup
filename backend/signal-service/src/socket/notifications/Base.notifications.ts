@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 
-export default class Base {
+export default class BaseNotification {
     constructor(private action: string, private status: number, private message: string, private data?: any) {}
 
     protected prepare() {

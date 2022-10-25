@@ -1,6 +1,6 @@
-import Base from "./Base.notifications";
+import BaseNotification from "./Base.notifications";
 
-export default class Success extends Base{
+export default class Success extends BaseNotification {
     constructor(action: string, message: string, data?: any) {
         super(action, 200, message, data)
     }
