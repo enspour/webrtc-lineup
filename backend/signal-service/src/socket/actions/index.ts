@@ -1,61 +1,35 @@
-import { Server, Socket } from "socket.io"
+import { Server, Socket } from "socket.io";
 
-import roomActions from "./rooms/room.actions";
-import idValidator from "./rooms/validators/id.validator";
-import joinValidator from "./rooms/validators/join.validator";
+import initRoomActions from "./room";
+import initConferenceActions from "./conference";
+
+import TypesActionsRoom from "./room/types.actions";
+import TypesActionsConference from "./conference/types.actions";
+
+import Broadcast from "@socket/notifications/Broadcast.notification";
 
 import services from "@socket/services";
 
-export const Actions = {
-    GET_USERS: "room:get_users",
-    NOTIFY_GET_USERS: "notify:room:get_users",
-
-    JOIN_ROOM: "room:join",
-    NOTIFY_JOIN: "notify:room:join",
-
-    LEAVE_ROOM: "room:leave",
-    NOTIFY_LEAVE: "notify:room:leave",
-
-    NOTIFY_USER_LEAVE: "notify:room:user:leave",
-    NOTIFY_USER_JOIN: "notify:room:user:join",
-
-
-    JOIN_CONFERENCE: "room:conference:join",
-    NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",
-
-    LEAVE_CONFERENCE: "room:conference:leave",
-    NOTIFY_LEAVE_CONFERENCE: "notify:room:conference:leave",
-
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:room:conference:user:join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:room:conference:user:leave",
-
-    SEND_ICE_CANDIDATE: "webrtc:send_ice-candidate",
-    ACCEPT_ICE_CANDIDATE: "webrtc:accept_ice-candidate",
-
-    SEND_OFFER: "webrtc:send_offer",
-    ACCEPT_OFFER: "webrtc:accept_offer",    
-
-    SEND_ANSWER: "webrtc:send_answer",
-    ACCEPT_ANSWER: "webrtc:accept_answer",
-}
-
 const initActions = (io: Server) => {
     io.on("connection", (socket: Socket) => { 
-        socket.on(
-            Actions.JOIN_ROOM,
-            services.actions.create(socket, roomActions.join, joinValidator, Actions.NOTIFY_JOIN)    
-        );
+        initRoomActions(socket)        
+        initConferenceActions(socket);
 
-        socket.on(
-            Actions.LEAVE_ROOM,
-            services.actions.create(socket, roomActions.leave, idValidator, Actions.NOTIFY_LEAVE)
-        );
+        socket.once("disconnecting", _ => {
+            const rooms = [...socket.rooms].filter(item => socket.id !== item);
+            for (const roomId of rooms) {
+                services.rooms.removeClient(roomId, socket.id);
+                
+                if (roomId.endsWith("/conference")) {
+                    return new Broadcast(
+                        TypesActionsConference.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
+                    ).notify(socket, roomId);
+                } 
 
-        socket.on(
-            Actions.GET_USERS,
-            services.actions.create(socket, roomActions.getClients, idValidator, Actions.NOTIFY_GET_USERS)
-        );
-    })
+                new Broadcast(TypesActionsRoom.NOTIFY_USER_LEAVE, { socketId: socket.id });
+            }
+        });
+    });
 }
 
 export default initActions;

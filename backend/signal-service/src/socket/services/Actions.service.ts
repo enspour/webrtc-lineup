@@ -3,13 +3,10 @@ import { ErrorObject } from "ajv";
 
 import RoomsService from "./Rooms.service";
 
-import { Actions } from "@socket/actions";
 import BadRequest from "@socket/notifications/BadRequest.notification";
 import Broadcast from "@socket/notifications/Broadcast.notification";
 import NotFound from "@socket/notifications/NotFound.notification";
 import Success from "@socket/notifications/Success.notification";
-
-import services from "@socket/services";
 
 import parseId from "@utils/parseId";
 
@@ -29,14 +26,11 @@ class Client {
 
         const userId = parseId(this.socket.request);
         this.rooms.addClient(roomId, { socketId: this.socket.id, userId });
+    }
 
-        this.socket.once("disconnecting", _ => {
-            const rooms = [...this.socket.rooms].filter(item => this.socket.id !== item);
-            for (const roomId of rooms) {
-                this.rooms.removeClient(roomId, this.socket.id);
-                new Broadcast(Actions.NOTIFY_USER_LEAVE, { socketId: this.socket.id }).notify(this.socket, roomId);
-            }
-        });
+    async leave(roomId: string) {
+        await this.socket.leave(roomId);
+        this.rooms.removeClient(roomId, this.socket.id);
     }
 
     has(roomId: string) {
@@ -85,15 +79,17 @@ export default class ActionsService {
 
     create<T>(
         socket: Socket, 
-        handler: (context: ActionContext<T>) => any, 
-        validator?: (payload: T) => ErrorObject[],
-        errorAction?: string
+        handler: (context: ActionContext<T>) => any,
+        validation?: {
+            validate: (payload: T) => ErrorObject[],
+            action: string
+        },
     ) {
         return (payload: T) => {
             const context = new ActionContext(socket, payload, this.roomsService);
 
-            if (validator && validator(payload).length && errorAction) {
-                return context.badRequest(errorAction, "Payload is invalid");
+            if (validation && validation.validate(payload).length) {
+                return context.badRequest(validation.action, "Payload is invalid");
             }
 
             handler(context);
