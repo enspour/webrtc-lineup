@@ -1,5 +1,9 @@
-import RoomConnection from "./services/RoomConnection.service";
+import Signal from "./services/SignalService/Signal.service";
+import RoomService from "./services/Room.service";
+import ConferenceService from "./services/Conference.service";
 
 export { 
-    RoomConnection,
+    Signal,
+    RoomService,
+    ConferenceService,
 }

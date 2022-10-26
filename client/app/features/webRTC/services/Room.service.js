@@ -1,34 +1,25 @@
-import Signal from "./SignalService/Signal.service";
-
-import RoomStore from "@store/Room.store";
-
-export default class RoomConnection {
+export default class RoomService {
     #signal;
     #roomstore;
 
-    constructor() {
-        this.#signal = new Signal();
-        this.#roomstore = new RoomStore();
-
-        this.initialize();
+    constructor(signal, roomstore) {
+        this.#signal = signal;
+        this.#roomstore = roomstore;
     }
 
     initialize() {
-        this.#signal.onJoinRoom((status, _, data) => {
-            if (status === 200) {
-                if (data) this.#roomstore.setRoom(data);
-                return;
-            }
-
-            this.#signal.disconnect();
-        })
-
         this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onUserJoinRoom((socketId) => console.log("user connected to room", socketId))
         this.#signal.onUserLeaveRoom((socketId) => console.log("user leaved from room", socketId))
         this.#signal.onConnectionError((err) => console.log("unknow error", err));
-        this.#signal.onDisconnect((reason) => console.log("unknow error, reason:", reason))
+        this.#signal.onDisconnect((reason) => console.log("disconnecting, reason:", reason))
+
+        const offJoinRoom = this.#onJoinRoom();
+
+        return () => {
+            offJoinRoom();
+        }
     }
 
     get Name() {
@@ -39,9 +30,6 @@ export default class RoomConnection {
         let waiter;
 
         if (!this.#signal.Active) {
-            this.#signal.connect();
-            this.#signal.join(id, password);
-
             const clear = this.#signal.onJoinRoom((status, message, data) => {
                 if (waiter) {
                     waiter({ status, message, data });
@@ -49,6 +37,9 @@ export default class RoomConnection {
 
                 clear();
             })
+
+            this.#signal.connect();
+            this.#signal.join(id, password);
 
             return new Promise((resolve, _) => waiter = resolve);
         }
@@ -60,9 +51,6 @@ export default class RoomConnection {
         let waiter;
 
         if (this.#signal.Active) {
-            const id = this.#roomstore.id;
-            this.#signal.leave(id);
-
             const clear = this.#signal.onLeaveRoom((status, message, data) => {
                 if (waiter) {
                     waiter({ status, message, data });
@@ -70,6 +58,9 @@ export default class RoomConnection {
 
                 clear();
             })
+
+            const id = this.#roomstore.id;
+            this.#signal.leave(id);
 
             return new Promise((resolve, _) => waiter = resolve);
         }
@@ -86,6 +77,18 @@ export default class RoomConnection {
             })
             
             this.#signal.getUsers(id)
+        });
+    }
+
+
+    #onJoinRoom() {
+        return this.#signal.onJoinRoom((status, _, data) => {
+            if (status === 200) {
+                if (data) this.#roomstore.setRoom(data);
+                return;
+            }
+
+            this.#signal.disconnect();
         });
     }
 }
