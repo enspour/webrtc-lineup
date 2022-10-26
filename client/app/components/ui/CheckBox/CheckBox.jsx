@@ -6,7 +6,7 @@ import styles from "./CheckBox.module.scss";
 const CheckBox = ({ label, value, setValue }) => {
     return (
         <div className={styles.container}>
-            <label className={styles.wrapper}>
+            <label className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
                 <input 
                     type="checkbox" 
                     className={styles.input} 
