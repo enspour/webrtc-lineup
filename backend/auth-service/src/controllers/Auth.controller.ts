@@ -13,7 +13,7 @@ import BadRequestResponse from "core/server/responses/BadRequest.response";
 import SuccessResponse from "core/server/responses/Success.response";
 import CreatedResponse from "core/server/responses/Created.response";
 
-export default class AuthController {
+class AuthController {
     async login(req: Request, res: Response) {
         const email = req.body.email as string;
         const password = req.body.password as string;
@@ -95,3 +95,5 @@ export default class AuthController {
         new SuccessResponse({ key: publicKey }).send(res);
     }
 }
+
+export default new AuthController();

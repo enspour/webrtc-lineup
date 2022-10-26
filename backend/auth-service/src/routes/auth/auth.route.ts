@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import controllers from "@controllers";
+import AuthController from "@controllers/Auth.controller";
 
 import loginValidator from "./validators/login.validator";
 import signupValidator from "./validators/signup.validator";
@@ -12,12 +12,12 @@ import asyncHandler from "core/server/AsyncHandler";
 
 const authRoute = Router();
 
-authRoute.post("/login", loginValidator, validatorMiddleware, asyncHandler(controllers.auth.login));
-authRoute.post("/signup", signupValidator, validatorMiddleware, asyncHandler(controllers.auth.signup));
-authRoute.post("/logout", guardMiddleware, asyncHandler(controllers.auth.logout));
-authRoute.post("/refresh", asyncHandler(controllers.auth.refresh));
+authRoute.post("/login", loginValidator, validatorMiddleware, asyncHandler(AuthController.login));
+authRoute.post("/signup", signupValidator, validatorMiddleware, asyncHandler(AuthController.signup));
+authRoute.post("/logout", guardMiddleware, asyncHandler(AuthController.logout));
+authRoute.post("/refresh", asyncHandler(AuthController.refresh));
 
-authRoute.get("/me", guardMiddleware, asyncHandler(controllers.auth.me));
-authRoute.get("/access-token/public-key", asyncHandler(controllers.auth.accessTokenPublicKey));
+authRoute.get("/me", guardMiddleware, asyncHandler(AuthController.me));
+authRoute.get("/access-token/public-key", asyncHandler(AuthController.accessTokenPublicKey));
 
 export default authRoute;
