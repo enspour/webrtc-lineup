@@ -17,6 +17,13 @@ export default class APIResponse {
     }
 
     send(res: express.Response) {
-        res.status(this.status).json(this.sanitaze(this));
+        const response = JSON.stringify(
+            this.sanitaze(this), 
+            (_, value) => typeof value === "bigint" 
+                ? value.toString() 
+                : value
+        );
+        
+        res.status(this.status).end(response);
     }
 }
