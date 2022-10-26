@@ -1,16 +1,30 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import Panel from "@components/ui/Panel/Panel";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
+import services from "@services";
+
 import styles from "./CardsScreen.module.scss";
 
 const ConferenceCard = () => {
+    const router = useRouter();
+
     const [enableMicrophone, setEnableMicrophone] = React.useState(true);
     const [enableCamera, setEnableCamera] = React.useState(false);
 
+    const openConference = async () => {
+        const media = await services.userMedia.captureMedia({ video: true });
+        const response = await services.conference.join(media);
+        console.log(response)
+        if (response.status === 200) {
+            router.push("/room/conference")
+        }
+    }
+
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={openConference}>
             <Panel>
                 <div className={styles.card__wrapper}>
                     <div>
