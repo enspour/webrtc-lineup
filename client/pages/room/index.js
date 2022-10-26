@@ -9,12 +9,12 @@ import services from "@services";
 import styles from "@styles/pages/room.module.scss";
 
 const Room = observer(() => {
-    const name = services.roomConnection.Name;
+    const name = services.room.Name;
 
     const router = useRouter();
 
     const leave = async () => {
-        const response = await services.roomConnection.leave();
+        const response = await services.room.leave();
         router.push("/");
     }
 

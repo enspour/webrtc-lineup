@@ -15,13 +15,24 @@ import Storage from "./Storage.service";
 
 import Themes from "./Themes.service";
 
-import { RoomConnection } from "@features/webRTC";
+import RoomStore from "@store/Room.store";
+
+import { 
+    Signal, 
+    RoomService, 
+    ConferenceService, 
+} from "@features/webRTC";
+
+import iceServersConfig from "app/configs/iceServers.config";
 
 const cleaners = [];
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
 const authAPI = new AuthAPI();
+
+const signal = new Signal();
+const joinedRoom = new RoomStore();
 
 const services = {
     API,
@@ -43,7 +54,8 @@ const services = {
 
     island: new IslandService(),
 
-    roomConnection: new RoomConnection(),
+    room: new RoomService(signal, joinedRoom),
+    conference: new ConferenceService(signal, joinedRoom, iceServersConfig),
 
     initialize: function () {
         this.localStorage.initialize("local");
@@ -51,9 +63,13 @@ const services = {
 
         const searchCleaner = this.search.initialize(this.localStorage);
         const userMediaCleaner = this.userMedia.initialize();
+        const roomCleaner = this.room.initialize();
+        const conferenceCleaner = this.conference.initialize();
 
         cleaners.push(searchCleaner);
         cleaners.push(userMediaCleaner);
+        cleaners.push(roomCleaner);
+        cleaners.push(conferenceCleaner);
     },
 
     destroy: function () {

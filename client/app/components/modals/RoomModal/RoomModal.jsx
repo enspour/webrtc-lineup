@@ -123,7 +123,7 @@ const RoomModal = observer(() => {
 
     const join = async () => {
         const id = services.modals.room.Id;
-        const response = await services.roomConnection.join(id, password)
+        const response = await services.room.join(id, password);
         if (response.status === 200) router.push("/room"); 
     }
 
