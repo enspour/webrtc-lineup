@@ -7,7 +7,8 @@ export default class PeersStore {
         makeAutoObservable(this, {
             peers: observable,
             add: action,
-            remove: action
+            remove: action,
+            clear: action
         })
     }
 
@@ -17,5 +18,9 @@ export default class PeersStore {
 
     remove(peerId) {
         this.peers = this.peers.filter(item => item.remotePeerId !== peerId);
+    }
+
+    clear() {
+        this.peers = [];
     }
 }
