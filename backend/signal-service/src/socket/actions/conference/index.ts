@@ -58,7 +58,7 @@ const initConferenceActions = (socket: Socket) => {
 
     socket.on(
         TypesActions.SEND_ICE_CANDIDATE,
-        services.actions.create(socket, ConferenceActions.sendIceCandidate,sendIceCandidateValidator)
+        services.actions.create(socket, ConferenceActions.sendIceCandidate, sendIceCandidateValidator)
     );
 }
 

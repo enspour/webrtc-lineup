@@ -1,5 +1,12 @@
 import { Server, Socket } from "socket.io"
 
+import TypesActionsRoom from "./actions/room/types.actions";
+import TypesActionsConference from "./actions/conference/types.actions";
+
+import Broadcast from "./notifications/Broadcast.notification";
+
+import services from "./services";
+
 import logger from "@logger";
 
 const initEvents = (_io: Server) => {
@@ -15,10 +22,28 @@ const initEvents = (_io: Server) => {
         });
     }
 
+    const disconnectingSocket = (socket: Socket) => {
+        socket.once("disconnecting", _ => {
+            const rooms = [...socket.rooms].filter(item => socket.id !== item);
+            for (const roomId of rooms) {
+                services.rooms.removeClient(roomId, socket.id);
+                
+                if (roomId.endsWith("/conference")) {
+                    return new Broadcast(
+                        TypesActionsConference.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
+                    ).notify(socket, roomId);
+                } 
+
+                new Broadcast(TypesActionsRoom.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
+            }
+        });
+    }
+
     _io.on("connection", (socket: Socket) => {
         logger.log(`Connect socket: ${socket.id}`)
 
-        disconnectNotJoinedSocket(socket)
+        disconnectNotJoinedSocket(socket);
+        disconnectingSocket(socket);
 
         socket.on("disconnect", _ => {
             logger.log(`Disconnect socket: ${socket.id}`);

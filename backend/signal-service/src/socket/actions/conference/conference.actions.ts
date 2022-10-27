@@ -39,7 +39,7 @@ class ConferenceActions {
             await context.Client.leave(conferenceId);
             
             const payload = { socketId: context.Client.SocketId }
-            context.broadcast(conferenceId, TypesActions.NOTIFY_LEAVE_CONFERENCE, payload);
+            context.broadcast(conferenceId, TypesActions.NOTIFY_USER_LEAVE_CONFERENCE, payload);
             return context.success(TypesActions.NOTIFY_LEAVE_CONFERENCE, "Success leave from conference");
         }
 
