@@ -1,4 +1,4 @@
-import stores from "@store/index";
+import stores from "../store";
 
 export default class RoomService {
     #signal;

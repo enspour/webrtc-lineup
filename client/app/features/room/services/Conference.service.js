@@ -2,7 +2,7 @@ import iceServersConfig from "app/configs/iceServers.config";
 
 import PeersStore from "../store/Peers.store";
 
-import stores from "@store/index";
+import stores from "../store";
 
 class MediaPeerConnection {
     #signal;
