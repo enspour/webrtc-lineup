@@ -65,7 +65,15 @@ export default class UserMedia {
 
     async captureMedia(constraints) {
         try {
-            return await navigator.mediaDevices.getUserMedia(constraints);
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+
+            stream.getTracks().forEach(track => {
+                if (track.kind in constraints) {
+                    track.enabled = constraints[track.kind];
+                }
+            });
+
+            return stream;
         } catch (err) {
             return new Error("Disable access to user media.")
         }
@@ -78,7 +86,7 @@ export default class UserMedia {
     }
 
     async #checkPermission(constraints) {
-        const stream = await this.captureMedia(constraints);
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         this.stopCapturedMedia(stream);
         await this.#updateDevices();
     }
