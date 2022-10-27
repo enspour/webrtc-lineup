@@ -5,7 +5,6 @@ import DevicesStore from "@store/Devices.store";
 export default class UserMedia {
     #inputAudioDevices;
     #inputVideoDevices;
-    #stream;
 
     constructor() {
         this.#inputAudioDevices = new DevicesStore();
@@ -66,20 +65,21 @@ export default class UserMedia {
 
     async captureMedia(constraints) {
         try {
-            if (!this.#stream) {
-                this.#stream = await navigator.mediaDevices.getUserMedia(constraints);
-            }
-
-            return this.#stream;
+            return await navigator.mediaDevices.getUserMedia(constraints);
         } catch (err) {
-            return new Error("Access to stream")
+            return new Error("Disable access to user media.")
         }
     }
 
+    stopCapturedMedia(media) {
+        if (media) {
+            media.getTracks().forEach(track => track.stop());
+        }
+    }
 
     async #checkPermission(constraints) {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints)
-        stream.getTracks().forEach(track => track.stop());
+        const stream = await this.captureMedia(constraints);
+        this.stopCapturedMedia(stream);
         await this.#updateDevices();
     }
 
