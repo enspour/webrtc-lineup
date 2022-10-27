@@ -15,11 +15,12 @@ const ConferenceCard = () => {
     const [enableCamera, setEnableCamera] = React.useState(false);
 
     const openConference = async () => {
-        const media = await services.userMedia.captureMedia({ video: true });
-        const response = await services.conference.join(media);
-        console.log(response)
+        const constraints = { audio: enableMicrophone, video: enableCamera };
+        const response = await services.conference.join(constraints);
+        console.log(response);
+
         if (response.status === 200) {
-            router.push("/room/conference")
+            router.push("/room/conference");
         }
     }
 
