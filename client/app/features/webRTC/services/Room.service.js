@@ -1,10 +1,12 @@
+import stores from "@store/index";
+
 export default class RoomService {
     #signal;
-    #roomstore;
+    #room;
 
-    constructor(signal, roomstore) {
+    constructor(signal) {
         this.#signal = signal;
-        this.#roomstore = roomstore;
+        this.#room = stores.room;
     }
 
     initialize() {
@@ -23,7 +25,7 @@ export default class RoomService {
     }
 
     get Name() {
-        return this.#roomstore.name;
+        return this.#room.name;
     }
 
     async join(id, password) {
@@ -59,7 +61,7 @@ export default class RoomService {
                 clear();
             })
 
-            const id = this.#roomstore.id;
+            const id = this.#room.id;
             this.#signal.leave(id);
 
             return new Promise((resolve, _) => waiter = resolve);
@@ -69,7 +71,7 @@ export default class RoomService {
     }
 
     async getUsers() {
-        const id = this.#roomstore.id;
+        const id = this.#room.id;
         
         return new Promise((resolve, _) => {
             this.#signal.onceUsers((status, message, data) => {
@@ -84,7 +86,7 @@ export default class RoomService {
     #onJoinRoom() {
         return this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
-                if (data) this.#roomstore.setRoom(data);
+                if (data) this.#room.setRoom(data);
                 return;
             }
 
