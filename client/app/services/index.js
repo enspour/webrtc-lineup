@@ -19,7 +19,7 @@ import {
     Signal, 
     RoomService, 
     ConferenceService, 
-} from "@features/webRTC";
+} from "@features/room";
 
 const cleaners = [];
 
