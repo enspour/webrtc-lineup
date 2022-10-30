@@ -9,16 +9,16 @@
     height: 16rem;
     font-weight: 600;
     border-radius: 2rem;
-    border: 0.1rem solid var(--theme-bg-primary);
+    border: 0.1rem solid var(--theme-bg-tertiary);
     transition: 0.3s;
     cursor: pointer;
 
 
     &:hover {
-        border: 0.1rem solid var(--theme-bg-tertiary);
+        border: 0.1rem solid var(--theme-bg-secondary);
 
         .card__title {
-            color: var(--theme-color-secondary);
+            color: var(--theme-color-primary);
         }
     }
 }
@@ -40,7 +40,7 @@
 
 .card__hint {
     margin-top: .5rem;
-    color: var(--theme-color-placeholder);
+    color: var(--theme-placeholder-primary);
     transition: 0.3s;
 }
 

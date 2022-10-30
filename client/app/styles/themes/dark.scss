@@ -1,14 +1,21 @@
 body.dark {
-    --theme-bg-primary: #282828;
-    --theme-bg-secondary: #1f1f1f;
-    --theme-bg-tertiary: #606060;
-    --theme-bg-room-line: #CECECE;
+    --theme-bg-primary: #1f1f1f;
+    --theme-bg-secondary: #606060;
+    --theme-bg-tertiary: #282828;
+
     --theme-color-primary: #FFFFFF;
     --theme-color-secondary: #ededed;
-    --theme-color-link: #cecece;
-    --theme-color-icon: #FFFFFF;
-    --theme-color-placeholder: #cecece;
+
+    --theme-link-primary: #cecece;
+
+    --theme-icon-primary: #FFFFFF;
+    --theme-icon-secondary: #FFFFFF;
+
+    --theme-placeholder-primary: #cecece;
+    --theme-placeholder-secondary: #cecece;
+
     --theme-border-primary: #474747;
     --theme-border-secondary: #dedede;
+
     --theme-shadow-primary: #3a3a3a1a;
 }

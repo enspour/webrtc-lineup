@@ -20,8 +20,8 @@ const ThemeItem = ({ active, theme, setTheme }) => {
                 style={{ borderLeft: `6rem solid ${theme.primary}` }}
             />
             <div 
-                className={styles.themes__item__tertiary} 
-                style={{ borderBottom: `6rem solid ${theme.tertiary}` }}
+                className={styles.themes__item__secondary} 
+                style={{ borderBottom: `6rem solid ${theme.secondary}` }}
             />
         </div>
     )

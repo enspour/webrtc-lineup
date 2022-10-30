@@ -6,77 +6,56 @@
 
 .room {
     height: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 1.5rem 3rem;
 }
 
-.wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.room__name {
     font-size: 1.6rem;
     font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color: var(--theme-color-primary);
-    padding: 0 1rem;
+    margin: 1rem 0 .5rem 0;
 }
 
-.room__info {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    max-width: 26.5rem;
-    overflow: hidden;
-}
-
-.room__info__name {
+.room__author__name {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-.room__info__user {
-    color: var(--theme-color-link);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    min-width: 5rem;
+    color: var(--theme-link-primary);
 }
 
 .room__controls {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+    background-color: var(--theme-bg-secondary);
+    padding: 0 2rem;
+    border-radius: 1.5rem;
+    height: 3.5rem;
 }
 
-.tags {
+.room__tags {
     display: flex;
+    align-items: center;
     gap: 1rem;
-    margin: 0 1rem;
+    flex-grow: 1;
     overflow: hidden;
 }
 
-.tag {
-    background-color: var(--theme-bg-tertiary);
-    border-radius: .7rem;
-    padding: .3rem .8rem;
+.room__tag {
     color: var(--theme-color-secondary);
-    line-height: 1.2rem;
+    background-color: var(--theme-bg-secondary);
+    border-radius: .7rem;
+    padding: 0 1rem;
+    height: 2rem;
+    line-height: 2rem;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
 }
 
-.line {
-    width: 100%;
-    height: .1rem;
-    background-color: var(--theme-bg-room-line);
-}
 
-.dash {
-    background-color: var(--theme-color-primary);
-    min-width: 1rem;
-    height: .1rem;
-    display: inline-block;
-}
+
+

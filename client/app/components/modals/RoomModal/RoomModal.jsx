@@ -4,15 +4,12 @@ import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
 import Modal from "@components/ui/Modal/Modal";
-import CenterInput from "@components/ui/CenterInput/CenterInput";
-import Svg from "@components/ui/Svg/Svg";
+import ButtonWithInput from "@components/ui/ButtonWithInput/ButtonWithInput";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
-
-import JoinIcon from "@assets/images/room-modal/join.svg";
 
 import styles from "./RoomModal.module.scss";
 
@@ -21,7 +18,7 @@ const Information = observer(() => {
     const owner = services.modals.room.Owner;
 
     return (
-        <div className="w-60">
+        <div>
             <div className={styles.room__name}>{name}</div>
             <div className={styles.room__owner__name}>{owner.name}</div>
         </div>
@@ -47,21 +44,23 @@ const ConnectedUsers = observer(() => {
 
     if (request.isLoading) {
         return (
-            <div className={styles.room__connected__users}>
+            <div className={styles.room__users__loading}>
                 <div className="loader"></div>
             </div>
         )
     }
 
     if (users.length === 0) {
-        return "";
+        return (
+            <div className={styles.room__users__empty}></div>
+        );
     }
 
     return (
-        <div className={styles.room__connected__users}>
+        <div className={styles.room__users}>
             {
                 users.map(item => 
-                    <div key={item} className={styles.room__connected__user}/>
+                    <div key={item} className={styles.room__user}/>
                 )
             }
         </div>
@@ -79,47 +78,29 @@ const Tags = observer(() => {
     }
 
     return (
-        <div className="fl mt-4 mb-4">
-            <span className="text-semibold text-14 text-primary">Tags:</span>
-            <span className={styles.room__tags}>
+        <div className={styles.room__tags}>
+            <div className="text-semibold text-16 text-primary mb-1">Tags</div>
+            <div className={styles.room__tags__items}>
                 {
                     tags.map(tag => (
-                        <div key={tag.id} className={styles.room__tag} onClick={(e) => searchByTags(e, tag.name)}>
+                        <div 
+                            key={tag.id} 
+                            className={styles.room__tags__item} 
+                            onClick={(e) => searchByTags(e, tag.name)}
+                        >
                             {tag.name}
                         </div>
                     ))
                 }
-            </span>
+            </div>
         </div>
     );
 });
 
-const CreatedAt = observer(() => {
-    const createdAt = services.modals.room.CreatedAt;
-
-    const options = {
-        month: "long", 
-        day: "numeric", 
-        year: "numeric",
-    }
-
-    return (
-        <div className="text-al-center text-semibold text-14 text-primary">
-            { new Date(createdAt).toLocaleString("en-US", options) }
-        </div>
-    )
-});
-
-const RoomModal = observer(() => {
+const JoinButton = () => {
     const router = useRouter();
 
     const [password, setPassword] = React.useState("");
-
-    const isOpenRoom = services.modals.room.IsOpen;
-
-    const setIsOpenRoom = (value) => {
-        services.modals.room.IsOpen = value;
-    }
 
     const join = async () => {
         const id = services.modals.room.Id;
@@ -127,27 +108,41 @@ const RoomModal = observer(() => {
         if (response.status === 200) router.push("/room"); 
     }
 
+    return (
+        <div className={styles.room__btn__join}>
+            <ButtonWithInput 
+                type="password" 
+                placeholder="Password" 
+                value={password} 
+                setValue={setPassword}
+                onClick={join}
+            >
+                Join Now
+            </ButtonWithInput>  
+        </div>
+    )
+}
+
+const RoomModal = observer(() => {
+    const isOpenRoom = services.modals.room.IsOpen;
+
+    const setIsOpenRoom = (value) => {
+        services.modals.room.IsOpen = value;
+    }
+
     if (!isOpenRoom) return "";
 
     return (
         <Modal 
-            title="Room"
+            title="Join To Room"
             isOpen={isOpenRoom} 
             setIsOpen={setIsOpenRoom}
         >
             <div className={styles.wrapper}>
-                <div className="fl jf-between">
-                    <Information />
-
-                    <div className={styles.room__connection}>
-                        <CenterInput type="password" placeholder="Password" value={password} setValue={setPassword}/>
-                        <Svg url={JoinIcon} width="1.2" height="2" onClick={join}/>
-                    </div>
-                </div> 
-
+                <Information />
                 <ConnectedUsers />
                 <Tags />
-                <CreatedAt />
+                <JoinButton />
             </div>
         </Modal>
     )

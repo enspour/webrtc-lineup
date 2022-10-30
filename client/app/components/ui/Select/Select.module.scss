@@ -13,7 +13,7 @@
     width: 100%;
     padding: 0 2rem;
     border-radius: 2rem;
-    background-color: var(--theme-bg-primary);
+    background-color: var(--theme-bg-tertiary);
     border: 0.1rem solid var(--theme-border-primary);
     display: flex;
     justify-content: space-between;
@@ -28,7 +28,7 @@
     display: flex;
     flex-direction: column;
     padding: 1.6rem 0;
-    background-color: var(--theme-bg-primary);
+    background-color: var(--theme-bg-tertiary);
     border-radius: 2rem;
     border: 0.1rem solid var(--theme-border-primary);
 }
@@ -38,6 +38,6 @@
     cursor: pointer;
 
     &:hover {
-        background-color: var(--theme-bg-secondary);
+        background-color: var(--theme-bg-primary);
     }
 }

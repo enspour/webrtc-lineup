@@ -36,7 +36,7 @@
 .tags {
     display: flex;
     gap: 2rem;
-    padding: 0 2rem 4rem 2rem;
+    padding: 0 2rem 3rem 2rem;
 }
 
 .tags__title {
@@ -52,11 +52,13 @@
 }
 
 .tags__item {
-    background-color: var(--theme-bg-tertiary);
     color: var(--theme-color-secondary);
-    border-radius: .5rem;
+    background-color: var(--theme-bg-secondary);
+    border-radius: .7rem;
+    padding: 0 1rem;
+    height: 2rem;
+    line-height: 2rem;
     font-size: 1.2rem;
-    font-weight: 600;
-    padding: 0 1.5rem;
+    font-weight: 500;
     cursor: pointer;
 }

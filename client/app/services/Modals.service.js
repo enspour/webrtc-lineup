@@ -56,7 +56,7 @@ class RoomModal extends Modal {
 
 export default class Modals {
     constructor() {
-        this.addRoom = new Modal();
+        this.createRoom = new Modal();
         this.room = new RoomModal();    
     } 
 }

@@ -12,7 +12,7 @@
     outline: none;
     border: 0.1rem solid var(--theme-border-primary);
     border-radius: 2rem;
-    background-color: var(--theme-bg-secondary);
+    background-color: var(--theme-bg-primary);
     color: var(--theme-color-primary);
     padding: 0 2rem;
 
@@ -40,7 +40,7 @@
     margin-left: 2.1rem; 
     padding-bottom: .2rem;
     transition: all .4s ease;
-    color: var(--theme-color-placeholder);
-    background-color: var(--theme-bg-secondary);
+    color: var(--theme-placeholder-primary);
+    background-color: var(--theme-bg-primary);
     pointer-events: none;
 }

@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
-import CardsScreen from "@components/screens/room/CardsScreen/CardsScreen";
+
+import { CardsScreen } from "@features/room";
 
 import services from "@services";
 

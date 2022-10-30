@@ -1,5 +1,6 @@
 .wrapper {
-    width: 55rem;
+    min-width: 35rem;
+    max-width: 55rem;
 }
 
 .room__connection {
@@ -18,11 +19,22 @@
 .room__owner__name {
     font-size: 1.6rem;
     font-weight: 600;
-    color: var(--theme-color-link);
+    color: var(--theme-link-primary);
     margin-top: 0.5rem;
 }
 
-.room__connected__users {
+.room__users__loading {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.room__users__empty {
+    height: 3.5rem;
+    margin: 2rem 0;
+}
+
+.room__users {
     margin: 5rem 0;
     display: flex;
     justify-content: center;
@@ -36,7 +48,7 @@
     }
 }
 
-.room__connected__user {
+.room__user {
     width: 4.5rem;
     height: 4.5rem;
     background-color: #696969;
@@ -45,19 +57,30 @@
 
 .room__tags {
     display: flex;
+    margin: 4rem 0;
+}
+
+.room__tags__items {
+    display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    margin: 0 1rem; 
+    margin: 0 1rem;
     overflow: hidden;
 }
 
-.room__tag {
-    background-color: var(--theme-bg-tertiary);
-    border-radius: .7rem;
-    padding: .3rem .8rem;
+.room__tags__item {
     color: var(--theme-color-secondary);
-    line-height: 1.2rem;
+    background-color: var(--theme-bg-secondary);
+    border-radius: .7rem;
+    padding: 0 1rem;
+    height: 2rem;
+    line-height: 2rem;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
+}
+
+.room__btn__join {
+    margin: auto;
+    max-width: 25rem;
 }

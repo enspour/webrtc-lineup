@@ -1,28 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Svg = ({ url, height, width, color, onClick }) => (
-    <span
-        onClick={e => onClick?.call({}, e)} 
-        style={{ 
-            padding: "0.3rem",
-            height: "fit-content"
-        }}
-    >
-        <div 
-            style={{ 
-                WebkitMaskSize: "cover",
-                maskSize: "cover",
-                WebkitMaskImage: `url(${url})`,
-                maskImage: `url(${url})`,
-                backgroundColor: color || `var(--theme-color-icon)`, 
-                width: `${width}rem`,
-                height: `${height}rem`,
-                cursor: onClick ? "pointer" : "auto"
-            }}
-        />
-    </span>
-)
+const Svg = ({ url, height, width, color, onClick }) => {
+    const handleClick = (e) => {
+        onClick?.call({}, e)
+    }
+
+    const iconStyle = {
+        WebkitMaskSize: "cover",
+        maskSize: "cover",
+        WebkitMaskImage: `url(${url})`,
+        maskImage: `url(${url})`,
+        backgroundColor: color || `var(--theme-icon-primary)`,
+        width: `${width}rem`,
+        height: `${height}rem`,
+        cursor: onClick ? "pointer" : "auto",
+    }
+
+    const wrapperStyle = {
+        padding: "0.3rem",
+        height: "fit-content"
+    }
+
+    return (
+        <span
+            onClick={handleClick} 
+            style={wrapperStyle}
+        >
+            <div style={iconStyle}/>
+        </span>
+    )
+}
 
 Svg.propTypes = {
     url: PropTypes.string.isRequired,

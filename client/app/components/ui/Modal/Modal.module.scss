@@ -14,11 +14,7 @@
     display: block;
 }
 
-.wrapper {
-    padding: 2rem 2rem 0 2rem;
-}
-
-.modal__content {
+.modal__window {
     display: block; 
     position: absolute;
     left: 50%;
@@ -28,13 +24,18 @@
     max-height: 100vh;
 }
 
-.modal__title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--theme-color-primary);
-    text-align: center;
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 3rem;
 }
 
-.modal__body {
-    padding: 3rem;
+.modal__title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--theme-color-primary);
+}
+
+.modal__content {
+    padding: 2rem 3rem;
 }

@@ -97,7 +97,7 @@ const IslandPanel = observer(() => {
     }
 
     const setIsOpenAddRoom = (value) => {
-        services.modals.addRoom.IsOpen = value;
+        services.modals.createRoom.IsOpen = value;
     }
 
     React.useEffect(

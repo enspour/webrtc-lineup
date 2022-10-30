@@ -1,11 +1,8 @@
 import React from "react";
 import { autorun } from "mobx";
-import { observer } from "mobx-react-lite";
 
 import FilledButton from "@components/ui/FilledButton/FilledButton";
 import SimpleInput from "@components/ui/SimpleInput/SimpleInput";
-
-import useLogout from "@hooks/api/useLogout";
 
 import services from "@services";
 
@@ -26,13 +23,13 @@ const ProfileCredentials = React.memo(({
                 <SimpleInput value={email} setValue={setEmail} placeholder="Email"/>
             </div>
 
-            <div className="fl g-3">
-                <div className="w-140">
+            <div className="fl jf-between">
+                <div className="w-60">
                     <div className="mb-1 text-primary">Name</div>
                     <SimpleInput value={name} setValue={setName} placeholder="Name"/>
                 </div>
 
-                <div className="w-100">
+                <div className="w-35">
                     <div className="mb-1 text-primary">Password</div>
                     <FilledButton onClick={changePassword}> Reset </FilledButton>
                 </div>
@@ -41,7 +38,7 @@ const ProfileCredentials = React.memo(({
     )
 });
 
-const ProfileInformation = observer(() => {
+const ProfileScreen = () => {
     const [email, setEmail] = React.useState("");
     const [name, setName] = React.useState("");
 
@@ -58,7 +55,7 @@ const ProfileInformation = observer(() => {
     );
 
     return (
-        <div className="w-100">
+        <div className={styles.profile}>
             <div className="text-primary">Account</div>
             <div className="text-placeholder">
                 Here you can edit your public information and password.
@@ -68,24 +65,6 @@ const ProfileInformation = observer(() => {
                 email={email} setEmail={setEmail} 
                 name={name} setName={setName}
             />
-        </div>
-    )
-});
-
-const AccountLogout = () => { 
-    const logout = useLogout(); 
-    return <FilledButton onClick={logout}> Logout </FilledButton>
-}
-
-const ProfileScreen = () => {
-    return (
-        <div className={styles.profile}>
-            <ProfileInformation />
-
-            <div>
-                <AccountLogout />
-                <div className={styles.profile__avatar}></div>
-            </div>
         </div>
     )
 }

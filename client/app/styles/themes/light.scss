@@ -1,14 +1,21 @@
 body.light {
-    --theme-bg-primary: #F8F8F8;
-    --theme-bg-secondary: #FFFFFF;
-    --theme-bg-tertiary: #ECF6FF;
-    --theme-bg-room-line: #CECECE;
+    --theme-bg-primary: #FFFFFF;
+    --theme-bg-secondary: #526A7D;
+    --theme-bg-tertiary: #F8F8F8;
+    
     --theme-color-primary: #000000;
-    --theme-color-secondary: #00529E;
-    --theme-color-link: #858585;
-    --theme-color-icon: #000000;
-    --theme-color-placeholder: #A0A0A0;
+    --theme-color-secondary: #FFFFFF;
+
+    --theme-link-primary: #858585;
+
+    --theme-icon-primary: #000000;
+    --theme-icon-secondary: #FFFFFF;
+
+    --theme-placeholder-primary: #A0A0A0;
+    --theme-placeholder-secondary: #526A7D;
+
     --theme-border-primary: #EDEDED;
-    --theme-border-secondary: #00529E;
-    --theme-shadow-primary: #00529e1a;
+    --theme-border-secondary: #526A7D;
+    
+    --theme-shadow-primary: #0618261a;
 }

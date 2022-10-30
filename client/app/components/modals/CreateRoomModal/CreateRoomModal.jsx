@@ -15,14 +15,14 @@ import AddIcon from "@assets/images/create-room-modal/add.svg";
 
 import services from "@services";
 
-import styles from "./AddRoomModal.module.scss";
+import styles from "./CreateRoomModal.module.scss";
 
 const Tags = React.memo(({ tags, setTags }) => {
     const removeTag = (name) => setTags(prev => prev.filter(item => item !== name)); 
 
     return (
         <div className={styles.tags}>
-            <div className={styles.tags__title}>Tags: </div>
+            <div className={styles.tags__title}>Tags</div>
             <div className={styles.tags__items}>
                 {
                     tags.map(item => (
@@ -62,7 +62,7 @@ const InputTags = React.memo(({ tags, setTags }) => {
             <div>
                 <FilledButton onClick={pushTag}>
                     <div className={styles.tag__btn}>
-                        <Svg url={AddIcon} width="1.4" height="1.4"/>
+                        <Svg url={AddIcon} width="1.4" height="1.4" color="var(--theme-icon-secondary)"/>
                     </div>
                 </FilledButton>
             </div>
@@ -71,8 +71,8 @@ const InputTags = React.memo(({ tags, setTags }) => {
 });
 
 
-const AddRoomModal = observer(() => {
-    const isOpenAddRoom = services.modals.addRoom.IsOpen;
+const CreateRoomModal = observer(() => {
+    const isOpenAddRoom = services.modals.createRoom.IsOpen;
 
     const request = useRequest(services.roomAPI.create);
     const { data } = useResponse(request);
@@ -85,7 +85,7 @@ const AddRoomModal = observer(() => {
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
 
     const setIsOpenAddRoom = (value) => {
-        services.modals.addRoom.IsOpen = value;
+        services.modals.createRoom.IsOpen = value;
     }
 
     const addRoom = () => {
@@ -105,8 +105,8 @@ const AddRoomModal = observer(() => {
     if (!isOpenAddRoom) return "";
 
     return (
-        <Modal 
-            title="Room"
+        <Modal
+            title="Create New Room"
             isOpen={isOpenAddRoom} 
             setIsOpen={setIsOpenAddRoom}
         >
@@ -114,7 +114,7 @@ const AddRoomModal = observer(() => {
                 <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
                 
                 <div className={styles.private}>
-                    <CheckBox label="Private room" value={privateRoom} setValue={setPrivateRoom}/>
+                    <CheckBox label="Secure room" value={privateRoom} setValue={setPrivateRoom}/>
                 </div>
 
                 <div className={styles.password} ref={passwordRef}>
@@ -129,7 +129,7 @@ const AddRoomModal = observer(() => {
                 <InputTags tags={tags} setTags={setTags}/>
                 <Tags tags={tags} setTags={setTags}/>
 
-                <div className="w-80 m-auto">
+                <div className="w-50 m-auto">
                     <FilledButton onClick={addRoom}> Create </FilledButton>
                 </div>
             </div>
@@ -137,4 +137,4 @@ const AddRoomModal = observer(() => {
     );
 })
 
-export default AddRoomModal;
+export default CreateRoomModal;

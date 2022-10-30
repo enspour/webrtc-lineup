@@ -30,7 +30,15 @@ const RemoveControl = ({ room }) => {
         if (data) services.userRooms.update();
     }, [data]);
 
-    return <Svg url={RemoveIcon} width="1.4" height="1.4" onClick={remove}/>;
+    return (
+        <Svg 
+            url={RemoveIcon} 
+            width="1.1" 
+            height="1.1" 
+            onClick={remove}
+            color={"var(--theme-icon-secondary)"}
+        />
+    )
 }
 
 const AddToFavoritesControl = ({ room }) => {
@@ -46,7 +54,15 @@ const AddToFavoritesControl = ({ room }) => {
         if (data) services.userFavoritesRooms.update();
     }, [data])
 
-    return <Svg url={AddToFavoritesIcon} width="2" height="1.8" onClick={add}/>
+    return (
+        <Svg 
+            url={AddToFavoritesIcon} 
+            width="1.6" 
+            height="1.4" 
+            onClick={add}
+            color={"var(--theme-icon-secondary)"}
+        />
+    )
 }
 
 const RemoveFromFavoritesControl = ({ room }) => {
@@ -62,7 +78,15 @@ const RemoveFromFavoritesControl = ({ room }) => {
         if (data) services.userFavoritesRooms.update();
     }, [data])
 
-    return <Svg url={RemoveToFavoritesIcon} width="2" height="1.8" onClick={remove}/>
+    return (
+        <Svg 
+            url={RemoveToFavoritesIcon} 
+            width="1.6" 
+            height="1.4" 
+            onClick={remove} 
+            color={"var(--theme-icon-secondary)"}
+        />
+    );
 }
 
 const FavoritesControl = observer(({ room }) => {
@@ -94,7 +118,7 @@ const Tags = ({ tags }) => {
     }
 
     return tags.map(tag => (
-        <div key={tag.id} className={styles.tag} onClick={(e) => searchByTags(e, tag.name)}>
+        <div key={tag.id} className={styles.room__tag} onClick={(e) => searchByTags(e, tag.name)}>
             {tag.name}
         </div>
     ))
@@ -110,24 +134,19 @@ const RoomCard = ({ room }) => {
         <div className={styles.card} onClick={openRoomModal}>
             <Panel>
                 <div className={styles.room}>
-                    <div className={styles.wrapper}>
-                        <div className={styles.room__info}>
-                            <span className={styles.room__info__name}> {room.name} </span>
-                            <span className={styles.dash}></span>
-                            <span className={styles.room__info__user}> {room.owner.name} </span>
+                    <div className="fl g-2">
+                        <div className={styles.room__tags}>
+                            <Tags tags={room.tags}/>
                         </div>
 
                         <div className={styles.room__controls}>
                             <MultipleControl room={room}/>
-                            <Svg url={MoreIcon} width="1.6" height=".4"/>
+                            <Svg url={MoreIcon} width="1.6" height=".4" color={"var(--theme-icon-secondary)"}/>
                         </div>
                     </div>
-                    
-                    <div className={styles.line}></div>
 
-                    <div className={styles.tags}>
-                        <Tags tags={room.tags}/>
-                    </div>
+                    <div className={styles.room__name}> {room.name} </div>
+                    <div className={styles.room__author__name}> {room.owner.name} </div>
                 </div>
             </Panel>
         </div>

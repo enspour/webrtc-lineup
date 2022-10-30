@@ -18,6 +18,14 @@
     gap: 3rem;
 }
 
+.w-35 {
+    width: 35%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
 .w-60 {
     width: 60%;
 }
@@ -32,6 +40,10 @@
 
 .w-140 {
     width: 140%;
+}
+
+.w-160 {
+    width: 160%;
 }
 
 .m-auto {
@@ -79,5 +91,5 @@
 }
 
 .text-placeholder {
-    color: var(--theme-color-placeholder);
+    color: var(--theme-placeholder-primary);
 }

@@ -11,36 +11,48 @@ import HistoryIcon from "@assets/images/search/history.svg";
 import styles from "./SearchControl.module.scss";
 
 const HelperItem = ({ item, setText, setIsOpen, removeHistoryItem, pushHistoryItem }) => {
-    const push = (text) => {
+    const [isHover, setIsHover] = React.useState(false);
+    
+    const handleMouseEnter = () => setIsHover(true);
+    const handleMouseLeave = () => setIsHover(false);
+
+    const handleClickOnItem = () => {
         setTimeout(() => {
-            setText(text);
-            pushHistoryItem(text);
+            setText(item);
+            pushHistoryItem(item);
             setIsOpen(false);
         }, 0)
     }
-
-    const remove = (e, text) => {
+    
+    const handleClickOnRemove = (e) => {
         e.stopPropagation();
         removeHistoryItem(text);
     }
 
     return (
-        <div className={styles.helper__item} onClick={() => push(item)}>
+        <div 
+            className={styles.helper__item} 
+            onClick={handleClickOnItem}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             <div className={styles.helper__item__body}>
                 <Svg
                     url={HistoryIcon} 
                     height="1.8" 
-                    width="2.1" 
+                    width="2.1"
+                    color={isHover ? "var(--theme-color-secondary)" : "var(--theme-icon-primary)"}
                 />
 
-                <span>{item}</span>
+                <span className={styles.helper__item__text}>{item}</span>
             </div>
 
             <Svg
-                url={ClearIcon} 
+                url={ClearIcon}
                 height="1.4" 
                 width="1.4" 
-                onClick={e => remove(e, item)}
+                onClick={handleClickOnRemove}
+                color={isHover ? "var(--theme-color-secondary)" : "var(--theme-icon-primary)"}
             />
         </div>
     )
