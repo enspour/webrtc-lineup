@@ -65,7 +65,13 @@ export default class UserMedia {
 
     async captureMedia(constraints) {
         try {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: false,
+                    noiseSuppression: true
+                },
+                video: true
+            });
 
             stream.getTracks().forEach(track => {
                 if (track.kind in constraints) {
