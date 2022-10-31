@@ -63,13 +63,11 @@ class MediaPeerConnection {
 }
 
 export default class ConferenceService {
-    #signal;
-    #room;
-    
-    #peersStore;
-
-    #mediaStream;
     #userMedia;
+    #signal;
+    
+    #room;
+    #peersStore;
 
     constructor(signal, userMedia) {
         this.#signal = signal;
@@ -108,7 +106,7 @@ export default class ConferenceService {
     }
 
     async join(constraints) {
-        this.#mediaStream = await this.#userMedia.captureMedia(constraints);
+        await this.#userMedia.captureMedia(constraints);
 
         let waiter;
 
@@ -154,7 +152,7 @@ export default class ConferenceService {
     }
 
     async #sendOffer(peerId) {
-        const peer = new MediaPeerConnection(this.#room.id, peerId, this.#mediaStream, this.#signal);
+        const peer = new MediaPeerConnection(this.#room.id, peerId, this.#userMedia.Stream, this.#signal);
         this.#peersStore.add(peer);
         
         await peer.sendOffer();
@@ -162,7 +160,7 @@ export default class ConferenceService {
 
     #onAcceptOffer() {
         return this.#signal.onAcceptOffer(async (sourceId, offer) => {
-            const peer = new MediaPeerConnection(this.#room.id, sourceId, this.#mediaStream, this.#signal);
+            const peer = new MediaPeerConnection(this.#room.id, sourceId, this.#userMedia.Stream, this.#signal);
             this.#peersStore.add(peer);
             
             if (offer) {
@@ -201,7 +199,7 @@ export default class ConferenceService {
     #onLeave() {
         return this.#signal.onLeaveConference((status) => {
             if (status === 200) {
-                this.#userMedia.stopCapturedMedia(this.#mediaStream);
+                this.#userMedia.stopCapturedMedia();
                 this.#peersStore.clear();
             }
         })

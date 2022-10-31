@@ -7,6 +7,7 @@ import { IslandService } from "../features/Island";
 import User from "./user/User.service";
 import UserRooms from "./user/UserRooms.service";
 import UserFavoritesRooms from "./user/UserFavoritesRooms.service";
+import UserDevices from "./user/UserDevices.service";
 import UserMedia from "./user/UserMedia.service";
 
 import Search from "./Search.service";
@@ -27,8 +28,6 @@ const API = new APIService();
 const roomAPI = new RoomAPI();
 const authAPI = new AuthAPI();
 
-const userMedia = new UserMedia();
-
 const signal = new Signal();
 
 const services = {
@@ -47,24 +46,24 @@ const services = {
     user: new User(API, authAPI),
     userRooms: new UserRooms(API, roomAPI),
     userFavoritesRooms: new UserFavoritesRooms(API, roomAPI),
-    userMedia,
+    userDevices: new UserDevices(),
 
     island: new IslandService(),
 
     room: new RoomService(signal),
-    conference: new ConferenceService(signal, userMedia),
+    conference: new ConferenceService(signal, new UserMedia()),
 
     initialize: function () {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
         const searchCleaner = this.search.initialize(this.localStorage);
-        const userMediaCleaner = this.userMedia.initialize();
+        const userDevicesCleaner = this.userDevices.initialize();
         const roomCleaner = this.room.initialize();
         const conferenceCleaner = this.conference.initialize();
 
         cleaners.push(searchCleaner);
-        cleaners.push(userMediaCleaner);
+        cleaners.push(userDevicesCleaner);
         cleaners.push(roomCleaner);
         cleaners.push(conferenceCleaner);
     },
