@@ -36,6 +36,7 @@ const RoomLayout = observer(({ children }) => {
                     </div>
                 </div>
             </div>
+            
             <div>
                 { children }
             </div>
