@@ -1,41 +1,17 @@
-import { useRouter } from "next/router";
-import { observer } from "mobx-react-lite";
-
-import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
+import RoomLayout from "@components/layouts/RoomLayout/RoomLayout";
 
 import { RoomCardsScreen } from "@features/room";
 
-import services from "@services";
-
 import styles from "@styles/pages/room.module.scss";
 
-const Room = observer(() => {
-    const name = services.room.Name;
-
-    const router = useRouter();
-
-    const leave = async () => {
-        const response = await services.room.leave();
-        router.push("/");
-    }
-
+const Room = () => {
     return (
-        <div className={styles.room}>
-            <div className="fl jf-between al-center g-2">
-                <div className={styles.room__title}> {name} </div>
-
-                <div className={styles.room__btn__leave}>
-                    <OutlinedButton onClick={leave}>
-                        Leave
-                    </OutlinedButton>
-                </div>
-            </div>
-
+        <RoomLayout>
             <div className={styles.room__cards}>
                 <RoomCardsScreen />
             </div>
-        </div>
+        </RoomLayout>
     )
-})
+}
 
 export default Room;
