@@ -26,7 +26,7 @@ const HelperItem = ({ item, setText, setIsOpen, removeHistoryItem, pushHistoryIt
     
     const handleClickOnRemove = (e) => {
         e.stopPropagation();
-        removeHistoryItem(text);
+        removeHistoryItem(item);
     }
 
     return (
