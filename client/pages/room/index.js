@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 
 import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 
-import { CardsScreen } from "@features/room";
+import { RoomCardsScreen } from "@features/room";
 
 import services from "@services";
 
@@ -32,7 +32,7 @@ const Room = observer(() => {
             </div>
 
             <div className={styles.room__cards}>
-                <CardsScreen />
+                <RoomCardsScreen />
             </div>
         </div>
     )

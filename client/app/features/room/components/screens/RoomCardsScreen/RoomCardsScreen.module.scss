@@ -5,8 +5,6 @@
 }
 
 .card {
-    width: 30rem;
-    height: 16rem;
     font-weight: 600;
     border-radius: 2rem;
     border: 0.1rem solid var(--theme-bg-tertiary);
@@ -25,10 +23,6 @@
 
 .card__wrapper {
     padding: 1.5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
 }
 
 .card__title {
@@ -39,13 +33,14 @@
 }
 
 .card__hint {
+    font-size: 1.6rem;
     margin-top: .5rem;
     color: var(--theme-placeholder-primary);
     transition: 0.3s;
 }
 
 .card__voicevideo {
-    margin-top: auto;
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
