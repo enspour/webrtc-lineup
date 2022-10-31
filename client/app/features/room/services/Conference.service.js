@@ -113,7 +113,11 @@ export default class ConferenceService {
         const id = this.#room.id;
 
         if (id) {
-            const clear = this.#signal.onJoinConference(async (status, message, data) => {
+            const clear = this.#signal.onJoinConference((status, message, data) => {
+                if (status !== 200) {
+                    this.#userMedia.stopCapturedMedia();
+                }
+
                 if (waiter) {
                     waiter({ status, message, data });
                 }
