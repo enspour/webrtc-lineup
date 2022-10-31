@@ -28,6 +28,8 @@ const API = new APIService();
 const roomAPI = new RoomAPI();
 const authAPI = new AuthAPI();
 
+const userMedia = new UserMedia();
+
 const signal = new Signal();
 
 const services = {
@@ -47,11 +49,12 @@ const services = {
     userRooms: new UserRooms(API, roomAPI),
     userFavoritesRooms: new UserFavoritesRooms(API, roomAPI),
     userDevices: new UserDevices(),
+    userMedia,
 
     island: new IslandService(),
 
     room: new RoomService(signal),
-    conference: new ConferenceService(signal, new UserMedia()),
+    conference: new ConferenceService(signal, userMedia),
 
     initialize: function () {
         this.localStorage.initialize("local");
