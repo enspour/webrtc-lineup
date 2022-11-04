@@ -15,7 +15,7 @@ const ConferenceLayout = ({ children }) => {
 
             <ConferencePanel />
 
-            <div>
+            <div className={styles.conference__content}>
                 { children }
             </div>
         </div>

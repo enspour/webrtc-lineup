@@ -1,3 +1,9 @@
 .conference {
     padding: 2rem;
 }
+
+.conference__content {
+    margin-top: 1.5rem;
+    height: calc(100vh - 10rem);
+    width: 100%;
+}
