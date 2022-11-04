@@ -1,11 +1,20 @@
 import UserStore from "@store/User.store";
 
 export default class UserService {
+    #request;
     #userStore;
 
     constructor(api, authAPI) {
-        const request = api.createRequest(authAPI.me);
-        this.#userStore = new UserStore(request);
+        this.#request = api.createRequest(authAPI.me);
+        this.#userStore = new UserStore();
+    }
+
+    initialize() {
+        const offResponse = this.#onResponse();
+
+        return () => {
+            offResponse();
+        }
     }
 
     get Name() {
@@ -21,6 +30,15 @@ export default class UserService {
     }
 
     async update() {
-        await this.#userStore.update();
+        await this.#request.start({});
+    }
+
+    #onResponse() {
+        return this.#request.onResponse(response => {
+            if (response && response.status === 200) {
+                const user = response.data.body.user;
+                this.#userStore.setUser(user);
+            }
+        });
     }
 }

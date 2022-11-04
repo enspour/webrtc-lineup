@@ -5,8 +5,7 @@ import RoomAPI from "./APISerivces/RoomAPI.service";
 import { IslandService } from "../features/Island";
 
 import User from "./user/User.service";
-import UserRooms from "./user/UserRooms.service";
-import UserFavoritesRooms from "./user/UserFavoritesRooms.service";
+import RoomsService from "./Rooms.service";
 import UserDevices from "./user/UserDevices.service";
 import UserMedia from "./user/UserMedia.service";
 
@@ -21,8 +20,6 @@ import {
     RoomService, 
     ConferenceService, 
 } from "@features/room";
-
-const cleaners = [];
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
@@ -46,8 +43,8 @@ const services = {
     themes: new Themes(),
 
     user: new User(API, authAPI),
-    userRooms: new UserRooms(API, roomAPI),
-    userFavoritesRooms: new UserFavoritesRooms(API, roomAPI),
+    userRooms: new RoomsService(API.createRequest(roomAPI.getCreated)),
+    userFavoritesRooms: new RoomsService(API.createRequest(roomAPI.getFavorites)),
     userDevices: new UserDevices(),
     userMedia,
 
@@ -60,21 +57,15 @@ const services = {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
-        const searchCleaner = this.search.initialize(this.localStorage);
-        const userDevicesCleaner = this.userDevices.initialize();
-        const roomCleaner = this.room.initialize();
-        const conferenceCleaner = this.conference.initialize();
+        this.user.initialize();
+        this.userDevices.initialize();
+        this.userRooms.initialize();
+        this.userFavoritesRooms.initialize();
 
-        cleaners.push(searchCleaner);
-        cleaners.push(userDevicesCleaner);
-        cleaners.push(roomCleaner);
-        cleaners.push(conferenceCleaner);
-    },
+        this.search.initialize(this.localStorage);
 
-    destroy: function () {
-        for (const cleaner of cleaners) {
-            cleaner();
-        }
+        this.room.initialize();
+        this.conference.initialize();
     }
 }
 

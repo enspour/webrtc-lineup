@@ -13,9 +13,7 @@ export default class PeersStore {
     }
 
     add(peer) {
-        if (peer) {
-            this.peers.push(peer);
-        }
+        this.peers.push(peer);
     }
 
     remove(peerId) {
