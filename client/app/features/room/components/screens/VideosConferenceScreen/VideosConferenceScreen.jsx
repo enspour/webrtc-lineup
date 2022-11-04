@@ -71,6 +71,7 @@ const getGridOptions = (parent, count) => {
 
 const VideosConferenceScreen = () => {
     const MAX_COUNT_VIDEOS = 9;
+    
     const videosRef = React.useRef();
 
     const [videos, setVideos] = React.useState([]);
@@ -93,11 +94,13 @@ const VideosConferenceScreen = () => {
             };
             
             const peers = services.conference.Peers;
-            const remotePeers = peers.slice(0, MAX_COUNT_VIDEOS - 1).map(item => ({
-                peerId: item.PeerId,
-                stream: item.Stream,
-                muted: false,
-            }));
+            const remotePeers = peers
+                .slice(0, MAX_COUNT_VIDEOS - 1)
+                .map(item => ({
+                    peerId: item.PeerId,
+                    stream: item.Stream,
+                    muted: false,
+                }));
 
             setVideos([ local, ...remotePeers ]);
         })
@@ -105,16 +108,12 @@ const VideosConferenceScreen = () => {
 
     React.useEffect(() => {
         updateGridOptions();
-    }, [videos])
 
-    React.useEffect(() => {
-        const event = _debounce(() => { 
-            updateGridOptions();
-        }, 250)
-
+        const event = _debounce(updateGridOptions, 250);
+        
         window.addEventListener("resize", event);
         return () => window.removeEventListener("resize", event);
-    }, [])
+    }, [videos])
 
     return (
         <div ref={videosRef} className={styles.videos}>
