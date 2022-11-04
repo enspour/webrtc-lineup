@@ -1,34 +1,26 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
+import { useRouter } from "next/router";
 
 import ConferenceLayout from "@components/layouts/ConferenceLayout/ConferenceLayout";
 
+import VideosConferenceScreen from "@features/room/components/screens/VideosConferenceScreen/VideosConferenceScreen";
+
 import services from "@services";
 
-const RemoteVideo = ({ item }) => {
-    const ref = React.useRef();
+const Conference = () => {
+    const router = useRouter();
 
     React.useEffect(() => {
-        if (ref.current) {
-            ref.current.srcObject = item.remoteStream;
+        if (!services.room.Connected) {
+            router.push("/");
         }
     }, [])
 
     return (
-        <div> <video ref={ref} autoPlay/> </div>
+        <ConferenceLayout>
+            <VideosConferenceScreen />
+        </ConferenceLayout>
     )
 }
 
-const Conference = observer(() => {
-    const peers = services.conference.Peers;
-
-    return (
-        <ConferenceLayout>
-            <div> 
-                { peers.map(item => <RemoteVideo key={item.remotePeerId} item={item}/>) }
-            </div>
-        </ConferenceLayout>
-    )
-})
-
-export default Conference;
+export default React.memo(Conference);
