@@ -28,6 +28,10 @@ export default class RoomService {
         return this.#room.name;
     }
 
+    get Connected() {
+        return this.#signal.Connected;
+    }
+
     async join(id, password) {
         let waiter;
 
