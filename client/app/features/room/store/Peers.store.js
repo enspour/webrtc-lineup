@@ -13,11 +13,22 @@ export default class PeersStore {
     }
 
     add(peer) {
-        this.peers.push(peer);
+        if (peer) {
+            this.peers.push(peer);
+        }
     }
 
     remove(peerId) {
-        this.peers = this.peers.filter(item => item.remotePeerId !== peerId);
+        const index = this.peers.findIndex(item => item.PeerId === peerId);
+        if (index !== -1) {
+            const peer = this.peers[index];
+
+            this.peers = this.peers.filter((_, idx) => idx !== index);
+
+            return peer;
+        }
+
+        return null;
     }
 
     clear() {
