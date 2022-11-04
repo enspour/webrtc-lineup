@@ -12,12 +12,12 @@ export default class UserMedia {
         return this.#stream;
     }
 
-    get IsMuteAudio() {
-        return this.#mediaData.isMuteAudio;
+    get MutedAudio() {
+        return this.#mediaData.mutedAudio;
     }
 
-    get IsMuteVideo() {
-        return this.#mediaData.isMuteVideo;
+    get MutedVideo() {
+        return this.#mediaData.mutedVideo;
     }
 
     async captureMedia(constraints) {
@@ -28,7 +28,12 @@ export default class UserMedia {
                         echoCancellation: false,
                         noiseSuppression: true
                     },
-                    video: true
+                    video: {
+                        width: { max: 320 },
+                        height: { max: 240 },
+                        frameRate: 30,
+                        facingMode: "user"
+                    }
                 });
     
                 stream.getTracks().forEach(track => {
@@ -37,8 +42,8 @@ export default class UserMedia {
                     }
                 });
 
-                this.#mediaData.setIsMuteAudio(!constraints["audio"]);
-                this.#mediaData.setIsMuteVideo(!constraints["video"]);
+                this.#mediaData.setMutedAudio(!constraints["audio"]);
+                this.#mediaData.setMutedVideo(!constraints["video"]);
 
                 this.#stream = stream;
             }
@@ -61,7 +66,7 @@ export default class UserMedia {
             track.enabled = false;
         });
 
-        this.#mediaData.setIsMuteAudio(true);
+        this.#mediaData.setMutedAudio(true);
     }
 
     unmuteAudio() {
@@ -71,7 +76,7 @@ export default class UserMedia {
             track.enabled = true;
         });
 
-        this.#mediaData.setIsMuteAudio(false);
+        this.#mediaData.setMutedAudio(false);
     }
 
     muteVideo() {
@@ -81,7 +86,7 @@ export default class UserMedia {
             track.enabled = false;
         });
 
-        this.#mediaData.setIsMuteVideo(true);
+        this.#mediaData.setMutedVideo(true);
     }
 
     unmuteVideo() {
@@ -91,6 +96,6 @@ export default class UserMedia {
             track.enabled = true;
         });
 
-        this.#mediaData.setIsMuteVideo(false);
+        this.#mediaData.setMutedVideo(false);
     }
 }

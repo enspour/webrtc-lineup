@@ -1,24 +1,24 @@
 import { makeAutoObservable, observable, action } from "mobx";
 
 export default class MediaDataStore {
-    isMuteAudio = false;
-    isMuteVideo = false;
+    mutedAudio = false;
+    mutedVideo = false;
 
     constructor() {
         makeAutoObservable(this, {
-            isMuteAudio: observable,
-            isMuteVideo: observable,
+            mutedAudio: observable,
+            mutedVideo: observable,
 
-            setIsMuteAudio: action,
-            setIsMuteVideo: action
+            setMutedAudio: action,
+            setMutedVideo: action
         });
     }
 
-    setIsMuteAudio(value) {
-        this.isMuteAudio = value;
+    setMutedAudio(value) {
+        this.mutedAudio = value;
     }
 
-    setIsMuteVideo(value) {
-        this.isMuteVideo = value;
+    setMutedVideo(value) {
+        this.mutedVideo = value;
     }
 }
