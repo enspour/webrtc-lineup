@@ -1,6 +1,6 @@
 import MediaDataStore from "@store/MediaData.store";
 
-export default class UserMedia {
+export default class UserMediaService {
     #stream;
     #mediaData;
 

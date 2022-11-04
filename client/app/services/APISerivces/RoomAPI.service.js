@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class RoomAPI {
+export default class RoomAPIService {
 
     /**
      * @param {{ 

@@ -1,4 +1,4 @@
-export default class Storage {
+export default class StorageService {
     initialize(type) {
         if (type === "local") {
             this.storage = window.localStorage;

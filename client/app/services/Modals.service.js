@@ -54,7 +54,7 @@ class RoomModal extends Modal {
     }
 }
 
-export default class Modals {
+export default class ModalsService {
     constructor() {
         this.createRoom = new Modal();
         this.room = new RoomModal();    

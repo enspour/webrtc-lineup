@@ -5,7 +5,7 @@ import RoomAPI from "./APISerivces/RoomAPI.service";
 import { IslandService } from "../features/Island";
 
 import User from "./user/User.service";
-import RoomsService from "./Rooms.service";
+import Rooms from "./Rooms.service";
 import UserDevices from "./user/UserDevices.service";
 import UserMedia from "./user/UserMedia.service";
 
@@ -43,8 +43,8 @@ const services = {
     themes: new Themes(),
 
     user: new User(API, authAPI),
-    userRooms: new RoomsService(API.createRequest(roomAPI.getCreated)),
-    userFavoritesRooms: new RoomsService(API.createRequest(roomAPI.getFavorites)),
+    userRooms: new Rooms(API.createRequest(roomAPI.getCreated)),
+    userFavoritesRooms: new Rooms(API.createRequest(roomAPI.getFavorites)),
     userDevices: new UserDevices(),
     userMedia,
 
