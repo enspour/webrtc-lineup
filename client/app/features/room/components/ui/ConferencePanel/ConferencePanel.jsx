@@ -19,7 +19,7 @@ import LeaveIcon from "@assets/images/conference-panel/leave.svg";
 import styles from "./ConferencePanel.module.scss"
 
 const CameraControl = observer(() => {
-    const isMuteVideo = services.userMedia.IsMuteVideo;
+    const mutedVideo = services.userMedia.MutedVideo;
 
     const mute = () => services.userMedia.muteVideo();
     const unmute = () => services.userMedia.unmuteVideo();
@@ -27,7 +27,7 @@ const CameraControl = observer(() => {
     return (
         <div>
             {
-                isMuteVideo
+                mutedVideo
                     ? <Svg url={CameraOffIcon} width="2.2" height="2.1" onClick={unmute}/>
                     : <Svg url={CameraIcon} width="2.2" height="1.3" onClick={mute}/>
             }
@@ -36,7 +36,7 @@ const CameraControl = observer(() => {
 });
 
 const MicrophoneControl = observer(() => {
-    const isMuteAudio = services.userMedia.IsMuteAudio;
+    const mutedAudio = services.userMedia.MutedAudio;
 
     const mute = () => services.userMedia.muteAudio();
     const unmute = () => services.userMedia.unmuteAudio();
@@ -44,7 +44,7 @@ const MicrophoneControl = observer(() => {
     return (
         <div className={styles.conference__panel__controls__mic}>
             {
-                isMuteAudio 
+                mutedAudio 
                     ? <Svg url={MicrophoneOffIcon} width="1.8" height="1.9" onClick={unmute}/>
                     : <Svg url={MicrophoneIcon} width="1.4" height="1.9" onClick={mute}/>
             }
