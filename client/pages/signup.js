@@ -1,10 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Head from "next/head";
 import { useRouter } from "next/router";
 
-import Panel from "@components/ui/Panel/Panel";
-import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
