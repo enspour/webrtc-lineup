@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 
 import { IRepository } from "./Repository";
 
-import { User, UserAuth, Room, Tag } from "../types"
+import { User, UserAuth, Room, RoomAuth, Tag } from "../types"
 
 import UnknowError from "../QueryError/UnknowError";
 
@@ -51,16 +51,16 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findRoomWithSettingsById(id: bigint): Promise<(Room & { settings: RoomSettings }) | null> {
+    async findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth }) | null> {
         const room = await this.prismaClient.room.findUnique({
             where: { id },
-            include: { settings: true }
+            include: { auth: true }
         });
 
-        if (room && room.settings) {
+        if (room && room.auth) {
             return {
                 ...room,
-                settings: room.settings
+                auth: room.auth
             }
         }
 
@@ -158,9 +158,16 @@ export default class PrismaRepository implements IRepository {
                 name,
                 owner_id,
 
-                settings: {
-                    create: { password }
+                auth: {
+                    create: {
+                        password
+                    }
                 },
+
+                settings: {
+                    create: {}
+                },
+                
                 tags: {
                     connectOrCreate: tags.map(tag => ({
                         where: { name: tag },

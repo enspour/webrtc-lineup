@@ -2,14 +2,16 @@ import {
     User,
     UserAuth,
     Room,
+    RoomAuth,
     RoomSettings,
-    Tag
+    Tag 
 } from "@prisma/client";
 
 export {
     User,
     UserAuth,
     Room,
+    RoomAuth,
     RoomSettings,
     Tag
 }

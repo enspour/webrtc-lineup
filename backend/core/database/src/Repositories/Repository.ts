@@ -1,4 +1,4 @@
-import { User, UserAuth, Room, RoomSettings, Tag } from "../types"
+import { User, UserAuth, Room, RoomAuth, Tag } from "../types"
 
 export interface IRepository {
     findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null>;
@@ -6,7 +6,7 @@ export interface IRepository {
     findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
     findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomById(id: bigint): Promise<Room | null>;
-    findRoomWithSettingsById(id: bigint): Promise<(Room & { settings: RoomSettings }) | null>;
+    findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth }) | null>;
     findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
@@ -43,8 +43,8 @@ export default class Repository implements IRepository {
         return await this._repository.findRoomById(id);
     }
 
-    async findRoomWithSettingsById(id: bigint): Promise<(Room & { settings: RoomSettings }) | null> {
-        return await this._repository.findRoomWithSettingsById(id);
+    async findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth }) | null> {
+        return await this._repository.findRoomAuthById(id);
     }
 
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {

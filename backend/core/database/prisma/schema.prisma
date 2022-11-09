@@ -45,9 +45,9 @@ model UserAssets {
 model Room {
   id          BigInt        @id @default(autoincrement())
   name        String
-  status      Boolean       @default(false)
   owner_id    BigInt
   created_at  DateTime      @default(now())
+  auth        RoomAuth?
   settings    RoomSettings?
   owner       User          @relation(fields: [owner_id], references: [id])
   tags        Tag[]
@@ -56,9 +56,17 @@ model Room {
   @@map("rooms")
 }
 
-model RoomSettings {
+model RoomAuth {
   id            BigInt  @id @default(autoincrement())
   password      String?
+  room_id       BigInt  @unique
+  room          Room    @relation(fields: [room_id], references: [id], onDelete: Cascade)
+
+  @@map("rooms_auth")
+}
+
+model RoomSettings {
+  id            BigInt  @id @default(autoincrement())
   room_id       BigInt  @unique
   room          Room    @relation(fields: [room_id], references: [id], onDelete: Cascade)
 
