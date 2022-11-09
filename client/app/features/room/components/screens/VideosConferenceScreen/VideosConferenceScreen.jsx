@@ -90,19 +90,25 @@ const VideosConferenceScreen = () => {
             const local = {
                 peerId: "local",
                 stream: services.userMedia.Stream,
+                active: services.userMedia.IsSpeaking,
                 muted: true,
             };
             
             const peers = services.conference.Peers;
-            const remotePeers = peers
+            const remotePeers = [...peers]
+                .sort((a, b) => b.LastAudioActive - a.LastAudioActive)
                 .slice(0, MAX_COUNT_VIDEOS - 1)
                 .map(item => ({
                     peerId: item.PeerId,
                     stream: item.Stream,
+                    active: item.IsSpeaking,
                     muted: false,
                 }));
 
-            setVideos([ local, ...remotePeers ]);
+            setVideos([ 
+                local,  
+                ...remotePeers 
+            ]);
         })
     , [])
 

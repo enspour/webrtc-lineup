@@ -1,8 +1,9 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
 import styles from "./UserVideo.module.scss";
 
-const UserVideo = ({ item, options }) => {
+const UserVideo = observer(({ item, options }) => {
     const videoRef = React.useRef();
 
     React.useEffect(() => {
@@ -12,19 +13,28 @@ const UserVideo = ({ item, options }) => {
     }, [])
 
     return (
-        <div className={styles.wrapper}>
+        <div 
+            className={styles.wrapper}
+            style={{
+                border: `.2rem solid ${
+                    item.active 
+                        ? "var(--theme-border-conf-video-active)" 
+                        : "var(--theme-border-conf-video)"
+                }`
+            }}
+        >
             <video 
                 ref={videoRef}
                 className={styles.video}
                 style={{
                     height: `${options.height}px`,
-                    width: `${options.width}px`
+                    width: `${options.width}px`,
                 }}
                 muted={item.muted} 
                 autoPlay
             />
         </div>
     )
-}
+})
 
-export default React.memo(UserVideo);
+export default UserVideo;

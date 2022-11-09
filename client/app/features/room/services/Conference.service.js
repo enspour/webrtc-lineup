@@ -1,7 +1,8 @@
 import iceServersConfig from "app/configs/iceServers.config";
 
-import PeersStore from "../store/Peers.store";
+import { SpeechService } from "@features/speech";
 
+import PeersStore from "../store/Peers.store";
 import stores from "../store";
 
 class MediaPeerConnection {
@@ -9,13 +10,15 @@ class MediaPeerConnection {
     #peerId;
     #signal;
     #stream;
+    #speechService;
     #peerConnection;
-
+    
     constructor(roomId, peerId, localStream, signal) {
         this.#roomId = roomId;
         this.#peerId = peerId;
         this.#signal = signal;
         this.#stream = new MediaStream();
+        this.#speechService = new SpeechService();
         this.#peerConnection = new RTCPeerConnection(iceServersConfig);
 
         localStream.getTracks().forEach(track => {
@@ -24,6 +27,10 @@ class MediaPeerConnection {
 
         this.#peerConnection.ontrack = event => {
             this.#stream.addTrack(event.track);
+
+            if (event.track.kind === "audio") {
+                this.#speechService.initialize(this.#stream);
+            }
         }
 
         this.#peerConnection.onicecandidate = event => {
@@ -39,6 +46,14 @@ class MediaPeerConnection {
 
     get PeerId() {
         return this.#peerId;
+    }
+
+    get IsSpeaking() {
+        return this.#speechService.IsSpeaking;
+    }
+
+    get LastAudioActive() {
+        return this.#speechService.LastAudioActive;
     }
 
     close() {

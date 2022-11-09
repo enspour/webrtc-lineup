@@ -1,11 +1,16 @@
 import MediaDataStore from "@store/MediaData.store";
 
+import { SpeechService } from "@features/speech";
+
 export default class UserMediaService {
     #stream;
     #mediaData;
 
+    #speechService;
+
     constructor() {
         this.#mediaData = new MediaDataStore();
+        this.#speechService = new SpeechService();
     }
 
     get Stream() {
@@ -18,6 +23,14 @@ export default class UserMediaService {
 
     get MutedVideo() {
         return this.#mediaData.mutedVideo;
+    }
+
+    get IsSpeaking() {
+        return this.#speechService.IsSpeaking;
+    }
+
+    get LastAudioActive() {
+        return this.#speechService.LastAudioActive;
     }
 
     async captureMedia(constraints) {
@@ -44,6 +57,8 @@ export default class UserMediaService {
 
                 this.#mediaData.setMutedAudio(!constraints["audio"]);
                 this.#mediaData.setMutedVideo(!constraints["video"]);
+
+                this.#speechService.initialize(stream);
 
                 this.#stream = stream;
             }

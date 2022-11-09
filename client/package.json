@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "hark": "^1.2.3",
     "lodash": "^4.17.21",
     "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",
