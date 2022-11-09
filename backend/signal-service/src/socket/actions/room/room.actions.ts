@@ -29,7 +29,6 @@ class RoomsActions {
             const payload = {
                 id: room.id.toString(),
                 name: room.name,
-                status: room.status,
                 owner_id: room.owner_id.toString(),
                 created_at: room.created_at,
             };
