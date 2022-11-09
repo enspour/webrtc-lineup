@@ -45,7 +45,7 @@ const LoginWithEmail = React.memo(() => {
 
     return (
         <div className={styles.login}>
-            <div className={styles.login__title}>Login with Email</div>
+            <div className={styles.login__title}>Login</div>
             
             <div className={styles.login__inputs}>
                 <InputControl 
@@ -80,6 +80,8 @@ const Login = () => {
     return (
         <LoginLayout title="Lineup | Login">
             <div className={styles.wrapper}>
+                <div className={styles.title}> Lineup </div>
+
                 <LoginWithEmail />
 
                 <div className={styles.signup}>

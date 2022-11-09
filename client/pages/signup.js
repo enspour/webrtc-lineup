@@ -46,7 +46,7 @@ const SignupWithEmail = () => {
 
     return (
         <div className={styles.singup}>
-            <div className={styles.singup__title}>Sign up with Email</div>
+            <div className={styles.singup__title}>Signup</div>
 
             <div className={styles.singup__inputs}>
                 <InputControl
@@ -93,6 +93,8 @@ const Signup = () => {
     return (
         <LoginLayout title="Lineup | Signup">
             <div className={styles.wrapper}>
+                <div className={styles.title}>Lineup</div>
+
                 <SignupWithEmail />
 
                 <div className={styles.login}>

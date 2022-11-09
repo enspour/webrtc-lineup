@@ -1,6 +1,13 @@
 .wrapper {
     padding: 5rem;
-    min-width: 60rem; 
+    min-width: 50rem; 
+}
+
+.title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--theme-color-primary);
 }
 
 .singup {
@@ -8,11 +15,10 @@
 }
 
 .singup__title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
-    text-align: center;
     color: var(--theme-color-primary);
-    margin-bottom: 2.5rem;
+    margin: 2.5rem 0;
 }
 
 .singup__inputs {
