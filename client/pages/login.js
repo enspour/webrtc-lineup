@@ -1,13 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import Head from "next/head";
 
 import { useRouter } from "next/router";
 
-import Panel from "@components/ui/Panel/Panel";
+import LoginLayout from "@components/layouts/LoginLayout/LoginLayout";
+
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
-import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 
 import useRequest from "@hooks/api/useRequest";
@@ -16,22 +15,6 @@ import useResponse from "@hooks/api/useResponse";
 import services from "@services";
 
 import styles from "@styles/pages/login.module.scss";
-
-const LoginAsGuest = React.memo(() => {
-    const LoginAsGuest = () => {
-        console.log("Login as guest");
-    }
-
-    return <OutlinedButton onClick={LoginAsGuest}> Sign in as Guest </OutlinedButton>
-});
-
-const LoginWithGoogle = React.memo(() => {
-    const LoginWithGoogle = () => {
-        console.log("Login with google");
-    };
-    
-    return <OutlinedButton onClick={LoginWithGoogle}> Sign in with Google </OutlinedButton>
-});
 
 const LoginWithEmail = React.memo(() => {
     const router = useRouter();
@@ -61,10 +44,10 @@ const LoginWithEmail = React.memo(() => {
     }, [data]);
 
     return (
-        <div className={styles.login_with_email}>
-            <div className={styles.login_with_email__title}>Sign in with Email</div>
+        <div className={styles.login}>
+            <div className={styles.login__title}>Login with Email</div>
             
-            <div className={styles.login_with_email__inputs}>
+            <div className={styles.login__inputs}>
                 <InputControl 
                     type="text" 
                     placeholder="Enter your email" 
@@ -80,13 +63,13 @@ const LoginWithEmail = React.memo(() => {
                 />
             </div>
             
-            <div className={styles.login_with_email__recovery}>Recovery Password</div>
+            <div className={styles.login__recovery}>Recovery Password</div>
             
-            <div className={styles.login_with_email__remember_me}>
+            <div className={styles.login__remember_me}>
                 <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
-            <div className={styles.login_with_email__btn}>
+            <div className={styles.login__btn}>
                 <FilledButton onClick={login}> Login </FilledButton>
             </div>
         </div>
@@ -95,36 +78,18 @@ const LoginWithEmail = React.memo(() => {
 
 const Login = () => {
     return (
-        <main className={styles.main}>
-            <Head>
-                <title>Lineup | Login</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            </Head>
+        <LoginLayout title="Lineup | Login">
+            <div className={styles.wrapper}>
+                <LoginWithEmail />
 
-            <div className={styles.container}>
-                <Panel>
-                    <div className={styles.wrapper}>
-                        <div className={styles.logo}>Lineup</div>
-
-                        <div className={styles.title}>Login</div>
-                        
-                        <div className={styles.login_another_way}>
-                            <LoginAsGuest />
-                            <LoginWithGoogle />
-                        </div>
-
-                        <LoginWithEmail />
-
-                        <div className={styles.signup}>
-                            <span>Don't have account? </span>
-                            <Link href="/signup">
-                                <span className={styles.signup__link}>Signup</span>
-                            </Link>
-                        </div>
-                    </div>
-                </Panel>
+                <div className={styles.signup}>
+                    <span>Don't have account? </span>
+                    <Link href="/signup">
+                        <span className={styles.signup__link}>Signup</span>
+                    </Link>
+                </div>
             </div>
-        </main>
+        </LoginLayout>
     );
 }
 

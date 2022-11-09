@@ -15,14 +15,7 @@ import useResponse from "@hooks/api/useResponse";
 import services from "@services";
 
 import styles from "@styles/pages/signup.module.scss";
-
-const SignupWithGoogle = () => {
-    const SignupWithGoogle = () => {
-        console.log("Signup with google");
-    };
-    
-    return <OutlinedButton onClick={SignupWithGoogle}> Sign up with Google </OutlinedButton>
-}
+import LoginLayout from "@components/layouts/LoginLayout/LoginLayout";
 
 const SignupWithEmail = () => {
     const router = useRouter();
@@ -55,10 +48,10 @@ const SignupWithEmail = () => {
     }, [data]);
 
     return (
-        <div className={styles.singup_with_email}>
-            <div className={styles.singup_with_email__title}>Sign up with Email</div>
+        <div className={styles.singup}>
+            <div className={styles.singup__title}>Sign up with Email</div>
 
-            <div className={styles.singup_with_email__inputs}>
+            <div className={styles.singup__inputs}>
                 <InputControl
                     type="text" 
                     placeholder="Enter your name" 
@@ -88,11 +81,11 @@ const SignupWithEmail = () => {
                 />
             </div>
 
-            <div className={styles.singup_with_email__remember_me}>
+            <div className={styles.singup__remember_me}>
                 <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
-            <div className={styles.signup_with_email__btn}>
+            <div className={styles.singup__btn}>
                 <FilledButton onClick={signup}> Signup </FilledButton>
             </div>
         </div>
@@ -101,33 +94,18 @@ const SignupWithEmail = () => {
 
 const Signup = () => {
     return (
-        <div className={styles.main}>
-            <Head>
-                <title> Lineup | Signup </title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            </Head>
+        <LoginLayout title="Lineup | Signup">
+            <div className={styles.wrapper}>
+                <SignupWithEmail />
 
-            <div className={styles.container}>
-                <Panel>
-                    <div className={styles.wrapper}>
-                        <div className={styles.logo}>Lineup</div>
-
-                        <div className={styles.title}>Signup</div>
-                        
-                        <SignupWithGoogle />
-
-                        <SignupWithEmail />
-
-                        <div className={styles.login}>
-                            <span>Do have account? </span>
-                            <Link href="/login">
-                                <span className={styles.login__link}>Login</span>
-                            </Link>
-                        </div>
-                    </div>
-                </Panel>
+                <div className={styles.login}>
+                    <span>Do have account? </span>
+                    <Link href="/login">
+                        <span className={styles.login__link}>Login</span>
+                    </Link>
+                </div>
             </div>
-        </div>
+        </LoginLayout>
     );
 }
 
