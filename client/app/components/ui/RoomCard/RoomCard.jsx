@@ -157,7 +157,6 @@ RoomCard.propTypes = {
     room: PropTypes.shape({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        status: PropTypes.bool.isRequired,
 
         tags: PropTypes.arrayOf(
             PropTypes.shape({

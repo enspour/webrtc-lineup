@@ -12,7 +12,7 @@ const Account = () => {
     return (
         <MainLayout title="Lineup | Account">
             <div className={styles.container}>
-                <Panel>
+                <Panel maxHeight="calc(100vh - 6rem - 10rem)">
                     <div className={styles.wrapper}>
                         <ProfileScreen />
                         <ThemesScreen />

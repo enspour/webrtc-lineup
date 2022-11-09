@@ -62,7 +62,7 @@ const ConferencePanel = () => {
     }
 
     return (
-        <Panel>
+        <Panel overflow="hidden">
             <div className={styles.conference__panel}>
                 <div className="fl al-center g-3">
                     <div className={styles.conference__panel__menu}>

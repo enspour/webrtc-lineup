@@ -55,7 +55,7 @@ const ConferenceCard = () => {
 const SettingsCard = () => {
     return (
         <div className={styles.card}>
-            <Panel>
+            <Panel minHeight="100%">
                 <div className={styles.card__wrapper}>
                     <div>
                         <div className={styles.card__title}> Settings </div>
