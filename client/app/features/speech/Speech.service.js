@@ -10,7 +10,7 @@ export default class SpeechService {
     }
 
     initialize(stream) {
-        const speech = hark(stream, { threshold: 0 });
+        const speech = hark(stream, { threshold: -80 });
     
         speech.on("speaking", () => {
             this.#store.setIsSpeaking(true);
