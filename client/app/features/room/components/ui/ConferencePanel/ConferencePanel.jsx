@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
 import Svg from "@components/ui/Svg/Svg";
-import Panel from "@components/ui/Panel/Panel";
+import FilledButton from "@components/ui/FilledButton/FilledButton";
 
 import services from "@services";
 
@@ -62,36 +62,36 @@ const ConferencePanel = () => {
     }
 
     return (
-        <Panel overflow="hidden">
-            <div className={styles.conference__panel}>
-                <div className="fl al-center g-3">
-                    <div className={styles.conference__panel__menu}>
-                        <Svg url={MenuLeftIcon} width="1.8" height="1.5"/>
-                        <Svg url={MenuRightIcon} width="1.8" height="1.5"/>
-                    </div>
-
-                    <div className={styles.conference__panel__full}>
-                        <Svg url={FullIcon} width="1.4" height="1.4"/>
-                    </div>
-
-                    <div className={styles.conference__panel__title}>
-                        Conference
-                    </div>
+        <div className={styles.conference__panel}>
+            <div className="fl al-center g-3">
+                <div className={styles.conference__panel__menu}>
+                    <Svg url={MenuLeftIcon} width="1.8" height="1.5"/>
+                    <Svg url={MenuRightIcon} width="1.8" height="1.5"/>
                 </div>
 
-                <div className="fl al-center g-8">
-                    <div className={styles.conference__panel__controls}>
-                        <CameraControl />
-                        <MicrophoneControl />
-                    </div>
+                <div className={styles.conference__panel__full}>
+                    <Svg url={FullIcon} width="1.4" height="1.4"/>
+                </div>
 
-                    <div className={styles.conference__panel__leave} onClick={leave}>
+                <div className={styles.conference__panel__title}>
+                    Conference
+                </div>
+            </div>
+
+            <div className="fl al-center g-8">
+                <div className={styles.conference__panel__controls}>
+                    <CameraControl />
+                    <MicrophoneControl />
+                </div>
+
+                <FilledButton onClick={leave} height="3.5rem">
+                    <div className={styles.conference__panel__leave}>
                         <Svg url={LeaveIcon} width="2.4" height=".9" color="var(--theme-color-secondary)"/>
                         <span> Leave </span>
                     </div>
-                </div>
+                </FilledButton>
             </div>
-        </Panel>
+        </div>
     )
 }
 
