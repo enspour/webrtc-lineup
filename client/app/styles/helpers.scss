@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.jf-center {
+    justify-content: center;
+}
+
 .jf-between {
     justify-content: space-between;
 }
@@ -53,6 +57,10 @@
 .m-auto {
     margin: auto;
 }
+
+.h-100vh {
+    height: 100vh;
+} 
 
 .mt-4 {
     margin-top: 4rem;

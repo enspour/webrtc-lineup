@@ -6,7 +6,7 @@ import UserVideo from "../../ui/UserVideo/UserVideo";
 
 import services from "@services";
 
-import styles from "./VideosConferenceScreen.module.scss";
+import styles from "./ConferenceVideosScreen.module.scss";
 
 const getGridColumnsRows = count => {
     switch (count) {
@@ -69,7 +69,7 @@ const getGridOptions = (parent, count) => {
     return { ...options, child }
 }
 
-const VideosConferenceScreen = () => {
+const ConferenceVideosScreen = () => {
     const MAX_COUNT_VIDEOS = 9;
     
     const videosRef = React.useRef();
@@ -136,4 +136,4 @@ const VideosConferenceScreen = () => {
     )
 }
 
-export default VideosConferenceScreen;
+export default ConferenceVideosScreen;
