@@ -1,20 +1,28 @@
-.room {
-    padding: 5rem;
-}
-
 .room__header {
-    padding: 2rem;
-    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    padding: 0 5rem;
     color: var(--theme-color-primary);
+    background-color: var(--theme-bg-primary);
+    box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
 }
 
 .room__header__title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 5rem;
     font-weight: 600;
     line-height: 4rem;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 70%;
 }
 
 .room__header__leave {
-    height: 4rem;
-    min-width: 17rem;
+    min-width: 15rem;
+}
+
+.room__content {
+    margin-top: 4rem;
 }
