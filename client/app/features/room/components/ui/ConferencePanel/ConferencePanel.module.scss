@@ -41,10 +41,11 @@
 .conference__panel__leave {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
     font-size: 1.6rem;
     font-weight: 600;
-    padding: 0 2.5rem;
+    width: 14.8rem;
 }
 
 .conference__panel__full {
