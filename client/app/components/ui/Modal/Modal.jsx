@@ -27,7 +27,7 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
     return (
         <div className={styles.modal} ref={modalRef} onClick={outsideClick}>
             <div className={styles.modal__window} ref={modalContentRef}>
-                <Panel>
+                <Panel maxHeight="100vh">
                     <div className={styles.modal__header}>
                         <div className={styles.modal__title}>{title}</div>
                         <Svg url={CloseIcon} width="1.1" height="1.1" onClick={closeModal}/>

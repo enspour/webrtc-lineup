@@ -20,7 +20,10 @@ const Information = observer(() => {
     return (
         <div>
             <div className={styles.room__name}>{name}</div>
-            <div className={styles.room__owner__name}>{owner.name}</div>
+            <div className={styles.room__owner}>
+                <div className={styles.room__owner__avatar}></div>
+                <div className={styles.room__owner__name}>{owner.name}</div>
+            </div>
         </div>
     )
 });

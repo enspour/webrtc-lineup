@@ -1,5 +1,5 @@
 .wrapper {
-    min-width: 35rem;
+    min-width: 45rem;
     max-width: 55rem;
 }
 
@@ -11,16 +11,33 @@
 }
 
 .room__name {
+    padding: 1.5rem 2rem;
     font-size: 1.6rem;
     font-weight: 600;
+    text-align: center;
+    border-radius: 2rem;
+    color: var(--theme-color-secondary);
+    background-color: var(--theme-bg-secondary);
+}
+
+.room__owner {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    border-radius: 2rem;
     color: var(--theme-color-primary);
 }
 
-.room__owner__name {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--theme-link-primary);
-    margin-top: 0.5rem;
+.room__owner__avatar {
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    background-color: #696969;
+    border-radius: 50%;
 }
 
 .room__users__loading {
