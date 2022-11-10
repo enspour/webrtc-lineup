@@ -1,15 +1,20 @@
 .room {
-    padding: 6rem 12.5rem;
+    padding: 5rem;
 }
 
-.room__title {
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 4rem;
+.room__header {
+    padding: 2rem;
+    border-radius: 2rem;
     color: var(--theme-color-primary);
 }
 
-.room__btn__leave {
+.room__header__title {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 4rem;
+}
+
+.room__header__leave {
     height: 4rem;
     min-width: 17rem;
 }

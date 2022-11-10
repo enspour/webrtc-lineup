@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
+import FilledButton from "@components/ui/FilledButton/FilledButton";
 
 import services from "@services";
 
@@ -25,14 +25,14 @@ const RoomLayout = observer(({ children }) => {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
 
-            <div>
+            <div className={styles.room__header}>
                 <div className="fl jf-between al-center g-2">
-                    <div className={styles.room__title}> {name} </div>
+                    <div className={styles.room__header__title}> {name} </div>
 
-                    <div className={styles.room__btn__leave}>
-                        <OutlinedButton onClick={leave}>
+                    <div className={styles.room__header__leave}>
+                        <FilledButton onClick={leave}>
                             Leave
-                        </OutlinedButton>
+                        </FilledButton>
                     </div>
                 </div>
             </div>
