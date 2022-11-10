@@ -3,9 +3,15 @@ import PropTypes from "prop-types";
 
 import styles from "./FilledButton.module.scss";
 
-const FilledButton = ({ children, onClick }) => {
+const FilledButton = ({ onClick, height = "4rem", children }) => {
     return (
-        <button className={styles.btn} onClick={e => onClick(e)}> {children} </button>
+        <button 
+            className={styles.btn} 
+            style={{ height }}
+            onClick={e => onClick(e)}
+        > 
+            {children} 
+        </button>
     );
 }
 

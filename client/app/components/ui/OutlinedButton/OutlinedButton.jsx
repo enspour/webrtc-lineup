@@ -3,9 +3,15 @@ import PropTypes from "prop-types";
 
 import styles from "./OutlinedButton.module.scss";
 
-const OutlinedButton = ({ children, onClick }) => {
+const OutlinedButton = ({ onClick, height, children }) => {
     return (
-        <button className={styles.btn} onClick={e => onClick(e)}> {children} </button>
+        <button 
+            className={styles.btn} 
+            style={{ height }}
+            onClick={e => onClick(e)}
+        > 
+            {children} 
+        </button>
     );
 }
 
