@@ -1,0 +1,15 @@
+.settings {
+    max-width: 100rem;
+    margin: 0 auto;
+}
+
+.wrapper {
+    padding: 2rem;
+}
+
+.settings__title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    text-align: center;
+}

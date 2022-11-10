@@ -8,6 +8,25 @@ import services from "@services";
 
 import styles from "./RoomCardsScreen.module.scss";
 
+const Card = ({ title, hint, onClick, children }) => {
+    return (
+        <div className={styles.card} onClick={onClick}>
+            <Panel minHeight="10rem" height="100%" width="30rem">
+                <div className={styles.card__wrapper}>
+                    <div>
+                        <div className={styles.card__title}>{title}</div>
+                        <div className={styles.card__hint}>{hint}</div>
+                    </div>
+
+                    <div>
+                        {children}
+                    </div>
+                </div>
+            </Panel>
+        </div>
+    )
+}
+
 const ConferenceCard = () => {
     const router = useRouter();
 
@@ -25,53 +44,37 @@ const ConferenceCard = () => {
     }
 
     return (
-        <div className={styles.card} onClick={openConference}>
-            <Panel>
-                <div className={styles.card__wrapper}>
-                    <div>
-                        <div className={styles.card__title}> Conference </div>
-                        <div className={styles.card__hint}> Click to connect to conference </div>
-                    </div>
-                    
-                    <div className={styles.card__voicevideo}>
-                        <CheckBox
-                            label="Microphone"
-                            value={enableMicrophone} 
-                            setValue={setEnableMicrophone}
-                        />
-                        
-                        <CheckBox
-                            label="Camera" 
-                            value={enableCamera} 
-                            setValue={setEnableCamera}
-                        />
-                    </div>
-                </div>
-            </Panel>
-        </div>
-    )
-}
-
-const SettingsCard = () => {
-    return (
-        <div className={styles.card}>
-            <Panel minHeight="100%">
-                <div className={styles.card__wrapper}>
-                    <div>
-                        <div className={styles.card__title}> Settings </div>
-                        <div className={styles.card__hint}> Click to set the settings for room </div>
-                    </div>
-                </div>
-            </Panel>
-        </div>
+        <Card 
+            title="Conference" 
+            hint="You can connect to conference here." 
+            onClick={openConference}
+        >
+            <div className={styles.card__voicevideo}>
+                <CheckBox
+                    label="Microphone"
+                    value={enableMicrophone} 
+                    setValue={setEnableMicrophone}
+                />
+                
+                <CheckBox
+                    label="Camera" 
+                    value={enableCamera} 
+                    setValue={setEnableCamera}
+                />
+            </div>
+        </Card>
     )
 }
 
 const RoomCardsScreen = () => {
+    const router = useRouter();
+
+    const openSettings = () => router.push("/room/settings");
+
     return (
         <div className={styles.cards}>
             <ConferenceCard />
-            <SettingsCard />
+            <Card title="Settings" hint="You can customize the room here." onClick={openSettings}/>
         </div>
     )
 }

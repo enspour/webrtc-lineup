@@ -1,7 +1,8 @@
 .cards {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .card {
@@ -10,7 +11,6 @@
     border: 0.1rem solid var(--theme-bg-tertiary);
     transition: 0.3s;
     cursor: pointer;
-
 
     &:hover {
         border: 0.1rem solid var(--theme-bg-secondary);
