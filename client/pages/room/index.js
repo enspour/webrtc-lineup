@@ -7,8 +7,6 @@ import { RoomCardsScreen } from "@features/room";
 
 import services from "@services";
 
-import styles from "@styles/pages/room.module.scss";
-
 const Room = () => {
     const router = useRouter();
 
@@ -18,9 +16,17 @@ const Room = () => {
         }
     }, [])
    
+    if (!services.room.Connected) {
+        return (
+            <div className="h-100vh w-100 fl al-center jf-center">
+                <div className="loader"></div>
+            </div>
+        );
+    }
+
     return (
         <RoomLayout>
-            <div className={styles.room__cards}>
+            <div className="mt-4">
                 <RoomCardsScreen />
             </div>
         </RoomLayout>
