@@ -5,17 +5,17 @@ import PanelHeader from "@components/ui/PanelHeader/PanelHeader";
 
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 
-import styles from "./RoomSettingsPage.module.scss";
+import styles from "./RoomChattingPage.module.scss";
 
-const Settings = () => {
+const Chatting = () => {
     return (
-        <RoomLayout title="Lineup | Settings">
-            <div className={styles.settings}>
+        <RoomLayout title="Lineup | Chatting">
+            <div className={styles.chatting}>
                 <Panel>
-                    <PanelHeader title="Settings"/>
+                    <PanelHeader title="Chatting"/>
 
                     <div className={styles.wrapper}>
-                        impliment settings
+                        impliment chatting
                     </div>
                 </Panel>
             </div>
@@ -23,4 +23,4 @@ const Settings = () => {
     )
 }
 
-export default React.memo(Settings);
+export default React.memo(Chatting);

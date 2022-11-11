@@ -70,11 +70,23 @@ const RoomCards = () => {
     const router = useRouter();
 
     const openSettings = () => router.push("/room/settings");
+    const openChatting = () => router.push("/room/chatting");
 
     return (
         <div className={styles.cards}>
             <ConferenceCard />
-            <Card title="Settings" hint="You can customize the room here." onClick={openSettings}/>
+            
+            <Card 
+                title="Room Chatting" 
+                hint="You can chatting with other connected to this room." 
+                onClick={openChatting}
+            />
+
+            <Card 
+                title="Settings" 
+                hint="You can customize the room here." 
+                onClick={openSettings}
+            />
         </div>
     )
 }
