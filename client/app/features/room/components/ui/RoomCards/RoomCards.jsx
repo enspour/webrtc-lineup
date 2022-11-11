@@ -1,10 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { observer } from "mobx-react-lite";
 
 import Panel from "@components/ui/Panel/Panel";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import services from "@services";
+
+import stores from "@features/room/store";
 
 import styles from "./RoomCards.module.scss";
 
@@ -66,10 +69,27 @@ const ConferenceCard = () => {
     )
 }
 
-const RoomCards = () => {
+const SettingsCard = observer(() => {
     const router = useRouter();
 
     const openSettings = () => router.push("/room/settings");
+
+    if (stores.room.owner.id !== services.user.Id) {
+        return "";
+    }
+
+    return (
+        <Card 
+            title="Settings" 
+            hint="You can customize the room here." 
+            onClick={openSettings}
+        />
+    )
+})
+
+const RoomCards = () => {
+    const router = useRouter();
+
     const openChatting = () => router.push("/room/chatting");
 
     return (
@@ -77,16 +97,12 @@ const RoomCards = () => {
             <ConferenceCard />
             
             <Card 
-                title="Room Chatting" 
+                title="Chatting" 
                 hint="You can chatting with other connected to this room here." 
                 onClick={openChatting}
             />
 
-            <Card 
-                title="Settings" 
-                hint="You can customize the room here." 
-                onClick={openSettings}
-            />
+            <SettingsCard />            
         </div>
     )
 }
