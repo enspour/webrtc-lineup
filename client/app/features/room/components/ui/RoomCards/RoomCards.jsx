@@ -6,7 +6,7 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import services from "@services";
 
-import styles from "./RoomCardsScreen.module.scss";
+import styles from "./RoomCards.module.scss";
 
 const Card = ({ title, hint, onClick, children }) => {
     return (
@@ -66,7 +66,7 @@ const ConferenceCard = () => {
     )
 }
 
-const RoomCardsScreen = () => {
+const RoomCards = () => {
     const router = useRouter();
 
     const openSettings = () => router.push("/room/settings");
@@ -79,4 +79,4 @@ const RoomCardsScreen = () => {
     )
 }
 
-export default React.memo(RoomCardsScreen);
+export default React.memo(RoomCards);

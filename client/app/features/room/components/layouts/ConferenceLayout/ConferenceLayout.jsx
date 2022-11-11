@@ -1,9 +1,8 @@
 import React from "react";
 import Head from "next/head";
 
-import RedirectDisconnectedUser from "@components/wrappers/RedirectDisconnectedUser";
-
-import { ConferencePanel } from "@features/room";
+import RedirectDisconnectedUser from "@features/room/components/ui/RedirectDisconnectedUser/RedirectDisconnectedUser";
+import ConferencePanel from "@features/room/components/ui/ConferencePanel/ConferencePanel";
 
 import styles from "./ConferenceLayout.module.scss";
 

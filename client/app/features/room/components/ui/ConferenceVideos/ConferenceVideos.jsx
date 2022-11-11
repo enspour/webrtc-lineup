@@ -2,11 +2,11 @@ import React from "react";
 import { autorun } from "mobx";
 import _debounce from "lodash/debounce";
 
-import UserVideo from "../../ui/UserVideo/UserVideo";
+import UserVideo from "../UserVideo/UserVideo";
 
 import services from "@services";
 
-import styles from "./ConferenceVideosScreen.module.scss";
+import styles from "./ConferenceVideos.module.scss";
 
 const getGridColumnsRows = count => {
     switch (count) {
@@ -69,7 +69,7 @@ const getGridOptions = (parent, count) => {
     return { ...options, child }
 }
 
-const ConferenceVideosScreen = () => {
+const ConferenceVideos = () => {
     const MAX_COUNT_VIDEOS = 9;
     
     const videosRef = React.useRef();
@@ -136,4 +136,4 @@ const ConferenceVideosScreen = () => {
     )
 }
 
-export default ConferenceVideosScreen;
+export default ConferenceVideos;

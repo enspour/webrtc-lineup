@@ -2,9 +2,9 @@ import React from "react";
 
 import Panel from "@components/ui/Panel/Panel";
 
-import styles from "./RoomSettingsScreen.module.scss";
+import styles from "./RoomSettings.module.scss";
 
-const RoomSettingsScreen = () => {
+const RoomSettings = () => {
     return (
         <div className={styles.settings}>
             <Panel>
@@ -18,4 +18,4 @@ const RoomSettingsScreen = () => {
     )
 }
 
-export default React.memo(RoomSettingsScreen);
+export default React.memo(RoomSettings);

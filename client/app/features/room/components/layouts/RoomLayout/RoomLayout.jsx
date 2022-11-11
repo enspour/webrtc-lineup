@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import RedirectDisconnectedUser from "@components/wrappers/RedirectDisconnectedUser";
+import RedirectDisconnectedUser from "@features/room/components/ui/RedirectDisconnectedUser/RedirectDisconnectedUser";
 
 import FilledButton from "@components/ui/FilledButton/FilledButton";
 
