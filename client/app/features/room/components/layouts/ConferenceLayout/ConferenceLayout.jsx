@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-import RedirectDisconnectedUser from "@features/room/components/ui/RedirectDisconnectedUser/RedirectDisconnectedUser";
+import RedirectDisconnectedUser from "@features/room/components/logic/RedirectDisconnectedUser/RedirectDisconnectedUser";
 import ConferencePanel from "@features/room/components/ui/ConferencePanel/ConferencePanel";
 
 import styles from "./ConferenceLayout.module.scss";
