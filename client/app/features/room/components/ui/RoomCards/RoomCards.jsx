@@ -78,7 +78,7 @@ const RoomCards = () => {
             
             <Card 
                 title="Room Chatting" 
-                hint="You can chatting with other connected to this room." 
+                hint="You can chatting with other connected to this room here." 
                 onClick={openChatting}
             />
 
