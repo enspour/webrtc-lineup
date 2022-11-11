@@ -1,5 +1,9 @@
 .wrapper {
     padding: 2rem 3rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: var(--theme-bg-primary);
 }
 
 .header {

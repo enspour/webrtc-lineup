@@ -7,8 +7,9 @@
 .input__control {
     height: 4rem;
     width: 100%;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 600;
+    line-height: 4rem;
     outline: none;
     border: 0.1rem solid var(--theme-border-primary);
     border-radius: 2rem;
@@ -38,7 +39,6 @@
     top: 50%;
     transform: translateY(-50%);
     margin-left: 2.1rem; 
-    padding-bottom: .2rem;
     transition: all .4s ease;
     color: var(--theme-placeholder-primary);
     background-color: var(--theme-bg-primary);
