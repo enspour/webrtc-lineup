@@ -1,0 +1,19 @@
+.wrapper {
+    padding: 2rem 3rem;
+}
+
+.header {
+    display: flex;
+    position: relative;
+}
+
+.header__title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    text-align: center;
+}
