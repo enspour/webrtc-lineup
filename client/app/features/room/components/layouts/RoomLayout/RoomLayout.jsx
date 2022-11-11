@@ -9,6 +9,7 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import services from "@services";
 
 import styles from "./RoomLayout.module.scss"
+import Link from "next/link";
 
 const RoomLayout = observer(({ title = "Lineup | Room", children }) => {
     const name = services.room.Name;
@@ -29,7 +30,9 @@ const RoomLayout = observer(({ title = "Lineup | Room", children }) => {
                 </Head>
 
                 <div className={styles.room__header}>
-                    <div className={styles.room__header__title}> {name} </div>
+                    <Link href="/room">
+                        <div className={styles.room__header__title}> {name} </div>
+                    </Link>
 
                     <div className={styles.room__header__leave}>
                         <FilledButton onClick={leave} height="3.5rem">
