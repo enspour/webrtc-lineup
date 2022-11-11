@@ -25,7 +25,8 @@ const API = new APIService();
 const roomAPI = new RoomAPI();
 const authAPI = new AuthAPI();
 
-const userMedia = new UserMedia();
+const userDevices = new UserDevices();
+const userMedia = new UserMedia(userDevices);
 
 const signal = new Signal();
 
@@ -45,7 +46,7 @@ const services = {
     user: new User(API, authAPI),
     userRooms: new Rooms(API.createRequest(roomAPI.getCreated)),
     userFavoritesRooms: new Rooms(API.createRequest(roomAPI.getFavorites)),
-    userDevices: new UserDevices(),
+    userDevices,
     userMedia,
 
     island: new IslandService(),

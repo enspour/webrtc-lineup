@@ -7,8 +7,11 @@ export default class UserMediaService {
     #mediaData;
 
     #speechService;
+    #userDevices;
 
-    constructor() {
+    constructor(userDevices) {
+        this.#userDevices = userDevices;
+
         this.#mediaData = new MediaDataStore();
         this.#speechService = new SpeechService();
     }
@@ -36,16 +39,21 @@ export default class UserMediaService {
     async captureMedia(constraints) {
         try {
             if (!this.#stream) {
+                const audioDeviceId = this.#userDevices.SelectedAudioInputDevice;
+                const videoDeviceId = this.#userDevices.SelectedVideoInputDevice;
+
                 const stream = await navigator.mediaDevices.getUserMedia({
                     audio: {
                         echoCancellation: false,
-                        noiseSuppression: true
+                        noiseSuppression: true,
+                        deviceId: audioDeviceId
                     },
                     video: {
                         width: { max: 320 },
                         height: { max: 240 },
                         frameRate: 30,
-                        facingMode: "user"
+                        facingMode: "user",
+                        deviceId: videoDeviceId
                     }
                 });
     
