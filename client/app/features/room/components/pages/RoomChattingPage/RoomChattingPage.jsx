@@ -10,8 +10,8 @@ import styles from "./RoomChattingPage.module.scss";
 const Chatting = () => {
     return (
         <RoomLayout title="Lineup | Chatting">
-            <div className={styles.chatting}>
-                <Panel>
+            <div className={styles.container}>
+                <Panel height="calc(100vh - 5rem - 4rem)">
                     <PanelHeader title="Chatting"/>
 
                     <div className={styles.wrapper}>
