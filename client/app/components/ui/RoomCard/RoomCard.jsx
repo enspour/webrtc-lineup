@@ -8,10 +8,10 @@ import Svg from "../Svg/Svg";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
 
-import MoreIcon from "@assets/images/room/more.svg";
-import RemoveIcon from "@assets/images/room/remove.svg";
-import AddToFavoritesIcon from "@assets/images/room/addToFavorites.svg";
-import RemoveToFavoritesIcon from "@assets/images/room/removeFromFavorites.svg";
+import MoreIcon from "@assets/images/room-card/more.svg";
+import RemoveIcon from "@assets/images/room-card/remove.svg";
+import AddToFavoritesIcon from "@assets/images/room-card/addToFavorites.svg";
+import RemoveToFavoritesIcon from "@assets/images/room-card/removeFromFavorites.svg";
 
 import services from "@services";
 
