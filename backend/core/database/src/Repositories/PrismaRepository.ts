@@ -51,10 +51,10 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth }) | null> {
+    async findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth, owner: User }) | null> {
         const room = await this.prismaClient.room.findUnique({
             where: { id },
-            include: { auth: true }
+            include: { auth: true, owner: true }
         });
 
         if (room && room.auth) {
