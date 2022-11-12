@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-import styles from "./ButtonWithInput.module.scss";
+import styles from "./InputButtonGroup.module.scss";
 
-const ButtonWithInput = ({ value, setValue, type, placeholder, onClick, children }) => {
+const InputButtonGroup = ({ value, setValue, type, placeholder, onClick, children }) => {
     return (
         <div className={styles.wrapper}>
             <input 
@@ -18,7 +18,7 @@ const ButtonWithInput = ({ value, setValue, type, placeholder, onClick, children
     )
 }
 
-ButtonWithInput.propTypes = {
+InputButtonGroup.propTypes = {
     type: PropTypes.oneOf(["text", "password"]).isRequired,
     value: PropTypes.string.isRequired,
     setValue: PropTypes.func.isRequired,
@@ -26,4 +26,4 @@ ButtonWithInput.propTypes = {
     onClick: PropTypes.func,
 }
 
-export default ButtonWithInput;
+export default InputButtonGroup;

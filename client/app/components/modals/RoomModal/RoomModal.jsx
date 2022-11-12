@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
 import Modal from "@components/ui/Modal/Modal";
-import ButtonWithInput from "@components/ui/ButtonWithInput/ButtonWithInput";
+import InputButtonGroup from "@components/ui/InputButtonGroup/InputButtonGroup";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
@@ -113,7 +113,7 @@ const JoinButton = () => {
 
     return (
         <div className={styles.room__btn__join}>
-            <ButtonWithInput 
+            <InputButtonGroup 
                 type="password" 
                 placeholder="Password" 
                 value={password} 
@@ -121,7 +121,7 @@ const JoinButton = () => {
                 onClick={join}
             >
                 Join Now
-            </ButtonWithInput>  
+            </InputButtonGroup>  
         </div>
     )
 }
