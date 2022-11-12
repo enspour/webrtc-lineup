@@ -3,45 +3,57 @@ import { autorun } from "mobx";
 
 import Panel from "@components/ui/Panel/Panel";
 import PanelHeader from "@components/ui/PanelHeader/PanelHeader";
-import SimpleInput from "@components/ui/SimpleInput/SimpleInput";
+import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 
-import stores from "@features/room/store";
+import services from "@services";
 
 import styles from "./RoomSettingsPage.module.scss";
 
-const RoomSettings = () => {
+const RoomNameSettings = () => {
     const [name, setName] = React.useState("");
-    const [visibility, setVisibility] = React.useState(false);
 
     React.useEffect(() => 
         autorun(() => {
-            const roomname = stores.room.name;
+            const roomname = services.room.Name;
             setName(roomname)
         })
     , [])
 
     return (
-        <div className={styles.settings}>
-            <div className="text-primary"> Room </div>
-            <div className="text-placeholder"> You can change settings of room here. </div>
-            <div className={styles.settings__items}>
-                <div>
-                    <div className="mb-1"> Name </div>
-                    <SimpleInput value={name} setValue={setName} placeholder="Name"/>
-                </div>
+        <div>
+            <div className="mb-1"> Name </div>
+            <EditInput value={name} setValue={setName} placeholder="Name"/>
+        </div>
+    )
+}
 
-                <div>
-                    <div className="mb-1">
-                        <div> Visibility </div>
-                        <div className="text-placeholder"> 
-                            If you make a room private, users won't be able to find it. 
-                        </div>
-                    </div>
-                    <CheckBox label="Private" value={visibility} setValue={setVisibility}/>
+const RoomVisibilitySettings = () => {
+    const [visibility, setVisibility] = React.useState(false);
+
+    return (
+        <div>
+            <div className="mb-1">
+                <div> Visibility </div>
+                <div className="text-placeholder"> 
+                    If you make a room private, users won't be able to find it. 
                 </div>
+            </div>
+            <CheckBox label="Private" value={visibility} setValue={setVisibility}/>
+        </div>
+    )
+}
+
+const GeneralSettings = () => {
+    return (
+        <div className={styles.settings}>
+            <div className="text-primary"> General </div>
+            <div className="text-placeholder"> You can change general settings here. </div>
+            <div className={styles.settings__items}>
+                <RoomNameSettings />
+                <RoomVisibilitySettings />
             </div>
         </div>
     )
@@ -80,7 +92,7 @@ const Settings = () => {
                     <PanelHeader title="Settings"/>
 
                     <div className={styles.wrapper}>
-                        <RoomSettings />
+                        <GeneralSettings />
                         <ConferenceSettings />
                     </div>
                 </Panel>

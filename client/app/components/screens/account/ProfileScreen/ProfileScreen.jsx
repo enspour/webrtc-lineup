@@ -2,7 +2,7 @@ import React from "react";
 import { autorun } from "mobx";
 
 import FilledButton from "@components/ui/FilledButton/FilledButton";
-import SimpleInput from "@components/ui/SimpleInput/SimpleInput";
+import EditInput from "@components/ui/EditInput/EditInput";
 
 import services from "@services";
 
@@ -20,13 +20,13 @@ const ProfileCredentials = React.memo(({
         <div className={styles.profile__credentials}>
             <div>
                 <div className="mb-1 text-primary">Email Address</div>
-                <SimpleInput value={email} setValue={setEmail} placeholder="Email"/>
+                <EditInput value={email} setValue={setEmail} placeholder="Email"/>
             </div>
 
             <div className="fl jf-between">
                 <div className="w-60">
                     <div className="mb-1 text-primary">Name</div>
-                    <SimpleInput value={name} setValue={setName} placeholder="Name"/>
+                    <EditInput value={name} setValue={setName} placeholder="Name"/>
                 </div>
 
                 <div className="w-35">
