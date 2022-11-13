@@ -1,13 +1,17 @@
 import { Router, Application } from "express";
 
-import roomsRoute from "./rooms/rooms.route";
+import roomRoutes from "./room/room.route";
+import roomsRoutes from "./rooms/rooms.route";
+import roomSettingsRoutes from "./room-settings/room-settings.router";
 
 import NotFound from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.use("/api/v1/room-service/rooms", roomsRoute);
+    router.use("/api/v1/room-service/room", roomRoutes);
+    router.use("/api/v1/room-service/rooms", roomsRoutes);
+    router.use("/api/v1/room-service/room-settings", roomSettingsRoutes);
 
     router.use("*", (req, res) => 
         new NotFound(`URL: ${req.originalUrl} is not found.`).send(res));
