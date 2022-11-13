@@ -26,8 +26,10 @@ class RoomsController {
     async search(req: Request, res: Response) {
         const words = req.query.words as string[];
         const tags = req.query.tags as string[];
+        
+        const user = getUser(req);
 
-        const rooms = await RoomsService.search(words, tags);
+        const rooms = await RoomsService.search(user.id, words, tags);
 
         new SuccessResponse({ rooms }).send(res);
     }

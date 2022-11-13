@@ -1,12 +1,12 @@
 import { repository } from "core/database/src/connection";
 
 class RoomService {
-    async getRoom(id: bigint) {
-        return await repository.findRoomByIdWithSettings(id);
+    async getRoom(id: bigint, userId: bigint) {
+        return await repository.findRoomById(id, userId);
     }
 
-    async create(name: string, password: string, ownerId: bigint, tags: string[]) {
-        return await repository.createRoom(name, password, ownerId, tags);
+    async create(name: string, password: string, userId: bigint, tags: string[]) {
+        return await repository.createRoom(name, password, userId, tags);
     }
 
     async delete(id: bigint, userId: bigint) {
@@ -14,25 +14,17 @@ class RoomService {
     }
 
     async addToFavorites(id: bigint, userId: bigint) {
-        const room = await repository.findRoomById(id);
-
+        const room = await repository.findRoomById(id, userId);
+        
         if (room) {
-            await repository.addRoomToFavorites(id, userId);
-            return room;
-        }
-
-        return null
-    }
-
-    async deleteFromFavorites(id: bigint, userId: bigint) {
-        const room = await repository.findRoomById(id);
-
-        if (room) {
-            await repository.deleteRoomFromFavorites(id, userId);
-            return room;
+            return await repository.addRoomToFavorites(id, userId);
         }
 
         return null;
+    }
+
+    async deleteFromFavorites(id: bigint, userId: bigint) {
+        return await repository.deleteRoomFromFavorites(id, userId);
     }
 
     async updateName(id: bigint, userId: bigint, name: string) {

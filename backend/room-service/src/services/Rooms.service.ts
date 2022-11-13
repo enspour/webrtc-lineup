@@ -9,17 +9,17 @@ class RoomsService {
         return await repository.findFavoritesRooms(userId);
     }
 
-    async search(words: string[], tags: string[]) {
+    async search(userId: bigint, words: string[], tags: string[]) {
         if (words.length) {
             if (tags.length) {
-                return await repository.findRoomsByWordsTags(words, tags);
+                return await repository.findRoomsByWordsTags(words, tags, userId);
             } else {
-                return await repository.findRoomsByWords(words);
+                return await repository.findRoomsByWords(words, userId);
             }
         }
 
         if (tags.length) {
-            return await repository.findRoomsByTags(tags);
+            return await repository.findRoomsByTags(tags, userId);
         }
 
         return [];

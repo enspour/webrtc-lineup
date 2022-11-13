@@ -12,7 +12,9 @@ class RoomController {
     async getRoom(req: Request, res: Response) {
         const id = BigInt(req.params.id);
 
-        const room = await RoomService.getRoom(id);
+        const user = getUser(req);
+
+        const room = await RoomService.getRoom(id, user.id);
 
         if (room) {
             return new SuccessResponse({ room }).send(res);
