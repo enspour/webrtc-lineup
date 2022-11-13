@@ -38,10 +38,10 @@ class RoomController {
 
         const user = getUser(req);
 
-        const room = await RoomService.delete(id, user.id);
+        const count = await RoomService.delete(id, user.id);
 
-        if (room) { 
-            return new SuccessResponse({ room }).send(res);
+        if (count > 0) { 
+            return new SuccessResponse("Success delete room.").send(res);
         }
 
         new NotFoundResponse("Room is not found.").send(res);

@@ -5,9 +5,9 @@ export interface IRepository {
     findUserAuthByEmail(email: string): Promise<UserAuth | null>;
     findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
     findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]>;
-    findRoomById(id: bigint): Promise<Room | null>;
+    findRoomById(id: bigint): Promise<(Room & { owner: User }) | null>;
     findRoomByIdWithSettings(id: bigint): Promise<(Room & { settings: RoomSettings, owner: User }) | null>;
-    findRoomByIdWithAuth(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null>;
+    findRoomByIdWithAuthSettings(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null>;
     findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
     findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]>;
@@ -15,7 +15,7 @@ export interface IRepository {
     createUser(name: string, email: string, password: string): Promise<User & { email: string }>;
     createRoom(name: string, password: string, owner_id: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})>;
     
-    deleteRoom(id: bigint): Promise<Room | null>;
+    deleteRoom(id: bigint, user_id: bigint): Promise<number>;
     deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<User>;
 
     addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<User>;
@@ -45,7 +45,7 @@ export default class Repository implements IRepository {
         return await this._repository.findFavoritesRooms(user_id);
     }
 
-    async findRoomById(id: bigint): Promise<Room | null> {
+    async findRoomById(id: bigint): Promise<(Room & { owner: User }) | null> {
         return await this._repository.findRoomById(id);
     }
 
@@ -53,8 +53,8 @@ export default class Repository implements IRepository {
         return await this._repository.findRoomByIdWithSettings(id);
     }
 
-    async findRoomByIdWithAuth(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
-        return await this._repository.findRoomByIdWithAuth(id);
+    async findRoomByIdWithAuthSettings(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
+        return await this._repository.findRoomByIdWithAuthSettings(id);
     }
 
     async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
@@ -77,8 +77,8 @@ export default class Repository implements IRepository {
         return await this._repository.createRoom(name, password, owner_id, tags);
     }
 
-    async deleteRoom(id: bigint): Promise<Room | null> {
-        return await this._repository.deleteRoom(id);
+    async deleteRoom(id: bigint, user_id: bigint): Promise<number> {
+        return await this._repository.deleteRoom(id, user_id);
     }
 
     async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<User> {

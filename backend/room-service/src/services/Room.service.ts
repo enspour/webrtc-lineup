@@ -9,14 +9,8 @@ class RoomService {
         return await repository.createRoom(name, password, ownerId, tags);
     }
 
-    async delete(id: bigint, ownerId: bigint) {
-        const room = await repository.findRoomById(id);
-
-        if (room && room.owner_id === ownerId) {
-            return await repository.deleteRoom(id);
-        }
-
-        return null;
+    async delete(id: bigint, userId: bigint) {
+        return await repository.deleteRoom(id, userId);
     }
 
     async addToFavorites(id: bigint, userId: bigint) {

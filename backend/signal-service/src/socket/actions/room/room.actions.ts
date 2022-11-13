@@ -13,7 +13,7 @@ class RoomsActions {
     async join(context: ActionContext<JoinRoomPayload>) {
         const { id, password } = context.Payload;
 
-        const room = await RoomService.findRoomByIdWithAuth(BigInt(id));
+        const room = await RoomService.findRoomByIdWithAuthSettings(BigInt(id));
 
         if (!room) {
             return context.badRequest(TypesActions.NOTIFY_JOIN, "Room is not found");

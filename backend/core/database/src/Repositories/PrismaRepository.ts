@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { includes } from "lodash";
 
 import { PrismaClient } from "@prisma/client";
 import { Prisma } from "@prisma/client";
@@ -45,9 +45,10 @@ export default class PrismaRepository implements IRepository {
         }) 
     }
 
-    async findRoomById(id: bigint): Promise<Room | null> {
+    async findRoomById(id: bigint): Promise<(Room & { owner: User }) | null> {
         return await this.prismaClient.room.findFirst({
-            where: { id }
+            where: { id },
+            include: { owner: true }
         });
     }
 
@@ -67,7 +68,7 @@ export default class PrismaRepository implements IRepository {
         return null;
     }
 
-    async findRoomByIdWithAuth(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
+    async findRoomByIdWithAuthSettings(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
         const room = await this.prismaClient.room.findUnique({
             where: { id },
             include: { auth: true, owner: true, settings: true }
@@ -201,20 +202,15 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async deleteRoom(id: bigint): Promise<Room | null> {
-        try {
-            return await this.prismaClient.room.delete({
-                where: { id }
-            });
-        } catch (err) {
-            if (err instanceof Prisma.PrismaClientKnownRequestError) {
-                if (err.code === "P2025") {
-                    return null;
-                }
+    async deleteRoom(id: bigint, user_id: bigint): Promise<number> {
+        const result = await this.prismaClient.room.deleteMany({
+            where: {
+                id,
+                owner_id: user_id
             }
+        });
 
-            throw err;
-        }
+        return result.count;
     }
 
     async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<User> {
