@@ -11,7 +11,15 @@ import Success from "@socket/notifications/Success.notification";
 import parseId from "@utils/parseId";
 
 class Client {
-    constructor(private socket: Socket, private rooms: RoomsService) {}
+    private userId;
+
+    constructor(private socket: Socket, private rooms: RoomsService) {
+        this.userId = parseId(socket.request);
+    }
+
+    get UserId() {
+        return this.userId;
+    }
 
     get SocketId() {
         return this.socket.id;
@@ -23,9 +31,7 @@ class Client {
 
     async join(roomId: string) {
         await this.socket.join(roomId);
-
-        const userId = parseId(this.socket.request);
-        this.rooms.addClient(roomId, { socketId: this.socket.id, userId });
+        this.rooms.addClient(roomId, { socketId: this.socket.id, userId: this.userId });
     }
 
     async leave(roomId: string) {
