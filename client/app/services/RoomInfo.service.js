@@ -53,6 +53,10 @@ export default class RoomInfoService {
         this.#store.setRoom(room);
     }
 
+    setName(name) {
+        this.#store.setName(name);
+    }
+
     setSettings(settings) {
         if (typeof settings === "function") {
             return this.#store.setSettings(settings(this.Settings));

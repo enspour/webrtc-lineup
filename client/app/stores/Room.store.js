@@ -22,6 +22,7 @@ export default class RoomStore {
             state: observable,
 
             setRoom: action,
+            setName: action,
             setSettings: action,
             setState: action,
             clear: action
@@ -35,6 +36,10 @@ export default class RoomStore {
         this.settings = room.settings;
         this.tags = room.tags;
         this.createdAt = room.createdAt;
+    }
+
+    setName(name) {
+        this.name = name;
     }
 
     setSettings(settings) {

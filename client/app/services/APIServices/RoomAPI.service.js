@@ -89,4 +89,15 @@ export default class RoomAPIService {
             { signal },
         );
     }
+
+    /**
+     * @param {{ 
+     *  body: { id: string; name: string; }
+     * }} data
+     * @param {AbortSignal} signal 
+     * @returns 
+     */
+    async updateName(data, signal) {
+        return await axios.post("/api/v1/room-service/room/name", data.body, { signal });
+    }
 }

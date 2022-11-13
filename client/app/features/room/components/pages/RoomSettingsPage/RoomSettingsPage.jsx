@@ -17,19 +17,31 @@ import services from "@services";
 import styles from "./RoomSettingsPage.module.scss";
 
 const RoomNameSettings = () => {
-    const [name, setName] = React.useState("");
+    const [name, setName] = React.useState(services.room.RoomInfo.Name);
 
-    React.useEffect(() => 
-        autorun(() => {
-            const roomname = services.room.RoomInfo.Name;
-            setName(roomname)
-        })
-    , [])
+    const request = useRequest(services.roomAPI.updateName);
+    const { data } = useResponse(request);
+
+    const save = () => {
+        const body = {
+            id: services.room.RoomInfo.Id,
+            name: name
+        }
+
+        request.start({ body });
+    }
+
+    React.useEffect(() => {
+        if (data && data.status === 200) {
+            const { name } = data.body;
+            services.room.RoomInfo.setName(name);
+        }
+    }, [data]);
 
     return (
         <div>
             <div className="mb-1"> Name </div>
-            <EditInput value={name} setValue={setName} placeholder="Name"/>
+            <EditInput value={name} setValue={setName} placeholder="Name" onClick={save}/>
         </div>
     )
 }
