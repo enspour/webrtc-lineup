@@ -127,7 +127,7 @@ const Tags = ({ tags }) => {
 const RoomCard = ({ room }) => {
     const openRoomModal = () => {
         services.modals.room.IsOpen = true;
-        services.modals.room.Room = room;
+        services.modals.room.setRoom(room);
     }
     
     return (

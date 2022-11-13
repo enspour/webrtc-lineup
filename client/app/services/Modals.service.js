@@ -33,10 +33,6 @@ class RoomModal extends Modal {
         return this.#roomStore.name;
     }
 
-    get Status() {
-        return this.#roomStore.status;
-    }
-
     get Owner() {
         return this.#roomStore.owner;
     }
@@ -49,7 +45,7 @@ class RoomModal extends Modal {
         return this.#roomStore.createdAt;
     }
 
-    set Room(room) {
+    setRoom(room) {
         this.#roomStore.setRoom(room);
     }
 }
