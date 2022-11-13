@@ -13,7 +13,7 @@ class RoomsActions {
     async join(context: ActionContext<JoinRoomPayload>) {
         const { id, password } = context.Payload;
 
-        const room = await RoomsService.findRoomAuthById(BigInt(id));
+        const room = await RoomsService.findRoomByIdWithAuth(BigInt(id));
 
         if (!room) {
             return context.badRequest(TypesActions.NOTIFY_JOIN, "Room is not found");
@@ -32,6 +32,11 @@ class RoomsActions {
                 owner: {
                     id: room.owner.id.toString(),
                     name: room.owner.name,
+                },
+                settings: {
+                    visibility: room.settings.visibility,
+                    enable_audio: room.settings.enable_audio,
+                    enable_video: room.settings.enable_video
                 },
                 created_at: room.created_at,
             };
