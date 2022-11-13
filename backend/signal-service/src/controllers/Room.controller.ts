@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import RoomService from "@services/Rooms.service";
+import RoomService from "@services/Room.service";
 
 import SuccessResponse from "core/server/responses/Success.response";
 

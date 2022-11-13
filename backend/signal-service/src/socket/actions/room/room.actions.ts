@@ -5,7 +5,7 @@ import TypesActions from "./types.actions";
 import { IdPayload } from "../validators/id.validator";
 import { JoinRoomPayload } from "./validators/joinRoom.validator";
 
-import RoomsService from "@services/Rooms.service";
+import RoomService from "@services/Room.service";
 
 import services from "@socket/services";
 
@@ -13,7 +13,7 @@ class RoomsActions {
     async join(context: ActionContext<JoinRoomPayload>) {
         const { id, password } = context.Payload;
 
-        const room = await RoomsService.findRoomByIdWithAuth(BigInt(id));
+        const room = await RoomService.findRoomByIdWithAuth(BigInt(id));
 
         if (!room) {
             return context.badRequest(TypesActions.NOTIFY_JOIN, "Room is not found");

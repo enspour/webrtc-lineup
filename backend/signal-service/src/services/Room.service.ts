@@ -2,7 +2,7 @@ import { repository } from "core/database/src/connection";
 
 import services from "@socket/services";
 
-class RoomsService {
+class RoomService {
     async findRoomByIdWithAuth(roomId: bigint) {
         return await repository.findRoomByIdWithAuth(roomId)
     }
@@ -12,4 +12,4 @@ class RoomsService {
     }
 }
 
-export default new RoomsService();
+export default new RoomService();

@@ -1,11 +1,16 @@
 import { Router, Application } from "express";
 
-import rooms from "./rooms/rooms.route";
+import roomRoutes from "./room/room.route";
+
+import NotFoundResponse from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
 
-    router.use("/api/v1/signal-service/rooms/", rooms);
+    router.use("/api/v1/signal-service/room/", roomRoutes);
+
+    router.use("*", (req, res) => 
+        new NotFoundResponse(`URL: ${req.originalUrl} is not found.`).send(res));
 
     app.use(router);
 }
