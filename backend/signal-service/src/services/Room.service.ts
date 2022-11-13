@@ -3,8 +3,8 @@ import { repository } from "core/database/src/connection";
 import services from "@socket/services";
 
 class RoomService {
-    async findRoomByIdWithAuthSettings(roomId: bigint) {
-        return await repository.findRoomByIdWithAuthSettings(roomId)
+    async findRoomByIdWithAuth(roomId: bigint, userId: bigint) {
+        return await repository.findRoomByIdWithAuth(roomId, userId);
     }
 
     getUsersIdInRoom(roomId: string) {
