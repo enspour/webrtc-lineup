@@ -1,15 +1,15 @@
-import stores from "../store";
-
 export default class RoomService {
     #signal;
-    #room;
+    #roomInfo;
 
-    constructor(signal) {
+    constructor(signal, roomInfo) {
         this.#signal = signal;
-        this.#room = stores.room;
+        this.#roomInfo = roomInfo;
     }
 
     initialize() {
+        this.#roomInfo.initialize();
+
         this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onUserJoinRoom((socketId) => console.log("user connected to room", socketId))
@@ -24,8 +24,8 @@ export default class RoomService {
         }
     }
 
-    get Name() {
-        return this.#room.name;
+    get RoomInfo() {
+        return this.#roomInfo;
     }
 
     get Connected() {
@@ -65,7 +65,7 @@ export default class RoomService {
                 clear();
             })
 
-            const id = this.#room.id;
+            const id = this.#roomInfo.Id;
             this.#signal.leave(id);
 
             return new Promise((resolve, _) => waiter = resolve);
@@ -75,7 +75,7 @@ export default class RoomService {
     }
 
     async getUsers() {
-        const id = this.#room.id;
+        const id = this.#roomInfo.Id;
         
         return new Promise((resolve, _) => {
             this.#signal.onceUsers((status, message, data) => {
@@ -86,11 +86,13 @@ export default class RoomService {
         });
     }
 
-
     #onJoinRoom() {
         return this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
-                if (data) this.#room.setRoom(data);
+                if (data) {
+                    this.#roomInfo.setRoom(data);
+                }
+
                 return;
             }
 

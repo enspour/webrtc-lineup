@@ -3,7 +3,6 @@ import iceServersConfig from "app/configs/iceServers.config";
 import { SpeechService } from "@features/speech";
 
 import PeersStore from "../store/Peers.store";
-import stores from "../store";
 
 class MediaPeerConnection {
     #roomId;
@@ -27,8 +26,10 @@ class MediaPeerConnection {
 
         this.#peerConnection.ontrack = event => {
             this.#stream.addTrack(event.track);
+        }
 
-            if (event.track.kind === "audio") {
+        this.#peerConnection.onconnectionstatechange = () => {
+            if (this.#peerConnection.connectionState === "connected") {
                 this.#speechService.initialize(this.#stream);
             }
         }
@@ -92,17 +93,17 @@ class MediaPeerConnection {
 }
 
 export default class ConferenceService {
-    #userMedia;
     #signal;
+    #roomInfo;
+    #userMedia;
     
-    #room;
     #peersStore;
 
-    constructor(signal, userMedia) {
+    constructor(signal, roomInfo, userMedia) {
         this.#signal = signal;
+        this.#roomInfo = roomInfo;
         this.#userMedia = userMedia;
         
-        this.#room = stores.room;
         this.#peersStore = new PeersStore();
     }
 
@@ -137,7 +138,7 @@ export default class ConferenceService {
     async join(constraints) {
         let waiter;
         
-        const id = this.#room.id;
+        const id = this.#roomInfo.Id;
         
         if (id) {
             await this.#userMedia.captureMedia(constraints);
@@ -165,7 +166,7 @@ export default class ConferenceService {
     async leave() {
         let waiter;
 
-        const id = this.#room.id;
+        const id = this.#roomInfo.Id;
 
         if (id) {
             const clear = this.#signal.onLeaveConference(async (status, message, data) => {
@@ -185,7 +186,7 @@ export default class ConferenceService {
     }
 
     async #sendOffer(peerId) {
-        const peer = new MediaPeerConnection(this.#room.id, peerId, this.#userMedia.Stream, this.#signal);
+        const peer = new MediaPeerConnection(this.#roomInfo.Id, peerId, this.#userMedia.Stream, this.#signal);
         this.#peersStore.add(peer);
         
         await peer.sendOffer();
@@ -193,7 +194,7 @@ export default class ConferenceService {
 
     #onAcceptOffer() {
         return this.#signal.onAcceptOffer(async (sourceId, offer) => {
-            const peer = new MediaPeerConnection(this.#room.id, sourceId, this.#userMedia.Stream, this.#signal);
+            const peer = new MediaPeerConnection(this.#roomInfo.Id, sourceId, this.#userMedia.Stream, this.#signal);
             this.#peersStore.add(peer);
             
             if (offer) {
