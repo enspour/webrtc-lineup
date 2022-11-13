@@ -4,7 +4,7 @@ import roomRoutes from "./room/room.route";
 import roomsRoutes from "./rooms/rooms.route";
 import roomSettingsRoutes from "./room-settings/room-settings.router";
 
-import NotFound from "core/server/responses/NotFound.response";
+import NotFoundResponse from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
@@ -14,7 +14,7 @@ const useRoutes = (app: Application) => {
     router.use("/api/v1/room-service/room-settings", roomSettingsRoutes);
 
     router.use("*", (req, res) => 
-        new NotFound(`URL: ${req.originalUrl} is not found.`).send(res));
+        new NotFoundResponse(`URL: ${req.originalUrl} is not found.`).send(res));
 
     app.use(router);
 }
