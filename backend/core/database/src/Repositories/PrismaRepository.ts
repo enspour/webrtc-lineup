@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { PrismaClient, RoomSettings } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { Prisma } from "@prisma/client";
 
 import { IRepository } from "./Repository";
 
-import { User, UserAuth, Room, RoomAuth, Tag } from "../types"
+import { User, UserAuth, Room, RoomAuth, RoomSettings, Tag } from "../types"
 
 import UnknowError from "../QueryError/UnknowError";
 
@@ -51,15 +51,32 @@ export default class PrismaRepository implements IRepository {
         });
     }
 
-    async findRoomAuthById(id: bigint): Promise<(Room & { auth: RoomAuth, owner: User }) | null> {
+    async findRoomByIdWithSettings(id: bigint): Promise<(Room & { settings: RoomSettings, owner: User }) | null> {
         const room = await this.prismaClient.room.findUnique({
             where: { id },
-            include: { auth: true, owner: true }
+            include: { owner: true, settings: true }
         });
 
-        if (room && room.auth) {
+        if (room && room.settings) {
             return {
                 ...room,
+                settings: room.settings,
+            }
+        }
+
+        return null;
+    }
+
+    async findRoomByIdWithAuth(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
+        const room = await this.prismaClient.room.findUnique({
+            where: { id },
+            include: { auth: true, owner: true, settings: true }
+        });
+
+        if (room && room.auth && room.settings) {
+            return {
+                ...room,
+                settings: room.settings,
                 auth: room.auth
             }
         }
@@ -165,7 +182,11 @@ export default class PrismaRepository implements IRepository {
                 },
 
                 settings: {
-                    create: {}
+                    create: {
+                        visibility: true,
+                        enable_audio: true,
+                        enable_video: true
+                    }
                 },
                 
                 tags: {
@@ -216,5 +237,52 @@ export default class PrismaRepository implements IRepository {
                 }
             }
         })
+    }
+
+    async updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number> {
+        const result = await this.prismaClient.roomSettings.updateMany({
+            where: {
+                room: {
+                    id: room_id,
+                    owner_id: user_id
+                }
+            },
+            data: {
+                visibility
+            },
+        });
+
+        return result.count
+    }
+
+    async updateRoomSettingsEnableAudio(room_id: bigint, user_id: bigint, enable_audio: boolean): Promise<number> {
+        const result = await this.prismaClient.roomSettings.updateMany({
+            where: {
+                room: {
+                    id: room_id,
+                    owner_id: user_id
+                }
+            },
+            data: {
+                enable_audio
+            },
+        });
+
+        return result.count
+    }
+    async updateRoomSettingsEnableVideo(room_id: bigint, user_id: bigint, enable_video: boolean): Promise<number> {
+        const result = await this.prismaClient.roomSettings.updateMany({
+            where: {
+                room: {
+                    id: room_id,
+                    owner_id: user_id
+                }
+            },
+            data: {
+                enable_video
+            },
+        });
+
+        return result.count
     }
 }

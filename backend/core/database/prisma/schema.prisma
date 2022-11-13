@@ -68,6 +68,9 @@ model RoomAuth {
 model RoomSettings {
   id            BigInt  @id @default(autoincrement())
   room_id       BigInt  @unique
+  visibility    Boolean
+  enable_audio  Boolean
+  enable_video  Boolean
   room          Room    @relation(fields: [room_id], references: [id], onDelete: Cascade)
 
   @@map("rooms_settings")
