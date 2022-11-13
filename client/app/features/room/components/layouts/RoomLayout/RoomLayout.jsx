@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
@@ -9,10 +10,9 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import services from "@services";
 
 import styles from "./RoomLayout.module.scss"
-import Link from "next/link";
 
 const RoomLayout = observer(({ title = "Lineup | Room", children }) => {
-    const name = services.room.Name;
+    const name = services.room.RoomInfo.Name;
     
     const router = useRouter();
 

@@ -7,8 +7,6 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import services from "@services";
 
-import stores from "@features/room/store";
-
 import styles from "./RoomCards.module.scss";
 
 const Card = ({ title, hint, onClick, children }) => {
@@ -74,7 +72,7 @@ const SettingsCard = observer(() => {
 
     const openSettings = () => router.push("/room/settings");
 
-    if (stores.room.owner.id !== services.user.Id) {
+    if (services.room.RoomInfo.Owner.id !== services.user.Id) {
         return "";
     }
 
