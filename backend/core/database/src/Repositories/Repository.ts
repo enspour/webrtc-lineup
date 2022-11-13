@@ -20,6 +20,7 @@ export interface IRepository {
 
     addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<User>;
 
+    updateRoomName(room_id: bigint, user_id: bigint, name: string): Promise<number>;
     updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number>;
     updateRoomSettingsEnableAudio(room_id: bigint, user_id: bigint, enable_audio: boolean): Promise<number>;
     updateRoomSettingsEnableVideo(room_id: bigint, user_id: bigint, enable_video: boolean): Promise<number>;
@@ -86,6 +87,10 @@ export default class Repository implements IRepository {
 
     async addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<User> {
         return await this._repository.addRoomToFavorites(room_id, user_id);
+    }
+
+    async updateRoomName(room_id: bigint, user_id: bigint, name: string): Promise<number> {
+        return await this._repository.updateRoomName(room_id, user_id, name);
     }
 
     async updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number> {

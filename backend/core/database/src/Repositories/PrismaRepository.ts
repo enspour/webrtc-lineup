@@ -239,6 +239,20 @@ export default class PrismaRepository implements IRepository {
         })
     }
 
+    async updateRoomName(room_id: bigint, user_id: bigint, name: string): Promise<number> {
+        const result = await this.prismaClient.room.updateMany({
+            where: {
+                id: room_id,
+                owner_id: user_id
+            },
+            data: {
+                name
+            },
+        });
+
+        return result.count
+    }
+
     async updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number> {
         const result = await this.prismaClient.roomSettings.updateMany({
             where: {
