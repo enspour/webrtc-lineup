@@ -26,7 +26,7 @@ export default class RoomAPIService {
      * @returns 
      */
     async create(data, signal) {
-        return await axios.post("/api/v1/room-service/rooms/", data.body, {
+        return await axios.post("/api/v1/room-service/room/", data.body, {
             signal
         });
     }
@@ -41,7 +41,7 @@ export default class RoomAPIService {
      * @returns 
      */
     async delete(data, signal) {
-        return await axios.delete(`/api/v1/room-service/rooms/${data.params.id}`, {
+        return await axios.delete(`/api/v1/room-service/room/${data.params.id}`, {
             signal
         });
     }
@@ -56,7 +56,7 @@ export default class RoomAPIService {
      * @returns 
      */
     async addToFavorites(data, signal) {
-        return await axios.post(`/api/v1/room-service/rooms/favorites/${data.params.id}`, {
+        return await axios.post(`/api/v1/room-service/room/favorites/${data.params.id}`, {
             signal
         });
     }
@@ -71,7 +71,7 @@ export default class RoomAPIService {
      * @returns 
      */
     async deleteFromFavorites(data, signal) {
-        return await axios.delete(`/api/v1/room-service/rooms/favorites/${data.params.id}`, {
+        return await axios.delete(`/api/v1/room-service/room/favorites/${data.params.id}`, {
             signal
         });
     }
@@ -85,7 +85,7 @@ export default class RoomAPIService {
      */
     async getUsersInRoom(data, signal) {
         return await axios.get(
-            `/api/v1/signal-service/rooms/${data.params.roomId}/users`, 
+            `/api/v1/signal-service/room/${data.params.roomId}/users`, 
             { signal },
         );
     }
