@@ -1,6 +1,9 @@
 import APIService from "./APISerivces/API.service";
 import AuthAPI from "./APISerivces/AuthAPI.service";
 import RoomAPI from "./APISerivces/RoomAPI.service";
+import RoomSettingsAPI from "./APISerivces/RoomSettingsAPI.service";
+
+import RoomInfo from "./RoomInfo.service";
 
 import { IslandService } from "../features/Island";
 
@@ -28,12 +31,15 @@ const authAPI = new AuthAPI();
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
 
+const connectedRoom = new RoomInfo(API.createRequest(roomAPI.getOne));
+
 const signal = new Signal();
 
 const services = {
     API,
     authAPI,
     roomAPI,
+    roomSettingsAPI: new RoomSettingsAPI(),
     
     search: new Search(API, roomAPI),
     modals: new Modals(),
@@ -51,8 +57,8 @@ const services = {
 
     island: new IslandService(),
 
-    room: new RoomService(signal),
-    conference: new ConferenceService(signal, userMedia),
+    room: new RoomService(signal, connectedRoom),
+    conference: new ConferenceService(signal, connectedRoom, userMedia),
 
     initialize: function () {
         this.localStorage.initialize("local");

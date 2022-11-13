@@ -2,7 +2,7 @@ import { action, makeAutoObservable, observable } from "mobx"
 
 export default class RoomsStore {
     rooms = [];
-    state = "pending"; // "pending", "done" or "error"
+    state = "done"; // "pending", "done" or "error"
 
     constructor() {
         makeAutoObservable(this, {
