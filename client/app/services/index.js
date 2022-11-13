@@ -1,7 +1,8 @@
-import APIService from "./APISerivces/API.service";
-import AuthAPI from "./APISerivces/AuthAPI.service";
-import RoomAPI from "./APISerivces/RoomAPI.service";
-import RoomSettingsAPI from "./APISerivces/RoomSettingsAPI.service";
+import APIService from "./APIServices/API.service";
+import AuthAPI from "./APIServices/AuthAPI.service";
+import RoomAPI from "./APIServices/RoomAPI.service";
+import RoomSettingsAPI from "./APIServices/RoomSettingsAPI.service";
+import RoomsAPI from "./APIServices/RoomsAPI.service";
 
 import RoomInfo from "./RoomInfo.service";
 
@@ -26,6 +27,7 @@ import {
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
+const roomsAPI = new RoomsAPI();
 const authAPI = new AuthAPI();
 
 const userDevices = new UserDevices();
@@ -39,9 +41,10 @@ const services = {
     API,
     authAPI,
     roomAPI,
+    roomsAPI,
     roomSettingsAPI: new RoomSettingsAPI(),
     
-    search: new Search(API, roomAPI),
+    search: new Search(API, roomsAPI),
     modals: new Modals(),
 
     localStorage: new Storage(),
@@ -50,8 +53,8 @@ const services = {
     themes: new Themes(),
 
     user: new User(API, authAPI),
-    userRooms: new Rooms(API.createRequest(roomAPI.getCreated)),
-    userFavoritesRooms: new Rooms(API.createRequest(roomAPI.getFavorites)),
+    userRooms: new Rooms(API.createRequest(roomsAPI.getCreated)),
+    userFavoritesRooms: new Rooms(API.createRequest(roomsAPI.getFavorites)),
     userDevices,
     userMedia,
 

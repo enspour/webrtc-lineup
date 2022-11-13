@@ -1,4 +1,4 @@
-import RoomStore from "@store/Room.store";
+import RoomStore from "@stores/Room.store";
 
 export default class RoomInfoService {
     #store;

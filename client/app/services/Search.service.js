@@ -1,7 +1,8 @@
 import { autorun } from "mobx";
 
 import RoomsService from "./Rooms.service";
-import SearchStore from "@store/Search.store";
+
+import SearchStore from "@stores/Search.store";
 
 import removeDuplicates from "@utils/removeDuplicates";
 
@@ -13,8 +14,8 @@ export default class SearchService {
     #rooms;
     #searchStore;
 
-    constructor(api, roomAPI) {
-        const request = api.createRequest(roomAPI.search);
+    constructor(api, roomsAPI) {
+        const request = api.createRequest(roomsAPI.search);
         this.#rooms = new RoomsService(request);
         this.#searchStore = new SearchStore();
     }

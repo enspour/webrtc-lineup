@@ -1,5 +1,5 @@
-import ModalStore from "@store/Modal.store";
-import RoomStore from "@store/Room.store";
+import ModalStore from "@stores/Modal.store";
+import RoomStore from "@stores/Room.store";
 
 class Modal {
     #store;

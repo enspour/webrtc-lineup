@@ -1,4 +1,4 @@
-import MediaDataStore from "@store/MediaData.store";
+import MediaDataStore from "@stores/MediaData.store";
 
 import { SpeechService } from "@features/speech";
 

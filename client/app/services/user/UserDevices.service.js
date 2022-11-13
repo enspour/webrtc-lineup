@@ -1,6 +1,6 @@
 import { autorun } from "mobx";
 
-import DevicesStore from "@store/Devices.store";
+import DevicesStore from "@stores/Devices.store";
 
 export default class UserDevices {
     #inputAudioDevices;

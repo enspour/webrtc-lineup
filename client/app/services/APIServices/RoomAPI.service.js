@@ -46,18 +46,6 @@ export default class RoomAPIService {
         });
     }
 
-    async getCreated(_, signal) {
-        return await axios.get("/api/v1/room-service/rooms", {
-            signal
-        });
-    }
-
-    async getFavorites(_, signal) {
-        return await axios.get("/api/v1/room-service/rooms/favorites", {
-            signal
-        });
-    }
-
     /**
      * @param {{
      *  params: {
@@ -86,23 +74,6 @@ export default class RoomAPIService {
         return await axios.delete(`/api/v1/room-service/rooms/favorites/${data.params.id}`, {
             signal
         });
-    }
-
-    /**
-     * @param {{
-     *  params: {
-     *      name: string,
-     *      tags: string[]
-     *  } 
-     * }} data 
-     * @param {AbortSignal} signal 
-     * @returns 
-     */
-    async search(data, signal) {
-        return await axios.get(`/api/v1/room-service/rooms/search`, {
-            params: data.params,
-            signal
-        })
     }
 
     /**

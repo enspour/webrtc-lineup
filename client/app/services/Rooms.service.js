@@ -1,4 +1,4 @@
-import RoomsStore from "@store/Rooms.store";
+import RoomsStore from "@stores/Rooms.store";
 
 const handlerRecievedRooms = rooms => {
     return rooms.map(item => ({

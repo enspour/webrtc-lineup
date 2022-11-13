@@ -2,7 +2,7 @@ import iceServersConfig from "app/configs/iceServers.config";
 
 import { SpeechService } from "@features/speech";
 
-import PeersStore from "../store/Peers.store";
+import PeersStore from "../stores/Peers.store";
 
 class MediaPeerConnection {
     #roomId;

@@ -1,4 +1,4 @@
-import UserStore from "@store/User.store";
+import UserStore from "@stores/User.store";
 
 export default class UserService {
     #request;
