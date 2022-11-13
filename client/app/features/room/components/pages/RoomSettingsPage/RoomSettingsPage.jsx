@@ -1,5 +1,6 @@
 import React from "react";
 import { autorun } from "mobx";
+import { observer } from "mobx-react-lite";
 
 import Panel from "@components/ui/Panel/Panel";
 import PanelHeader from "@components/ui/PanelHeader/PanelHeader";
@@ -7,6 +8,9 @@ import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
+
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 
@@ -17,7 +21,7 @@ const RoomNameSettings = () => {
 
     React.useEffect(() => 
         autorun(() => {
-            const roomname = services.room.Name;
+            const roomname = services.room.RoomInfo.Name;
             setName(roomname)
         })
     , [])
@@ -30,8 +34,27 @@ const RoomNameSettings = () => {
     )
 }
 
-const RoomVisibilitySettings = () => {
-    const [visibility, setVisibility] = React.useState(false);
+const RoomVisibilitySettings = observer(() => {
+    const settings = services.room.RoomInfo.Settings;
+
+    const request = useRequest(services.roomSettingsAPI.updateVisibility);
+    const { data } = useResponse(request);
+
+    const setVisibility = (value) => {
+        const body = {
+            id: services.room.RoomInfo.Id,
+            visibility: value
+        }
+
+        request.start({ body });
+    }
+
+    React.useEffect(() => {
+        if (data && data.status === 200) {
+            const { visibility } = data.body;
+            services.room.RoomInfo.setSettings(prev => ({ ...prev, visibility }));
+        }
+    }, [data])
 
     return (
         <div>
@@ -41,7 +64,78 @@ const RoomVisibilitySettings = () => {
                     If you make a room private, users won't be able to find it. 
                 </div>
             </div>
-            <CheckBox label="Private" value={visibility} setValue={setVisibility}/>
+            <CheckBox label="Public" value={settings.visibility} setValue={setVisibility}/>
+        </div>
+    )
+})
+
+const ConferenceAudioSettings = observer(() => {
+    const settings = services.room.RoomInfo.Settings;
+
+    const request = useRequest(services.roomSettingsAPI.updateEnableAudio);
+    const { data } = useResponse(request);
+
+    const setEnableAudio = (value) => {
+        const body = {
+            id: services.room.RoomInfo.Id,
+            enable_audio: value
+        }
+
+        request.start({ body });
+    }
+
+    React.useEffect(() => {
+        if (data && data.status === 200) {
+            const { enable_audio } = data.body;
+            services.room.RoomInfo.setSettings(prev => ({ ...prev, enable_audio }));
+        }
+    }, [data])
+
+    return <CheckBox label="Enable audio" value={settings.enable_audio} setValue={setEnableAudio}/>
+});
+
+const ConferenceVideoSettings = observer(() => {
+    const settings = services.room.RoomInfo.Settings;
+
+    const request = useRequest(services.roomSettingsAPI.updateEnableVideo);
+    const { data } = useResponse(request);
+
+    const setEnableVideo = (value) => {
+        const body = {
+            id: services.room.RoomInfo.Id,
+            enable_video: value
+        }
+
+        request.start({ body });
+    }
+
+    React.useEffect(() => {
+        if (data && data.status === 200) {
+            const { enable_video } = data.body;
+            services.room.RoomInfo.setSettings(prev => ({ ...prev, enable_video }));
+        }
+    }, [data])
+
+    return <CheckBox label="Enable Video" value={settings.enable_video} setValue={setEnableVideo}/>
+});
+
+const ConferenceSettings = () => {
+    return (
+        <div className={styles.settings}> 
+            <div className="text-primary"> Conference </div>
+            <div className="text-placeholder"> You can change settings of conference here. </div>
+            <div className={styles.settings__items}>
+                <div>
+                    <div className="mb-1">
+                        <div>Voice & Audio</div>
+                        <div className="text-placeholder"> You can disable video or audio in conference</div>
+                    </div>
+                    <div className={styles.settings__conference__voiceaudio}>
+                        <ConferenceAudioSettings />
+                        <ConferenceVideoSettings />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
@@ -54,31 +148,6 @@ const GeneralSettings = () => {
             <div className={styles.settings__items}>
                 <RoomNameSettings />
                 <RoomVisibilitySettings />
-            </div>
-        </div>
-    )
-}
-
-
-const ConferenceSettings = () => {
-    const [enableAudio, setEnableAudio] = React.useState(false);
-    const [enableVoice, setEnableVoice] = React.useState(false);
-
-    return (
-        <div className={styles.settings}> 
-            <div className="text-primary"> Conference </div>
-            <div className="text-placeholder"> You can change settings of conference here. </div>
-            <div className={styles.settings__items}>
-                <div>
-                    <div className="mb-1">
-                        <div>Voice & Audio</div>
-                        <div className="text-placeholder"> You can disable video or audio in conference</div>
-                    </div>
-                    <div className={styles.settings__conference__voiceaudio}>
-                        <CheckBox label="Enable audio" value={enableAudio} setValue={setEnableAudio}/>
-                        <CheckBox label="Enable voice" value={enableVoice} setValue={setEnableVoice}/>
-                    </div>
-                </div>
             </div>
         </div>
     )
