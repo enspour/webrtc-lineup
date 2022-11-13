@@ -40,6 +40,10 @@ class RoomService {
 
         return null;
     }
+
+    async updateName(id: bigint, userId: bigint, name: string) {
+        return await repository.updateRoomName(id, userId, name);
+    }
 }
 
 export default new RoomService();

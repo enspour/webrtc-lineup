@@ -72,6 +72,21 @@ class RoomController {
 
         new BadRequestResponse("Room is not found.").send(res);
     }
+
+    async updateName(req: Request, res: Response) {
+        const id = BigInt(req.body.id);
+        const name = req.body.name;
+
+        const user = getUser(req);
+
+        const count = await RoomService.updateName(id, user.id, name);
+
+        if (count > 0) {
+            return new SuccessResponse({ name }).send(res);
+        }
+
+        new NotFoundResponse("Room is not found.").send(res);
+    }
 }
 
 export default new RoomController();

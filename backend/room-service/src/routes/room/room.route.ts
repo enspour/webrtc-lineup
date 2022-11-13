@@ -5,6 +5,7 @@ import RoomController from "@controllers/Room.controller";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 import guardMiddleware from "@middlewares/guard.middleware";
 
+import updateNameValidator from "./validators/updateName.validator";
 import createValidator from "./validators/create.validator";
 import idValidator from "routes/validators/params/id.validator";
 
@@ -46,5 +47,12 @@ router.delete("/favorites/:id",
     validatorMiddleware,
     asyncHandler(RoomController.deleteRoomFromFavorites)
 );
+
+router.post("/name",
+    guardMiddleware,
+    updateNameValidator,
+    validatorMiddleware,
+    asyncHandler(RoomController.updateName)
+)
 
 export default router;
