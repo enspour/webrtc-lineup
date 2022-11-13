@@ -44,17 +44,27 @@ export default class PrismaRepository implements IRepository {
         }) 
     }
 
-    async findRoomById(id: bigint): Promise<(Room & { owner: User }) | null> {
-        return await this.prismaClient.room.findFirst({
-            where: { id },
-            include: { owner: true }
-        });
-    }
-
-    async findRoomByIdWithSettings(id: bigint): Promise<(Room & { settings: RoomSettings, owner: User }) | null> {
-        const room = await this.prismaClient.room.findUnique({
-            where: { id },
-            include: { owner: true, settings: true }
+    async findRoomById(id: bigint, user_id: bigint): Promise<(Room & { owner: User, settings: RoomSettings }) | null> {
+        const room = await this.prismaClient.room.findFirst({
+            where: { 
+                id,
+                OR: [
+                    { owner_id: user_id },
+                    {
+                        settings: {
+                            visibility: true
+                        }
+                    },
+                    {
+                        subs: {
+                            some: {
+                                id: user_id
+                            }
+                        }
+                    }
+                ]
+            },
+            include: { owner: true, settings: true },
         });
 
         if (room && room.settings) {
@@ -67,9 +77,26 @@ export default class PrismaRepository implements IRepository {
         return null;
     }
 
-    async findRoomByIdWithAuthSettings(id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
-        const room = await this.prismaClient.room.findUnique({
-            where: { id },
+    async findRoomByIdWithAuth(id: bigint, user_id: bigint): Promise<(Room & { auth: RoomAuth, settings: RoomSettings, owner: User }) | null> {
+        const room = await this.prismaClient.room.findFirst({
+            where: { 
+                id,
+                OR: [
+                    { owner_id: user_id },
+                    {
+                        settings: {
+                            visibility: true
+                        }
+                    },
+                    {
+                        subs: {
+                            some: {
+                                id: user_id
+                            }
+                        }
+                    }
+                ]
+            },
             include: { auth: true, owner: true, settings: true }
         });
 
@@ -84,21 +111,40 @@ export default class PrismaRepository implements IRepository {
         return null;
     }
 
-    async findRoomsByWords(words: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+    async findRoomsByWords(words: string[], user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         return await this.prismaClient.room.findMany({
             where: { 
-                AND: words.map(item => ({
-                    name: {
-                        contains: item,
-                        mode: "insensitive"
+                AND: [
+                    ...(words.map(item => ({
+                        name: {
+                            contains: item,
+                            mode: "insensitive"
+                        }
+                    })) as []),
+                    {
+                        OR: [
+                            { owner_id: user_id },
+                            {
+                                settings: {
+                                    visibility: true
+                                }
+                            },
+                            {
+                                subs: {
+                                    some: {
+                                        id: user_id
+                                    }
+                                }
+                            }
+                        ]
                     }
-                }))
+                ]
             },
             include: { tags: true, owner: true }
         })
     }
 
-    async findRoomsByWordsTags(words: string[], tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+    async findRoomsByWordsTags(words: string[], tags: string[], user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         const chunkedTags = _.chunk(tags, 1);
 
         return await this.prismaClient.room.findMany({
@@ -117,14 +163,31 @@ export default class PrismaRepository implements IRepository {
                                 name: { in: item }
                             }
                         }
-                    }))
+                    })),
+                    {
+                        OR: [
+                            { owner_id: user_id },
+                            {
+                                settings: {
+                                    visibility: true
+                                }
+                            },
+                            {
+                                subs: {
+                                    some: {
+                                        id: user_id
+                                    }
+                                }
+                            }
+                        ]
+                    }
                 ]
             },
             include: { tags: true, owner: true }
         });
     }
 
-    async findRoomsByTags(tags: string[]): Promise<(Room & { tags: Tag[], owner: User })[]> {
+    async findRoomsByTags(tags: string[], user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]> {
         const chunkedTags = _.chunk(tags, 1);
 
         return await this.prismaClient.room.findMany({
@@ -136,7 +199,24 @@ export default class PrismaRepository implements IRepository {
                                 name: { in: item }
                             }
                         }
-                    }))
+                    })),
+                    {
+                        OR: [
+                            { owner_id: user_id },
+                            {
+                                settings: {
+                                    visibility: true
+                                }
+                            },
+                            {
+                                subs: {
+                                    some: {
+                                        id: user_id
+                                    }
+                                }
+                            }
+                        ]
+                    }
                 ]
             },
             include: { tags: true, owner: true }
@@ -169,11 +249,11 @@ export default class PrismaRepository implements IRepository {
         throw new UnknowError("Error creating user");
     }
 
-    async createRoom(name: string, password: string, owner_id: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})> {
+    async createRoom(name: string, password: string, userId: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})> {
         return await this.prismaClient.room.create({
             data: {
                 name,
-                owner_id,
+                owner_id: userId,
 
                 auth: {
                     create: {
@@ -212,23 +292,25 @@ export default class PrismaRepository implements IRepository {
         return result.count;
     }
 
-    async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<User> {
-        return await this.prismaClient.user.update({
-            where: { id: user_id },
+    async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<Room> {
+        return await this.prismaClient.room.update({
+            where: { id: room_id },
             data: {
-                fav_rooms: {
-                    disconnect: { id: room_id }
-                }
+                subs: {
+                    disconnect: { id: user_id }
+                } 
             }
-        })
+        });
     }
 
-    async addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<User> {
-        return await this.prismaClient.user.update({
-            where: { id: user_id },
+    async addRoomToFavorites(room_id: bigint, user_id: bigint): Promise<Room> {
+        return await this.prismaClient.room.update({
+            where: {
+                id: room_id,
+            },
             data: {
-                fav_rooms: {
-                    connect: { id: room_id }
+                subs: {
+                    connect: { id: user_id }
                 }
             }
         })
