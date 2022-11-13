@@ -1,6 +1,18 @@
 import axios from "axios";
 
 export default class RoomAPIService {
+    /**
+     * @param {{ 
+     *  params: { id: string }
+     * }} data
+     * @param {AbortSignal} signal 
+     * @returns 
+     */
+    async getOne(data, signal) {
+        return await axios.get(`/api/v1/room-service/room/${data.params.id}`, {
+            signal,
+        });
+    }
 
     /**
      * @param {{ 
