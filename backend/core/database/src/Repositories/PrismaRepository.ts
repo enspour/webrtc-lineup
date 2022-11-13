@@ -1,7 +1,6 @@
-import _, { includes } from "lodash";
+import _ from "lodash";
 
 import { PrismaClient } from "@prisma/client";
-import { Prisma } from "@prisma/client";
 
 import { IRepository } from "./Repository";
 
