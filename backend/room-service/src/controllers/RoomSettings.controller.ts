@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import RoomSettingsService from "@services/RoomSettings.service";
+import SignalService from "@services-communication/services/Signal.service";
 
 import { getUser } from "core/utils/user";
 
@@ -17,6 +18,7 @@ class RoomSettingsController {
         const count = await RoomSettingsService.updateVisibility(id, user.id, visibility);
 
         if (count > 0) {
+            SignalService.updateRoomInformationConnectedUsers(id);
             return new SuccessResponse({ visibility }).send(res);
         }
 
@@ -32,6 +34,7 @@ class RoomSettingsController {
         const count = await RoomSettingsService.updateEnableAudio(id, user.id, enable_audio);
 
         if (count > 0) {
+            SignalService.updateRoomInformationConnectedUsers(id);
             return new SuccessResponse({ enable_audio }).send(res);
         }
 
@@ -47,6 +50,7 @@ class RoomSettingsController {
         const count = await RoomSettingsService.updateEnableVideo(id, user.id, enable_video);
 
         if (count > 0) {
+            SignalService.updateRoomInformationConnectedUsers(id);
             return new SuccessResponse({ enable_video }).send(res);
         }
 

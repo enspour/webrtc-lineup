@@ -12,7 +12,8 @@
       "@logger": ["logger"],
       "@services/*": ["services/*"],
       "@controllers/*": ["controllers/*"],
-      "@middlewares/*": ["middlewares/*"]
+      "@middlewares/*": ["middlewares/*"],
+      "@services-communication/*": ["services-communication/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

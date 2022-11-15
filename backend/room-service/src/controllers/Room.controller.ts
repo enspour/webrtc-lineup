@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import RoomService from "@services/Room.service";
+import SignalService from "@services-communication/services/Signal.service";
 
 import { getUser } from "core/utils/user";
 
@@ -84,6 +85,7 @@ class RoomController {
         const count = await RoomService.updateName(id, user.id, name);
 
         if (count > 0) {
+            SignalService.updateRoomInformationConnectedUsers(id);
             return new SuccessResponse({ name }).send(res);
         }
 
