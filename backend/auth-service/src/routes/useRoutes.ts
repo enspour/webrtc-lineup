@@ -1,16 +1,20 @@
 import { Router, Application } from "express";
 
-import NotFound from "core/server/responses/NotFound.response";
+import authRoutes from "./auth/auth.route";
 
-import authRoute from "./auth/auth.route";
+import servicesCommunicationRoutes from "@services-communication/routes";
+
+import NotFoundResponse from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.use("/api/v1/auth-service", authRoute);
+    router.use("/api/v1/auth-service", authRoutes);
+
+    router.use("/services-communication/auth-service/", servicesCommunicationRoutes);
 
     router.use("*", (req, res) => 
-        new NotFound(`URL: ${req.originalUrl} is not found.`).send(res));
+        new NotFoundResponse(`URL: ${req.originalUrl} is not found.`).send(res));
 
     app.use(router);
 }

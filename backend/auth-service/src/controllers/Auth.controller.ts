@@ -1,7 +1,5 @@
 import { Request, Response } from "express"
 
-import { accessTokenKeys } from "@loaders/jwt.keys";
-
 import AuthService from "@services/Auth.service";
 import JWTService from "@services/JWT.service";
 
@@ -88,11 +86,6 @@ class AuthController {
         const token = getCookie("accessToken", req);
         const payload = decodeAccessJWT(token);
         new SuccessResponse(payload).send(res);
-    }
-
-    async accessTokenPublicKey(req: Request, res: Response) {
-        const publicKey = accessTokenKeys.publicKey;
-        new SuccessResponse({ key: publicKey }).send(res);
     }
 }
 
