@@ -21,16 +21,8 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/v1/auth-service/:path*',
-                destination: 'http://localhost:3010/api/v1/auth-service/:path*',
-            },
-            {
-                source: '/api/v1/room-service/:path*',
-                destination: 'http://localhost:3020/api/v1/room-service/:path*',
-            },
-            {
-                source: '/api/v1/signal-service/:path*',
-                destination: 'http://localhost:3030/api/v1/signal-service/:path*',
+                source: '/api/v1/:path*',
+                destination: 'http://localhost:8080/api/v1/:path*',
             }
         ]
     },
