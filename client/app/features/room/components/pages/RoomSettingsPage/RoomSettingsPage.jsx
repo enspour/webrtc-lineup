@@ -58,7 +58,7 @@ const RoomVisibilitySettings = observer(() => {
                     If you make a room private, users won't be able to find it. 
                 </div>
             </div>
-            <CheckBox label="Public" value={settings.visibility} setValue={setVisibility}/>
+            <CheckBox label="Make Visible" value={settings.visibility} setValue={setVisibility}/>
         </div>
     )
 })
@@ -77,7 +77,7 @@ const ConferenceAudioSettings = observer(() => {
         request.start({ body });
     }
 
-    return <CheckBox label="Enable audio" value={settings.enableAudio} setValue={setEnableAudio}/>
+    return <CheckBox label="Enable Audio" value={settings.enableAudio} setValue={setEnableAudio}/>
 });
 
 const ConferenceVideoSettings = observer(() => {
