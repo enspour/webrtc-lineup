@@ -12,7 +12,7 @@ import styles from "./RoomCards.module.scss";
 const Card = ({ title, hint, onClick, children }) => {
     return (
         <div className={styles.card} onClick={onClick}>
-            <Panel minHeight="10rem" height="100%" width="30rem">
+            <Panel minHeight="15rem" height="100%" width="30rem">
                 <div className={styles.card__wrapper}>
                     <div>
                         <div className={styles.card__title}>{title}</div>
@@ -28,20 +28,27 @@ const Card = ({ title, hint, onClick, children }) => {
     )
 }
 
-const ConferenceCard = () => {
+const ConferenceCard = observer(() => {
+    const settings = services.room.RoomInfo.Settings;
+
     const router = useRouter();
 
     const [enableMicrophone, setEnableMicrophone] = React.useState(true);
     const [enableCamera, setEnableCamera] = React.useState(false);
 
     const openConference = async () => {
-        const constraints = { audio: enableMicrophone, video: enableCamera };
-        const response = await services.conference.join(constraints);
+        const constraints = { audio: settings.enableAudio, video: settings.enableVideo };
+        const options = { enableMicrophone, enableCamera };
+        const response = await services.room.Conference.join(constraints, options);
         console.log(response);
 
         if (response.status === 200) {
             router.push("/room/conference");
         }
+    }
+
+    if (settings.enableAudio === false && settings.enableVideo === false) {
+        return "";
     }
 
     return (
@@ -51,21 +58,29 @@ const ConferenceCard = () => {
             onClick={openConference}
         >
             <div className={styles.card__voicevideo}>
-                <CheckBox
-                    label="Microphone"
-                    value={enableMicrophone} 
-                    setValue={setEnableMicrophone}
-                />
-                
-                <CheckBox
-                    label="Camera" 
-                    value={enableCamera} 
-                    setValue={setEnableCamera}
-                />
+                {
+                    settings.enableAudio 
+                        ?  <CheckBox
+                                label="Microphone"
+                                value={enableMicrophone} 
+                                setValue={setEnableMicrophone}
+                            />
+                        : ""
+                }
+
+                {
+                    settings.enableVideo 
+                        ?  <CheckBox
+                                label="Camera" 
+                                value={enableCamera} 
+                                setValue={setEnableCamera}
+                            />
+                        : ""
+                }                
             </div>
         </Card>
     )
-}
+})
 
 const SettingsCard = observer(() => {
     const router = useRouter();

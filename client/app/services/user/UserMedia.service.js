@@ -36,37 +36,50 @@ export default class UserMediaService {
         return this.#speechService.LastAudioActive;
     }
 
-    async captureMedia(constraints) {
+    async captureMedia(constraints, options) {
         try {
             if (!this.#stream) {
-                const audioDeviceId = this.#userDevices.SelectedAudioInputDevice;
-                const videoDeviceId = this.#userDevices.SelectedVideoInputDevice;
+                const _constraints = {};
 
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    audio: {
+                if (constraints.audio) {
+                    const audioDeviceId = this.#userDevices.SelectedAudioInputDevice;
+                    _constraints.audio = {
                         echoCancellation: false,
                         noiseSuppression: true,
                         deviceId: audioDeviceId
-                    },
-                    video: {
+                    }
+                }
+
+                if (constraints.video) {
+                    const videoDeviceId = this.#userDevices.SelectedVideoInputDevice;
+                    _constraints.video = {
                         width: { max: 320 },
                         height: { max: 240 },
                         frameRate: 30,
                         facingMode: "user",
                         deviceId: videoDeviceId
                     }
-                });
+                }
+
+                const stream = await navigator.mediaDevices.getUserMedia(_constraints);
+                
+                if (constraints.audio) {
+                    stream.getAudioTracks().forEach(track => {
+                        track.enabled = options.enableMicrophone;
+                    })
     
-                stream.getTracks().forEach(track => {
-                    if (track.kind in constraints) {
-                        track.enabled = constraints[track.kind];
-                    }
-                });
+                    this.#mediaData.setMutedAudio(!options.enableMicrophone);
 
-                this.#mediaData.setMutedAudio(!constraints["audio"]);
-                this.#mediaData.setMutedVideo(!constraints["video"]);
+                    this.#speechService.initialize(stream);
+                }
 
-                this.#speechService.initialize(stream);
+                if (constraints.video) {
+                    stream.getVideoTracks().forEach(track => {
+                        track.enabled = options.enableCamera;
+                    })
+
+                    this.#mediaData.setMutedVideo(!options.enableCamera);
+                }
 
                 this.#stream = stream;
             }

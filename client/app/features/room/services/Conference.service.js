@@ -135,13 +135,13 @@ export default class ConferenceService {
         return this.#peersStore.peers;
     }
 
-    async join(constraints) {
+    async join(constraints, options) {
         let waiter;
         
         const id = this.#roomInfo.Id;
         
         if (id) {
-            await this.#userMedia.captureMedia(constraints);
+            await this.#userMedia.captureMedia(constraints, options);
 
             const clear = this.#signal.onJoinConference((status, message, data) => {
                 if (status !== 200) {
