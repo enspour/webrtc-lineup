@@ -1,5 +1,7 @@
 import RoomStore from "@stores/Room.store";
 
+import handlerReceivedRoom from "@utils/handlersReceivedData/handlerReceivedRoom";
+
 export default class RoomInfoService {
     #store;
     #request;
@@ -84,7 +86,8 @@ export default class RoomInfoService {
     #onResponse() {
         return this.#request.onResponse(response => {
             if (response && response.status === 200) {
-                this.#store.setRoom(response.data.body.room);
+                const room = handlerReceivedRoom(response.data.body.room);
+                this.#store.setRoom(room);
                 this.#store.setState("done");
             }
         })

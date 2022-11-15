@@ -1,11 +1,6 @@
 import RoomsStore from "@stores/Rooms.store";
 
-const handlerRecievedRooms = rooms => {
-    return rooms.map(item => ({
-        ...item,
-        createdAt: item.created_at,
-    }))
-}
+import handlerRecievedRooms from "@utils/handlersReceivedData/handlerReceivedRooms";
 
 export default class RoomsService {
     #store;
