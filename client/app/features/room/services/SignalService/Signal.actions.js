@@ -11,6 +11,8 @@ export default {
     NOTIFY_USER_LEAVE: "notify:room:user:leave",
     NOTIFY_USER_JOIN: "notify:room:user:join",
 
+    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info:update",
+
 
     JOIN_CONFERENCE: "room:conference:join",
     NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",

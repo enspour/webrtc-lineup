@@ -93,7 +93,7 @@ export default class Signal {
      * @param {(status: number, message: string, data: any) => Promise<void>} handler 
      * @returns 
      */
-     onceUsers(handler) {
+    onceUsers(handler) {
         const event = async ({ status, message, data }) => await handler(status, message, data);
         this.#socket.once(SignalActions.NOTIFY_GET_USERS, event);
     }
@@ -118,6 +118,15 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_USER_JOIN, event);
     }
 
+    /**
+     * @param {(room: string) => Promise<void>} handler 
+     * @returns 
+     */
+    onRoomInformationUpdate(handler) {
+        const event = async ({ room }) => await handler(room);
+        this.#socket.on(SignalActions.NOTIFY_UPDATE_ROOM_INFORMATION, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_ROOM_INFORMATION, event);
+    }
 
 
     // ----- CONFERENCE -----
