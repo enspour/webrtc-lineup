@@ -1,14 +1,24 @@
+import SignalService from "./SignalService/Signal.service";
+import ConferenceService from "./Conference.service";
+import RoomInfoService from "app/services/RoomInfo.service";
+
+import handlerReceivedRoom from "@utils/handlersReceivedData/handlerReceivedRoom";
+
 export default class RoomService {
     #signal;
+    #conference;
     #roomInfo;
 
-    constructor(signal, roomInfo) {
-        this.#signal = signal;
-        this.#roomInfo = roomInfo;
+    constructor(API, roomAPI, userMedia) {
+        this.#roomInfo = new RoomInfoService(API.createRequest(roomAPI.getOne));
+
+        this.#signal = new SignalService();
+        this.#conference = new ConferenceService(this.#signal, this.#roomInfo, userMedia);
     }
 
     initialize() {
         this.#roomInfo.initialize();
+        this.#conference.initialize();
 
         this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
@@ -16,12 +26,19 @@ export default class RoomService {
         this.#signal.onUserLeaveRoom((socketId) => console.log("user leaved from room", socketId))
         this.#signal.onConnectionError((err) => console.log("unknow error", err));
         this.#signal.onDisconnect((reason) => console.log("disconnecting, reason:", reason))
+        this.#signal.onRoomInformationUpdate(room => console.log(room));
 
         const offJoinRoom = this.#onJoinRoom();
+        const offUpdateRoomInfo = this.#onUpdateRoomInfo();
 
         return () => {
             offJoinRoom();
+            offUpdateRoomInfo();
         }
+    }
+
+    get Conference() {
+        return this.#conference;
     }
 
     get RoomInfo() {
@@ -90,13 +107,21 @@ export default class RoomService {
         return this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
                 if (data) {
-                    this.#roomInfo.setRoom(data);
+                    const room = handlerReceivedRoom(data);
+                    this.#roomInfo.setRoom(room);
                 }
 
                 return;
             }
 
             this.#signal.disconnect();
+        });
+    }
+
+    #onUpdateRoomInfo() {
+        return this.#signal.onRoomInformationUpdate((data) => {
+            const room = handlerReceivedRoom(data);
+            this.#roomInfo.setRoom(room);
         });
     }
 }
