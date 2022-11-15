@@ -23,6 +23,9 @@ export interface IRepository {
     updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number>;
     updateRoomSettingsEnableAudio(room_id: bigint, user_id: bigint, enable_audio: boolean): Promise<number>;
     updateRoomSettingsEnableVideo(room_id: bigint, user_id: bigint, enable_video: boolean): Promise<number>;
+
+
+    findRoomByIdPrivilege(id: bigint): Promise<(Room & { owner: User, settings: RoomSettings }) | null>;
 }
 
 export default class Repository implements IRepository {
@@ -97,5 +100,10 @@ export default class Repository implements IRepository {
     }
     async updateRoomSettingsEnableVideo(room_id: bigint, user_id: bigint, enable_audio: boolean): Promise<number> {
         return await this._repository.updateRoomSettingsEnableVideo(room_id, user_id, enable_audio);
+    }
+
+
+    async findRoomByIdPrivilege(id: bigint): Promise<(Room & { owner: User, settings: RoomSettings }) | null> {
+        return this._repository.findRoomByIdPrivilege(id);
     }
 }

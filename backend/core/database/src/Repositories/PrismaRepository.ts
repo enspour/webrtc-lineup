@@ -376,4 +376,21 @@ export default class PrismaRepository implements IRepository {
 
         return result.count
     }
+
+
+    async findRoomByIdPrivilege(id: bigint): Promise<(Room & { owner: User, settings: RoomSettings }) | null> {
+        const room = await this.prismaClient.room.findFirst({
+            where: { id },
+            include: { owner: true, settings: true },
+        });
+
+        if (room && room.settings) {
+            return {
+                ...room,
+                settings: room.settings,
+            }
+        }
+
+        return null;
+    }
 }
