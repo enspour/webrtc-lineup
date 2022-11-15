@@ -56,7 +56,7 @@ const ConferencePanel = () => {
     const router = useRouter();
 
     const leave = async () => {
-        const response = await services.conference.leave();
+        const response = await services.room.Conference.leave();
         console.log(response);
         router.push("/room");
     }

@@ -1,5 +1,4 @@
 import React from "react";
-import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import Panel from "@components/ui/Panel/Panel";
@@ -10,7 +9,6 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 
 import useRequest from "@hooks/api/useRequest";
-import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 
@@ -20,7 +18,6 @@ const RoomNameSettings = () => {
     const [name, setName] = React.useState(services.room.RoomInfo.Name);
 
     const request = useRequest(services.roomAPI.updateName);
-    const { data } = useResponse(request);
 
     const save = () => {
         const body = {
@@ -30,13 +27,6 @@ const RoomNameSettings = () => {
 
         request.start({ body });
     }
-
-    React.useEffect(() => {
-        if (data && data.status === 200) {
-            const { name } = data.body;
-            services.room.RoomInfo.setName(name);
-        }
-    }, [data]);
 
     return (
         <div>
@@ -50,7 +40,6 @@ const RoomVisibilitySettings = observer(() => {
     const settings = services.room.RoomInfo.Settings;
 
     const request = useRequest(services.roomSettingsAPI.updateVisibility);
-    const { data } = useResponse(request);
 
     const setVisibility = (value) => {
         const body = {
@@ -60,13 +49,6 @@ const RoomVisibilitySettings = observer(() => {
 
         request.start({ body });
     }
-
-    React.useEffect(() => {
-        if (data && data.status === 200) {
-            const { visibility } = data.body;
-            services.room.RoomInfo.setSettings(prev => ({ ...prev, visibility }));
-        }
-    }, [data])
 
     return (
         <div>
@@ -85,7 +67,6 @@ const ConferenceAudioSettings = observer(() => {
     const settings = services.room.RoomInfo.Settings;
 
     const request = useRequest(services.roomSettingsAPI.updateEnableAudio);
-    const { data } = useResponse(request);
 
     const setEnableAudio = (value) => {
         const body = {
@@ -96,21 +77,13 @@ const ConferenceAudioSettings = observer(() => {
         request.start({ body });
     }
 
-    React.useEffect(() => {
-        if (data && data.status === 200) {
-            const { enable_audio } = data.body;
-            services.room.RoomInfo.setSettings(prev => ({ ...prev, enable_audio }));
-        }
-    }, [data])
-
-    return <CheckBox label="Enable audio" value={settings.enable_audio} setValue={setEnableAudio}/>
+    return <CheckBox label="Enable audio" value={settings.enableAudio} setValue={setEnableAudio}/>
 });
 
 const ConferenceVideoSettings = observer(() => {
     const settings = services.room.RoomInfo.Settings;
 
     const request = useRequest(services.roomSettingsAPI.updateEnableVideo);
-    const { data } = useResponse(request);
 
     const setEnableVideo = (value) => {
         const body = {
@@ -121,14 +94,7 @@ const ConferenceVideoSettings = observer(() => {
         request.start({ body });
     }
 
-    React.useEffect(() => {
-        if (data && data.status === 200) {
-            const { enable_video } = data.body;
-            services.room.RoomInfo.setSettings(prev => ({ ...prev, enable_video }));
-        }
-    }, [data])
-
-    return <CheckBox label="Enable Video" value={settings.enable_video} setValue={setEnableVideo}/>
+    return <CheckBox label="Enable Video" value={settings.enableVideo} setValue={setEnableVideo}/>
 });
 
 const ConferenceSettings = () => {

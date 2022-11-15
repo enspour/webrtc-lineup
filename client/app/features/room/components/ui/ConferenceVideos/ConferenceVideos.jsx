@@ -94,7 +94,7 @@ const ConferenceVideos = () => {
                 muted: true,
             };
             
-            const peers = services.conference.Peers;
+            const peers = services.room.Conference.Peers;
             const remotePeers = [...peers]
                 .sort((a, b) => b.LastAudioActive - a.LastAudioActive)
                 .slice(0, MAX_COUNT_VIDEOS - 1)
