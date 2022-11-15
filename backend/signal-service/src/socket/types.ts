@@ -1,4 +1,20 @@
-const TypesActions = {
+export const RoomActionsTypes = {
+    GET_USERS: "room:get_users",
+    NOTIFY_GET_USERS: "notify:room:get_users",
+
+    JOIN_ROOM: "room:join",
+    NOTIFY_JOIN: "notify:room:join",
+
+    LEAVE_ROOM: "room:leave",
+    NOTIFY_LEAVE: "notify:room:leave",
+
+    NOTIFY_USER_LEAVE: "notify:room:user:leave",
+    NOTIFY_USER_JOIN: "notify:room:user:join",
+
+    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info:update",
+};
+
+export const ConferenceActionsTypes = {
     JOIN_CONFERENCE: "room:conference:join",
     NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",
 
@@ -20,5 +36,3 @@ const TypesActions = {
     NOTIFY_SEND_ANSWER: "notify:room:conference:send_answer",
     ACCEPT_ANSWER: "room:conference:accept_answer",
 };
-
-export default TypesActions;

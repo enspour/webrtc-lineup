@@ -15,6 +15,7 @@
       "@controllers/*": ["controllers/*"],
       "@logger": ["logger"],
       "@routes": ["routes/useRoutes"],
+      "@services-communication/*": ["services-communication/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

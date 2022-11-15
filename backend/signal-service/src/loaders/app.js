@@ -3,8 +3,10 @@ const express = require("express");
 const createApp = () => {
     const app = express();
 
-    const useRoutes = require("@routes").default
+    app.use(express.json());
     
+    const useRoutes = require("@routes").default
+
     useRoutes(app)
 
     return app;

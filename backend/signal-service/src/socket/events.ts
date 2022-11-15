@@ -1,7 +1,6 @@
 import { Server, Socket } from "socket.io"
 
-import TypesActionsRoom from "./actions/room/types.actions";
-import TypesActionsConference from "./actions/conference/types.actions";
+import { RoomActionsTypes, ConferenceActionsTypes } from "./types";
 
 import Broadcast from "./notifications/Broadcast.notification";
 
@@ -30,11 +29,11 @@ const initEvents = (_io: Server) => {
                 
                 if (roomId.endsWith("/conference")) {
                     return new Broadcast(
-                        TypesActionsConference.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
+                        ConferenceActionsTypes.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
                     ).notify(socket, roomId);
                 } 
 
-                new Broadcast(TypesActionsRoom.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
+                new Broadcast(RoomActionsTypes.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
             }
         });
     }

@@ -1,6 +1,6 @@
 import { ActionContext } from "@socket/services/Actions.service";
 
-import TypesActions from "./types.actions";
+import { RoomActionsTypes } from "@socket/types";
 
 import { IdPayload } from "../validators/id.validator";
 import { JoinRoomPayload } from "./validators/joinRoom.validator";
@@ -18,11 +18,11 @@ class RoomsActions {
         const room = await RoomService.findRoomByIdWithAuth(BigInt(id), BigInt(userId));
 
         if (!room) {
-            return context.badRequest(TypesActions.NOTIFY_JOIN, "Room is not found");
+            return context.badRequest(RoomActionsTypes.NOTIFY_JOIN, "Room is not found");
         }
 
         if (room.auth.password && room.auth.password !== password) {
-            return context.badRequest(TypesActions.NOTIFY_JOIN, "Incorrect password");
+            return context.badRequest(RoomActionsTypes.NOTIFY_JOIN, "Incorrect password");
         }
         
         if (context.Client.CountRooms === 1) {
@@ -43,10 +43,10 @@ class RoomsActions {
                 created_at: room.created_at,
             };
             
-            context.success(TypesActions.NOTIFY_JOIN, "Success join", payload);
-            return context.broadcast(id, TypesActions.NOTIFY_USER_JOIN, { socketId: context.Client.SocketId })
+            context.success(RoomActionsTypes.NOTIFY_JOIN, "Success join", payload);
+            return context.broadcast(id, RoomActionsTypes.NOTIFY_USER_JOIN, { socketId: context.Client.SocketId })
         } else {
-            return context.success(TypesActions.NOTIFY_JOIN, "Already connected")
+            return context.success(RoomActionsTypes.NOTIFY_JOIN, "Already connected")
         }
     }
 
@@ -54,11 +54,11 @@ class RoomsActions {
         const { id } = context.Payload;
 
         if (context.Client.has(id)) {
-            context.success(TypesActions.NOTIFY_LEAVE, "Success leave", { id });
+            context.success(RoomActionsTypes.NOTIFY_LEAVE, "Success leave", { id });
             return context.Client.disconnect();
         }
 
-        context.success(TypesActions.NOTIFY_LEAVE, "Already leaved");
+        context.success(RoomActionsTypes.NOTIFY_LEAVE, "Already leaved");
     }
 
     getClients(context: ActionContext<IdPayload>) {
@@ -66,10 +66,10 @@ class RoomsActions {
 
         if (context.Client.has(id)) {
             const clients = services.rooms.getClients(id);
-            return context.success(TypesActions.NOTIFY_GET_USERS, "Success send sockets", { users: clients });
+            return context.success(RoomActionsTypes.NOTIFY_GET_USERS, "Success send sockets", { users: clients });
         }
 
-        context.badRequest(TypesActions.NOTIFY_GET_USERS, "Bad request")
+        context.badRequest(RoomActionsTypes.NOTIFY_GET_USERS, "Bad request")
     }
 }
 

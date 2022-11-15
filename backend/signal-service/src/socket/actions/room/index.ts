@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 
-import TypesActions from "./types.actions";
+import { RoomActionsTypes } from "@socket/types";
 import RoomActions from "./room.actions";
 
 import { joinRoomValidator } from "./validators/joinRoom.validator";
@@ -10,32 +10,32 @@ import services from "@socket/services";
 
 const joinValidator = {
     validate: joinRoomValidator,
-    action: TypesActions.NOTIFY_JOIN
+    action: RoomActionsTypes.NOTIFY_JOIN
 };
 
 const leaveValidator = {
     validate: idValidator,
-    action: TypesActions.NOTIFY_LEAVE,
+    action: RoomActionsTypes.NOTIFY_LEAVE,
 };
 
 const getClientsValidator = {
     validate: idValidator,
-    action: TypesActions.NOTIFY_GET_USERS,
+    action: RoomActionsTypes.NOTIFY_GET_USERS,
 };
 
 const initRoomActions = (socket: Socket) => {
     socket.on(
-        TypesActions.JOIN_ROOM,
+        RoomActionsTypes.JOIN_ROOM,
         services.actions.create(socket, RoomActions.join, joinValidator)    
     );
 
     socket.on(
-        TypesActions.LEAVE_ROOM,
+        RoomActionsTypes.LEAVE_ROOM,
         services.actions.create(socket, RoomActions.leave, leaveValidator)
     );
 
     socket.on(
-        TypesActions.GET_USERS,
+        RoomActionsTypes.GET_USERS,
         services.actions.create(socket, RoomActions.getClients, getClientsValidator)
     );
 }
