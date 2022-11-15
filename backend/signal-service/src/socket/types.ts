@@ -8,10 +8,10 @@ export const RoomActionsTypes = {
     LEAVE_ROOM: "room:leave",
     NOTIFY_LEAVE: "notify:room:leave",
 
-    NOTIFY_USER_LEAVE: "notify:room:user:leave",
-    NOTIFY_USER_JOIN: "notify:room:user:join",
+    NOTIFY_USER_LEAVE: "notify:room:user_leave",
+    NOTIFY_USER_JOIN: "notify:room:user_join",
 
-    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info:update",
+    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
 };
 
 export const ConferenceActionsTypes = {
@@ -21,8 +21,8 @@ export const ConferenceActionsTypes = {
     LEAVE_CONFERENCE: "room:conference:leave",
     NOTIFY_LEAVE_CONFERENCE: "notify:room:conference:leave",
 
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:room:conference:user:join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:room:conference:user:leave",
+    NOTIFY_USER_JOIN_CONFERENCE: "notify:room:conference:user_join",
+    NOTIFY_USER_LEAVE_CONFERENCE: "notify:room:conference:user_leave",
 
     SEND_ICE_CANDIDATE: "room:conference:send_ice-candidate",
     NOTIFY_SEND_ICE_CANDIDATE: "notify:room:conference:send_ice-candidate",
