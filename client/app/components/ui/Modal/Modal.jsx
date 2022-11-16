@@ -2,12 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Panel from "../Panel/Panel";
+import PanelHeader from "../PanelHeader/PanelHeader";
 
 import useCssAnimation from "@hooks/css/useCssAnimation";
-
-import Svg from "../Svg/Svg";
-
-import CloseIcon from "@assets/images/modal/close.svg";
 
 import styles from "./Modal.module.scss";
 
@@ -28,10 +25,8 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
         <div className={styles.modal} ref={modalRef} onClick={outsideClick}>
             <div className={styles.modal__window} ref={modalContentRef}>
                 <Panel maxHeight="100vh">
-                    <div className={styles.modal__header}>
-                        <div className={styles.modal__title}>{title}</div>
-                        <Svg url={CloseIcon} width="1.1" height="1.1" onClick={closeModal}/>
-                    </div>
+                    <PanelHeader title={title} onClick={closeModal}/>
+                    
                     <div className={styles.modal__content}>
                         {children}
                     </div>

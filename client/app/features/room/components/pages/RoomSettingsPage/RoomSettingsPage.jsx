@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
 import Panel from "@components/ui/Panel/Panel";
@@ -132,11 +133,15 @@ const GeneralSettings = () => {
 }
 
 const Settings = () => {
+    const router = useRouter();
+
+    const back = () => router.back();
+
     return (
         <RoomLayout title="Lineup | Settings">
             <div className={styles.container}>
                 <Panel maxHeight="calc(100vh - 5rem - 4rem)">
-                    <PanelHeader title="Settings"/>
+                    <PanelHeader title="Settings" onClick={back}/>
 
                     <div className={styles.wrapper}>
                         <GeneralSettings />
