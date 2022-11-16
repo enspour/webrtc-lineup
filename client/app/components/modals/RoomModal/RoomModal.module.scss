@@ -1,6 +1,5 @@
 .wrapper {
-    min-width: 45rem;
-    max-width: 55rem;
+    max-width: 60rem;
 }
 
 .room__connection {
@@ -11,7 +10,8 @@
 }
 
 .room__name {
-    padding: 1.5rem 2rem;
+    padding: 0 2rem;
+    padding-bottom: 1.5rem;
     font-size: 1.6rem;
     font-weight: 600;
     border-radius: 2rem;
