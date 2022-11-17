@@ -9,8 +9,6 @@ class SignalService {
             const url = `${backend}/services-communication/signal-service/users/update-room-inforamtion/${id}`;
             
             const response = await fetch(url, { method: "PUT" });
-    
-            console.log(response);
         } catch {}
     }
 }
