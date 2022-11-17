@@ -53,8 +53,8 @@ export default class UserMediaService {
                 if (constraints.video) {
                     const videoDeviceId = this.#userDevices.SelectedVideoInputDevice;
                     _constraints.video = {
-                        width: { max: 320 },
-                        height: { max: 240 },
+                        width: { max: 640 },
+                        height: { max: 480 },
                         frameRate: 30,
                         facingMode: "user",
                         deviceId: videoDeviceId

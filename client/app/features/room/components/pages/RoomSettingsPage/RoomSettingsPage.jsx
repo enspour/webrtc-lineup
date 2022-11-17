@@ -56,7 +56,7 @@ const RoomVisibilitySettings = observer(() => {
             <div className="mb-1">
                 <div> Visibility </div>
                 <div className="text-placeholder"> 
-                    If you make a room private, users won't be able to find it. 
+                    If you make the room hidden, users won't be able to find it. 
                 </div>
             </div>
             <CheckBox label="Make Visible" value={settings.visibility} setValue={setVisibility}/>
