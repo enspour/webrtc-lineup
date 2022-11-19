@@ -4,6 +4,7 @@ import validator from "@utils/validator";
 
 export interface OfferPayload {
     roomId: string;
+    conferenceId: string;
     destinationId: string;
     offer: {
         type: string;
@@ -15,6 +16,7 @@ const schema: JSONSchemaType<OfferPayload> = {
     type: "object",
     properties: {
         roomId: { type: "string" },
+        conferenceId: { type: "string" },
         destinationId: { type: "string" },
         offer: { 
             type: "object",

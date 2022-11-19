@@ -3,34 +3,35 @@ import { Socket } from "socket.io";
 import { ConferenceActionsTypes } from "@socket/types";
 import ConferenceActions from "./conference.actions";
 
-import { idValidator } from "../validators/id.validator";
+import { joinValidator } from "./validators/join.validator";
+import { leaveValidator } from "./validators/leave.validator";
 import { offerValidator } from "./validators/offer.validator";
 import { answerValidator } from "./validators/answer.validator";
 import { iceCandidateValidator } from "./validators/iceCandidate.validator";
 
 import services from "@socket/services";
 
-const joinValidator = {
-    validate: idValidator,
+const joinValidation = {
+    validate: joinValidator,
     action: ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE
 };
 
-const leaveValidator = {
-    validate: idValidator,
+const leaveValidation = {
+    validate: leaveValidator,
     action: ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE,
 };
 
-const sendOfferValidator = {
+const sendOfferValidation = {
     validate: offerValidator,
     action: ConferenceActionsTypes.NOTIFY_SEND_OFFER
 };
 
-const sendAnswerValidator = {
+const sendAnswerValidation = {
     validate: answerValidator,
     action: ConferenceActionsTypes.NOTIFY_SEND_ANSWER
 };
 
-const sendIceCandidateValidator = {
+const sendIceCandidateValidation = {
     validate: iceCandidateValidator,
     action: ConferenceActionsTypes.NOTIFY_SEND_ICE_CANDIDATE
 };
@@ -38,27 +39,27 @@ const sendIceCandidateValidator = {
 const initConferenceActions = (socket: Socket) => {
     socket.on(
         ConferenceActionsTypes.JOIN_CONFERENCE,
-        services.actions.create(socket, ConferenceActions.join, joinValidator)
+        services.actions.create(socket, ConferenceActions.join, joinValidation)
     );
 
     socket.on(
         ConferenceActionsTypes.LEAVE_CONFERENCE,
-        services.actions.create(socket, ConferenceActions.leave, leaveValidator)
+        services.actions.create(socket, ConferenceActions.leave, leaveValidation)
     );
 
     socket.on(
         ConferenceActionsTypes.SEND_OFFER,
-        services.actions.create(socket, ConferenceActions.sendOffer, sendOfferValidator)
+        services.actions.create(socket, ConferenceActions.sendOffer, sendOfferValidation)
     );
 
     socket.on(
         ConferenceActionsTypes.SEND_ANSWER,
-        services.actions.create(socket, ConferenceActions.sendAnswer, sendAnswerValidator)
+        services.actions.create(socket, ConferenceActions.sendAnswer, sendAnswerValidation)
     );
 
     socket.on(
         ConferenceActionsTypes.SEND_ICE_CANDIDATE,
-        services.actions.create(socket, ConferenceActions.sendIceCandidate, sendIceCandidateValidator)
+        services.actions.create(socket, ConferenceActions.sendIceCandidate, sendIceCandidateValidation)
     );
 }
 

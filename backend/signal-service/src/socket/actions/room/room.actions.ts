@@ -15,7 +15,7 @@ class RoomsActions {
 
         const userId = context.Client.UserId;
 
-        const room = await RoomService.findRoomByIdWithAuth(BigInt(id), BigInt(userId));
+        const room = await RoomService.findOneByIdWithAuth(BigInt(id), BigInt(userId));
 
         if (!room) {
             return context.badRequest(RoomActionsTypes.NOTIFY_JOIN, "Room is not found");
@@ -37,14 +37,17 @@ class RoomsActions {
                 },
                 settings: {
                     visibility: room.settings.visibility,
-                    enable_audio: room.settings.enable_audio,
-                    enable_video: room.settings.enable_video
                 },
                 created_at: room.created_at,
             };
             
             context.success(RoomActionsTypes.NOTIFY_JOIN, "Success join", payload);
-            return context.broadcast(id, RoomActionsTypes.NOTIFY_USER_JOIN, { socketId: context.Client.SocketId })
+            
+            return context.broadcast(
+                id, 
+                RoomActionsTypes.NOTIFY_USER_JOIN, 
+                { socketId: context.Client.SocketId }
+            );
         } else {
             return context.success(RoomActionsTypes.NOTIFY_JOIN, "Already connected")
         }
@@ -66,7 +69,12 @@ class RoomsActions {
 
         if (context.Client.has(id)) {
             const clients = services.rooms.getClients(id);
-            return context.success(RoomActionsTypes.NOTIFY_GET_USERS, "Success send sockets", { users: clients });
+            
+            return context.success(
+                RoomActionsTypes.NOTIFY_GET_USERS, 
+                "Success send sockets", 
+                { users: clients }
+            );
         }
 
         context.badRequest(RoomActionsTypes.NOTIFY_GET_USERS, "Bad request")

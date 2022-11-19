@@ -4,6 +4,7 @@ import validator from "@utils/validator";
 
 export interface IceCandidatePayload {
     roomId: string;
+    conferenceId: string;
     destinationId: string;
     iceCandidate: {
         candidate: string;
@@ -16,6 +17,7 @@ const schema: JSONSchemaType<IceCandidatePayload> = {
     type: "object",
     properties: {
         roomId: { type: "string" },
+        conferenceId: { type: "string" },
         destinationId: { type: "string" },
         iceCandidate: {
             type: "object",
