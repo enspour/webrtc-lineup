@@ -22,7 +22,7 @@ class MediaPeerConnection {
         this.#speechService = new SpeechService();
         this.#peerConnection = new RTCPeerConnection(iceServersConfig);
 
-        localStream.getTracks().forEach(track => {
+        localStream?.getTracks().forEach(track => {
             this.#peerConnection.addTrack(track);
         });
 
