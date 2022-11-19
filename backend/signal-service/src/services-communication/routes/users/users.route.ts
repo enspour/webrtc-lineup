@@ -1,6 +1,8 @@
 import { Router } from "express";
 
 import idValidator from "./validators/params/id.validator";
+import updateConferenceInfoValidator from "./validators/body/updateConferenceInfo.validator";
+
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 
 import UsersController from "@services-communication/controllers/Users.controller";
@@ -14,5 +16,11 @@ router.put("/update-room-inforamtion/:id",
     validatorMiddleware,
     AsyncHandler(UsersController.updateRoomInformation)
 );
+
+router.put("/update-conference-information",
+    updateConferenceInfoValidator,
+    validatorMiddleware,
+    AsyncHandler(UsersController.updateConferenceInformation)
+)
 
 export default router;
