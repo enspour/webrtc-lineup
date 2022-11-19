@@ -12,7 +12,7 @@ class RoomsStore {
         this.rooms = [];
     }
 
-    addClient(roomId: string, client: Client) {
+    appendClient(roomId: string, client: Client) {
         const index = this.rooms.findIndex(item => item.id === roomId)
         if (index === -1) {
             const room = { id: roomId, clients: new ClientsStore(client) }

@@ -9,7 +9,7 @@ export default class RoomsService {
     }
 
     addClient(roomId: string, client: Client) {
-        this.rooms.addClient(roomId, client)
+        this.rooms.appendClient(roomId, client);
     }
 
     removeClient(roomId: string, socketId: string) {
