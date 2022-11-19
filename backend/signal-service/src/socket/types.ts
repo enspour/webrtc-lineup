@@ -12,6 +12,7 @@ export const RoomActionsTypes = {
     NOTIFY_USER_JOIN: "notify:room:user_join",
 
     NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
+    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
 };
 
 export const ConferenceActionsTypes = {
