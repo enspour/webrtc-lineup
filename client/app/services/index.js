@@ -1,28 +1,36 @@
 import APIService from "./APIServices/API.service";
 import AuthAPI from "./APIServices/AuthAPI.service";
 import RoomAPI from "./APIServices/RoomAPI.service";
-import RoomSettingsAPI from "./APIServices/RoomSettingsAPI.service";
 import RoomsAPI from "./APIServices/RoomsAPI.service";
+import ConferenceAPI from "./APIServices/ConferenceAPI.service";
+import ConferencesAPI from "./APIServices/ConferencesAPI.service";
+
+import RequestedArray from "./RequestedArray.service";
 
 import User from "./user/User.service";
-import Rooms from "./Rooms.service";
 import UserDevices from "./user/UserDevices.service";
 import UserMedia from "./user/UserMedia.service";
 
 import Search from "./Search.service";
-import Modals from "./Modals.service";
-import Storage from "./Storage.service";
 
+import ContextMenu from "./ContextMenu.service";
+import Modals from "./Modals.service";
 import Themes from "./Themes.service";
+
+import Storage from "./Storage.service";
 
 import { IslandService } from "../features/Island";
 
 import { RoomService } from "@features/room";
 
+import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
+
 const API = new APIService();
 const roomAPI = new RoomAPI();
 const roomsAPI = new RoomsAPI();
 const authAPI = new AuthAPI();
+const conferenceAPI = new ConferenceAPI();
+const conferencesAPI = new ConferencesAPI();
 
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
@@ -32,25 +40,27 @@ const services = {
     authAPI,
     roomAPI,
     roomsAPI,
-    roomSettingsAPI: new RoomSettingsAPI(),
+    conferenceAPI,
+    conferencesAPI,
     
     search: new Search(API, roomsAPI),
+
+    contextMenu: new ContextMenu(),
     modals: new Modals(),
+    themes: new Themes(),
 
     localStorage: new Storage(),
     sessionStorage: new Storage(),
-    
-    themes: new Themes(),
 
     user: new User(API, authAPI),
-    userRooms: new Rooms(API.createRequest(roomsAPI.getCreated)),
-    userFavoritesRooms: new Rooms(API.createRequest(roomsAPI.getFavorites)),
+    userRooms: new RequestedArray(API.createRequest(roomsAPI.findCreatedRooms), handlerDataRooms),
+    userFavoritesRooms: new RequestedArray(API.createRequest(roomsAPI.findFavoritesRooms), handlerDataRooms),
     userDevices,
     userMedia,
 
     island: new IslandService(),
 
-    room: new RoomService(API, roomAPI, userMedia),
+    room: new RoomService(API, roomAPI, conferencesAPI, userMedia),
 
     initialize: function () {
         this.localStorage.initialize("local");
