@@ -1,9 +1,11 @@
 import { autorun } from "mobx";
 
-import RoomsService from "./Rooms.service";
+import RequestedArrayService from "./RequestedArray.service";
 
+import StateStore from "@stores/State.store";
 import SearchStore from "@stores/Search.store";
 
+import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 import removeDuplicates from "@utils/removeDuplicates";
 
 export default class SearchService {
@@ -11,19 +13,21 @@ export default class SearchService {
     #delay = 2000;
     #timeout;
 
-    #rooms;
-    #searchStore;
+    #requestedRooms;
+    #requestedRoomsState;
+    #search;
 
     constructor(api, roomsAPI) {
         const request = api.createRequest(roomsAPI.search);
-        this.#rooms = new RoomsService(request);
-        this.#searchStore = new SearchStore();
+        this.#requestedRooms = new RequestedArrayService(request, handlerDataRooms);
+        this.#requestedRoomsState = new StateStore();
+        this.#search = new SearchStore();
     }
 
     initialize(localStorage) {
         this.#loadHistory(localStorage);
         
-        const destroyRoomsService = this.#rooms.initialize();
+        const destroyRoomsService = this.#requestedRooms.initialize();
 
         const offSavingHistory = this.#onSavingHistory(localStorage);
         const offPushingInHistory = this.#onPushingInHistory();
@@ -37,43 +41,43 @@ export default class SearchService {
     }
 
     get History() {
-        return this.#searchStore.history;
+        return this.#search.history;
     }
 
     get SearchedText() {
-        return this.#searchStore.searchedText;
+        return this.#search.searchedText;
     }
 
     set SearchedText(text) {
         if (typeof text === "string") {
-            return this.#searchStore.setSearchedText(text);
+            return this.#search.setSearchedText(text);
         }
 
         throw new Error("Text is invalid. It's must be string.")
     }
 
     get Rooms() {
-        return this.#rooms.Rooms;
+        return this.#requestedRooms.Array;
     }
 
     get State() {
-        return this.#rooms.State;
+        return this.#requestedRoomsState.State;
     }
 
     pushHistoryItem(text) {
         this.removeHistoryItem(text);
 
-        this.#searchStore.setHistory([text, ...this.History])
+        this.#search.setHistory([text, ...this.History])
 
         while (this.History.length > this.#size) {
-            this.#searchStore.setHistory(this.History.slice(0, this.History.length - 1))
+            this.#search.setHistory(this.History.slice(0, this.History.length - 1))
         }
     }
 
     removeHistoryItem(text) {
         const index = this.History.findIndex(item => item === text);
         if (index !== -1) {
-            this.#searchStore.setHistory([...this.History.slice(0, index), ...this.History.slice(index + 1)])
+            this.#search.setHistory([...this.History.slice(0, index), ...this.History.slice(index + 1)])
         }
     }
 
@@ -94,21 +98,21 @@ export default class SearchService {
             params: { tags, words }
         }
 
-        await this.#rooms.update(data);
+        await this.#requestedRooms.update(data);
     }
 
     clear() {
-        this.#rooms.clear();
+        this.#requestedRooms.clear();
     }
 
     #loadHistory(localStorage) {
         const history = localStorage.get("__history") || [];
-        this.#searchStore.setHistory(removeDuplicates(history));
+        this.#search.setHistory(removeDuplicates(history));
     }
 
     #onSavingHistory(localStorage) {
         return autorun(() => {
-            const history = this.#searchStore.history;
+            const history = this.#search.history;
             localStorage.set("__history", history);
         })
     }
