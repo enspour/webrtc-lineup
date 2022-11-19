@@ -1,5 +1,6 @@
 import ModalStore from "@stores/Modal.store";
-import RoomStore from "@stores/Room.store";
+
+import { RoomStore } from "@features/room";
 
 class Modal {
     #store;
@@ -53,6 +54,6 @@ class RoomModal extends Modal {
 export default class ModalsService {
     constructor() {
         this.createRoom = new Modal();
-        this.room = new RoomModal();    
+        this.room = new RoomModal(); 
     } 
 }
