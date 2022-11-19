@@ -13,12 +13,12 @@ const router = Router();
 
 router.get("/",
     guardMiddleware,
-    asyncHandler(RoomsController.getCreatedRooms)
+    asyncHandler(RoomsController.findCreatedRooms)
 );
 
 router.get("/favorites", 
     guardMiddleware,
-    asyncHandler(RoomsController.getFavoritesRooms)
+    asyncHandler(RoomsController.findFavoritesRooms)
 );
 
 router.get("/search",

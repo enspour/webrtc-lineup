@@ -1,11 +1,11 @@
 import { repository } from "core/database/src/connection";
 
 class RoomsService {
-    async getCreated(userId: bigint) {
+    async findCreatedRooms(userId: bigint) {
         return await repository.findUserRooms(userId);
     }
 
-    async getFavorites(userId: bigint) {
+    async findFavoritesRooms(userId: bigint) {
         return await repository.findFavoritesRooms(userId);
     }
 

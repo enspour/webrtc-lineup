@@ -5,6 +5,7 @@ import RoomController from "@controllers/Room.controller";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 import guardMiddleware from "@middlewares/guard.middleware";
 
+import visibilityValidator from "./validators/visibility.validator";
 import updateNameValidator from "./validators/updateName.validator";
 import createValidator from "./validators/create.validator";
 import idValidator from "routes/validators/params/id.validator";
@@ -17,7 +18,7 @@ router.get("/:id",
     guardMiddleware,
     idValidator,
     validatorMiddleware,
-    asyncHandler(RoomController.getRoom)
+    asyncHandler(RoomController.findOne)
 );
 
 router.post("/", 
@@ -54,5 +55,12 @@ router.post("/name",
     validatorMiddleware,
     asyncHandler(RoomController.updateName)
 )
+
+router.post("/settings/visibility", 
+    guardMiddleware,
+    visibilityValidator,
+    validatorMiddleware,
+    asyncHandler(RoomController.updateVisibility)
+);
 
 export default router;

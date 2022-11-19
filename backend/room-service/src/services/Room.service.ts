@@ -1,7 +1,7 @@
 import { repository } from "core/database/src/connection";
 
 class RoomService {
-    async getRoom(id: bigint, userId: bigint) {
+    async findOne(id: bigint, userId: bigint) {
         return await repository.findRoomById(id, userId);
     }
 
@@ -29,6 +29,10 @@ class RoomService {
 
     async updateName(id: bigint, userId: bigint, name: string) {
         return await repository.updateRoomName(id, userId, name);
+    }
+
+    async updateVisibility(roomId: bigint, userId: bigint, visibility: boolean) {
+        return await repository.updateRoomSettingsVisibility(roomId, userId, visibility);
     }
 }
 

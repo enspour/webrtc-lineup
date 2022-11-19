@@ -7,18 +7,18 @@ import { getUser } from "core/utils/user";
 import SuccessResponse from "core/server/responses/Success.response";
 
 class RoomsController {
-    async getCreatedRooms(req: Request, res: Response) {
+    async findCreatedRooms(req: Request, res: Response) {
         const user = getUser(req);
 
-        const rooms = await RoomsService.getCreated(user.id);
+        const rooms = await RoomsService.findCreatedRooms(user.id);
 
         new SuccessResponse({ rooms }).send(res);
     }
 
-    async getFavoritesRooms(req: Request, res: Response) {
+    async findFavoritesRooms(req: Request, res: Response) {
         const user = getUser(req);
 
-        const rooms = await RoomsService.getFavorites(user.id);
+        const rooms = await RoomsService.findFavoritesRooms(user.id);
 
         new SuccessResponse({ rooms }).send(res);
     }

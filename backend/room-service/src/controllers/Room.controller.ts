@@ -10,12 +10,12 @@ import SuccessResponse from "core/server/responses/Success.response";
 import BadRequestResponse from "core/server/responses/BadRequest.response";
 
 class RoomController {
-    async getRoom(req: Request, res: Response) {
+    async findOne(req: Request, res: Response) {
         const id = BigInt(req.params.id);
 
         const user = getUser(req);
 
-        const room = await RoomService.getRoom(id, user.id);
+        const room = await RoomService.findOne(id, user.id);
 
         if (room) {
             return new SuccessResponse({ room }).send(res);
@@ -85,8 +85,24 @@ class RoomController {
         const count = await RoomService.updateName(id, user.id, name);
 
         if (count > 0) {
-            SignalService.updateRoomInformationConnectedUsers(id);
+            SignalService.updateRoomInformation(id);
             return new SuccessResponse({ name }).send(res);
+        }
+
+        new NotFoundResponse("Room is not found.").send(res);
+    }
+
+    async updateVisibility(req: Request, res: Response) {
+        const id = BigInt(req.body.id);
+        const visibility = req.body.visibility;
+        
+        const user = getUser(req);
+        
+        const count = await RoomService.updateVisibility(id, user.id, visibility);
+
+        if (count > 0) {
+            SignalService.updateRoomInformation(id);
+            return new SuccessResponse({ visibility }).send(res);
         }
 
         new NotFoundResponse("Room is not found.").send(res);
