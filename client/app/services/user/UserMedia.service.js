@@ -36,7 +36,7 @@ export default class UserMediaService {
         return this.#speechService.LastAudioActive;
     }
 
-    async captureMedia(constraints, options) {
+    async captureMedia(constraints) {
         try {
             if (!this.#stream) {
                 const _constraints = {};
@@ -62,23 +62,19 @@ export default class UserMediaService {
                 }
 
                 const stream = await navigator.mediaDevices.getUserMedia(_constraints);
-                
+
                 if (constraints.audio) {
                     stream.getAudioTracks().forEach(track => {
-                        track.enabled = options.enableMicrophone;
+                        track.enabled = !this.#mediaData.mutedAudio;
                     })
-    
-                    this.#mediaData.setMutedAudio(!options.enableMicrophone);
 
                     this.#speechService.initialize(stream);
                 }
 
                 if (constraints.video) {
                     stream.getVideoTracks().forEach(track => {
-                        track.enabled = options.enableCamera;
+                        track.enabled = !this.#mediaData.mutedVideo;
                     })
-
-                    this.#mediaData.setMutedVideo(!options.enableCamera);
                 }
 
                 this.#stream = stream;
@@ -96,41 +92,41 @@ export default class UserMediaService {
     }
 
     muteAudio() {
-        if (!this.#stream) return;
-
-        this.#stream.getAudioTracks().forEach(track => {
-            track.enabled = false;
-        });
+        if (this.#stream) {
+            this.#stream.getAudioTracks().forEach(track => {
+                track.enabled = false;
+            });
+        }
 
         this.#mediaData.setMutedAudio(true);
     }
 
     unmuteAudio() {
-        if (!this.#stream) return;
-
-        this.#stream.getAudioTracks().forEach(track => {
-            track.enabled = true;
-        });
+        if (this.#stream) {
+            this.#stream.getAudioTracks().forEach(track => {
+                track.enabled = true;
+            });
+        }
 
         this.#mediaData.setMutedAudio(false);
     }
 
     muteVideo() {
-        if (!this.#stream) return;
+        if (this.#stream) {
+            this.#stream.getVideoTracks().forEach(track => {
+                track.enabled = false;
+            });
+        }
         
-        this.#stream.getVideoTracks().forEach(track => {
-            track.enabled = false;
-        });
-
         this.#mediaData.setMutedVideo(true);
     }
 
     unmuteVideo() {
-        if (!this.#stream) return;
-        
-        this.#stream.getVideoTracks().forEach(track => {
-            track.enabled = true;
-        });
+        if (this.#stream) {
+            this.#stream.getVideoTracks().forEach(track => {
+                track.enabled = true;
+            });
+        }
 
         this.#mediaData.setMutedVideo(false);
     }
