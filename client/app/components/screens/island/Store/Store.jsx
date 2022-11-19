@@ -16,7 +16,7 @@ const Store = observer(() => {
     React.useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userRooms.Rooms;
+                const rooms = services.userRooms.Array;
                 const userId = services.user.Id;
                 const userName = services.user.Name;
 

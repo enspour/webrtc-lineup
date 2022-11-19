@@ -16,7 +16,7 @@ const Favorites = observer(() => {
     React.useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userFavoritesRooms.Rooms;
+                const rooms = services.userFavoritesRooms.Array;
 
                 if (rooms) {
                     setItems([...rooms]);
