@@ -4,6 +4,8 @@ import {
     Room,
     RoomAuth,
     RoomSettings,
+    Conference,
+    ConferenceSettings,
     Tag 
 } from "@prisma/client";
 
@@ -13,5 +15,7 @@ export {
     Room,
     RoomAuth,
     RoomSettings,
+    Conference,
+    ConferenceSettings,
     Tag
 }
