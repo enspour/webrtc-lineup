@@ -3,6 +3,8 @@ import useLoaderTheme from "@hooks/loaders/useLoaderTheme";
 import useLoaderStore from "@hooks/loaders/useLoaderStore";
 import useLoaderUser from "@hooks/loaders/useLoaderUser";
 
+import MainLayout from "@components/layouts/MainLayout/MainLayout";
+
 import "@assets/fonts/stylesheet.css";
 import "@styles/reset.scss";
 import "@styles/base.scss";
@@ -18,7 +20,11 @@ function MyApp({ Component, pageProps }) {
     useLoaderStore();
     useLoaderUser();
 
-    return <Component {...pageProps} />
+    return (
+        <MainLayout>
+            <Component {...pageProps} />
+        </MainLayout>
+    )
 }
 
 export default MyApp;

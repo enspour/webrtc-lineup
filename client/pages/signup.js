@@ -12,7 +12,7 @@ import useResponse from "@hooks/api/useResponse";
 import services from "@services";
 
 import styles from "@styles/pages/signup.module.scss";
-import LoginLayout from "@components/layouts/LoginLayout/LoginLayout";
+import WelcomeLayout from "@components/layouts/WelcomeLayout/WelcomeLayout";
 
 const SignupWithEmail = () => {
     const router = useRouter();
@@ -91,7 +91,7 @@ const SignupWithEmail = () => {
 
 const Signup = () => {
     return (
-        <LoginLayout title="Lineup | Signup">
+        <WelcomeLayout title="Lineup | Signup">
             <div className={styles.wrapper}>
                 <div className={styles.title}>Lineup</div>
 
@@ -104,7 +104,7 @@ const Signup = () => {
                     </Link>
                 </div>
             </div>
-        </LoginLayout>
+        </WelcomeLayout>
     );
 }
 

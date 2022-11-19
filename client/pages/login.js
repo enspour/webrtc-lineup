@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import LoginLayout from "@components/layouts/LoginLayout/LoginLayout";
+import WelcomeLayout from "@components/layouts/WelcomeLayout/WelcomeLayout";
 
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
@@ -78,7 +78,7 @@ const LoginWithEmail = React.memo(() => {
 
 const Login = () => {
     return (
-        <LoginLayout title="Lineup | Login">
+        <WelcomeLayout title="Lineup | Login">
             <div className={styles.wrapper}>
                 <div className={styles.title}> Lineup </div>
 
@@ -91,7 +91,7 @@ const Login = () => {
                     </Link>
                 </div>
             </div>
-        </LoginLayout>
+        </WelcomeLayout>
     );
 }
 

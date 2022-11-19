@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import MainLayout from "@components/layouts/MainLayout/MainLayout";
+import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
 
 import IslandScreen from "@components/screens/island/IslandScreen/IslandScreen";
 
@@ -10,9 +10,9 @@ const Home = observer(() => {
     const current = services.island.Current;
 
     return (
-        <MainLayout title={`Lineup | ${current.name}`}> 
+        <LobbyLayout title={`Lineup | ${current.name}`}> 
             <IslandScreen />
-        </MainLayout>
+        </LobbyLayout>
     );
 })
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import MainLayout from "@components/layouts/MainLayout/MainLayout";
+import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
 import Panel from "@components/ui/Panel/Panel";
 
 import ThemesScreen from "@components/screens/account/ThemesScreen/ThemesScreen";
@@ -10,7 +10,7 @@ import styles from "@styles/pages/account.module.scss";
 
 const Account = () => {
     return (
-        <MainLayout title="Lineup | Account">
+        <LobbyLayout title="Lineup | Account">
             <div className={styles.container}>
                 <Panel maxHeight="calc(100vh - 6rem - 10rem)">
                     <div className={styles.wrapper}>
@@ -19,7 +19,7 @@ const Account = () => {
                     </div>
                 </Panel>
             </div>
-        </MainLayout>
+        </LobbyLayout>
     )
 };
 
