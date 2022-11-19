@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -15,6 +16,7 @@ model User {
   name        String
   created_at  DateTime  @default(now())
   modified_at DateTime  @default(now())
+
   auth        UserAuth?
   assets      UserAssets?
   rooms       Room[]
@@ -27,6 +29,7 @@ model UserAuth {
   id        BigInt  @id @default(autoincrement())
   email     String  @unique
   password  String
+
   user_id   BigInt  @unique
   user      User    @relation(fields: [user_id], references: [id])
   
@@ -36,6 +39,7 @@ model UserAuth {
 model UserAssets {
   id        BigInt  @id @default(autoincrement())
   avatar    String
+
   user_id   BigInt  @unique
   user      User    @relation(fields: [user_id], references: [id])
 
@@ -45,12 +49,15 @@ model UserAssets {
 model Room {
   id          BigInt        @id @default(autoincrement())
   name        String
-  owner_id    BigInt
   created_at  DateTime      @default(now())
+  modified_at DateTime      @default(now())
+
   auth        RoomAuth?
   settings    RoomSettings?
-  owner       User          @relation(fields: [owner_id], references: [id])
+  owner_id    BigInt
+  owner       User          @relation(fields: [owner_id], references: [id], onDelete: Cascade)
   tags        Tag[]
+  conferences Conference[]
   subs        User[]        @relation("users_favorites_rooms")
 
   @@map("rooms")
@@ -59,6 +66,7 @@ model Room {
 model RoomAuth {
   id            BigInt  @id @default(autoincrement())
   password      String?
+
   room_id       BigInt  @unique
   room          Room    @relation(fields: [room_id], references: [id], onDelete: Cascade)
 
@@ -67,18 +75,43 @@ model RoomAuth {
 
 model RoomSettings {
   id            BigInt  @id @default(autoincrement())
-  room_id       BigInt  @unique
   visibility    Boolean
-  enable_audio  Boolean
-  enable_video  Boolean
+
+  room_id       BigInt  @unique
   room          Room    @relation(fields: [room_id], references: [id], onDelete: Cascade)
 
   @@map("rooms_settings")
 }
 
+model Conference {
+  id            String              @id
+  name          String
+  description   String?
+  modified_at   DateTime            @default(now())
+  created_at    DateTime            @default(now())
+
+  settings      ConferenceSettings?
+  room_id       BigInt              
+  room          Room                @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  
+  @@map("conferences")
+}
+
+model ConferenceSettings {
+  id            BigInt      @id @default(autoincrement())
+  enable_audio  Boolean
+  enable_video  Boolean
+
+  conference_id String      @unique
+  conference    Conference  @relation(fields: [conference_id], references: [id], onDelete: Cascade)
+
+  @@map("conferences_settings")
+}
+
 model Tag {
   id      BigInt @id @default(autoincrement())
   name    String @unique
+
   rooms   Room[]
 
   @@map("tags")
