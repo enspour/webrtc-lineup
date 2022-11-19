@@ -8,7 +8,7 @@ export default class RoomAPIService {
      * @param {AbortSignal} signal 
      * @returns 
      */
-    async getOne(data, signal) {
+    async findOne(data, signal) {
         return await axios.get(`/api/v1/room-service/room/${data.params.id}`, {
             signal,
         });
@@ -99,5 +99,16 @@ export default class RoomAPIService {
      */
     async updateName(data, signal) {
         return await axios.post("/api/v1/room-service/room/name", data.body, { signal });
+    }
+
+    /**
+     * @param {{ 
+     *  body: { id: string; visibility: boolean; }
+     * }} data
+     * @param {AbortSignal} signal 
+     * @returns 
+     */
+    async updateVisibility(data, signal) {
+        return await axios.post("/api/v1/room-service/room/settings/visibility", data.body, { signal });
     }
 }

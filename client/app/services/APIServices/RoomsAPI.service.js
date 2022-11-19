@@ -1,13 +1,13 @@
 import axios from "axios";
 
 export default class RoomsAPIService {
-    async getCreated(_, signal) {
+    async findCreatedRooms(_, signal) {
         return await axios.get("/api/v1/room-service/rooms", {
             signal
         });
     }
 
-    async getFavorites(_, signal) {
+    async findFavoritesRooms(_, signal) {
         return await axios.get("/api/v1/room-service/rooms/favorites", {
             signal
         });
