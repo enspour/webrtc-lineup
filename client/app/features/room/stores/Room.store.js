@@ -6,9 +6,8 @@ export default class RoomStore {
     owner = {};
     settings = {};
     tags = [];
+    modifiedAt = "";
     createdAt = "";
-
-    state = "done"; // "pending", "done" or "error"
 
     constructor() {
         makeAutoObservable(this, {
@@ -17,14 +16,10 @@ export default class RoomStore {
             owner: observable,
             settings: observable,
             tags: observable,
-            createdAt: observable,
-
-            state: observable,
 
             setRoom: action,
             setName: action,
             setSettings: action,
-            setState: action,
             clear: action
         });
     }
@@ -35,6 +30,7 @@ export default class RoomStore {
         this.owner = room.owner;
         this.settings = room.settings;
         this.tags = room.tags;
+        this.modifiedAt = room.modifiedAt;
         this.createdAt = room.createdAt;
     }
 
@@ -46,17 +42,13 @@ export default class RoomStore {
         this.settings = settings;
     }
 
-    setState(state) {
-        this.state = state;
-    }
-
     clear() {
         this.id = "",
         this.name = "";
         this.owner = {};
         this.settings = {};
         this.tags = [];
+        this.modifiedAt = "";
         this.createdAt = "";
-        this.state = "done"
     }
 }
