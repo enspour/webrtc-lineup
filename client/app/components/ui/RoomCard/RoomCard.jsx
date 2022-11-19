@@ -90,7 +90,7 @@ const RemoveFromFavoritesControl = ({ room }) => {
 }
 
 const FavoritesControl = observer(({ room }) => {
-    const favorites = services.userFavoritesRooms.Rooms;
+    const favorites = services.userFavoritesRooms.Array;
     const isFavorites = favorites.find(item => item.id === room.id);
 
     if (isFavorites) {
