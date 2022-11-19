@@ -7,16 +7,16 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 
 import services from "@services";
 
-import MenuLeftIcon from "@assets/images/conference-panel/menu-left.svg";
-import MenuRightIcon from "@assets/images/conference-panel/menu-right.svg";
-import FullIcon from "@assets/images/conference-panel/full.svg";
-import MicrophoneIcon from "@assets/images/conference-panel/mic.svg";
-import MicrophoneOffIcon from "@assets/images/conference-panel/mic-off.svg";
-import CameraIcon from "@assets/images/conference-panel/cam.svg";
-import CameraOffIcon from "@assets/images/conference-panel/cam-off.svg";
-import LeaveIcon from "@assets/images/conference-panel/leave.svg";
+import MenuLeftIcon from "@assets/images/conference-header/menu-left.svg";
+import MenuRightIcon from "@assets/images/conference-header/menu-right.svg";
+import FullIcon from "@assets/images/conference-header/full.svg";
+import MicrophoneIcon from "@assets/images/conference-header/mic.svg";
+import MicrophoneOffIcon from "@assets/images/conference-header/mic-off.svg";
+import CameraIcon from "@assets/images/conference-header/cam.svg";
+import CameraOffIcon from "@assets/images/conference-header/cam-off.svg";
+import LeaveIcon from "@assets/images/conference-header/leave.svg";
 
-import styles from "./ConferencePanel.module.scss"
+import styles from "./Header.module.scss"
 
 const CameraControl = observer(() => {
     const mutedVideo = services.userMedia.MutedVideo;
@@ -42,7 +42,7 @@ const MicrophoneControl = observer(() => {
     const unmute = () => services.userMedia.unmuteAudio();
 
     return (
-        <div className={styles.conference__panel__controls__mic}>
+        <div className={styles.header__controls__mic}>
             {
                 mutedAudio 
                     ? <Svg url={MicrophoneOffIcon} width="1.8" height="1.9" onClick={unmute}/>
@@ -52,40 +52,41 @@ const MicrophoneControl = observer(() => {
     );
 });
 
-const ConferencePanel = () => {
+const Header = () => {
     const router = useRouter();
 
     const leave = async () => {
         const response = await services.room.Conference.leave();
         console.log(response);
-        router.push("/room");
+        const id = services.room.RoomInfo.Id;
+        router.push(`/room/${id}`);
     }
 
     return (
-        <div className={styles.conference__panel}>
+        <div className={styles.header}>
             <div className="fl al-center g-3">
-                <div className={styles.conference__panel__menu}>
+                <div className={styles.header__menu}>
                     <Svg url={MenuLeftIcon} width="1.8" height="1.5"/>
                     <Svg url={MenuRightIcon} width="1.8" height="1.5"/>
                 </div>
 
-                <div className={styles.conference__panel__full}>
+                <div className={styles.header__full}>
                     <Svg url={FullIcon} width="1.4" height="1.4"/>
                 </div>
 
-                <div className={styles.conference__panel__title}>
+                <div className={styles.header__title}>
                     Conference
                 </div>
             </div>
 
             <div className="fl al-center g-8">
-                <div className={styles.conference__panel__controls}>
+                <div className={styles.header__controls}>
                     <CameraControl />
                     <MicrophoneControl />
                 </div>
 
                 <FilledButton onClick={leave} height="3.5rem">
-                    <div className={styles.conference__panel__leave}>
+                    <div className={styles.header__leave}>
                         <Svg url={LeaveIcon} width="2.4" height=".9" color="var(--theme-color-secondary)"/>
                         <span> Leave </span>
                     </div>
@@ -95,4 +96,4 @@ const ConferencePanel = () => {
     )
 }
 
-export default React.memo(ConferencePanel);
+export default React.memo(Header);

@@ -1,31 +1,5 @@
-.room__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 5rem;
-    padding: 0 5rem;
-    color: var(--theme-color-primary);
-    background-color: var(--theme-bg-primary);
-    box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
-}
-
-.room__header__title {
-    font-size: 1.8rem;
-    line-height: 5rem;
-    font-weight: 600;
-    line-height: 4rem;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 70%;
-    cursor: pointer;
-}
-
-.room__header__leave {
-    min-width: 15rem;
-}
-
 .room__content {
     padding: 2rem;
-    height: calc(100vh - 5rem);
+    height: calc(100vh - 13rem);
     width: 100%;
 }

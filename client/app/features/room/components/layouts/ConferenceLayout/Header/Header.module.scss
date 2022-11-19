@@ -1,4 +1,4 @@
-.conference__panel {
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -9,14 +9,14 @@
     box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
 }
 
-.conference__panel__menu {
+.header__menu {
     display: flex;
     gap: 1.5rem;
 
     div { cursor: pointer !important; }
 }
 
-.conference__panel__title {
+.header__title {
     height: 3.5rem;
     line-height: 3.5rem;
     font-size: 1.6rem;
@@ -27,18 +27,18 @@
     border-radius: 2rem;
 }
 
-.conference__panel__controls {
+.header__controls {
     display: flex;
     align-items: center;
     gap: 2.5rem;
 }
 
-.conference__panel__controls__mic {
+.header__controls__mic {
     width: 1.8rem;
     div { margin: auto; }
 }
 
-.conference__panel__leave {
+.header__leave {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,6 +48,6 @@
     width: 14.8rem;
 }
 
-.conference__panel__full {
+.header__full {
     div { cursor: pointer !important; }
 }

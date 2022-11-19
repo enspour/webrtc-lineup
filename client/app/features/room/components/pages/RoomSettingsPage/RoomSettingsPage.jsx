@@ -40,7 +40,7 @@ const RoomNameSettings = () => {
 const RoomVisibilitySettings = observer(() => {
     const settings = services.room.RoomInfo.Settings;
 
-    const request = useRequest(services.roomSettingsAPI.updateVisibility);
+    const request = useRequest(services.roomAPI.updateVisibility);
 
     const setVisibility = (value) => {
         const body = {
@@ -64,61 +64,6 @@ const RoomVisibilitySettings = observer(() => {
     )
 })
 
-const ConferenceAudioSettings = observer(() => {
-    const settings = services.room.RoomInfo.Settings;
-
-    const request = useRequest(services.roomSettingsAPI.updateEnableAudio);
-
-    const setEnableAudio = (value) => {
-        const body = {
-            id: services.room.RoomInfo.Id,
-            enable_audio: value
-        }
-
-        request.start({ body });
-    }
-
-    return <CheckBox label="Enable Audio" value={settings.enableAudio} setValue={setEnableAudio}/>
-});
-
-const ConferenceVideoSettings = observer(() => {
-    const settings = services.room.RoomInfo.Settings;
-
-    const request = useRequest(services.roomSettingsAPI.updateEnableVideo);
-
-    const setEnableVideo = (value) => {
-        const body = {
-            id: services.room.RoomInfo.Id,
-            enable_video: value
-        }
-
-        request.start({ body });
-    }
-
-    return <CheckBox label="Enable Video" value={settings.enableVideo} setValue={setEnableVideo}/>
-});
-
-const ConferenceSettings = () => {
-    return (
-        <div className={styles.settings}> 
-            <div className="text-primary"> Conference </div>
-            <div className="text-placeholder"> You can change settings of conference here. </div>
-            <div className={styles.settings__items}>
-                <div>
-                    <div className="mb-1">
-                        <div>Voice & Audio</div>
-                        <div className="text-placeholder"> You can disable video or audio in conference</div>
-                    </div>
-                    <div className={styles.settings__conference__voiceaudio}>
-                        <ConferenceAudioSettings />
-                        <ConferenceVideoSettings />
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 const GeneralSettings = () => {
     return (
         <div className={styles.settings}>
@@ -140,12 +85,11 @@ const Settings = () => {
     return (
         <RoomLayout title="Lineup | Settings">
             <div className={styles.container}>
-                <Panel maxHeight="calc(100vh - 5rem - 4rem)">
+                <Panel maxHeight="calc(100vh - 17rem)">
                     <PanelHeader title="Settings" onClick={back}/>
 
                     <div className={styles.wrapper}>
                         <GeneralSettings />
-                        <ConferenceSettings />
                     </div>
                 </Panel>
             </div>

@@ -108,7 +108,10 @@ const JoinButton = () => {
     const join = async () => {
         const id = services.modals.room.Id;
         const response = await services.room.join(id, password);
-        if (response.status === 200) router.push("/room"); 
+        if (response.status === 200) {
+            services.room.ConferencesInfo.update({ params: { room_id: id } });
+            router.push(`/room/${id}`); 
+        }
     }
 
     return (

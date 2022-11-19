@@ -12,7 +12,8 @@ export default {
     NOTIFY_USER_JOIN: "notify:room:user_join",
 
     NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
-
+    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
+    
 
     JOIN_CONFERENCE: "room:conference:join",
     NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",

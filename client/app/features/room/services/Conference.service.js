@@ -6,14 +6,16 @@ import PeersStore from "../stores/Peers.store";
 
 class MediaPeerConnection {
     #roomId;
+    #conferenceId;
     #peerId;
     #signal;
     #stream;
     #speechService;
     #peerConnection;
     
-    constructor(roomId, peerId, localStream, signal) {
+    constructor(roomId, conferenceId, peerId, localStream, signal) {
         this.#roomId = roomId;
+        this.#conferenceId = conferenceId;
         this.#peerId = peerId;
         this.#signal = signal;
         this.#stream = new MediaStream();
@@ -29,14 +31,14 @@ class MediaPeerConnection {
         }
 
         this.#peerConnection.onconnectionstatechange = () => {
-            if (this.#peerConnection.connectionState === "connected") {
+            if (this.#peerConnection.connectionState === "connected" && this.#stream.getAudioTracks().length) {
                 this.#speechService.initialize(this.#stream);
             }
         }
 
         this.#peerConnection.onicecandidate = event => {
             if (event.candidate) {
-                this.#signal.sendIceCandidate(this.#roomId, this.#peerId, event.candidate);
+                this.#signal.sendIceCandidate(this.#roomId, this.#conferenceId, this.#peerId, event.candidate);
             }
         }
     }
@@ -64,7 +66,7 @@ class MediaPeerConnection {
     async sendOffer() {
         const offer = await this.#peerConnection.createOffer();
         await this.#peerConnection.setLocalDescription(offer);
-        this.#signal.sendOffer(this.#roomId, this.#peerId, offer);
+        this.#signal.sendOffer(this.#roomId, this.#conferenceId, this.#peerId, offer);
     }
 
     async acceptOffer(offer) {
@@ -76,7 +78,7 @@ class MediaPeerConnection {
     async sendAnswer() {
         const answer = await this.#peerConnection.createAnswer();
         await this.#peerConnection.setLocalDescription(answer);
-        this.#signal.sendAnswer(this.#roomId, this.#peerId, answer);
+        this.#signal.sendAnswer(this.#roomId, this.#conferenceId, this.#peerId, answer);
     }
 
     async acceptAnswer(answer) {
@@ -98,6 +100,8 @@ export default class ConferenceService {
     #userMedia;
     
     #peersStore;
+
+    #conferenceId;
 
     constructor(signal, roomInfo, userMedia) {
         this.#signal = signal;
@@ -135,13 +139,15 @@ export default class ConferenceService {
         return this.#peersStore.peers;
     }
 
-    async join(constraints, options) {
+    async join(conferenceId, constraints) {
+        this.#conferenceId = conferenceId;
+
         let waiter;
         
-        const id = this.#roomInfo.Id;
-        
-        if (id) {
-            await this.#userMedia.captureMedia(constraints, options);
+        const roomId = this.#roomInfo.Id;
+
+        if (roomId) {
+            await this.#userMedia.captureMedia(constraints);
 
             const clear = this.#signal.onJoinConference((status, message, data) => {
                 if (status !== 200) {
@@ -155,7 +161,7 @@ export default class ConferenceService {
                 clear();
             });
             
-            this.#signal.joinConference(id);
+            this.#signal.joinConference(roomId, conferenceId);
             
             return new Promise((resolve, _) => waiter = resolve);
         }
@@ -166,9 +172,9 @@ export default class ConferenceService {
     async leave() {
         let waiter;
 
-        const id = this.#roomInfo.Id;
+        const roomId = this.#roomInfo.Id;
 
-        if (id) {
+        if (roomId) {
             const clear = this.#signal.onLeaveConference(async (status, message, data) => {
                 if (waiter) {
                     waiter({ status, message, data });
@@ -177,7 +183,7 @@ export default class ConferenceService {
                 clear();
             });
 
-            this.#signal.leaveConference(id);
+            this.#signal.leaveConference(roomId, this.#conferenceId);
 
             return new Promise((resolve, _) => waiter = resolve);
         }
@@ -186,7 +192,14 @@ export default class ConferenceService {
     }
 
     async #sendOffer(peerId) {
-        const peer = new MediaPeerConnection(this.#roomInfo.Id, peerId, this.#userMedia.Stream, this.#signal);
+        const peer = new MediaPeerConnection(
+            this.#roomInfo.Id, 
+            this.#conferenceId, 
+            peerId, 
+            this.#userMedia.Stream, 
+            this.#signal
+        );
+        
         this.#peersStore.add(peer);
         
         await peer.sendOffer();
@@ -194,7 +207,14 @@ export default class ConferenceService {
 
     #onAcceptOffer() {
         return this.#signal.onAcceptOffer(async (sourceId, offer) => {
-            const peer = new MediaPeerConnection(this.#roomInfo.Id, sourceId, this.#userMedia.Stream, this.#signal);
+            const peer = new MediaPeerConnection(
+                this.#roomInfo.Id, 
+                this.#conferenceId, 
+                sourceId, 
+                this.#userMedia.Stream, 
+                this.#signal
+            );
+            
             this.#peersStore.add(peer);
             
             if (offer) {

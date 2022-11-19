@@ -102,7 +102,7 @@ export default class Signal {
      * @param {(socketId: string) => Promise<void>} handler 
      * @returns 
      */
-     onUserLeaveRoom(handler) {
+    onUserLeaveRoom(handler) {
         const event = async ({ socketId }) => await handler(socketId);
         this.#socket.on(SignalActions.NOTIFY_USER_LEAVE, event);
         return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE, event);
@@ -119,7 +119,7 @@ export default class Signal {
     }
 
     /**
-     * @param {(room: string) => Promise<void>} handler 
+     * @param {(room) => Promise<void>} handler 
      * @returns 
      */
     onRoomInformationUpdate(handler) {
@@ -128,11 +128,21 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_ROOM_INFORMATION, event);
     }
 
+    /**
+     * @param {(conference) => Promise<void>} handler 
+     * @returns 
+     */
+    onConferenceInformationUpdate(handler) {
+        const event = async ({ conference }) => await handler(conference);
+        this.#socket.on(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
+    }
+
 
     // ----- CONFERENCE -----
 
-    joinConference(id) {
-        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { id });
+    joinConference(roomId, conferenceId) {
+        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { roomId, conferenceId });
     }
 
     /**
@@ -145,8 +155,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_JOIN_CONFERENCE, event);
     }
 
-    leaveConference(id) {
-        this.#socket.emit(SignalActions.LEAVE_CONFERENCE, { id });
+    leaveConference(roomId, conferenceId) {
+        this.#socket.emit(SignalActions.LEAVE_CONFERENCE, { roomId, conferenceId });
     }
 
     /**
@@ -163,7 +173,7 @@ export default class Signal {
      * @param {(socketId: string) => Promise<void>} handler 
      * @returns 
      */
-     onUserJoinConference(handler) {
+    onUserJoinConference(handler) {
         const event = async ({ socketId }) => await handler(socketId);
         this.#socket.on(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
         return () => this.#socket.off(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
@@ -179,8 +189,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
     }
 
-    sendOffer(roomId, destinationId, offer) {
-        const payload = { roomId, destinationId, offer };
+    sendOffer(roomId, conferenceId, destinationId, offer) {
+        const payload = { roomId, conferenceId, destinationId, offer };
         this.#socket.emit(SignalActions.SEND_OFFER, payload);
     }
 
@@ -204,8 +214,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.ACCEPT_OFFER, event);
     }
 
-    sendAnswer(roomId, destinationId, answer) {
-        const payload = { roomId, destinationId, answer };
+    sendAnswer(roomId, conferenceId, destinationId, answer) {
+        const payload = { roomId, conferenceId, destinationId, answer };
         this.#socket.emit(SignalActions.SEND_ANSWER, payload);
     }
 
@@ -229,8 +239,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.ACCEPT_ANSWER, event);
     }
 
-    sendIceCandidate(roomId, destinationId, iceCandidate) {
-        const payload = { roomId, destinationId, iceCandidate };
+    sendIceCandidate(roomId, conferenceId, destinationId, iceCandidate) {
+        const payload = { roomId, conferenceId, destinationId, iceCandidate };
         this.#socket.emit(SignalActions.SEND_ICE_CANDIDATE, payload);
     }
 

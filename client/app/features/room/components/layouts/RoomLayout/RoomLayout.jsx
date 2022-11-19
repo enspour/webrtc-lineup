@@ -1,52 +1,32 @@
+import React from "react";
 import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { observer } from "mobx-react-lite";
 
-import RedirectDisconnectedUser from "@features/room/components/logic/RedirectDisconnectedUser/RedirectDisconnectedUser";
+import ConnectionLayout from "@features/room/components/layouts/ConnectionLayout/ConnectionLayout";
 
-import FilledButton from "@components/ui/FilledButton/FilledButton";
-
-import services from "@services";
+import Header from "./Header/Header";
+import Footer from "./Footer/Footer";
 
 import styles from "./RoomLayout.module.scss"
 
-const RoomLayout = observer(({ title = "Lineup | Room", children }) => {
-    const name = services.room.RoomInfo.Name;
-    
-    const router = useRouter();
-
-    const leave = async () => {
-        const response = await services.room.leave();
-        router.push("/");
-    }
-
+const RoomLayout = ({ title = "Lineup | Room", children }) => {
     return (
-        <RedirectDisconnectedUser>
+        <ConnectionLayout>
             <div>
                 <Head>
                     <title>{title}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 </Head>
 
-                <div className={styles.room__header}>
-                    <Link href="/room">
-                        <div className={styles.room__header__title}> {name} </div>
-                    </Link>
-
-                    <div className={styles.room__header__leave}>
-                        <FilledButton onClick={leave} height="3.5rem">
-                            Leave
-                        </FilledButton>
-                    </div>
-                </div>
+                <Header />
                 
                 <div className={styles.room__content}>
                     { children }
                 </div>
-            </div>
-        </RedirectDisconnectedUser>
-    )
-})
 
-export default RoomLayout;
+                <Footer />
+            </div>
+        </ConnectionLayout>
+    )
+}
+
+export default React.memo(RoomLayout);

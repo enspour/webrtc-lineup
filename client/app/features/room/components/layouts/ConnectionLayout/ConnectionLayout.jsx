@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import services from "@services";
 
-const RedirectDisconnectedUser = ({ children }) => {
+const ConnectionLayout = ({ children }) => {
     const router = useRouter();
 
     React.useEffect(() => {
@@ -23,4 +23,4 @@ const RedirectDisconnectedUser = ({ children }) => {
     return children;
 }
 
-export default React.memo(RedirectDisconnectedUser);
+export default React.memo(ConnectionLayout);

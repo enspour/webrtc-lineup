@@ -1,16 +1,25 @@
+import RequestedArrayService from "app/services/RequestedArray.service";
 import SignalService from "./SignalService/Signal.service";
 import ConferenceService from "./Conference.service";
-import RoomInfoService from "app/services/RoomInfo.service";
+import RoomInfoService from "./RoomInfo.service";
 
-import handlerReceivedRoom from "@utils/handlersReceivedData/handlerReceivedRoom";
+import handlerDataConferencesIntoStates from "@utils/handlersReceivedData/handlerDataConferencesIntoStates";
+import handlerRoom from "@utils/handlersReceivedData/handlerRoom";
+import handlerConference from "@utils/handlersReceivedData/handlerConference";
 
 export default class RoomService {
     #signal;
     #conference;
-    #roomInfo;
 
-    constructor(API, roomAPI, userMedia) {
-        this.#roomInfo = new RoomInfoService(API.createRequest(roomAPI.getOne));
+    #roomInfo;
+    #conferencesInfo;
+
+    constructor(API, roomAPI, conferencesAPI, userMedia) {
+        this.#roomInfo = new RoomInfoService(API.createRequest(roomAPI.findOne));
+        this.#conferencesInfo = new RequestedArrayService(
+            API.createRequest(conferencesAPI.findAll),
+            handlerDataConferencesIntoStates
+        );
 
         this.#signal = new SignalService();
         this.#conference = new ConferenceService(this.#signal, this.#roomInfo, userMedia);
@@ -18,6 +27,7 @@ export default class RoomService {
 
     initialize() {
         this.#roomInfo.initialize();
+        this.#conferencesInfo.initialize();
         this.#conference.initialize();
 
         this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
@@ -27,13 +37,16 @@ export default class RoomService {
         this.#signal.onConnectionError((err) => console.log("unknow error", err));
         this.#signal.onDisconnect((reason) => console.log("disconnecting, reason:", reason))
         this.#signal.onRoomInformationUpdate(room => console.log(room));
+        this.#signal.onConferenceInformationUpdate(conference => console.log(conference));
 
         const offJoinRoom = this.#onJoinRoom();
         const offUpdateRoomInfo = this.#onUpdateRoomInfo();
+        const offUpdateConferenceInfo = this.#onUpdateConferenceInfo();
 
         return () => {
             offJoinRoom();
             offUpdateRoomInfo();
+            offUpdateConferenceInfo();
         }
     }
 
@@ -43,6 +56,10 @@ export default class RoomService {
 
     get RoomInfo() {
         return this.#roomInfo;
+    }
+
+    get ConferencesInfo() {
+        return this.#conferencesInfo;
     }
 
     get Connected() {
@@ -107,7 +124,7 @@ export default class RoomService {
         return this.#signal.onJoinRoom((status, _, data) => {
             if (status === 200) {
                 if (data) {
-                    const room = handlerReceivedRoom(data);
+                    const room = handlerRoom(data);
                     this.#roomInfo.setRoom(room);
                 }
 
@@ -120,8 +137,19 @@ export default class RoomService {
 
     #onUpdateRoomInfo() {
         return this.#signal.onRoomInformationUpdate((data) => {
-            const room = handlerReceivedRoom(data);
+            const room = handlerRoom(data);
             this.#roomInfo.setRoom(room);
+        });
+    }
+
+    #onUpdateConferenceInfo() {
+        return this.#signal.onConferenceInformationUpdate((data) => {
+            const conference = handlerConference(data);
+            
+            const index = this.#conferencesInfo.Array.findIndex(item => item.id === conference.id);
+            if (index !== -1) {
+                this.#conferencesInfo.Array[index].setConference(conference);
+            }
         });
     }
 }
