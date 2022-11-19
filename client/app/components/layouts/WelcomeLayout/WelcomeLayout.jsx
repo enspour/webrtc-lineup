@@ -3,9 +3,9 @@ import Head from "next/head";
 
 import Panel from "@components/ui/Panel/Panel";
 
-import styles from "./LoginLayout.module.scss";
+import styles from "./WelcomeLayout.module.scss";
 
-const LoginLayout = ({ title = "Lineup", children }) => {
+const WelcomeLayout = ({ title = "Lineup", children }) => {
     return (
         <div>
             <Head>
@@ -24,4 +24,4 @@ const LoginLayout = ({ title = "Lineup", children }) => {
     )
 }
 
-export default React.memo(LoginLayout);
+export default React.memo(WelcomeLayout);

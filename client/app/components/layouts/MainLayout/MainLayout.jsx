@@ -1,25 +1,13 @@
-import React from "react";
-import Head from "next/head";
+import ContextMenu from "@components/ui/ContextMenu/ContextMenu";
 
-import Content from "./Content/Content";
-import Header from "./Header/Header";
-
-import styles from "./MainLayout.module.scss";
-
-const MainLayout = ({ children, title = "Lineup" }) => {
+const MainLayout = ({ children }) => {
     return (
-        <main className={styles.main}>
-            <Head>
-                <title>{title}</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            </Head>
+        <>
+            { children }
 
-            <Header />
-            <Content>
-                {children}
-            </Content>
-        </main>
+            <ContextMenu />
+        </>
     )
 }
 
-export default React.memo(MainLayout);
+export default MainLayout;
