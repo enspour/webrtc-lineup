@@ -26,12 +26,11 @@ class ConferenceController {
     }
 
     async delete(req: Request, res: Response) {
-        const roomId = BigInt(req.body.room_id);
-        const conferenceId = req.body.conference_id;
+        const conferenceId = req.params.id;
 
         const user = getUser(req);
 
-        const count = await ConferenceService.delete(roomId, conferenceId, user.id);
+        const count = await ConferenceService.delete(conferenceId, user.id);
 
         if (count > 0) {
             return new SuccessResponse("Success delete conference").send(res);
@@ -41,16 +40,15 @@ class ConferenceController {
     }
 
     async updateEnableAudio(req: Request, res: Response) {
-        const roomId = req.body.room_id;
         const conferenceId = req.body.conference_id;
         const enableAudio = req.body.enable_audio;
 
         const user = getUser(req);
         
-        const count = await ConferenceService.updateEnableAudio(BigInt(roomId), conferenceId, user.id, enableAudio);
+        const count = await ConferenceService.updateEnableAudio(conferenceId, user.id, enableAudio);
 
         if (count > 0) {
-            SignalService.updateConferenceInformation(roomId, conferenceId);
+            SignalService.updateConferenceInformation(conferenceId);
             return new SuccessResponse({ enable_audio: enableAudio }).send(res);
         }
 
@@ -58,16 +56,15 @@ class ConferenceController {
     }
     
     async updateEnableVideo(req: Request, res: Response) {
-        const roomId = req.body.room_id;
         const conferenceId = req.body.conference_id;
         const enableVideo = req.body.enable_video;
         
         const user = getUser(req);
 
-        const count = await ConferenceService.updateEnableVideo(BigInt(roomId), conferenceId, user.id, enableVideo);
+        const count = await ConferenceService.updateEnableVideo(conferenceId, user.id, enableVideo);
 
         if (count > 0) {
-            SignalService.updateConferenceInformation(roomId, conferenceId);
+            SignalService.updateConferenceInformation(conferenceId);
             return new SuccessResponse({ enable_video: enableVideo }).send(res);
         }
 

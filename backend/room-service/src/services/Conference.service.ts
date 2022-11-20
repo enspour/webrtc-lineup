@@ -6,20 +6,20 @@ const CONFERENCE_ID_LENGTH = 12;
 
 class ConferenceService {
     async create(roomId: bigint, userId: bigint, name: string, description: string) {
-        const conferenceId = nanoid(CONFERENCE_ID_LENGTH);
+        const conferenceId = `${roomId}|${nanoid(CONFERENCE_ID_LENGTH)}`;
         return await repository.createConference(conferenceId, name, description, roomId, userId);
     }
 
-    async delete(roomId: bigint, conferenceId: string, userId: bigint) {
-        return await repository.deleteConference(conferenceId, roomId, userId);
+    async delete(conferenceId: string, userId: bigint) {
+        return await repository.deleteConference(conferenceId, userId);
     }
 
-    async updateEnableAudio(roomId: bigint, conferenceId: string, userId: bigint, enableAudio: boolean) {
-        return await repository.updateConferenceSettingsEnableAudio(roomId, conferenceId, userId, enableAudio);
+    async updateEnableAudio(conferenceId: string, userId: bigint, enableAudio: boolean) {
+        return await repository.updateConferenceSettingsEnableAudio(conferenceId, userId, enableAudio);
     }
 
-    async updateEnableVideo(roomId: bigint, conferenceId: string, userId: bigint, enableVideo: boolean) {
-        return await repository.updateConferenceSettingsEnableVideo(roomId, conferenceId, userId, enableVideo);
+    async updateEnableVideo(conferenceId: string, userId: bigint, enableVideo: boolean) {
+        return await repository.updateConferenceSettingsEnableVideo(conferenceId, userId, enableVideo);
     }
 }
 

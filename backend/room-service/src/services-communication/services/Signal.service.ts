@@ -12,16 +12,12 @@ class SignalService {
         } catch {}
     }
 
-    async updateConferenceInformation(roomId: string, conferenceId: string) {
+    async updateConferenceInformation(conferenceId: string) {
         try {
             const { backend } = serverConfig;
-            const url = `${backend}/services-communication/signal-service/users/update-conference-information`;
+            const url = `${backend}/services-communication/signal-service/users/update-conference-information/${conferenceId}`;
 
-            const response = await fetch(url, { 
-                method: "PUT",
-                body: JSON.stringify({ room_id: roomId, conference_id: conferenceId }),
-                headers: { "Content-Type": "application/json" }
-            });
+            const response = await fetch(url, { method: "PUT" });
         } catch {}
     }
 }

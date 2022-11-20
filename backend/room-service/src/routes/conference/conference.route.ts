@@ -5,7 +5,7 @@ import ConferenceController from "@controllers/Conference.controller";
 import enableAudioValidator from "./validators/enableAudio.validator";
 import enableVideoValidator from "./validators/enableVideo.validator";
 import createValidator from "./validators/create.validator";
-import deleteValidator from "./validators/delete.validator";
+import idValidator from "routes/validators/params/id.validator";
 
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 import guardMiddleware from "@middlewares/guard.middleware";
@@ -21,9 +21,9 @@ router.post("/",
     asyncHandler(ConferenceController.create)
 );
 
-router.delete("/",
+router.delete("/:id",
     guardMiddleware,
-    deleteValidator,
+    idValidator,
     validatorMiddleware,
     asyncHandler(ConferenceController.delete)
 );
