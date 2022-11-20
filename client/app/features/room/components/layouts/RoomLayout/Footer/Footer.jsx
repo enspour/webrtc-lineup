@@ -88,8 +88,14 @@ const LeaveControl = () => {
 }
 
 const CreateControl = () => {
+    const owner = services.room.RoomInfo.Owner;
+    
     const open = () => {
         services.modals.createConference.setIsOpen(true);
+    }
+
+    if (owner.id !== services.user.Id) {
+        return "";
     }
 
     return (
