@@ -141,8 +141,8 @@ export default class Signal {
 
     // ----- CONFERENCE -----
 
-    joinConference(roomId, conferenceId) {
-        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { roomId, conferenceId });
+    joinConference(id) {
+        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { id });
     }
 
     /**
@@ -155,8 +155,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_JOIN_CONFERENCE, event);
     }
 
-    leaveConference(roomId, conferenceId) {
-        this.#socket.emit(SignalActions.LEAVE_CONFERENCE, { roomId, conferenceId });
+    leaveConference(id) {
+        this.#socket.emit(SignalActions.LEAVE_CONFERENCE, { id });
     }
 
     /**
@@ -189,8 +189,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
     }
 
-    sendOffer(roomId, conferenceId, destinationId, offer) {
-        const payload = { roomId, conferenceId, destinationId, offer };
+    sendOffer(conferenceId, destinationId, offer) {
+        const payload = { conferenceId, destinationId, offer };
         this.#socket.emit(SignalActions.SEND_OFFER, payload);
     }
 
@@ -214,8 +214,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.ACCEPT_OFFER, event);
     }
 
-    sendAnswer(roomId, conferenceId, destinationId, answer) {
-        const payload = { roomId, conferenceId, destinationId, answer };
+    sendAnswer(conferenceId, destinationId, answer) {
+        const payload = { conferenceId, destinationId, answer };
         this.#socket.emit(SignalActions.SEND_ANSWER, payload);
     }
 
@@ -239,8 +239,8 @@ export default class Signal {
         return () => this.#socket.off(SignalActions.ACCEPT_ANSWER, event);
     }
 
-    sendIceCandidate(roomId, conferenceId, destinationId, iceCandidate) {
-        const payload = { roomId, conferenceId, destinationId, iceCandidate };
+    sendIceCandidate(conferenceId, destinationId, iceCandidate) {
+        const payload = { conferenceId, destinationId, iceCandidate };
         this.#socket.emit(SignalActions.SEND_ICE_CANDIDATE, payload);
     }
 

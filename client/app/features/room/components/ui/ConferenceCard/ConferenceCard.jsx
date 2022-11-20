@@ -72,9 +72,7 @@ const ConferenceCard = observer(({ conference }) => {
     const [conferenceRef, appendMenu] = useContextMenu();
 
     const deleteConference = () => {
-        const room_id = services.room.RoomInfo.Id;
-        const conference_id = conference.id;
-        request.start({ body: { room_id, conference_id } })
+        request.start({ params: { id: conference.id } })
     }
 
     const openConference = async () => {
@@ -86,14 +84,14 @@ const ConferenceCard = observer(({ conference }) => {
         console.log(response);
     
         if (response.status === 200) {
-            const roomId = services.room.RoomInfo.Id;
-            router.push(`/room/${roomId}/conference/${conference.id}`);
+            const [roomId, conferenceId] = conference.id.split("|");
+            router.push(`/room/${roomId}/conference/${conferenceId}`);
         }
     }
 
     const openSettings = () => {
-        const roomId = services.room.RoomInfo.Id;
-        router.push(`/room/${roomId}/conference/${conference.id}/settings`)
+        const [roomId, conferenceId] = conference.id.split("|");
+        router.push(`/room/${roomId}/conference/${conferenceId}/settings`)
     }
 
     React.useEffect(() => {

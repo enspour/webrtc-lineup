@@ -14,19 +14,18 @@ export default class ConferenceAPIService {
 
     /**
      * @param {{ 
-     *  body: { room_id: string; conference_id: string }
+     *  params: { id: string }
      * }} data
      * @param {AbortSignal} signal 
      * @returns 
      */
     async delete(data, signal) {
-        return await axios.delete("/api/v1/room-service/conference/", { signal, data: data.body });
+        return await axios.delete(`/api/v1/room-service/conference/${data.params.id}`, { signal });
     }
 
     /**
      * @param {{ 
      *  body: { 
-     *      room_id: string;
      *      conference_id: string; 
      *      enable_audio: boolean; 
      *  }
@@ -41,7 +40,6 @@ export default class ConferenceAPIService {
     /**
      * @param {{ 
      *  body: { 
-     *      room_id: string;
      *      conference_id: string; 
      *      enable_audio: boolean; 
      *  }

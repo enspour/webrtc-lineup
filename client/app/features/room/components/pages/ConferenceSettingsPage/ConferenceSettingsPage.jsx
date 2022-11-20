@@ -22,7 +22,6 @@ const ConferenceAudioSettings = observer(({ conference }) => {
     
     const setEnableAudio = (value) => {
         const body = {
-            room_id: services.room.RoomInfo.Id,
             conference_id: conference.id,
             enable_audio: value
         }
@@ -40,7 +39,6 @@ const ConferenceVideoSettings = observer(({ conference }) => {
 
     const setEnableVideo = (value) => {
         const body = {
-            room_id: services.room.RoomInfo.Id,
             conference_id: conference.id,
             enable_video: value
         }
@@ -104,9 +102,10 @@ const ConferenceSettings = ({ conference }) => {
 
 const ConferenceSettingsPage = () => {
     const router = useRouter();
-    const { conferenceId } = router.query;
+    const { roomId, conferenceId } = router.query;
 
-    const conference = services.room.ConferencesInfo.Array.find(item => item.id === conferenceId);
+    const conference = services.room.ConferencesInfo.Array
+        .find(item => item.id === `${roomId}|${conferenceId}`) || { settings: {} };
 
     const back = () => router.back();
 
