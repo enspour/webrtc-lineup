@@ -27,7 +27,7 @@ const initEvents = (_io: Server) => {
             for (const roomId of rooms) {
                 services.rooms.removeClient(roomId, socket.id);
                 
-                if (roomId.includes("/")) {
+                if (roomId.includes("|")) {
                     return new Broadcast(
                         ConferenceActionsTypes.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
                     ).notify(socket, roomId);

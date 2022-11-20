@@ -23,12 +23,12 @@ class UsersController {
     }
 
     async updateConferenceInformation(req: Request, res: Response) {
-        const roomId = req.body.room_id;
-        const conferenceId = req.body.conference_id;
+        const id = req.params.id;
+        
+        const conference = await ConferenceService.findOneByIdPrivilege(id);
 
-        const conference = await ConferenceService.findOneByIdPrivilege(conferenceId);
-
-        if (conference) {
+        if (conference && id.includes("|")) {
+            const [roomId] = id.split("|");
             services.users.updateConferenceInformation(roomId, conference);
             return new SuccessResponse("Success notify users.").send(res);
         }

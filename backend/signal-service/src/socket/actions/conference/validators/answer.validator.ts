@@ -3,7 +3,6 @@ import { JSONSchemaType } from "ajv";
 import validator from "@utils/validator";
 
 export interface AnswerPayload {
-    roomId: string;
     conferenceId: string;
     destinationId: string;
     answer: {
@@ -15,7 +14,6 @@ export interface AnswerPayload {
 const schema: JSONSchemaType<AnswerPayload> = {
     type: "object",
     properties: {
-        roomId: { type: "string" },
         conferenceId: { type: "string" },
         destinationId: { type: "string" },
         answer: { 
@@ -28,7 +26,7 @@ const schema: JSONSchemaType<AnswerPayload> = {
             additionalProperties: false
         },
     },
-    required: ["roomId", "destinationId", "answer"],
+    required: ["conferenceId", "destinationId", "answer"],
     additionalProperties: false
 }
 

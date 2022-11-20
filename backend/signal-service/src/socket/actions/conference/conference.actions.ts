@@ -4,40 +4,41 @@ import { ActionContext } from "@socket/services/Actions.service";
 
 import { ConferenceActionsTypes } from "@socket/types";
 
-import { JoinPayload } from "./validators/join.validator";
-import { LeavePayload } from "./validators/leave.validator";
 import { OfferPayload } from "./validators/offer.validator";
 import { AnswerPayload } from "./validators/answer.validator";
 import { IceCandidatePayload } from "./validators/iceCandidate.validator";
+import { IdPayload } from "../validators/id.validator";
 
 class ConferenceActions {
-    async join(context: ActionContext<JoinPayload>) {
-        const { roomId, conferenceId } = context.Payload;
+    async join(context: ActionContext<IdPayload>) {
+        const { id } = context.Payload;
 
-        if (context.Client.has(roomId)) {
-            const conference = `${roomId}/${conferenceId}`;
-
-            if (!context.Client.has(conference)) {
-                await context.Client.join(conference);
-
-                const payload = { socketId: context.Client.SocketId }
-                
-                context.broadcast(
-                    conference, 
-                    ConferenceActionsTypes.NOTIFY_USER_JOIN_CONFERENCE, 
-                    payload
-                );
-                
+        if (id.includes("|")) {
+            const [roomId] = id.split("|");
+    
+            if (context.Client.has(roomId)) {
+                if (!context.Client.has(id)) {
+                    await context.Client.join(id);
+    
+                    const payload = { socketId: context.Client.SocketId }
+                    
+                    context.broadcast(
+                        id, 
+                        ConferenceActionsTypes.NOTIFY_USER_JOIN_CONFERENCE, 
+                        payload
+                    );
+                    
+                    return context.success(
+                        ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
+                        "Success to join to conference"
+                    );
+                }
+    
                 return context.success(
                     ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
-                    "Success to join to conference"
+                    "Already connected to conference"
                 );
             }
-
-            return context.success(
-                ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
-                "Already connected to conference"
-            );
         }
 
         context.badRequest(
@@ -46,18 +47,16 @@ class ConferenceActions {
         );
     }
 
-    async leave(context: ActionContext<LeavePayload>) {
-        const { roomId, conferenceId } = context.Payload;
+    async leave(context: ActionContext<IdPayload>) {
+        const { id } = context.Payload;
 
-        const conference = `${roomId}/${conferenceId}`;
-
-        if (context.Client.has(conference)) {
-            await context.Client.leave(conference);
+        if (context.Client.has(id)) {
+            await context.Client.leave(id);
             
             const payload = { socketId: context.Client.SocketId }
             
             context.broadcast(
-                conference, 
+                id, 
                 ConferenceActionsTypes.NOTIFY_USER_LEAVE_CONFERENCE, 
                 payload
             );
@@ -75,11 +74,9 @@ class ConferenceActions {
     }
 
     sendOffer(context: ActionContext<OfferPayload>) {
-        const { roomId, conferenceId, destinationId, offer } = context.Payload;
+        const { conferenceId, destinationId, offer } = context.Payload;
 
-        const conference = `${roomId}/${conferenceId}`;
-
-        if (context.Client.has(conference)) {
+        if (context.Client.has(conferenceId)) {
             const payload = { sourceId: context.Client.SocketId, offer };
 
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_OFFER, payload);
@@ -97,11 +94,9 @@ class ConferenceActions {
     }
 
     sendAnswer(context: ActionContext<AnswerPayload>) {
-        const { roomId, conferenceId, destinationId, answer } = context.Payload;
+        const { conferenceId, destinationId, answer } = context.Payload;
 
-        const conference = `${roomId}/${conferenceId}`;
-
-        if (context.Client.has(conference)) {
+        if (context.Client.has(conferenceId)) {
             const payload = { sourceId: context.Client.SocketId, answer };
 
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ANSWER, payload);
@@ -119,11 +114,9 @@ class ConferenceActions {
     }
 
     sendIceCandidate(context: ActionContext<IceCandidatePayload>) {
-        const { roomId, conferenceId, destinationId, iceCandidate } = context.Payload;
+        const { conferenceId, destinationId, iceCandidate } = context.Payload;
 
-        const conference = `${roomId}/${conferenceId}`;
-
-        if (context.Client.has(conference)) {
+        if (context.Client.has(conferenceId)) {
             const payload = { sourceId: context.Client.SocketId, iceCandidate };
             
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ICE_CANDIDATE, payload);

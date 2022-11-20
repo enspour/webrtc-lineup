@@ -3,21 +3,20 @@ import { Socket } from "socket.io";
 import { ConferenceActionsTypes } from "@socket/types";
 import ConferenceActions from "./conference.actions";
 
-import { joinValidator } from "./validators/join.validator";
-import { leaveValidator } from "./validators/leave.validator";
 import { offerValidator } from "./validators/offer.validator";
 import { answerValidator } from "./validators/answer.validator";
 import { iceCandidateValidator } from "./validators/iceCandidate.validator";
+import { idValidator } from "../validators/id.validator";
 
 import services from "@socket/services";
 
 const joinValidation = {
-    validate: joinValidator,
+    validate: idValidator,
     action: ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE
 };
 
 const leaveValidation = {
-    validate: leaveValidator,
+    validate: idValidator,
     action: ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE,
 };
 

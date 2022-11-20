@@ -1,7 +1,6 @@
 import { Router } from "express";
 
-import idValidator from "./validators/params/id.validator";
-import updateConferenceInfoValidator from "./validators/body/updateConferenceInfo.validator";
+import idParamsValidator from "./validators/id.params.validator";
 
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 
@@ -12,13 +11,13 @@ import AsyncHandler from "core/server/AsyncHandler";
 const router = Router();
 
 router.put("/update-room-inforamtion/:id", 
-    idValidator,
+    idParamsValidator,
     validatorMiddleware,
     AsyncHandler(UsersController.updateRoomInformation)
 );
 
-router.put("/update-conference-information",
-    updateConferenceInfoValidator,
+router.put("/update-conference-information/:id",
+    idParamsValidator,
     validatorMiddleware,
     AsyncHandler(UsersController.updateConferenceInformation)
 )
