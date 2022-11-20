@@ -31,7 +31,7 @@ model UserAuth {
   password  String
 
   user_id   BigInt  @unique
-  user      User    @relation(fields: [user_id], references: [id])
+  user      User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   
   @@map("users_auth")
 }
@@ -41,7 +41,7 @@ model UserAssets {
   avatar    String
 
   user_id   BigInt  @unique
-  user      User    @relation(fields: [user_id], references: [id])
+  user      User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("users_assets")
 }
