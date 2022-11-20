@@ -366,14 +366,11 @@ export default class PrismaRepository implements IRepository {
         return result.count;
     }
 
-    async deleteConference(id: string, room_id: bigint, user_id: bigint): Promise<number> {
+    async deleteConference(id: string, user_id: bigint): Promise<number> {
         const result = await this.prismaClient.conference.deleteMany({
             where: {
                 id,
-                room: {
-                    id: room_id,
-                    owner_id: user_id,
-                }
+                room: { owner_id: user_id }
             }
         });
 
@@ -435,7 +432,6 @@ export default class PrismaRepository implements IRepository {
     }
 
     async updateConferenceSettingsEnableAudio(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_audio: boolean
@@ -444,11 +440,7 @@ export default class PrismaRepository implements IRepository {
             where: {
                 conference: {
                     id: conference_id,
-
-                    room: {
-                        id: room_id,
-                        owner_id: user_id,
-                    }
+                    room: { owner_id: user_id }
                 }
             },
             data: {
@@ -460,7 +452,6 @@ export default class PrismaRepository implements IRepository {
     }
 
     async updateConferenceSettingsEnableVideo(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_video: boolean
@@ -469,11 +460,7 @@ export default class PrismaRepository implements IRepository {
             where: {
                 conference: {
                     id: conference_id,
-
-                    room: {
-                        id: room_id,
-                        owner_id: user_id,
-                    }
+                    room: { owner_id: user_id }
                 }
             },
             data: {

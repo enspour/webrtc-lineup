@@ -59,7 +59,7 @@ export interface IRepository {
     ): Promise<Conference | null>;
     
     deleteRoom(id: bigint, user_id: bigint): Promise<number>;
-    deleteConference(id: string, room_id: bigint, user_id: bigint): Promise<number>;
+    deleteConference(id: string, user_id: bigint): Promise<number>;
     deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<Room>;
 
 
@@ -70,14 +70,12 @@ export interface IRepository {
     updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number>;
     
     updateConferenceSettingsEnableAudio(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_audio: boolean
     ): Promise<number>;
     
     updateConferenceSettingsEnableVideo(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_video: boolean
@@ -172,8 +170,8 @@ export default class Repository implements IRepository {
         return await this._repository.deleteRoom(id, user_id);
     }
 
-    async deleteConference(id: string, room_id: bigint, user_id: bigint): Promise<number> {
-        return await this._repository.deleteConference(id, room_id, user_id);
+    async deleteConference(id: string, user_id: bigint): Promise<number> {
+        return await this._repository.deleteConference(id, user_id);
     }
 
     async deleteRoomFromFavorites(room_id: bigint, user_id: bigint): Promise<Room> {
@@ -193,13 +191,11 @@ export default class Repository implements IRepository {
     }
 
     async updateConferenceSettingsEnableAudio(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_audio: boolean
     ): Promise<number> {
         return await this._repository.updateConferenceSettingsEnableAudio(
-            room_id, 
             conference_id, 
             user_id, 
             enable_audio
@@ -207,13 +203,11 @@ export default class Repository implements IRepository {
     }
 
     async updateConferenceSettingsEnableVideo(
-        room_id: bigint, 
         conference_id: string, 
         user_id: bigint, 
         enable_video: boolean
     ): Promise<number> {
         return await this._repository.updateConferenceSettingsEnableVideo(
-            room_id, 
             conference_id, 
             user_id,
             enable_video
