@@ -75,7 +75,7 @@ const Tags = observer(() => {
 
     const searchByTags = (e, name) => {
         e.stopPropagation();
-        services.modals.room.IsOpen = false;
+        services.modals.room.setIsOpen(false);
         services.island.goSearch();
         services.search.SearchedText = `#${name}`;
     }
@@ -132,8 +132,8 @@ const JoinButton = () => {
 const RoomModal = observer(() => {
     const isOpenRoom = services.modals.room.IsOpen;
 
-    const setIsOpenRoom = (value) => {
-        services.modals.room.IsOpen = value;
+    const setIsOpenRoom = value => {
+        services.modals.room.setIsOpen(value);
     }
 
     if (!isOpenRoom) return "";

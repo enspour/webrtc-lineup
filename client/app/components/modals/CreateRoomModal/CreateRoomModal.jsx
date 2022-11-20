@@ -21,14 +21,14 @@ const Tags = React.memo(({ tags, setTags }) => {
     const removeTag = (name) => setTags(prev => prev.filter(item => item !== name)); 
 
     return (
-        <div className={styles.tags}>
-            <div className={styles.tags__title}>Tags</div>
-            <div className={styles.tags__items}>
+        <div className={styles.room__tags}>
+            <div className={styles.room__tags__title}>Tags</div>
+            <div className={styles.room__tags__items}>
                 {
                     tags.map(item => (
                         <div 
                             key={item} 
-                            className={styles.tags__item} 
+                            className={styles.room__tags__item} 
                             onClick={() => removeTag(item)}
                         > 
                             {item} 
@@ -48,7 +48,7 @@ const InputTags = React.memo(({ tags, setTags }) => {
         setTag(splited.join(""));
     }
 
-    const pushTag = () => {
+    const appendTag = () => {
         if (tag && !tags.includes(tag)) {
             setTags(prev => [...prev, tag]);
             setTag("");
@@ -56,15 +56,16 @@ const InputTags = React.memo(({ tags, setTags }) => {
     }
 
     return (
-        <div className={styles.tag}>
+        <div className={styles.room__tag}>
             <InputControl type="text" placeholder="Tag" value={tag} setValue={customSetTag}/>
             
-            <div>
-                <FilledButton onClick={pushTag}>
-                    <div className={styles.tag__btn}>
-                        <Svg url={AddIcon} width="1.4" height="1.4" color="var(--theme-icon-secondary)"/>
-                    </div>
-                </FilledButton>
+            <div className={styles.room__tag__btn}>
+                <Svg 
+                    url={AddIcon} 
+                    width="1.4" 
+                    height="1.4" 
+                    onClick={appendTag}
+                />
             </div>
         </div>
     )
@@ -72,10 +73,11 @@ const InputTags = React.memo(({ tags, setTags }) => {
 
 
 const CreateRoomModal = observer(() => {
-    const isOpenAddRoom = services.modals.createRoom.IsOpen;
+    const isOpenModal = services.modals.createRoom.IsOpen;
 
-    const request = useRequest(services.roomAPI.create);
-    const { data } = useResponse(request);
+    const setIsOpenModal = value => {
+        services.modals.createRoom.setIsOpen(value);
+    }
 
     const [name, setName] = React.useState("");
     const [password, setPassword] = React.useState(""); 
@@ -83,17 +85,23 @@ const CreateRoomModal = observer(() => {
     const [tags, setTags] = React.useState([]);
 
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
+    
+    const request = useRequest(services.roomAPI.create);
+    const { data } = useResponse(request);
 
-    const setIsOpenAddRoom = (value) => {
-        services.modals.createRoom.IsOpen = value;
-    }
+    const create = () => {
+        const body = {
+            name,
+            password, 
+            tags
+        }
 
-    const addRoom = () => {
-        request.start({ body: { name, password, tags } });
+        request.start({ body });
+
         setName("");
         setPassword("");
         setTags([]);
-        setIsOpenAddRoom(false);
+        setIsOpenModal(false);
     }
 
     React.useEffect(() => {
@@ -102,22 +110,22 @@ const CreateRoomModal = observer(() => {
         }
     }, [data]);
 
-    if (!isOpenAddRoom) return "";
+    if (!isOpenModal) return "";
 
     return (
         <Modal
-            title="Create New Room"
-            isOpen={isOpenAddRoom} 
-            setIsOpen={setIsOpenAddRoom}
+            title="Create Room"
+            isOpen={isOpenModal} 
+            setIsOpen={setIsOpenModal}
         >
-            <div className={styles.wrapper}>
+            <div className={styles.room__wrapper}>
                 <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
                 
-                <div className={styles.private}>
+                <div className={styles.room__private}>
                     <CheckBox label="Secure room" value={privateRoom} setValue={setPrivateRoom}/>
                 </div>
 
-                <div className={styles.password} ref={passwordRef}>
+                <div className={styles.room__password} ref={passwordRef}>
                     <InputControl 
                         type="password"
                         placeholder="Password" 
@@ -130,7 +138,7 @@ const CreateRoomModal = observer(() => {
                 <Tags tags={tags} setTags={setTags}/>
 
                 <div className="w-50 m-auto">
-                    <FilledButton onClick={addRoom}> Create </FilledButton>
+                    <FilledButton onClick={create}> Create </FilledButton>
                 </div>
             </div>
         </Modal>

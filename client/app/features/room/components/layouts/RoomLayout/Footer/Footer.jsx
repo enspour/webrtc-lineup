@@ -6,7 +6,8 @@ import FilledButton from "@components/ui/FilledButton/FilledButton";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import Svg from "@components/ui/Svg/Svg";
 
-import SettingsIcon from "@assets/images/room-header/settings.svg";
+import SettingsIcon from "@assets/images/room-footer/settings.svg";
+import CreateIcon from "@assets/images/room-footer/create.svg";
 
 import services from "@services";
 
@@ -66,7 +67,7 @@ const SettingsControl = observer(() => {
         return "";
     }
 
-    return <Svg url={SettingsIcon} width="2" height="2" onClick={openSettings}/>
+    return <Svg url={SettingsIcon} width="1.8" height="1.8" onClick={openSettings}/>
 });
 
 const LeaveControl = () => {
@@ -86,6 +87,16 @@ const LeaveControl = () => {
     )
 }
 
+const CreateControl = () => {
+    const open = () => {
+        services.modals.createConference.setIsOpen(true);
+    }
+
+    return (
+        <Svg url={CreateIcon} width="1.4" height="1.4" onClick={open}/>
+    )
+}
+
 const Footer = () => {
     return (
         <div className={styles.footer}>
@@ -95,6 +106,7 @@ const Footer = () => {
             </div>
 
             <div className="fl al-center g-2">
+                <CreateControl />
                 <SettingsControl />
                 <LeaveControl />
             </div>

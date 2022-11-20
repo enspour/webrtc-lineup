@@ -13,7 +13,7 @@ class Modal {
         return this.#store.isOpenModal;
     }
 
-    set IsOpen(value) {
+    setIsOpen(value) {
         return this.#store.setIsOpenModal(value);
     }
 }
@@ -54,6 +54,7 @@ class RoomModal extends Modal {
 export default class ModalsService {
     constructor() {
         this.createRoom = new Modal();
+        this.createConference = new Modal();
         this.room = new RoomModal(); 
     } 
 }

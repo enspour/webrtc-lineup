@@ -7,6 +7,7 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 
 import styles from "./RoomLayout.module.scss"
+import CreateConferenceModal from "../../modals/CreateConferenceModal/CreateConferenceModal";
 
 const RoomLayout = ({ title = "Lineup | Room", children }) => {
     return (
@@ -24,6 +25,8 @@ const RoomLayout = ({ title = "Lineup | Room", children }) => {
                 </div>
 
                 <Footer />
+
+                <CreateConferenceModal />
             </div>
         </ConnectionLayout>
     )

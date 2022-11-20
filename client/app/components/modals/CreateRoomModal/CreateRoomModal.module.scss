@@ -1,57 +1,57 @@
-.wrapper {
+.room__wrapper {
     width: 40rem;
 }
 
-.private {
+.room__private {
     margin: 3rem 0 2rem 2rem;
     font-size: 1.6rem;
     font-weight: 600;
 }
 
-.password {
+.room__password {
     max-height: 4rem;
     transition: max-height .4s ease-out;
 }
 
-.hidden {
+.room__hidden {
     max-height: 0;
     pointer-events: none;
     opacity: 0;
     visibility: hidden; 
 }
 
-.tag {
+.room__tag {
     display: flex;
     gap: 2rem;
     padding: 2rem;
 }
 
-.tag__btn {
+.room__tag__btn {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 4rem;
 }
 
-.tags {
+.room__tags {
     display: flex;
     gap: 2rem;
     padding: 0 2rem 3rem 2rem;
 }
 
-.tags__title {
+.room__tags__title {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--theme-color-primary);
 }
 
-.tags__items {
+.room__tags__items {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.tags__item {
+.room__tags__item {
     color: var(--theme-color-secondary);
     background-color: var(--theme-bg-secondary);
     border-radius: .7rem;

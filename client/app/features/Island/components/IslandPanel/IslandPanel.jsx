@@ -98,8 +98,8 @@ const IslandPanel = observer(() => {
         services.island.CurrentId = IslandSearchTab.id;
     }
 
-    const setIsOpenAddRoom = (value) => {
-        services.modals.createRoom.IsOpen = value;
+    const setIsOpenAddRoom = value => {
+        services.modals.createRoom.setIsOpen(value);
     }
 
     React.useEffect(
