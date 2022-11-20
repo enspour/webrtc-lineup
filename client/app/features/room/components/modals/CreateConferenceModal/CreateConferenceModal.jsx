@@ -20,7 +20,7 @@ const CreateConferenceModal = observer(() => {
     }
 
     const [name, setName] = React.useState("");
-    const [description, setDescription] = React.useState(""); 
+    const [description, setDescription] = React.useState("");
 
     const request = useRequest(services.conferenceAPI.create);
     const { data } = useResponse(request);
@@ -29,7 +29,7 @@ const CreateConferenceModal = observer(() => {
         const body = {
             room_id: services.room.RoomInfo.Id,
             name,
-            description
+            description: description || `Click to join the conference \"${name}\"`
         }
 
         request.start({ body });
