@@ -116,7 +116,9 @@ const ConferenceCard = observer(({ conference }) => {
                 <div className={styles.conference__wrapper}>
                     <div>
                         <div className={styles.conference__name}>{ conference.name }</div>
-                        <div className={styles.conference__description}>{ conference.description }</div>
+                        <div className={styles.conference__description}>
+                            { conference.description || `Click to join the conference «${conference.name}»` }
+                        </div>
                     </div>
 
                     <BottomPanel conference={conference}/>

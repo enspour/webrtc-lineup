@@ -29,7 +29,7 @@ const CreateConferenceModal = observer(() => {
         const body = {
             room_id: services.room.RoomInfo.Id,
             name,
-            description: description || `Click to join the conference \"${name}\"`
+            description,
         }
 
         request.start({ body });
