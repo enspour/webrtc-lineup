@@ -1,9 +1,9 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser');
+import express from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
-const createApp = () => {
-    const useRoutes = require("@routes").default;
+const createApp = async () => {
+    const useRoutes = (await import("@routes")).default;
 
     const app = express();
 

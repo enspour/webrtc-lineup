@@ -18,7 +18,7 @@ import serverConfig from "@configs/server.config";
     await connect();
     logger.log("Connect to database is successful.");
     
-    const app = createApp();
+    const app = await createApp();
     const server = createServer(app);
 
     const port = serverConfig.port;

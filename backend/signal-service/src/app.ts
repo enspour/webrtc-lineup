@@ -16,7 +16,7 @@ import serverConfig from "@configs/server.config";
     await loadPublicKeyAccessJWT();
     logger.log("Public Key is success loaded");
 
-    const app = createApp();
+    const app = await createApp();
     const server = createServer(app);
     createSocket(server);
 

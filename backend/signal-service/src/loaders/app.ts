@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express"
 
-const createApp = () => {
+const createApp = async () => {
+    const useRoutes = (await import("@routes")).default;
+
     const app = express();
 
     app.use(express.json());
-    
-    const useRoutes = require("@routes").default
 
     useRoutes(app)
 
