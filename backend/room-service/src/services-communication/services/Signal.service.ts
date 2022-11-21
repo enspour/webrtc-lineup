@@ -1,12 +1,13 @@
 import fetch from "node-fetch";
 
-import serverConfig from "@configs/server.config";
+import servicesConfig from "@configs/services.config";
 
 class SignalService {
     async updateRoomInformation(roomId: bigint) {
         try {
-            const { backend } = serverConfig;
-            const url = `${backend}/services-communication/signal-service/users/update-room-inforamtion/${roomId}`;
+            const { signal } = servicesConfig;
+            const url = 
+                `${signal}/services-communication/signal-service/users/update-room-inforamtion/${roomId}`;
             
             const response = await fetch(url, { method: "PUT" });
         } catch {}
@@ -14,8 +15,9 @@ class SignalService {
 
     async updateConferenceInformation(conferenceId: string) {
         try {
-            const { backend } = serverConfig;
-            const url = `${backend}/services-communication/signal-service/users/update-conference-information/${conferenceId}`;
+            const { signal } = servicesConfig;
+            const url = 
+                `${signal}/services-communication/signal-service/users/update-conference-information/${conferenceId}`;
 
             const response = await fetch(url, { method: "PUT" });
         } catch {}

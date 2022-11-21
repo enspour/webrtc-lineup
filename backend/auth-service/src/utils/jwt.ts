@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import JWTConfig from "@configs/jwt.config";
-import JWTKeys from "@loaders/jwt.keys";
+import { accessTokenKeys, refreshTokenKeys } from "@loaders/jwt.keys";
 
 import { 
     JWTAccessPayload, 
@@ -38,7 +38,7 @@ export const issueAccessJWT = (options: JWTAccessOptions) => {
     }
     
     const expiresIn = JWTConfig.accessToken.expiresIn;
-    const privateKey = JWTKeys.accessTokenKeys.privateKey;
+    const privateKey = accessTokenKeys.privateKey;
 
     return jwt.sign(payload, privateKey, {
         expiresIn,
@@ -47,7 +47,7 @@ export const issueAccessJWT = (options: JWTAccessOptions) => {
 }
 
 export const verifyAccessJWT = (token: string) => {
-    const publicKey = JWTKeys.accessTokenKeys.publicKey;
+    const publicKey = accessTokenKeys.publicKey;
     return verifyAccessToken(token, publicKey);
 }
 
@@ -65,7 +65,7 @@ export const issueRefreshJWT = (options: JWTRefreshOptions) => {
     };
 
     const expiresIn = JWTConfig.refreshToken.expiresIn;
-    const privateKey = JWTKeys.refreshTokenKeys.privateKey;
+    const privateKey = refreshTokenKeys.privateKey;
 
     return jwt.sign(payload, privateKey, {
         expiresIn,
@@ -74,7 +74,7 @@ export const issueRefreshJWT = (options: JWTRefreshOptions) => {
 }
 
 export const verifyRefreshJWT = (token: string) => {
-    const publicKey = JWTKeys.refreshTokenKeys.publicKey;
+    const publicKey = refreshTokenKeys.publicKey;
 
     try {
         jwt.verify(token, publicKey, { algorithms: ["RS256"] });
