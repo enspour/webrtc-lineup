@@ -5,7 +5,7 @@ import { RoomActionsTypes } from "@socket/types";
 import { IdPayload } from "../validators/id.validator";
 import { JoinRoomPayload } from "./validators/joinRoom.validator";
 
-import RoomService from "@services/Room.service";
+import RoomService from "@services-communication/services/Room.service";
 
 import services from "@socket/services";
 
@@ -15,7 +15,7 @@ class RoomsActions {
 
         const userId = context.Client.UserId;
 
-        const room = await RoomService.findOneByIdWithAuth(BigInt(id), BigInt(userId));
+        const room = await RoomService.findOneWithAuth(id, userId);
 
         if (!room) {
             return context.badRequest(RoomActionsTypes.NOTIFY_JOIN, "Room is not found");
