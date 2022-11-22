@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const domain = process.env.DOMAIN || "http://localhost:3000";
+const domain = process.env.DOMAIN || "http://localhost:8080";
 
 export async function middleware(request) {
     const cookies = request.cookies;
