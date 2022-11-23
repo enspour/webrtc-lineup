@@ -42,7 +42,7 @@ const ConnectedUsers = observer(() => {
     , []);
 
     React.useEffect(() => {
-        if (data) setUsers([...new Set(data.body.users)]);
+        if (data) setUsers(data.body.users);
     }, [data])
 
     if (request.isLoading) {
