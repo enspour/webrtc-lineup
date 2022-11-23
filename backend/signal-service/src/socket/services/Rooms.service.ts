@@ -1,6 +1,8 @@
 import { Client } from "@socket/stores/clients.store";
 import RoomsStore from "@socket/stores/rooms.store";
 
+import removeDuplicates from "core/utils/removeDuplicates";
+
 export default class RoomsService {
     private rooms; 
 
@@ -18,5 +20,10 @@ export default class RoomsService {
 
     getClients(roomId: string) {
         return this.rooms.getClients(roomId).map(item => ({ userId: item.userId, socketId: item.socketId }));
+    }
+
+    getUsersIds(roomId: string) {
+        const usersIds = this.rooms.getClients(roomId).map(item => item.userId);
+        return removeDuplicates(usersIds);
     }
 }
