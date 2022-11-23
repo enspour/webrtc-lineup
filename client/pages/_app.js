@@ -10,6 +10,7 @@ import "@styles/reset.scss";
 import "@styles/base.scss";
 import "@styles/helpers.scss"; 
 import "@styles/loader.scss";
+import "@styles/scroll.scss";
 
 import "@styles/themes/light.scss";
 import "@styles/themes/dark.scss";

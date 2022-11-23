@@ -24,9 +24,9 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
     return (
         <div className={styles.modal} ref={modalRef} onClick={outsideClick}>
             <div className={styles.modal__window} ref={modalContentRef}>
-                <Panel maxHeight="100vh">
+                <Panel maxHeight="100vh" overflow="hidden">
                     <PanelHeader title={title} onClick={closeModal}/>
-                    
+
                     <div className={styles.modal__content}>
                         {children}
                     </div>
