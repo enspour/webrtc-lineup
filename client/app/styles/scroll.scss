@@ -2,6 +2,7 @@
 ::-webkit-scrollbar {
     display: block;
     width: .5rem;
+    height: .5rem;
 }
   
 /* Track */
@@ -22,12 +23,14 @@
 
 ::-webkit-scrollbar-track-piece:end {
     background: transparent;
-    margin-bottom: 2rem; 
+    margin-bottom: .5rem; 
+    margin-right: .5rem;
 }
 
 ::-webkit-scrollbar-track-piece:start {
     background: transparent;
-    margin-top: 2rem;
+    margin-top: .5rem;
+    margin-left: .5rem;
 }
 
 ::-webkit-scrollbar-button {
