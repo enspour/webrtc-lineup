@@ -1,17 +1,23 @@
-.conferences {
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.section {
     height: 100%;
     overflow: auto;
 }
 
-.conferences__items {
+.section__items {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 2rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
-.conferences__title {
+.section__title {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 600;
