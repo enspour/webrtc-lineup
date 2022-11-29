@@ -5,7 +5,6 @@ import RoomStore from "./stores/Room.store";
 
 import RoomPage from "./components/pages/RoomPage/RoomPage";
 import RoomSettingsPage from "./components/pages/RoomSettingsPage/RoomSettingsPage";
-import RoomChattingPage from "./components/pages/RoomChattingPage/RoomChattingPage";
 import ConferencePage from "./components/pages/ConferencePage/ConferencePage";
 import ConferenceSettingsPage from "./components/pages/ConferenceSettingsPage/ConferenceSettingsPage";
 
@@ -18,7 +17,6 @@ export {
 
     RoomPage,
     RoomSettingsPage,
-    RoomChattingPage,
     ConferencePage,
     ConferenceSettingsPage,
 }
