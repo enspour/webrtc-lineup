@@ -77,7 +77,7 @@ const GeneralSettings = () => {
     )
 }
 
-const Settings = () => {
+const RoomSettingsPage = () => {
     const router = useRouter();
 
     const back = () => router.back();
@@ -97,4 +97,4 @@ const Settings = () => {
     )
 }
 
-export default React.memo(Settings);
+export default React.memo(RoomSettingsPage);
