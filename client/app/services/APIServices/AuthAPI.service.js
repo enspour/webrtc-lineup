@@ -13,7 +13,7 @@ export default class AuthAPIService {
      * @returns 
      */
     async login(data, signal) {
-        return await axios.post("/api/v1/auth-service/login", data.body, {
+        return await axios.post("/api/v1/auth-service/auth/login", data.body, {
             signal
         });
     }
@@ -31,23 +31,23 @@ export default class AuthAPIService {
      * @returns 
      */
     async signup(data, signal) {
-        return await axios.post("/api/v1/auth-service/signup", data.body, {
+        return await axios.post("/api/v1/auth-service/auth/signup", data.body, {
             signal
         }); 
     }
 
     async refresh() {
-        return await axios.post("/api/v1/auth-service/refresh");
+        return await axios.post("/api/v1/auth-service/auth/refresh");
     }
 
     async me(_, signal) {
-        return await axios.get("/api/v1/auth-service/me", {
+        return await axios.get("/api/v1/auth-service/auth/me", {
             signal
         });
     }
 
     async logout(_, signal) {
-        return await axios.post("/api/v1/auth-service/logout", {
+        return await axios.post("/api/v1/auth-service/auth/logout", {
             signal
         });
     }

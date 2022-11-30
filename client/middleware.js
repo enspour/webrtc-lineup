@@ -5,7 +5,7 @@ const domain = process.env.DOMAIN || "http://localhost:8080";
 export async function middleware(request) {
     const cookies = request.cookies;
 
-    const meResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/me`, cookies);
+    const meResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/auth/me`, cookies);
 
     if (meResponse.status === 200) {
         const response = NextResponse.next();
@@ -14,7 +14,7 @@ export async function middleware(request) {
     }
 
     if (meResponse.status === 401) {
-        const refreshResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/refresh`, cookies, "POST");
+        const refreshResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/auth/refresh`, cookies, "POST");
         if (refreshResponse.status === 200) {
             const response = NextResponse.next();
             pipeCookies(refreshResponse, response);
