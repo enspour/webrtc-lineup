@@ -9,7 +9,7 @@ import NotFoundResponse from "core/server/responses/NotFound.response";
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.use("/api/v1/auth-service", authRoutes);
+    router.use("/api/v1/auth-service/auth", authRoutes);
 
     router.use("/services-communication/auth-service/", servicesCommunicationRoutes);
 
