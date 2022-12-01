@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Panel from "../Panel/Panel";
-import PanelHeader from "../PanelHeader/PanelHeader";
+import PanelPlusHeader from "../PanelPlusHeader/PanelPlusHeader";
 
 import useCssAnimation from "@hooks/css/useCssAnimation";
 
@@ -24,13 +23,13 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
     return (
         <div className={styles.modal} ref={modalRef} onClick={outsideClick}>
             <div className={styles.modal__window} ref={modalContentRef}>
-                <Panel maxHeight="100vh" overflow="hidden">
-                    <PanelHeader title={title} onClick={closeModal}/>
-
-                    <div className={styles.modal__content}>
-                        {children}
-                    </div>
-                </Panel>
+                <PanelPlusHeader 
+                    title={title} 
+                    onClick={closeModal} 
+                    maxHeight="100vh"
+                >
+                    {children}
+                </PanelPlusHeader>
             </div>
         </div>
     );

@@ -3,15 +3,11 @@
     margin: 0 auto;
 }
 
-.wrapper {
-    padding: 2rem 3rem;
-    color: var(--theme-color-primary);
-}
-
 .settings {
     padding: 1rem;
     font-size: 1.6rem;
     font-weight: 600;
+    color: var(--theme-color-primary);
 }
 
 .settings__items {

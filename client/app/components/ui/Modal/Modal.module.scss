@@ -36,9 +36,3 @@
     font-weight: 700;
     color: var(--theme-color-primary);
 }
-
-.modal__content {
-    padding: 2rem 3rem;
-    max-height: calc(100vh - 6rem);
-    overflow: auto;
-}

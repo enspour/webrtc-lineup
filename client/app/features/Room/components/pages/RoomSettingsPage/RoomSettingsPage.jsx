@@ -2,8 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import Panel from "@components/ui/Panel/Panel";
-import PanelHeader from "@components/ui/PanelHeader/PanelHeader";
+import PanelPlusHeader from "@components/ui/PanelPlusHeader/PanelPlusHeader";
 import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
@@ -85,13 +84,13 @@ const RoomSettingsPage = () => {
     return (
         <RoomLayout title="Lineup | Settings">
             <div className={styles.container}>
-                <Panel maxHeight="calc(100vh - 17rem)">
-                    <PanelHeader title="Settings" onClick={back}/>
-
-                    <div className={styles.wrapper}>
-                        <GeneralSettings />
-                    </div>
-                </Panel>
+                <PanelPlusHeader 
+                    title="Settings" 
+                    onClick={back} 
+                    maxHeight="calc(100vh - 17rem)"
+                >
+                    <GeneralSettings />
+                </PanelPlusHeader>
             </div>
         </RoomLayout>
     )

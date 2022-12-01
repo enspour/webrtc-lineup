@@ -6,8 +6,7 @@ import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 
 import useRequest from '@hooks/api/useRequest';
 
-import Panel from "@components/ui/Panel/Panel";
-import PanelHeader from "@components/ui/PanelHeader/PanelHeader";
+import PanelPlusHeader from "@components/ui/PanelPlusHeader/PanelPlusHeader";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import EditInput from "@components/ui/EditInput/EditInput";
 
@@ -112,13 +111,13 @@ const ConferenceSettingsPage = () => {
     return (
         <RoomLayout title="Lineup | Settings">
             <div className={styles.container}>
-                <Panel maxHeight="calc(100vh - 17rem)">
-                    <PanelHeader title={conference.name} onClick={back}/>
-
-                    <div className={styles.wrapper}>
-                        <ConferenceSettings conference={conference}/>
-                    </div>
-                </Panel>
+                <PanelPlusHeader 
+                    title={conference.name} 
+                    onClick={back} 
+                    maxHeight="calc(100vh - 17rem)"
+                >
+                    <ConferenceSettings conference={conference}/>
+                </PanelPlusHeader>
             </div>
         </RoomLayout>
     )

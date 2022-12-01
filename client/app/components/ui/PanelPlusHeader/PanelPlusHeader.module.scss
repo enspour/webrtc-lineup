@@ -1,4 +1,10 @@
-.wrapper {
+.panel__content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem 3rem;
+}
+
+.panel__header {
     position: sticky;
     top: 0;
     left: 0;
@@ -6,7 +12,7 @@
     z-index: 10;
 }
 
-.header {
+.panel__header__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,7 +21,7 @@
     width: 100%;
 }
 
-.header__title {
+.panel__header__title {
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--theme-color-quaternary);
