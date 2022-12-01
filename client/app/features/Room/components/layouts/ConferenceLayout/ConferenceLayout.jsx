@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 
-import ConnectionLayout from "@features/room/components/layouts/ConnectionLayout/ConnectionLayout";
+import ConnectionLayout from "@features/Room/components/layouts/ConnectionLayout/ConnectionLayout";
 import Header from "./Header/Header";
 
 import styles from "./ConferenceLayout.module.scss";

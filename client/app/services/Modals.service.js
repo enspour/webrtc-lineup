@@ -1,6 +1,6 @@
 import ModalStore from "@stores/Modal.store";
 
-import { RoomStore } from "@features/room";
+import { RoomStore } from "@features/Room";
 
 class Modal {
     #store;

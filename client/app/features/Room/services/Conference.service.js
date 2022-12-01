@@ -1,6 +1,6 @@
 import iceServersConfig from "app/configs/iceServers.config";
 
-import { SpeechService } from "@features/speech";
+import { SpeechService } from "@features/Speech";
 
 import ConferenceInfo from "./ConferenceInfo.service";
 

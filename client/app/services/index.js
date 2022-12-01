@@ -21,7 +21,7 @@ import Storage from "./Storage.service";
 
 import { IslandService } from "@features/Island";
 
-import { ConferenceService, RoomService, SignalService } from "@features/room";
+import { ConferenceService, RoomService, SignalService } from "@features/Room";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 

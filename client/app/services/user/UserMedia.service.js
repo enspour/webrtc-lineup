@@ -1,6 +1,6 @@
 import MediaDataStore from "@stores/MediaData.store";
 
-import { SpeechService } from "@features/speech";
+import { SpeechService } from "@features/Speech";
 
 export default class UserMediaService {
     #stream;

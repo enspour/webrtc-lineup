@@ -1,4 +1,4 @@
-import { ConferenceStore } from "@features/room";
+import { ConferenceStore } from "@features/Room";
 
 import handlerConference from "./handlerConference";
 
