@@ -170,21 +170,21 @@ export default class Signal {
     }
 
     /**
-     * @param {(socketId: string) => Promise<void>} handler 
+     * @param {(socketId: string, userId: string) => Promise<void>} handler 
      * @returns 
      */
     onUserJoinConference(handler) {
-        const event = async ({ socketId }) => await handler(socketId);
+        const event = async ({ socketId, userId }) => await handler(socketId, userId);
         this.#socket.on(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
         return () => this.#socket.off(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
     }
 
     /**
-     * @param {(socketId: string) => Promise<void>} handler 
+     * @param {(socketId: string, userId: string) => Promise<void>} handler 
      * @returns 
      */
-     onUserLeaveConference(handler) {
-        const event = async ({ socketId }) => await handler(socketId);
+    onUserLeaveConference(handler) {
+        const event = async ({ socketId, userId }) => await handler(socketId, userId);
         this.#socket.on(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
         return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
     }
@@ -205,11 +205,11 @@ export default class Signal {
     }
 
     /**
-     * @param {(sourceId: string, offer) => Promise<void>} handler 
+     * @param {(socketId: string, userId: string, offer) => Promise<void>} handler 
      * @returns
      */
     onAcceptOffer(handler) {
-        const event = async ({ sourceId, offer }) => await handler(sourceId, offer);
+        const event = async ({ socketId, userId, offer }) => await handler(socketId, userId, offer);
         this.#socket.on(SignalActions.ACCEPT_OFFER, event);
         return () => this.#socket.off(SignalActions.ACCEPT_OFFER, event);
     }
@@ -230,11 +230,11 @@ export default class Signal {
     }
 
     /**
-     * @param {(sourceId: string, answer) => Promise<void>} handler 
+     * @param {(socketId: string, userId: string, answer) => Promise<void>} handler 
      * @returns
      */
     onAcceptAnswer(handler) {
-        const event = async ({ sourceId, answer }) => await handler(sourceId, answer);
+        const event = async ({ socketId, userId, answer }) => await handler(socketId, userId, answer);
         this.#socket.on(SignalActions.ACCEPT_ANSWER, event);
         return () => this.#socket.off(SignalActions.ACCEPT_ANSWER, event);
     }
@@ -255,11 +255,11 @@ export default class Signal {
     }
 
     /**
-     * @param {(sourceId: string, iceCandidate) => Promise<void>} handler 
+     * @param {(socketId: string, iceCandidate) => Promise<void>} handler 
      * @returns
      */
     onAcceptIceCandidate(handler) {
-        const event = async ({ sourceId, iceCandidate }) => await handler(sourceId, iceCandidate);
+        const event = async ({ socketId, iceCandidate }) => await handler(socketId, iceCandidate);
         this.#socket.on(SignalActions.ACCEPT_ICE_CANDIDATE, event);
         return () => this.#socket.off(SignalActions.ACCEPT_ICE_CANDIDATE, event);
     }
