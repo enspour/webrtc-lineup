@@ -1,6 +1,6 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 
-import AuthService from "@services/Auth.service";
+import UserService from "@services/User.service";
 import JWTService from "@services/JWT.service";
 
 import { validatePassowrd, hashPassword } from "@utils/bcrypt";
@@ -17,7 +17,7 @@ class AuthController {
         const password = req.body.password as string;
         const rememberMe = req.body.remember_me as boolean;
         
-        const userAuth = await AuthService.findByEmail(email);
+        const userAuth = await UserService.findByEmail(email);
         
         if (userAuth) {
             const isEqualPassword = await validatePassowrd(password, userAuth.password);
@@ -46,7 +46,7 @@ class AuthController {
 
         const hashedPassword = await hashPassword(password);
 
-        const user = await AuthService.create(name, email, hashedPassword);
+        const user = await UserService.create(name, email, hashedPassword);
         
         if (user) {
             const options = {
