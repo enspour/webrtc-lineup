@@ -2,18 +2,18 @@ import { Router } from "express";
 
 import ConferencesController from "@controllers/Conferences.controller";
 
-import idValidator from "routes/validators/params/id.validator";
+import AsyncHandler from "core/server/AsyncHandler";
 
 import guardMiddleware from "@middlewares/guard.middleware";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 
-import AsyncHandler from "core/server/AsyncHandler";
+import findAllValidator from "./validators/findAll.validator";
 
 const router = Router();
 
 router.get("/:id",
     guardMiddleware,
-    idValidator,
+    findAllValidator,
     validatorMiddleware,
     AsyncHandler(ConferencesController.findAll)    
 )

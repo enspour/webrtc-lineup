@@ -2,8 +2,8 @@ import { Router } from "express";
 
 import ConferenceController from "@controllers/Conference.controller";
 
-import enableAudioValidator from "./validators/enableAudio.validator";
-import enableVideoValidator from "./validators/enableVideo.validator";
+import updateEnableAudioValidator from "./validators/updateEnableAudio.validator";
+import updateEnableVideoValidator from "./validators/updateEnableVideo.validator";
 import createValidator from "./validators/create.validator";
 import idValidator from "routes/validators/params/id.validator";
 
@@ -30,14 +30,14 @@ router.delete("/:id",
 
 router.post("/settings/enable_audio", 
     guardMiddleware,
-    enableAudioValidator,
+    updateEnableAudioValidator,
     validatorMiddleware,
     asyncHandler(ConferenceController.updateEnableAudio)
 );
 
 router.post("/settings/enable_video", 
     guardMiddleware,
-    enableVideoValidator,
+    updateEnableVideoValidator,
     validatorMiddleware,
     asyncHandler(ConferenceController.updateEnableVideo)
 );

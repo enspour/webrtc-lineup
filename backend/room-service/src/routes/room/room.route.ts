@@ -5,7 +5,7 @@ import RoomController from "@controllers/Room.controller";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 import guardMiddleware from "@middlewares/guard.middleware";
 
-import visibilityValidator from "./validators/visibility.validator";
+import updateVisibilityValidator from "./validators/updateVisibility.validator";
 import updateNameValidator from "./validators/updateName.validator";
 import createValidator from "./validators/create.validator";
 import idValidator from "routes/validators/params/id.validator";
@@ -58,7 +58,7 @@ router.post("/name",
 
 router.post("/settings/visibility", 
     guardMiddleware,
-    visibilityValidator,
+    updateVisibilityValidator,
     validatorMiddleware,
     asyncHandler(RoomController.updateVisibility)
 );
