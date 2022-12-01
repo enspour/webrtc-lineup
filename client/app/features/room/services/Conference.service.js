@@ -2,19 +2,23 @@ import iceServersConfig from "app/configs/iceServers.config";
 
 import { SpeechService } from "@features/speech";
 
+import ConferenceInfo from "./ConferenceInfo.service";
+
 import PeersStore from "../stores/Peers.store";
 
 class MediaPeerConnection {
     #conferenceId;
     #peerId;
+    #userId;
     #signal;
     #stream;
     #speechService;
     #peerConnection;
     
-    constructor(conferenceId, peerId, localStream, signal) {
+    constructor(conferenceId, peerId, userId, localStream, signal) {
         this.#conferenceId = conferenceId;
         this.#peerId = peerId;
+        this.#userId = userId;
         this.#signal = signal;
         this.#stream = new MediaStream();
         this.#speechService = new SpeechService();
@@ -43,6 +47,10 @@ class MediaPeerConnection {
 
     get Stream() {
         return this.#stream;
+    }
+
+    get UserId() {
+        return this.#userId;
     }
 
     get PeerId() {
@@ -94,17 +102,19 @@ class MediaPeerConnection {
 
 export default class ConferenceService {
     #signal;
-    #roomInfo;
+    #room;
     #userMedia;
+    
+    #conferenceInfo;
     
     #peersStore;
 
-    #conferenceId;
-
-    constructor(signal, roomInfo, userMedia) {
+    constructor(signal, room, userMedia) {
         this.#signal = signal;
-        this.#roomInfo = roomInfo;
+        this.#room = room;
         this.#userMedia = userMedia;
+        
+        this.#conferenceInfo = new ConferenceInfo();
         
         this.#peersStore = new PeersStore();
     }
@@ -121,6 +131,7 @@ export default class ConferenceService {
         const offAcceptIceCandidate = this.#onAcceptIceCandidate();
         const offUserLeave = this.#onUserLeave();
         const offUserJoin = this.#onUserJoin();
+        const offJoin = this.#onJoin();
         const offLeave = this.#onLeave();
 
         return () => {
@@ -129,70 +140,74 @@ export default class ConferenceService {
             offAcceptIceCandidate();
             offUserLeave();
             offUserJoin();
+            offJoin();
             offLeave();
         }
+    }
+
+    get Info() {
+        return this.#conferenceInfo;
     }
 
     get Peers() {
         return this.#peersStore.peers;
     }
 
-    async join(conferenceId, constraints) {
-        this.#conferenceId = conferenceId;
+    async join(conference, constraints) {
+        if (conference) {
+            let waiter;
+            
+            const roomId = this.#room.Info.Id;
+            const conferenceId = conference.id;
 
-        let waiter;
+            if (roomId && conferenceId) { 
+                this.#conferenceInfo.setConference(conference);
+                await this.#userMedia.captureMedia(constraints);
         
-        const roomId = this.#roomInfo.Id;
-
-        if (roomId && conferenceId) {
-            await this.#userMedia.captureMedia(constraints);
-
-            const clear = this.#signal.onJoinConference((status, message, data) => {
-                if (status !== 200) {
-                    this.#userMedia.stopCapturedMedia();
-                }
-
-                if (waiter) {
-                    waiter({ status, message, data });
-                }
-
-                clear();
-            });
-            
-            this.#signal.joinConference(conferenceId);
-            
-            return new Promise((resolve, _) => waiter = resolve);
+                const clear = this.#signal.onJoinConference((status, message, data) => {
+                    if (waiter) waiter({ status, message, data });
+        
+                    clear();
+                });
+                
+                this.#signal.joinConference(conferenceId);
+                
+                return new Promise((resolve, _) => waiter = resolve);
+            }
+        
+            return new Error("You are not connected to room yet");
         }
-
-        return new Error("You are not connected to room yet");
     }
 
     async leave() {
-        let waiter;
+        const conferenceId = this.#conferenceInfo.Id;
 
-        const roomId = this.#roomInfo.Id;
+        if (conferenceId) {
+            let waiter;
+    
+            const roomId = this.#room.Info.Id;
+    
+            if (roomId && conferenceId) {
+                const clear = this.#signal.onLeaveConference(async (status, message, data) => {
+                    if (waiter) waiter({ status, message, data });
 
-        if (roomId && this.#conferenceId) {
-            const clear = this.#signal.onLeaveConference(async (status, message, data) => {
-                if (waiter) {
-                    waiter({ status, message, data });
-                }
-
-                clear();
-            });
-
-            this.#signal.leaveConference(this.#conferenceId);
-
-            return new Promise((resolve, _) => waiter = resolve);
+                    clear();
+                });
+    
+                this.#signal.leaveConference(conferenceId);
+    
+                return new Promise((resolve, _) => waiter = resolve);
+            }
+    
+            return new Error("You are not connected to room yet");
         }
-
-        return new Error("You are not connected to room yet");
     }
 
-    async #sendOffer(peerId) {
+    async #sendOffer(peerId, userId) {
         const peer = new MediaPeerConnection(
-            this.#conferenceId, 
-            peerId, 
+            this.#conferenceInfo.Id, 
+            peerId,
+            userId,
             this.#userMedia.Stream, 
             this.#signal
         );
@@ -203,10 +218,11 @@ export default class ConferenceService {
     }
 
     #onAcceptOffer() {
-        return this.#signal.onAcceptOffer(async (sourceId, offer) => {
+        return this.#signal.onAcceptOffer(async (peerId, userId, offer) => {
             const peer = new MediaPeerConnection(
-                this.#conferenceId, 
-                sourceId, 
+                this.#conferenceInfo.Id, 
+                peerId,
+                userId,
                 this.#userMedia.Stream, 
                 this.#signal
             );
@@ -221,8 +237,8 @@ export default class ConferenceService {
     }
 
     #onAcceptAnswer() {
-        return this.#signal.onAcceptAnswer(async (sourceId, answer) => {
-            const peer = this.#peersStore.peers.find(item => item.PeerId === sourceId);
+        return this.#signal.onAcceptAnswer(async (peerId, userId, answer) => {
+            const peer = this.#peersStore.peers.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.acceptAnswer(answer);
             }
@@ -230,8 +246,8 @@ export default class ConferenceService {
     }
 
     #onAcceptIceCandidate() {
-        return this.#signal.onAcceptIceCandidate(async (sourceId, iceCandidate) => {
-            const peer = this.#peersStore.peers.find(item => item.PeerId === sourceId);
+        return this.#signal.onAcceptIceCandidate(async (peerId, iceCandidate) => {
+            const peer = this.#peersStore.peers.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.addIceCandidate(iceCandidate);
             }
@@ -239,20 +255,32 @@ export default class ConferenceService {
     }
 
     #onUserJoin() {
-        return this.#signal.onUserJoinConference(async peerId => await this.#sendOffer(peerId));
+        return this.#signal.onUserJoinConference(
+            async (peerId, userId) => await this.#sendOffer(peerId, userId)
+        );
     }
 
     #onUserLeave() {
-        return this.#signal.onUserLeaveConference(peerId => {
+        return this.#signal.onUserLeaveConference((peerId, userId) => {
             const peer = this.#peersStore.remove(peerId);
             if (peer) peer.close();
         })
+    }
+
+    #onJoin() {
+        return this.#signal.onJoinConference((status) => {
+            if (status !== 200) {
+                this.#userMedia.stopCapturedMedia();
+                this.#conferenceInfo.clear();
+            }
+        });
     }
 
     #onLeave() {
         return this.#signal.onLeaveConference((status) => {
             if (status === 200) {
                 this.#userMedia.stopCapturedMedia();
+                this.#conferenceInfo.clear();
                 this.#peersStore.clear();
             }
         })
