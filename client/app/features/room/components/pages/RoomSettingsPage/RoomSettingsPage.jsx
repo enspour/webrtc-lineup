@@ -16,13 +16,13 @@ import services from "@services";
 import styles from "./RoomSettingsPage.module.scss";
 
 const RoomNameSettings = () => {
-    const [name, setName] = React.useState(services.room.RoomInfo.Name);
+    const [name, setName] = React.useState(services.room.Info.Name);
 
     const request = useRequest(services.roomAPI.updateName);
 
     const save = () => {
         const body = {
-            id: services.room.RoomInfo.Id,
+            id: services.room.Info.Id,
             name: name
         }
 
@@ -38,13 +38,13 @@ const RoomNameSettings = () => {
 }
 
 const RoomVisibilitySettings = observer(() => {
-    const settings = services.room.RoomInfo.Settings;
+    const settings = services.room.Info.Settings;
 
     const request = useRequest(services.roomAPI.updateVisibility);
 
     const setVisibility = (value) => {
         const body = {
-            id: services.room.RoomInfo.Id,
+            id: services.room.Info.Id,
             visibility: value
         }
 

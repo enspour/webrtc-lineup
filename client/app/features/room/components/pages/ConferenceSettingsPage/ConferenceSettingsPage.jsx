@@ -104,7 +104,7 @@ const ConferenceSettingsPage = () => {
     const router = useRouter();
     const { roomId, conferenceId } = router.query;
 
-    const conference = services.room.ConferencesInfo.Array
+    const conference = services.room.Conferences.Array
         .find(item => item.id === `${roomId}|${conferenceId}`) || { settings: {} };
 
     const back = () => router.back();

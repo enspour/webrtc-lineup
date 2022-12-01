@@ -22,7 +22,7 @@ const Toolkits = () => {
 }
 
 const Conferences = observer(() => {
-    const conferences = services.room.ConferencesInfo.Array;
+    const conferences = services.room.Conferences.Array;
 
     return (
         <div className={styles.section__items}>
@@ -36,7 +36,7 @@ const RoomPage = () => {
         <RoomLayout>
             <div className={styles.sections}>
                 <div className={styles.section}>
-                    <div className={styles.section__title}> Conversation </div>
+                    <div className={styles.section__title}> Conferences </div>
                     <Conferences />
                 </div>
                 

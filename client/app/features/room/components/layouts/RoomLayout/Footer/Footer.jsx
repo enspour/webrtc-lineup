@@ -54,12 +54,12 @@ const AudioControl = observer(() => {
 });
 
 const SettingsControl = observer(() => {
-    const owner = services.room.RoomInfo.Owner;
+    const owner = services.room.Info.Owner;
 
     const router = useRouter();
 
     const openSettings = () => {
-        const roomId = services.room.RoomInfo.Id;
+        const roomId = services.room.Info.Id;
         router.push(`/room/${roomId}/settings`);
     }
 
@@ -88,7 +88,7 @@ const LeaveControl = () => {
 }
 
 const CreateControl = () => {
-    const owner = services.room.RoomInfo.Owner;
+    const owner = services.room.Info.Owner;
     
     const open = () => {
         services.modals.createConference.setIsOpen(true);

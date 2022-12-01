@@ -56,9 +56,9 @@ const Header = () => {
     const router = useRouter();
 
     const leave = async () => {
-        const response = await services.room.Conference.leave();
+        const response = await services.conference.leave();
         console.log(response);
-        const id = services.room.RoomInfo.Id;
+        const id = services.room.Info.Id;
         router.push(`/room/${id}`);
     }
 

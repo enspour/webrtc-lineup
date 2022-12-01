@@ -27,7 +27,7 @@ const CreateConferenceModal = observer(() => {
 
     const create = () => {
         const body = {
-            room_id: services.room.RoomInfo.Id,
+            room_id: services.room.Info.Id,
             name,
             description,
         }
@@ -41,8 +41,8 @@ const CreateConferenceModal = observer(() => {
 
     React.useEffect(() => {
         if (data && data.status === 200) {
-            const room_id = services.room.RoomInfo.Id;
-            services.room.ConferencesInfo.update({ params: { room_id } });
+            const room_id = services.room.Info.Id;
+            services.room.Conferences.update({ params: { room_id } });
         }
     }, [data])
 
