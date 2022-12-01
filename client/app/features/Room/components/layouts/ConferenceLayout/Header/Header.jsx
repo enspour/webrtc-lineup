@@ -19,10 +19,15 @@ import LeaveIcon from "@assets/images/conference-header/leave.svg";
 import styles from "./Header.module.scss"
 
 const CameraControl = observer(() => {
+    const settings = services.conference.Info.Settings;
     const mutedVideo = services.userMedia.MutedVideo;
 
     const mute = () => services.userMedia.muteVideo();
     const unmute = () => services.userMedia.unmuteVideo();
+
+    if (!settings.enableVideo) {
+        return "";
+    }
 
     return (
         <div>
@@ -36,10 +41,15 @@ const CameraControl = observer(() => {
 });
 
 const MicrophoneControl = observer(() => {
+    const settings = services.conference.Info.Settings;
     const mutedAudio = services.userMedia.MutedAudio;
 
     const mute = () => services.userMedia.muteAudio();
     const unmute = () => services.userMedia.unmuteAudio();
+
+    if (!settings.enableAudio) {
+        return "";
+    }
 
     return (
         <div className={styles.header__controls__mic}>
@@ -51,6 +61,16 @@ const MicrophoneControl = observer(() => {
         </div>
     );
 });
+
+const ConferenceName = observer(() => {
+    const name = services.conference.Info.Name;
+
+    return (
+        <div className={styles.header__conference__name}> 
+            {name} 
+        </div>
+    )
+})
 
 const Header = () => {
     const router = useRouter();
@@ -74,12 +94,10 @@ const Header = () => {
                     <Svg url={FullIcon} width="1.4" height="1.4"/>
                 </div>
 
-                <div className={styles.header__title}>
-                    Conference
-                </div>
+                <ConferenceName />
             </div>
 
-            <div className="fl al-center g-8">
+            <div className="fl al-center g-5">
                 <div className={styles.header__controls}>
                     <CameraControl />
                     <MicrophoneControl />
