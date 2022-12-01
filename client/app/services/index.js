@@ -24,6 +24,7 @@ import { IslandService } from "@features/Island";
 import { ConferenceService, RoomService, SignalService } from "@features/Room";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
+import UserAPIService from "./APIServices/UserAPI.service";
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
@@ -31,6 +32,7 @@ const roomsAPI = new RoomsAPI();
 const authAPI = new AuthAPI();
 const conferenceAPI = new ConferenceAPI();
 const conferencesAPI = new ConferencesAPI();
+const userAPI = new UserAPIService();
 
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
@@ -46,6 +48,7 @@ const services = {
     roomsAPI,
     conferenceAPI,
     conferencesAPI,
+    userAPI,
     
     search: new Search(API, roomsAPI),
 
