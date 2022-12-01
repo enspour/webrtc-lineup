@@ -1,6 +1,7 @@
 import { Router, Application } from "express";
 
 import authRoutes from "./auth/auth.route";
+import userRoutes from "./user/user.route";
 
 import servicesCommunicationRoutes from "@services-communication/routes";
 
@@ -10,6 +11,7 @@ const useRoutes = (app: Application) => {
     const router = Router();
     
     router.use("/api/v1/auth-service/auth", authRoutes);
+    router.use("/api/v1/auth-service/user", userRoutes);
 
     router.use("/services-communication/auth-service/", servicesCommunicationRoutes);
 
