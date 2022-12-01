@@ -20,7 +20,10 @@ class ConferenceActions {
                 if (!context.Client.has(id)) {
                     await context.Client.join(id);
     
-                    const payload = { socketId: context.Client.SocketId }
+                    const payload = { 
+                        socketId: context.Client.SocketId,
+                        userId: context.Client.UserId, 
+                    }
                     
                     context.broadcast(
                         id, 
@@ -53,7 +56,10 @@ class ConferenceActions {
         if (context.Client.has(id)) {
             await context.Client.leave(id);
             
-            const payload = { socketId: context.Client.SocketId }
+            const payload = {
+                socketId: context.Client.SocketId,
+                userId: context.Client.UserId,
+            }
             
             context.broadcast(
                 id, 
@@ -77,7 +83,11 @@ class ConferenceActions {
         const { conferenceId, destinationId, offer } = context.Payload;
 
         if (context.Client.has(conferenceId)) {
-            const payload = { sourceId: context.Client.SocketId, offer };
+            const payload = { 
+                socketId: context.Client.SocketId, 
+                userId: context.Client.UserId, 
+                offer,
+            };
 
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_OFFER, payload);
             
@@ -97,7 +107,11 @@ class ConferenceActions {
         const { conferenceId, destinationId, answer } = context.Payload;
 
         if (context.Client.has(conferenceId)) {
-            const payload = { sourceId: context.Client.SocketId, answer };
+            const payload = { 
+                socketId: context.Client.SocketId, 
+                userId: context.Client.UserId,
+                answer,
+            };
 
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ANSWER, payload);
             
@@ -117,7 +131,10 @@ class ConferenceActions {
         const { conferenceId, destinationId, iceCandidate } = context.Payload;
 
         if (context.Client.has(conferenceId)) {
-            const payload = { sourceId: context.Client.SocketId, iceCandidate };
+            const payload = { 
+                socketId: context.Client.SocketId, 
+                iceCandidate 
+            };
             
             io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ICE_CANDIDATE, payload);
             
