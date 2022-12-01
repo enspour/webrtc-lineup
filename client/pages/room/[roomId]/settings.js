@@ -1,3 +1,3 @@
-import { RoomSettingsPage } from "@features/room";
+import { RoomSettingsPage } from "@features/Room";
 
 export default RoomSettingsPage;

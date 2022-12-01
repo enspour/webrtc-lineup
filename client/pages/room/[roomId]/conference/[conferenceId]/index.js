@@ -1,3 +1,3 @@
-import { ConferencePage } from "@features/room"
+import { ConferencePage } from "@features/Room"
 
 export default ConferencePage;
