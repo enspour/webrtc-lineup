@@ -1,15 +1,33 @@
 import React from "react";
 
+import useRequest from "@hooks/api/useRequest";
+import useResponse from "@hooks/api/useResponse";
+
+import services from "@services";
+
 import styles from "./UserAudio.module.scss";
 
 const UserAudio = ({ item }) => {
     const audioRef = React.useRef();
+
+    const [user, setUser] = React.useState({});
+
+    const request = useRequest(services.userAPI.findOne);
+    const { data } = useResponse(request);
+    
+    React.useEffect(() => {
+        request.start({ params: { id: item.userId } })
+    }, []);
 
     React.useEffect(() => {
         if (audioRef.current) {
             audioRef.current.srcObject = item.stream;
         }
     }, [])
+
+    React.useEffect(() => {
+        if (data) setUser(data.body.user);
+    }, [data])
 
     return (
         <div
@@ -30,8 +48,8 @@ const UserAudio = ({ item }) => {
             />
 
             <div className={styles.user__avatar}></div>
-            <div className="h-100">
-                <div className={styles.user__name}>Lineup user</div>
+            <div>
+                <div className={styles.user__name}> {user.name} </div>
             </div>
         </div>
     )
