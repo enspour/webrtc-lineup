@@ -20,17 +20,23 @@ import UnknowError from "../QueryError/UnknowError";
 export default class PrismaRepository implements IRepository {
     constructor(private prismaClient: PrismaClient) {}
 
-    async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null> {
-        return await this.prismaClient.userAuth.findUnique({
-            where: { email },
-            include: { user: true }
-        })
+    async findUserById(id: bigint): Promise<User | null> {
+        return await this.prismaClient.user.findUnique({
+            where: { id }
+        });
     }
 
     async findUserAuthByEmail(email: string): Promise<UserAuth | null> {
         return await this.prismaClient.userAuth.findUnique({
             where: { email }
         }); 
+    }
+
+    async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null> {
+        return await this.prismaClient.userAuth.findUnique({
+            where: { email },
+            include: { user: true }
+        })
     }
 
     async findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {

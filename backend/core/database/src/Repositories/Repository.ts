@@ -10,8 +10,9 @@ import {
 } from "../types";
 
 export interface IRepository {
-    findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null>;
+    findUserById(id: bigint): Promise<User | null>;
     findUserAuthByEmail(email: string): Promise<UserAuth | null>;
+    findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User }) | null>;
     
     findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]>;
     findFavoritesRooms(user_id: bigint): Promise<(Room & { tags: Tag[], owner: User })[]>;
@@ -89,12 +90,16 @@ export interface IRepository {
 export default class Repository implements IRepository {
     constructor(private _repository: IRepository) {}
 
-    async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User; }) | null> {
-        return await this._repository.findUserAuthByEmailWithUser(email); 
+    async findUserById(id: bigint): Promise<User | null> {
+        return await this._repository.findUserById(id);
     }
 
     async findUserAuthByEmail(email: string): Promise<UserAuth | null> {
         return await this._repository.findUserAuthByEmail(email);
+    }
+
+    async findUserAuthByEmailWithUser(email: string): Promise<(UserAuth & { user: User; }) | null> {
+        return await this._repository.findUserAuthByEmailWithUser(email); 
     }
 
     async findUserRooms(user_id: bigint): Promise<(Room & { tags: Tag[] })[]> {
