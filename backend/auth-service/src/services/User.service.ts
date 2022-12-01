@@ -1,6 +1,10 @@
 import { repository } from "core/database/src/connection";
 
-class AuthService {
+class UserService {
+    async findById(id: bigint) {
+        return await repository.findUserById(id);
+    }
+
     async findByEmail(email: string) {
         return await repository.findUserAuthByEmailWithUser(email);
     }
@@ -16,4 +20,4 @@ class AuthService {
     }
 }
 
-export default new AuthService();
+export default new UserService();
