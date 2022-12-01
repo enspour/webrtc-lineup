@@ -1,6 +1,4 @@
 import RequestedArrayService from "app/services/RequestedArray.service";
-import SignalService from "./SignalService/Signal.service";
-import ConferenceService from "./Conference.service";
 import RoomInfoService from "./RoomInfo.service";
 
 import handlerDataConferencesIntoStates from "@utils/handlersReceivedData/handlerDataConferencesIntoStates";
@@ -8,27 +6,23 @@ import handlerRoom from "@utils/handlersReceivedData/handlerRoom";
 import handlerConference from "@utils/handlersReceivedData/handlerConference";
 
 export default class RoomService {
-    #signal;
-    #conference;
-
     #roomInfo;
-    #conferencesInfo;
+    #conferences;
+    #signal;
 
-    constructor(API, roomAPI, conferencesAPI, userMedia) {
+    constructor(signal, API, roomAPI, conferencesAPI) {
+        this.#signal = signal;
+
         this.#roomInfo = new RoomInfoService(API.createRequest(roomAPI.findOne));
-        this.#conferencesInfo = new RequestedArrayService(
+        this.#conferences = new RequestedArrayService(
             API.createRequest(conferencesAPI.findAll),
             handlerDataConferencesIntoStates
         );
-
-        this.#signal = new SignalService();
-        this.#conference = new ConferenceService(this.#signal, this.#roomInfo, userMedia);
     }
 
     initialize() {
         this.#roomInfo.initialize();
-        this.#conferencesInfo.initialize();
-        this.#conference.initialize();
+        this.#conferences.initialize();
 
         this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
         this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
@@ -50,20 +44,16 @@ export default class RoomService {
         }
     }
 
-    get Conference() {
-        return this.#conference;
+    get Connected() {
+        return this.#signal.Connected;
     }
 
-    get RoomInfo() {
+    get Info() {
         return this.#roomInfo;
     }
 
-    get ConferencesInfo() {
-        return this.#conferencesInfo;
-    }
-
-    get Connected() {
-        return this.#signal.Connected;
+    get Conferences() {
+        return this.#conferences;
     }
 
     async join(id, password) {
@@ -146,9 +136,9 @@ export default class RoomService {
         return this.#signal.onConferenceInformationUpdate((data) => {
             const conference = handlerConference(data);
             
-            const index = this.#conferencesInfo.Array.findIndex(item => item.id === conference.id);
+            const index = this.#conferences.Array.findIndex(item => item.id === conference.id);
             if (index !== -1) {
-                this.#conferencesInfo.Array[index].setConference(conference);
+                this.#conferences.Array[index].setConference(conference);
             }
         });
     }

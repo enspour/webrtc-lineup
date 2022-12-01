@@ -1,7 +1,9 @@
+import SignalService from "./services/SignalService/Signal.service";
 import RoomService from "./services/Room.service";
+import ConferenceService from "./services/Conference.service";
 
-import ConferenceStore from "./stores/Conference.store";
 import RoomStore from "./stores/Room.store";
+import ConferenceStore from "./stores/Conference.store";
 
 import RoomPage from "./components/pages/RoomPage/RoomPage";
 import RoomSettingsPage from "./components/pages/RoomSettingsPage/RoomSettingsPage";
@@ -10,10 +12,12 @@ import ConferenceSettingsPage from "./components/pages/ConferenceSettingsPage/Co
 
 
 export { 
+    SignalService,
     RoomService,
+    ConferenceService,
 
-    ConferenceStore,
     RoomStore,
+    ConferenceStore,
 
     RoomPage,
     RoomSettingsPage,

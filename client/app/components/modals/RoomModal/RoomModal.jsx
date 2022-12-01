@@ -109,7 +109,7 @@ const JoinButton = () => {
         const id = services.modals.room.Id;
         const response = await services.room.join(id, password);
         if (response.status === 200) {
-            services.room.ConferencesInfo.update({ params: { room_id: id } });
+            services.room.Conferences.update({ params: { room_id: id } });
             router.push(`/room/${id}`); 
         }
     }

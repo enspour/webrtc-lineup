@@ -19,9 +19,9 @@ import Themes from "./Themes.service";
 
 import Storage from "./Storage.service";
 
-import { IslandService } from "../features/Island";
+import { IslandService } from "@features/Island";
 
-import { RoomService } from "@features/room";
+import { ConferenceService, RoomService, SignalService } from "@features/room";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 
@@ -34,6 +34,10 @@ const conferencesAPI = new ConferencesAPI();
 
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
+
+const signal = new SignalService();
+
+const room = new RoomService(signal, API, roomAPI, conferencesAPI);
 
 const services = {
     API,
@@ -60,7 +64,8 @@ const services = {
 
     island: new IslandService(),
 
-    room: new RoomService(API, roomAPI, conferencesAPI, userMedia),
+    room,
+    conference: new ConferenceService(signal, room, userMedia),
 
     initialize: function () {
         this.localStorage.initialize("local");
@@ -74,6 +79,7 @@ const services = {
         this.search.initialize(this.localStorage);
 
         this.room.initialize();
+        this.conference.initialize();
     }
 }
 
