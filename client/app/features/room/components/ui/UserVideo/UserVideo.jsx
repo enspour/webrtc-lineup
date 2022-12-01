@@ -1,9 +1,8 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
 
 import styles from "./UserVideo.module.scss";
 
-const UserVideo = observer(({ item, options }) => {
+const UserVideo = ({ item, options }) => {
     const videoRef = React.useRef();
 
     React.useEffect(() => {
@@ -18,8 +17,8 @@ const UserVideo = observer(({ item, options }) => {
             style={{
                 border: `.2rem solid ${
                     item.active 
-                        ? "var(--theme-border-conf-video-active)" 
-                        : "var(--theme-border-conf-video)"
+                        ? "var(--theme-border-conf-user-active)" 
+                        : "var(--theme-border-conf-user)"
                 }`
             }}
         >
@@ -35,6 +34,6 @@ const UserVideo = observer(({ item, options }) => {
             />
         </div>
     )
-})
+}
 
-export default UserVideo;
+export default React.memo(UserVideo);

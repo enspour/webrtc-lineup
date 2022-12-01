@@ -80,7 +80,7 @@ const ConferenceCard = observer(({ conference }) => {
             audio: conference.settings.enableAudio, 
             video: conference.settings.enableVideo, 
         };
-        const response = await services.room.Conference.join(conference.id, constraints);
+        const response = await services.conference.join(conference, constraints);
         console.log(response);
     
         if (response.status === 200) {
@@ -97,7 +97,7 @@ const ConferenceCard = observer(({ conference }) => {
     React.useEffect(() => {
         appendMenu({ id: 1, name: "Open", onClick: openConference });
 
-        if (services.room.RoomInfo.Owner.id === services.user.Id) {
+        if (services.room.Info.Owner.id === services.user.Id) {
             appendMenu({ id: 2, name: "Delete", onClick: deleteConference });
             appendMenu({ id: 3, name: "Settings", onClick: openSettings });
         }
@@ -105,8 +105,8 @@ const ConferenceCard = observer(({ conference }) => {
 
     React.useEffect(() => {
         if (data && data.status === 200) {
-            const room_id = services.room.RoomInfo.Id;
-            services.room.ConferencesInfo.update({ params: { room_id } })
+            const room_id = services.room.Info.Id;
+            services.room.Conferences.update({ params: { room_id } })
         }
     }, [data])
 

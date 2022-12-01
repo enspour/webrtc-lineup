@@ -69,9 +69,7 @@ const getGridOptions = (parent, count) => {
     return { ...options, child }
 }
 
-const ConferenceVideos = () => {
-    const MAX_COUNT_VIDEOS = 9;
-    
+const ConferenceVideos = () => {    
     const videosRef = React.useRef();
 
     const [videos, setVideos] = React.useState([]);
@@ -87,19 +85,22 @@ const ConferenceVideos = () => {
 
     React.useEffect(() =>
         autorun(() => {
+            const MAX_COUNT_VIDEOS = 9;
+            
             const local = {
                 peerId: "local",
+                userId: services.user.Id,
                 stream: services.userMedia.Stream,
                 active: services.userMedia.IsSpeaking,
                 muted: true,
             };
             
-            const peers = services.room.Conference.Peers;
-            const remotePeers = [...peers]
+            const remotePeers = [...services.conference.Peers]
                 .sort((a, b) => b.LastAudioActive - a.LastAudioActive)
                 .slice(0, MAX_COUNT_VIDEOS - 1)
                 .map(item => ({
                     peerId: item.PeerId,
+                    userId: item.UserId,
                     stream: item.Stream,
                     active: item.IsSpeaking,
                     muted: false,
@@ -136,4 +137,4 @@ const ConferenceVideos = () => {
     )
 }
 
-export default ConferenceVideos;
+export default React.memo(ConferenceVideos);

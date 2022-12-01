@@ -1,13 +1,27 @@
-import React from "react";
+import { observer } from "mobx-react-lite";
 
 import ConferenceLayout from "../../layouts/ConferenceLayout/ConferenceLayout";
 
 import ConferenceVideos from "../../ui/ConferenceVideos/ConferenceVideos";
+import ConferenceAudios from "../../ui/ConferenceAudios/ConferenceAudios";
+import ConferenceChat from "../../ui/ConferenceChat/ConferenceChat";
 
-const ConferencePage = () => (
-    <ConferenceLayout>
-        <ConferenceVideos />
-    </ConferenceLayout>
-)
+import services from "@services";
 
-export default React.memo(ConferencePage);
+const ConferencePage = observer(() => {
+    const settings = services.conference.Info.Settings;
+
+    return (
+        <ConferenceLayout>
+            {
+                settings.enableVideo 
+                    ? <ConferenceVideos />
+                    : settings.enableAudio
+                        ? <ConferenceAudios />
+                        : <ConferenceChat />
+            }
+        </ConferenceLayout>
+    )
+});
+
+export default ConferencePage;
