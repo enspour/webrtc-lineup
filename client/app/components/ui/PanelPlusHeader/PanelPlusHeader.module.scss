@@ -1,7 +1,11 @@
+@import "../../../styles/mixins.scss";
+
 .panel__content {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2rem 3rem;
+
+    @include fix_scroll_for_panel_plus_header;
 }
 
 .panel__header {
