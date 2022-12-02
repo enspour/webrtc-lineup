@@ -2,10 +2,10 @@ import { Router } from "express";
 
 import ConferenceController from "@controllers/Conference.controller";
 
+import createValidator from "./validators/create.validator";
+import deleteValidator from "./validators/delete.validator";
 import updateEnableAudioValidator from "./validators/updateEnableAudio.validator";
 import updateEnableVideoValidator from "./validators/updateEnableVideo.validator";
-import createValidator from "./validators/create.validator";
-import idValidator from "routes/validators/params/id.validator";
 
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 import guardMiddleware from "@middlewares/guard.middleware";
@@ -23,7 +23,7 @@ router.post("/",
 
 router.delete("/:id",
     guardMiddleware,
-    idValidator,
+    deleteValidator,
     validatorMiddleware,
     asyncHandler(ConferenceController.delete)
 );

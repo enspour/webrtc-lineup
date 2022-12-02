@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import RoomController from "@services-communication/controllers/Room.controller";
 
-import withAuthValidator from "./validators/withAuth.validator";
+import findOneValidator from "./validators/findOne.validator";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";
 
 import AsyncHandler from "core/server/AsyncHandler";
@@ -10,7 +10,7 @@ import AsyncHandler from "core/server/AsyncHandler";
 const router = Router();
 
 router.get("/with-auth",
-    withAuthValidator,
+    findOneValidator,
     validatorMiddleware,
     AsyncHandler(RoomController.findOneWithAuth)
 );

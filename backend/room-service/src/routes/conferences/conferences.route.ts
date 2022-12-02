@@ -11,7 +11,7 @@ import findAllValidator from "./validators/findAll.validator";
 
 const router = Router();
 
-router.get("/:id",
+router.get("/:room_id",
     guardMiddleware,
     findAllValidator,
     validatorMiddleware,

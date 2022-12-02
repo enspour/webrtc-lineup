@@ -1,15 +1,15 @@
 import { repository } from "core/database/src/connection";
 
 class RoomService {
-    async findRoomByIdPrivilege(id: bigint) {
+    async findByIdPrivilege(id: bigint) {
         return await repository.findRoomByIdPrivilege(id);
     }
 
-    async findOne(id: bigint, userId: bigint) {
+    async findById(id: bigint, userId: bigint) {
         return await repository.findRoomById(id, userId);
     }
 
-    async findRoomByIdWithAuth(roomId: bigint, userId: bigint) {
+    async findByIdWithAuth(roomId: bigint, userId: bigint) {
         return await repository.findRoomByIdWithAuth(roomId, userId);
     }
 

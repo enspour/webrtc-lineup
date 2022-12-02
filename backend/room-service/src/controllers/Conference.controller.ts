@@ -48,7 +48,7 @@ class ConferenceController {
         const count = await ConferenceService.updateEnableAudio(conferenceId, user.id, enableAudio);
 
         if (count > 0) {
-            const conference = await ConferenceService.findConferenceByIdPrivilege(conferenceId);
+            const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
                 SignalService.updateConferenceInformation(conference);
             }
@@ -68,7 +68,7 @@ class ConferenceController {
         const count = await ConferenceService.updateEnableVideo(conferenceId, user.id, enableVideo);
 
         if (count > 0) {
-            const conference = await ConferenceService.findConferenceByIdPrivilege(conferenceId);
+            const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
                 SignalService.updateConferenceInformation(conference);
             }

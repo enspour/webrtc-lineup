@@ -1,5 +1,5 @@
 import { param } from "express-validator";
 
 export default [
-    param("id").isString().notEmpty(),
+    param("room_id").isNumeric().notEmpty(),
 ];

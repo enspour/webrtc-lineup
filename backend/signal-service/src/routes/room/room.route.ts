@@ -10,7 +10,7 @@ import getUsersValidator from "./validators/getUsers.validator";
 const router = Router();
 
 router.get(
-    "/:roomId/users", 
+    "/:room_id/users",
     getUsersValidator, 
     validatorMiddleware,
     AsyncHandler(RoomController.getUsers)

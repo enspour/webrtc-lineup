@@ -5,7 +5,7 @@ import { repository } from "core/database/src/connection";
 const CONFERENCE_ID_LENGTH = 12;
 
 class ConferenceService {
-    async findConferenceByIdPrivilege(id: string) {
+    async findByIdPrivilege(id: string) {
         return await repository.findConferenceByIdPrivilege(id);
     } 
 

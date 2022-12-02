@@ -6,7 +6,7 @@ import SuccessResponse from "core/server/responses/Success.response";
 
 class RoomController {
     async getUsers(req: Request, res: Response) {
-        const roomId = req.params.roomId;
+        const roomId = req.params.room_id;
 
         const users = services.rooms.getUsersIds(roomId);
 

@@ -15,7 +15,7 @@ class RoomController {
 
         const user = getUser(req);
 
-        const room = await RoomService.findOne(id, user.id);
+        const room = await RoomService.findById(id, user.id);
 
         if (room) {
             return new SuccessResponse({ room }).send(res);
@@ -85,7 +85,7 @@ class RoomController {
         const count = await RoomService.updateName(id, user.id, name);
 
         if (count > 0) {
-            const room = await RoomService.findRoomByIdPrivilege(id);
+            const room = await RoomService.findByIdPrivilege(id);
             if (room) {
                 SignalService.updateRoomInformation(room);
             }
@@ -105,7 +105,7 @@ class RoomController {
         const count = await RoomService.updateVisibility(id, user.id, visibility);
 
         if (count > 0) {
-            const room = await RoomService.findRoomByIdPrivilege(id);
+            const room = await RoomService.findByIdPrivilege(id);
             if (room) {
                 SignalService.updateRoomInformation(room);
             }
