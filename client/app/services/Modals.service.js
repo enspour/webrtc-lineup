@@ -1,7 +1,5 @@
 import ModalStore from "@stores/Modal.store";
 
-import { RoomStore } from "@features/Room";
-
 class Modal {
     #store;
 
@@ -19,42 +17,48 @@ class Modal {
 }
 
 class RoomModal extends Modal {
-    #roomStore;
+    #room;
 
     constructor() {
         super();
-        this.#roomStore = new RoomStore();
+
+        this.#room = {}
     } 
 
-    get Id() {
-        return this.#roomStore.id;
-    }
-
-    get Name() {
-        return this.#roomStore.name;
-    }
-
-    get Owner() {
-        return this.#roomStore.owner;
-    }
-
-    get Tags() {
-        return this.#roomStore.tags;
-    }
-
-    get CreatedAt() {
-        return this.#roomStore.createdAt;
+    get Room() {
+        return this.#room;
     }
 
     setRoom(room) {
-        this.#roomStore.setRoom(room);
+        this.#room = room;
+    }
+}
+
+class ConferenceModal extends Modal {
+    #conference;
+
+    constructor() {
+        super();
+
+        this.#conference = {};
+    }
+
+    get Conference() {
+        return this.#conference;
+    }
+
+    setConference(conference) {
+        this.#conference = conference
     }
 }
 
 export default class ModalsService {
     constructor() {
         this.createRoom = new Modal();
+        this.browseRoom = new RoomModal();
+        this.browseRoomSettings = new Modal();
+
         this.createConference = new Modal();
-        this.room = new RoomModal(); 
-    } 
+        this.browseConferenceSettings = new ConferenceModal();
+    }
 }

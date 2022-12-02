@@ -6,10 +6,7 @@ import RoomStore from "./stores/Room.store";
 import ConferenceStore from "./stores/Conference.store";
 
 import RoomPage from "./components/pages/RoomPage/RoomPage";
-import RoomSettingsPage from "./components/pages/RoomSettingsPage/RoomSettingsPage";
 import ConferencePage from "./components/pages/ConferencePage/ConferencePage";
-import ConferenceSettingsPage from "./components/pages/ConferenceSettingsPage/ConferenceSettingsPage";
-
 
 export { 
     SignalService,
@@ -20,7 +17,5 @@ export {
     ConferenceStore,
 
     RoomPage,
-    RoomSettingsPage,
     ConferencePage,
-    ConferenceSettingsPage,
 }

@@ -11,11 +11,11 @@ import useResponse from "@hooks/api/useResponse";
 
 import services from "@services";
 
-import styles from "./RoomModal.module.scss";
+import styles from "./BrowseRoomModal.module.scss";
 
 const Information = observer(() => {
-    const name = services.modals.room.Name;
-    const owner = services.modals.room.Owner;
+    const name = services.modals.browseRoom.Room.name;
+    const owner = services.modals.browseRoom.Room.owner;
 
     return (
         <div>
@@ -36,7 +36,7 @@ const ConnectedUsers = observer(() => {
 
     React.useEffect(() => 
         autorun(() => {
-            const id = services.modals.room.Id;
+            const id = services.modals.browseRoom.Room.id;
             request.start({ params: { roomId: id }});
         })
     , []);
@@ -71,11 +71,11 @@ const ConnectedUsers = observer(() => {
 });
 
 const Tags = observer(() => { 
-    const tags = services.modals.room.Tags;
+    const tags = services.modals.browseRoom.Room.tags;
 
     const searchByTags = (e, name) => {
         e.stopPropagation();
-        services.modals.room.setIsOpen(false);
+        services.modals.browseRoom.setIsOpen(false);
         services.island.goSearch();
         services.search.SearchedText = `#${name}`;
     }
@@ -106,7 +106,7 @@ const JoinButton = () => {
     const [password, setPassword] = React.useState("");
 
     const join = async () => {
-        const id = services.modals.room.Id;
+        const id = services.modals.browseRoom.Room.id;
         const response = await services.room.join(id, password);
         if (response.status === 200) {
             services.room.Conferences.update({ params: { room_id: id } });
@@ -130,26 +130,23 @@ const JoinButton = () => {
 }
 
 const RoomModal = observer(() => {
-    const isOpenRoom = services.modals.room.IsOpen;
+    const isOpenRoom = services.modals.browseRoom.IsOpen;
 
     const setIsOpenRoom = value => {
-        services.modals.room.setIsOpen(value);
+        services.modals.browseRoom.setIsOpen(value);
     }
-
-    if (!isOpenRoom) return "";
 
     return (
         <Modal 
             title="Join To Room"
             isOpen={isOpenRoom} 
             setIsOpen={setIsOpenRoom}
+            width="60rem"
         >
-            <div className={styles.wrapper}>
-                <Information />
-                <ConnectedUsers />
-                <Tags />
-                <JoinButton />
-            </div>
+            <Information />
+            <ConnectedUsers />
+            <Tags />
+            <JoinButton />
         </Modal>
     )
 });

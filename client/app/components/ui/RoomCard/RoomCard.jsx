@@ -126,8 +126,8 @@ const Tags = ({ tags }) => {
 
 const RoomCard = ({ room }) => {
     const openRoomModal = () => {
-        services.modals.room.setIsOpen(true);
-        services.modals.room.setRoom(room);
+        services.modals.browseRoom.setRoom(room);
+        services.modals.browseRoom.setIsOpen(true);
     }
     
     return (

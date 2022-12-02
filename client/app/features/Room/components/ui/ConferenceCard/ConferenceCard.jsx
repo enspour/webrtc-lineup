@@ -90,8 +90,8 @@ const ConferenceCard = observer(({ conference }) => {
     }
 
     const openSettings = () => {
-        const [roomId, conferenceId] = conference.id.split("|");
-        router.push(`/room/${roomId}/conference/${conferenceId}/settings`)
+        services.modals.browseConferenceSettings.setConference(conference);
+        services.modals.browseConferenceSettings.setIsOpen(true);
     }
 
     React.useEffect(() => {

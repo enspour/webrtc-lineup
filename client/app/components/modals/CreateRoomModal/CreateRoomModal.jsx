@@ -110,36 +110,33 @@ const CreateRoomModal = observer(() => {
         }
     }, [data]);
 
-    if (!isOpenModal) return "";
-
     return (
         <Modal
             title="Create Room"
             isOpen={isOpenModal} 
             setIsOpen={setIsOpenModal}
+            width="45rem"
         >
-            <div className={styles.room__wrapper}>
-                <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
-                
-                <div className={styles.room__private}>
-                    <CheckBox label="Secure room" value={privateRoom} setValue={setPrivateRoom}/>
-                </div>
+            <InputControl type="text" placeholder="Name" value={name} setValue={setName}/>
+            
+            <div className={styles.room__private}>
+                <CheckBox label="Secure room" value={privateRoom} setValue={setPrivateRoom}/>
+            </div>
 
-                <div className={styles.room__password} ref={passwordRef}>
-                    <InputControl 
-                        type="password"
-                        placeholder="Password" 
-                        value={password} 
-                        setValue={setPassword}
-                    />
-                </div>
+            <div className={styles.room__password} ref={passwordRef}>
+                <InputControl 
+                    type="password"
+                    placeholder="Password" 
+                    value={password} 
+                    setValue={setPassword}
+                />
+            </div>
 
-                <InputTags tags={tags} setTags={setTags}/>
-                <Tags tags={tags} setTags={setTags}/>
+            <InputTags tags={tags} setTags={setTags}/>
+            <Tags tags={tags} setTags={setTags}/>
 
-                <div className="w-50 m-auto">
-                    <FilledButton onClick={create}> Create </FilledButton>
-                </div>
+            <div className="w-50 m-auto">
+                <FilledButton onClick={create}> Create </FilledButton>
             </div>
         </Modal>
     );

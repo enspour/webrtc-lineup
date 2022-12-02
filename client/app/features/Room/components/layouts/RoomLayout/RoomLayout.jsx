@@ -6,8 +6,11 @@ import ConnectionLayout from "@features/Room/components/layouts/ConnectionLayout
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 
-import styles from "./RoomLayout.module.scss"
 import CreateConferenceModal from "../../modals/CreateConferenceModal/CreateConferenceModal";
+import BrowseRoomSettingsModal from "../../modals/BrowseRoomSettingsModal/BrowseRoomSettingsModal";
+import BrowseConferenceSettingsModal from "../../modals/BrowseConferenceSettingsModal/BrowseConferenceSettingsModal";
+
+import styles from "./RoomLayout.module.scss"
 
 const RoomLayout = ({ title = "Lineup | Room", children }) => {
     return (
@@ -27,6 +30,8 @@ const RoomLayout = ({ title = "Lineup | Room", children }) => {
                 <Footer />
 
                 <CreateConferenceModal />
+                <BrowseConferenceSettingsModal />
+                <BrowseRoomSettingsModal />
             </div>
         </ConnectionLayout>
     )

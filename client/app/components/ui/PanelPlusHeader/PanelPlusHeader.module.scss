@@ -22,7 +22,11 @@
 }
 
 .panel__header__title {
+    width: 95%;
     font-size: 1.6rem;
     font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     color: var(--theme-color-quaternary);
 }

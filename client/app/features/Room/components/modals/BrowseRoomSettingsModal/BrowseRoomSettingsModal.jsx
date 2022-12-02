@@ -1,18 +1,15 @@
 import React from "react";
-import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import PanelPlusHeader from "@components/ui/PanelPlusHeader/PanelPlusHeader";
+import Modal from "@components/ui/Modal/Modal";
 import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
-
-import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 
 import useRequest from "@hooks/api/useRequest";
 
 import services from "@services";
 
-import styles from "./RoomSettingsPage.module.scss";
+import styles from "./BrowseRoomSettingsModal.module.scss";
 
 const RoomNameSettings = () => {
     const [name, setName] = React.useState(services.room.Info.Name);
@@ -63,37 +60,32 @@ const RoomVisibilitySettings = observer(() => {
     )
 })
 
-const GeneralSettings = () => {
-    return (
-        <div className={styles.settings}>
-            <div className="text-primary"> General </div>
-            <div className="text-placeholder"> You can change general settings here. </div>
-            <div className={styles.settings__items}>
-                <RoomNameSettings />
-                <RoomVisibilitySettings />
-            </div>
-        </div>
-    )
-}
+const BrowseRoomSettingsModal = observer(() => {
+    const name = services.room.Info.Name;
 
-const RoomSettingsPage = () => {
-    const router = useRouter();
+    const isOpenModal = services.modals.browseRoomSettings.IsOpen;
 
-    const back = () => router.back();
+    const setIsOpenModal = value => {
+        services.modals.browseRoomSettings.setIsOpen(value);
+    }
 
     return (
-        <RoomLayout title="Lineup | Settings">
-            <div className={styles.container}>
-                <PanelPlusHeader 
-                    title="Settings" 
-                    onClick={back} 
-                    maxHeight="calc(100vh - 17rem)"
-                >
-                    <GeneralSettings />
-                </PanelPlusHeader>
+        <Modal
+            title={`Room Settings | ${name}`}
+            isOpen={isOpenModal}
+            setIsOpen={setIsOpenModal}
+            width="90rem"
+        >
+            <div className={styles.settings}>
+                <div className="text-primary"> General </div>
+                <div className="text-placeholder"> You can change general settings here. </div>
+                <div className={styles.settings__items}>
+                    <RoomNameSettings />
+                    <RoomVisibilitySettings />
+                </div>
             </div>
-        </RoomLayout>
+        </Modal>
     )
-}
+})
 
-export default React.memo(RoomSettingsPage);
+export default BrowseRoomSettingsModal;

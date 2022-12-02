@@ -46,15 +46,14 @@ const CreateConferenceModal = observer(() => {
         }
     }, [data])
 
-    if (!isOpenModal) return "";
-
     return (
         <Modal
             title="Create Conference"
             isOpen={isOpenModal}
             setIsOpen={setIsOpenModal}
+            width="40rem"
         >
-            <div className={styles.conference__wrapper}>
+            <div className={styles.conference}>
                 <InputControl 
                     type="text" 
                     placeholder="Name" 

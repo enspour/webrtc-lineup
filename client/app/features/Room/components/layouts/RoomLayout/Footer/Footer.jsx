@@ -56,11 +56,8 @@ const AudioControl = observer(() => {
 const SettingsControl = observer(() => {
     const owner = services.room.Info.Owner;
 
-    const router = useRouter();
-
     const openSettings = () => {
-        const roomId = services.room.Info.Id;
-        router.push(`/room/${roomId}/settings`);
+        services.modals.browseRoomSettings.setIsOpen(true);
     }
 
     if (owner.id !== services.user.Id) {
@@ -120,4 +117,4 @@ const Footer = () => {
     )
 }
 
-export default Footer;
+export default React.memo(Footer);

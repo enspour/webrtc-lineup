@@ -1,18 +1,14 @@
-import React from "react";
-import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
-
-import useRequest from '@hooks/api/useRequest';
-
-import PanelPlusHeader from "@components/ui/PanelPlusHeader/PanelPlusHeader";
+import Modal from "@components/ui/Modal/Modal";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import EditInput from "@components/ui/EditInput/EditInput";
 
+import useRequest from '@hooks/api/useRequest';
+
 import services from "@services";
 
-import styles from "./ConferenceSettingsPage.module.scss";
+import styles from "./BrowseConferenceSettingsModal.module.scss";
 
 const ConferenceAudioSettings = observer(({ conference }) => {
     const settings = conference.settings;
@@ -64,7 +60,9 @@ const ConferenceAudioVideoSettings = ({ conference }) => {
 }
 
 const ConferenceNameSettings = ({ conference }) => {
-    const [name, setName] = React.useState(conference.name);
+    const name = conference.name;
+
+    const setName = value => {}
 
     return (
         <div>
@@ -75,7 +73,9 @@ const ConferenceNameSettings = ({ conference }) => {
 }
 
 const ConferenceDescriptionSettings = ({ conference }) => {
-    const [description, setDescription] = React.useState(conference.description);
+    const description = conference.description;
+
+    const setDescription = value => {}
 
     return (
         <div>
@@ -85,42 +85,33 @@ const ConferenceDescriptionSettings = ({ conference }) => {
     )
 }
 
-const ConferenceSettings = ({ conference }) => {
-    return (
-        <div className={styles.settings}> 
-            <div className="text-primary"> Conference </div>
-            <div className="text-placeholder"> You can change settings of conference here. </div>
-            <div className={styles.settings__items}>
-                <ConferenceNameSettings conference={conference}/>
-                <ConferenceDescriptionSettings conference={conference}/>
-                <ConferenceAudioVideoSettings conference={conference}/>
-            </div>
-        </div>
-    )
-};
+const BrowseConferenceSettingsModal = observer(() => {
+    const conference = services.modals.browseConferenceSettings.Conference;
 
-const ConferenceSettingsPage = () => {
-    const router = useRouter();
-    const { roomId, conferenceId } = router.query;
+    const isOpenModal = services.modals.browseConferenceSettings.IsOpen;
 
-    const conference = services.room.Conferences.Array
-        .find(item => item.id === `${roomId}|${conferenceId}`) || { settings: {} };
-
-    const back = () => router.back();
+    const setIsOpenModal = value => {
+        services.modals.browseConferenceSettings.setIsOpen(value);
+    }
 
     return (
-        <RoomLayout title="Lineup | Settings">
-            <div className={styles.container}>
-                <PanelPlusHeader 
-                    title={conference.name} 
-                    onClick={back} 
-                    maxHeight="calc(100vh - 17rem)"
-                >
-                    <ConferenceSettings conference={conference}/>
-                </PanelPlusHeader>
+        <Modal
+            title={`Conference Settings | ${conference.name}`}
+            isOpen={isOpenModal}
+            setIsOpen={setIsOpenModal}
+            width="90rem"
+        >
+            <div className={styles.settings}> 
+                <div className="text-primary"> Conference </div>
+                <div className="text-placeholder"> You can change settings of conference here. </div>
+                <div className={styles.settings__items}>
+                    <ConferenceNameSettings conference={conference}/>
+                    <ConferenceDescriptionSettings conference={conference}/>
+                    <ConferenceAudioVideoSettings conference={conference}/>
+                </div>
             </div>
-        </RoomLayout>
+        </Modal>
     )
-}
+})
 
-export default React.memo(ConferenceSettingsPage);
+export default BrowseConferenceSettingsModal;

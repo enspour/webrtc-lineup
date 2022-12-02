@@ -4,7 +4,7 @@ import Head from "next/head";
 import Header from "./Header/Header";
 
 import CreateRoomModal from "@components/modals/CreateRoomModal/CreateRoomModal";
-import RoomModal from "@components/modals/RoomModal/RoomModal";
+import BrowseRoomModal from "@components/modals/BrowseRoomModal/BrowseRoomModal";
 
 import styles from "./LobbyLayout.module.scss";
 
@@ -21,7 +21,7 @@ const LobbyLayout = ({ children, title = "Lineup" }) => {
             <div className={styles.content}> {children} </div>
 
             <CreateRoomModal />
-            <RoomModal />
+            <BrowseRoomModal />
         </main>
     )
 }

@@ -7,7 +7,15 @@ import useCssAnimation from "@hooks/css/useCssAnimation";
 
 import styles from "./Modal.module.scss";
 
-const Modal = ({ title, isOpen, setIsOpen, children }) => {
+const Modal = ({ 
+    title, 
+    isOpen, 
+    setIsOpen, 
+
+    width = "inherit",
+
+    children,
+}) => {
     const modalRef = useCssAnimation(styles.visible, isOpen, [isOpen]);
     
     const modalContentRef = React.useRef();
@@ -20,9 +28,17 @@ const Modal = ({ title, isOpen, setIsOpen, children }) => {
 
     const closeModal = () => setIsOpen(false);
 
+    if (!isOpen) return "";
+
     return (
-        <div className={styles.modal} ref={modalRef} onClick={outsideClick}>
-            <div className={styles.modal__window} ref={modalContentRef}>
+        <div ref={modalRef} className={styles.modal} onClick={outsideClick}>
+            <div 
+                ref={modalContentRef}
+                className={styles.modal__window} 
+                style={{
+                    width: `min(${width}, 95vw)`,
+                }}
+            >
                 <PanelPlusHeader 
                     title={title} 
                     onClick={closeModal} 
