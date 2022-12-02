@@ -24,15 +24,6 @@ export default class RoomService {
         this.#roomInfo.initialize();
         this.#conferences.initialize();
 
-        this.#signal.onJoinRoom((status, message, data) => console.log(status, message, data))
-        this.#signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
-        this.#signal.onUserJoinRoom((socketId) => console.log("user connected to room", socketId))
-        this.#signal.onUserLeaveRoom((socketId) => console.log("user leaved from room", socketId))
-        this.#signal.onConnectionError((err) => console.log("unknow error", err));
-        this.#signal.onDisconnect((reason) => console.log("disconnecting, reason:", reason))
-        this.#signal.onRoomInformationUpdate(room => console.log(room));
-        this.#signal.onConferenceInformationUpdate(conference => console.log(conference));
-
         const offJoinRoom = this.#onJoinRoom();
         const offUpdateRoomInfo = this.#onUpdateRoomInfo();
         const offUpdateConferenceInfo = this.#onUpdateConferenceInfo();

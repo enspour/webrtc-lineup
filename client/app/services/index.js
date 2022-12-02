@@ -4,6 +4,7 @@ import RoomAPI from "./APIServices/RoomAPI.service";
 import RoomsAPI from "./APIServices/RoomsAPI.service";
 import ConferenceAPI from "./APIServices/ConferenceAPI.service";
 import ConferencesAPI from "./APIServices/ConferencesAPI.service";
+import UserAPI from "./APIServices/UserAPI.service";
 
 import RequestedArray from "./RequestedArray.service";
 
@@ -24,7 +25,7 @@ import { IslandService } from "@features/Island";
 import { ConferenceService, RoomService, SignalService } from "@features/Room";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
-import UserAPIService from "./APIServices/UserAPI.service";
+import { signalLogger } from "@utils/logger";
 
 const API = new APIService();
 const roomAPI = new RoomAPI();
@@ -32,7 +33,7 @@ const roomsAPI = new RoomsAPI();
 const authAPI = new AuthAPI();
 const conferenceAPI = new ConferenceAPI();
 const conferencesAPI = new ConferencesAPI();
-const userAPI = new UserAPIService();
+const userAPI = new UserAPI();
 
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
@@ -83,6 +84,8 @@ const services = {
 
         this.room.initialize();
         this.conference.initialize();
+
+        signalLogger(signal)
     }
 }
 
