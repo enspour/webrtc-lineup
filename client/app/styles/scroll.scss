@@ -21,22 +21,18 @@
     }
 }
 
-::-webkit-scrollbar-track-piece:end {
-    background-color: transparent;
-    margin-bottom: 1.5rem; 
-    margin-right: 1.5rem;
+::-webkit-scrollbar-track-piece:start {
+    display: none;
 }
 
-::-webkit-scrollbar-track-piece:start {
-    background-color: transparent;
-    margin-top: 1.5rem;
-    margin-left: 1.5rem;
+::-webkit-scrollbar-track-piece:end {
+    display: none;
 }
 
 ::-webkit-scrollbar-button {
-    background-color: transparent;
+    display: none;
 }
 
 ::-webkit-scrollbar-corner {
-    background-color: transparent;
+    display: none;
 }

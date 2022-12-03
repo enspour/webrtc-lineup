@@ -1,7 +1,31 @@
-@mixin fix_scroll_for_panel_plus_header() {
+@mixin fix_scroll_for_panel_plus_header {
     &::-webkit-scrollbar-track-piece:start {
+        display: block;
         background-color: transparent;
         margin-top: 0rem;
         margin-left: 0rem;
+    }
+
+    &::-webkit-scrollbar-track-piece:end {
+        display: block;
+        background-color: transparent;
+        margin-bottom: 1.5rem; 
+        margin-right: 1.5rem;
+    }
+}
+
+@mixin fix_scroll_for_panel {
+    &::-webkit-scrollbar-track-piece:start {
+        display: block;
+        background-color: transparent;
+        margin-top: 1.5rem;
+        margin-left: 1.5rem;
+    }
+
+    &::-webkit-scrollbar-track-piece:end {
+        display: block;
+        background-color: transparent;
+        margin-bottom: 1.5rem; 
+        margin-right: 1.5rem;
     }
 }
