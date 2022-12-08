@@ -9,6 +9,7 @@ import NotFound from "@socket/notifications/NotFound.notification";
 import Success from "@socket/notifications/Success.notification";
 
 import parseId from "@utils/parseId";
+import ServerError from "@socket/notifications/ServerError.notification";
 
 class Client {
     private userId;
@@ -73,6 +74,10 @@ export class ActionContext<T> {
 
     notFound(action: string, message: string, data?: any) {
         return new NotFound(action, message, data).notify(this.socket);
+    }
+
+    serverError(action: string, message: string, data?: any) {
+        return new ServerError(action, message, data).notify(this.socket);
     }
 
     broadcast(roomId: string, action: string, data: any) {
