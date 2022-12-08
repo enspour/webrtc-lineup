@@ -35,6 +35,7 @@ const conferenceAPI = new ConferenceAPI();
 const conferencesAPI = new ConferencesAPI();
 const userAPI = new UserAPI();
 
+const user = new User(API, authAPI);
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
 
@@ -60,7 +61,7 @@ const services = {
     localStorage: new Storage(),
     sessionStorage: new Storage(),
 
-    user: new User(API, authAPI),
+    user,
     userRooms: new RequestedArray(API.createRequest(roomsAPI.findCreatedRooms), handlerDataRooms),
     userFavoritesRooms: new RequestedArray(API.createRequest(roomsAPI.findFavoritesRooms), handlerDataRooms),
     userDevices,
@@ -69,7 +70,7 @@ const services = {
     island: new IslandService(),
 
     room,
-    conference: new ConferenceService(signal, room, userMedia),
+    conference: new ConferenceService(signal, room, user, userMedia),
 
     initialize: function () {
         this.localStorage.initialize("local");

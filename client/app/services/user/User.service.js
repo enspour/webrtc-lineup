@@ -41,4 +41,11 @@ export default class UserService {
             }
         });
     }
+
+    toObject() {
+        return {
+            id: this.Id,
+            name: this.Name
+        }
+    }
 }
