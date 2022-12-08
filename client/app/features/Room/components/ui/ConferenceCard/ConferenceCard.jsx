@@ -84,7 +84,8 @@ const ConferenceCard = observer(({ conference }) => {
         console.log(response);
     
         if (response.status === 200) {
-            const [roomId, conferenceId] = conference.id.split("|");
+            const roomId = services.room.Info.Id;
+            const conferenceId = conference.id;
             router.push(`/room/${roomId}/conference/${conferenceId}`);
         }
     }

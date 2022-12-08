@@ -141,8 +141,8 @@ export default class Signal {
 
     // ----- CONFERENCE -----
 
-    joinConference(id) {
-        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { id });
+    joinConference(roomId, conferenceId) {
+        this.#socket.emit(SignalActions.JOIN_CONFERENCE, { roomId, conferenceId });
     }
 
     /**
@@ -262,5 +262,37 @@ export default class Signal {
         const event = async ({ socketId, iceCandidate }) => await handler(socketId, iceCandidate);
         this.#socket.on(SignalActions.ACCEPT_ICE_CANDIDATE, event);
         return () => this.#socket.off(SignalActions.ACCEPT_ICE_CANDIDATE, event);
+    }
+
+
+    // ----- CHAT -----
+
+    /**
+     * @param {string} conferenceId
+     * @param {{ tempId: string, text: string }} message  
+     * @returns
+     */
+    sendMessage(conferenceId, message) {
+        this.#socket.emit(SignalActions.SEND_MESSAGE, { conferenceId, message })
+    }
+
+    /**
+     * @param {(status: number, message: string, data: any) => Promise<void>} handler 
+     * @returns
+     */
+    onSendMessage(handler) {
+        const event = async ({ status, message, data }) => await handler(status, message, data);
+        this.#socket.on(SignalActions.NOTIFY_SEND_MESSAGE, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_SEND_MESSAGE, event);
+    }
+
+    /**
+     * @param {(message) => Promise<void>} handler 
+     * @returns
+     */
+    onNewMessage(handler) {
+        const event = async ({ message }) => await handler(message);
+        this.#socket.on(SignalActions.NOTIFY_NEW_MESSAGE, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_NEW_MESSAGE, event);
     }
 }

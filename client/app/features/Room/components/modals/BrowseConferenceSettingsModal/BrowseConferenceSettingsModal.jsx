@@ -17,6 +17,7 @@ const ConferenceAudioSettings = observer(({ conference }) => {
     
     const setEnableAudio = (value) => {
         const body = {
+            room_id: services.room.Info.Id,
             conference_id: conference.id,
             enable_audio: value
         }
@@ -34,6 +35,7 @@ const ConferenceVideoSettings = observer(({ conference }) => {
 
     const setEnableVideo = (value) => {
         const body = {
+            room_id: services.room.Info.Id,
             conference_id: conference.id,
             enable_video: value
         }
