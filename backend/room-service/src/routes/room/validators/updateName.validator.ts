@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
 export default [
-    body("id").isNumeric().notEmpty(),
+    body("id").isString().notEmpty(),
     body("name").isString().notEmpty(),
 ];

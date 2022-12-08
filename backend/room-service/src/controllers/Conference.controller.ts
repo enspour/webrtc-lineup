@@ -40,6 +40,7 @@ class ConferenceController {
     }
 
     async updateEnableAudio(req: Request, res: Response) {
+        const roomId = req.body.room_id;
         const conferenceId = req.body.conference_id;
         const enableAudio = req.body.enable_audio;
 
@@ -50,7 +51,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(conference);
+                SignalService.updateConferenceInformation(roomId, conference);
             }
 
             return new SuccessResponse({ enable_audio: enableAudio }).send(res);
@@ -60,6 +61,7 @@ class ConferenceController {
     }
     
     async updateEnableVideo(req: Request, res: Response) {
+        const roomId = req.body.room_id;
         const conferenceId = req.body.conference_id;
         const enableVideo = req.body.enable_video;
         
@@ -70,7 +72,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(conference);
+                SignalService.updateConferenceInformation(roomId, conference);
             }
             
             return new SuccessResponse({ enable_video: enableVideo }).send(res);

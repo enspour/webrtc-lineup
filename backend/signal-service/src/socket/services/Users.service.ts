@@ -15,9 +15,7 @@ export default class UsersService {
         new BroadcastAll(RoomActionsTypes.NOTIFY_UPDATE_ROOM_INFORMATION, { room: data }).notify(roomId);
     }
 
-    updateConferenceInformation(conference: (Conference & { settings: ConferenceSettings })) {
-        const [roomId] = conference.id.split("|");
-        
+    updateConferenceInformation(roomId: string, conference: (Conference & { settings: ConferenceSettings })) {
         const data = JSON.parse(toJson(conference));
 
         new BroadcastAll(

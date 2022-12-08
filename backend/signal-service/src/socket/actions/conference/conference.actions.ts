@@ -4,44 +4,41 @@ import { ActionContext } from "@socket/services/Actions.service";
 
 import { ConferenceActionsTypes } from "@socket/types";
 
+import { IdPayload } from "../validators/id.validator";
+import { JoinPayload } from "./validators/join.validator";
 import { OfferPayload } from "./validators/offer.validator";
 import { AnswerPayload } from "./validators/answer.validator";
 import { IceCandidatePayload } from "./validators/iceCandidate.validator";
-import { IdPayload } from "../validators/id.validator";
 
 class ConferenceActions {
-    async join(context: ActionContext<IdPayload>) {
-        const { id } = context.Payload;
+    async join(context: ActionContext<JoinPayload>) {
+        const { roomId, conferenceId } = context.Payload;
 
-        if (id.includes("|")) {
-            const [roomId] = id.split("|");
-    
-            if (context.Client.has(roomId)) {
-                if (!context.Client.has(id)) {
-                    await context.Client.join(id);
-    
-                    const payload = { 
-                        socketId: context.Client.SocketId,
-                        userId: context.Client.UserId, 
-                    }
-                    
-                    context.broadcast(
-                        id, 
-                        ConferenceActionsTypes.NOTIFY_USER_JOIN_CONFERENCE, 
-                        payload
-                    );
-                    
-                    return context.success(
-                        ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
-                        "Success to join to conference"
-                    );
+        if (context.Client.has(roomId)) {
+            if (!context.Client.has(conferenceId)) {
+                await context.Client.join(conferenceId);
+
+                const payload = { 
+                    socketId: context.Client.SocketId,
+                    userId: context.Client.UserId, 
                 }
-    
+                
+                context.broadcast(
+                    conferenceId, 
+                    ConferenceActionsTypes.NOTIFY_USER_JOIN_CONFERENCE, 
+                    payload
+                );
+                
                 return context.success(
                     ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
-                    "Already connected to conference"
+                    "Success to join to conference"
                 );
             }
+
+            return context.success(
+                ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
+                "Already connected to conference"
+            );
         }
 
         context.badRequest(

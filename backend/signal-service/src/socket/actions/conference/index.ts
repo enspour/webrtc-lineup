@@ -3,15 +3,16 @@ import { Socket } from "socket.io";
 import { ConferenceActionsTypes } from "@socket/types";
 import ConferenceActions from "./conference.actions";
 
+import { idValidator } from "../validators/id.validator";
+import { joinValidator } from "./validators/join.validator";
 import { offerValidator } from "./validators/offer.validator";
 import { answerValidator } from "./validators/answer.validator";
 import { iceCandidateValidator } from "./validators/iceCandidate.validator";
-import { idValidator } from "../validators/id.validator";
 
 import services from "@socket/services";
 
 const joinValidation = {
-    validate: idValidator,
+    validate: joinValidator,
     action: ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE
 };
 

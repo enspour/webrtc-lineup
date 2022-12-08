@@ -23,13 +23,13 @@ class SignalService {
         } catch {}
     }
 
-    async updateConferenceInformation(conference: Conference & { settings: ConferenceSettings }) {
+    async updateConferenceInformation(roomId: string, conference: Conference & { settings: ConferenceSettings }) {
         try {
             const { signal } = servicesConfig;
             const url = 
                 `${signal}/services-communication/signal-service/users/update-conference-information/`;
 
-            const body = toJson({ conference });
+            const body = toJson({ room_id: roomId, conference });
 
             const response = await fetch(url, {
                 method: "PUT",
