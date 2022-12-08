@@ -48,9 +48,7 @@ const UserAudio = ({ item }) => {
             />
 
             <div className={styles.user__avatar}></div>
-            <div>
-                <div className={styles.user__name}> {user.name} </div>
-            </div>
+            <div className={styles.user__name}> {user.name} </div>
         </div>
     )
 }
