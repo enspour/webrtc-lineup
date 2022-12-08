@@ -1,31 +1,38 @@
 import ConferenceInfo from "./ConferenceInfo.service";
 import ConferenceMediaPeers from "./ConferenceMediaPeers.service";
+import ConferenceMessages from "./ConferenceMessages.service";
 
 export default class ConferenceService {
+    #conferenceInfo;
+
     #room;
     #signal;
     #userMedia;
-
-    #conferenceInfo;
-    #mediaPeers;
     
-    constructor(signal, room, userMedia) {
+    #mediaPeers;
+    #messages;
+    
+    constructor(signal, room, user, userMedia) {
+        this.#conferenceInfo = new ConferenceInfo();
+
         this.#room = room;
         this.#signal = signal;
         this.#userMedia = userMedia;
         
-        this.#conferenceInfo = new ConferenceInfo();
-        this.#mediaPeers = new ConferenceMediaPeers(signal, userMedia, this.#conferenceInfo);
+        this.#mediaPeers = new ConferenceMediaPeers(this.#conferenceInfo, signal, userMedia);
+        this.#messages = new ConferenceMessages(this.#conferenceInfo, signal, user);
     }
 
     initialize() {
         const peersDestroyer = this.#mediaPeers.initialize();
+        const messagesDestoryer = this.#messages.initialize();
 
         const offJoin = this.#onJoin();
         const offLeave = this.#onLeave();
 
         return () => {
             peersDestroyer();
+            messagesDestoryer();
 
             offJoin();
             offLeave();
@@ -38,6 +45,10 @@ export default class ConferenceService {
 
     get Peers() {
         return this.#mediaPeers.Peers;
+    }
+    
+    get Messages() {
+        return this.#messages.Messages;
     }
 
     async join(conference, constraints) {
@@ -57,7 +68,7 @@ export default class ConferenceService {
                     clear();
                 });
                 
-                this.#signal.joinConference(conferenceId);
+                this.#signal.joinConference(roomId, conferenceId);
                 
                 return new Promise((resolve, _) => waiter = resolve);
             }
@@ -88,6 +99,10 @@ export default class ConferenceService {
     
             return new Error("You are not connected to room yet");
         }
+    }
+
+    sendMessage(text) {
+        this.#messages.sendMessage(text);
     }
 
     #onJoin() {

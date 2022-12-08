@@ -1,4 +1,4 @@
-import RequestedArray from "@stores/RequestedArray.store";
+import ArrayStore from "@stores/Array.store";
 import StateStore from "@stores/State.store";
 
 export default class RequestedArrayService {
@@ -12,7 +12,7 @@ export default class RequestedArrayService {
         this.#request = request;
         this.#handlerReceivedData = handlerReceivedData;
 
-        this.#requestedArray = new RequestedArray();
+        this.#requestedArray = new ArrayStore();
         this.#requestedArrayState = new StateStore();
     }
 
@@ -47,7 +47,7 @@ export default class RequestedArrayService {
 
     #onStart() {
         return this.#request.onStart(() => {
-            this.#requestedArray.setArray([]);
+            this.#requestedArray.clear();
             this.#requestedArrayState.setState("pending");
         })
     }
@@ -55,7 +55,8 @@ export default class RequestedArrayService {
     #onResponse() {
         return this.#request.onResponse(response => {
             if (response && response.status === 200) {
-                this.#requestedArray.setArray(this.#handlerReceivedData(response.data));
+                this.#requestedArray.clear();
+                this.#requestedArray.appendMany(this.#handlerReceivedData(response.data));
                 this.#requestedArrayState.setState("done");
             }
         })
@@ -64,6 +65,7 @@ export default class RequestedArrayService {
     #onError() {
         return this.#request.onError(error => {
             if (error) {
+                this.#requestedArray.clear();
                 this.#requestedArrayState.setState("error");
             }
         });

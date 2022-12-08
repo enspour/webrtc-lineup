@@ -2,7 +2,7 @@ import iceServersConfig from "app/configs/iceServers.config";
 
 import { SpeechService } from "@features/Speech";
 
-import PeersStore from "../stores/Peers.store";
+import ArrayStore from "@stores/Array.store";
 
 class MediaPeerConnection {
     #conferenceId;
@@ -101,18 +101,20 @@ class MediaPeerConnection {
 }
 
 export default class ConferenceMediaPeersService {
-    #signal;
-    #userMedia;
     #conferenceInfo;
 
-    #peersStore;
+    #signal;
+    #userMedia;
 
-    constructor(signal, userMedia, conferenceInfo) {
-        this.#signal = signal;
-        this.#userMedia = userMedia;
+    #peers;
+
+    constructor(conferenceInfo, signal, userMedia) {
         this.#conferenceInfo = conferenceInfo;
 
-        this.#peersStore = new PeersStore();
+        this.#signal = signal;
+        this.#userMedia = userMedia;
+
+        this.#peers = new ArrayStore();
     }
 
     initialize() {
@@ -138,13 +140,13 @@ export default class ConferenceMediaPeersService {
     }
 
     get Peers() {
-        return this.#peersStore.peers;
+        return this.#peers.array;
     }
 
     #onLeave() {
         return this.#signal.onLeaveConference((status) => {
             if (status === 200) {
-                this.#peersStore.clear();
+                this.#peers.clear();
             }
         })
     }
@@ -157,7 +159,8 @@ export default class ConferenceMediaPeersService {
 
     #onUserLeave() {
         return this.#signal.onUserLeaveConference((peerId, userId) => {
-            const peer = this.#peersStore.remove(peerId);
+            const index = this.#peers.array.findIndex(item => item.PeerId === peerId);
+            const peer = this.#peers.remove(index);
             if (peer) peer.close();
         })
     }
@@ -175,7 +178,7 @@ export default class ConferenceMediaPeersService {
                 this.#signal
             );
             
-            this.#peersStore.add(peer);
+            this.#peers.append(peer);
             
             const options = { 
                 offerToReceiveVideo: enableVideo,
@@ -200,7 +203,7 @@ export default class ConferenceMediaPeersService {
                     this.#signal
                 );
                 
-                this.#peersStore.add(peer);
+                this.#peers.append(peer);
                 
                 if (offer) {
                     await peer.acceptOffer(offer);
@@ -212,7 +215,7 @@ export default class ConferenceMediaPeersService {
 
     #onAcceptAnswer() {
         return this.#signal.onAcceptAnswer(async (peerId, userId, answer) => {
-            const peer = this.#peersStore.peers.find(item => item.PeerId === peerId);
+            const peer = this.#peers.array.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.acceptAnswer(answer);
             }
@@ -221,7 +224,7 @@ export default class ConferenceMediaPeersService {
 
     #onAcceptIceCandidate() {
         return this.#signal.onAcceptIceCandidate(async (peerId, iceCandidate) => {
-            const peer = this.#peersStore.peers.find(item => item.PeerId === peerId);
+            const peer = this.#peers.array.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.addIceCandidate(iceCandidate);
             }
