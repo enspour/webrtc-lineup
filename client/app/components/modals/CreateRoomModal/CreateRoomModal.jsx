@@ -1,6 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
+import RoomAPI from "@api/RoomAPI";
+
 import Modal from "@components/ui/Modal/Modal";
 import InputControl from "@components/ui/InputControl/InputControl";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
@@ -86,7 +88,7 @@ const CreateRoomModal = observer(() => {
 
     const passwordRef = useCssAnimation(styles.hidden, !privateRoom, [privateRoom]);
     
-    const request = useRequest(services.roomAPI.create);
+    const request = useRequest(RoomAPI.create);
     const { data } = useResponse(request);
 
     const create = () => {

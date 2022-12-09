@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class ConferencesAPIService {
+class ConferencesAPI {
     /**
      * @param {{ 
      *  params: { room_id: string }
@@ -12,3 +12,5 @@ export default class ConferencesAPIService {
         return await axios.get(`/api/v1/room-service/conferences/${data.params.room_id}`, { signal });
     }
 }
+
+export default new ConferencesAPI();

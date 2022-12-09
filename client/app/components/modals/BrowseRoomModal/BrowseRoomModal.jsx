@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
+import RoomAPI from "@api/RoomAPI";
+
 import Modal from "@components/ui/Modal/Modal";
 import InputButtonGroup from "@components/ui/InputButtonGroup/InputButtonGroup";
 
@@ -31,7 +33,7 @@ const Information = observer(() => {
 const ConnectedUsers = observer(() => {
     const [users, setUsers] = React.useState([]);
 
-    const request = useRequest(services.roomAPI.getUsersInRoom);
+    const request = useRequest(RoomAPI.getUsersInRoom);
     const { data } = useResponse(request);
 
     React.useEffect(() => 
@@ -108,6 +110,7 @@ const JoinButton = () => {
     const join = async () => {
         const id = services.modals.browseRoom.Room.id;
         const response = await services.room.join(id, password);
+        
         if (response.status === 200) {
             services.room.Conferences.update({ params: { room_id: id } });
             router.push(`/room/${id}`); 

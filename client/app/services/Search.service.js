@@ -1,6 +1,9 @@
 import { autorun } from "mobx";
 
-import RequestedArrayService from "./RequestedArray.service";
+import API from "@api/API";
+import RoomsAPI from "@api/RoomsAPI";
+
+import RequestedArray from "./RequestedArray.service";
 
 import StateStore from "@stores/State.store";
 import SearchStore from "@stores/Search.store";
@@ -17,9 +20,8 @@ export default class SearchService {
     #requestedRoomsState;
     #search;
 
-    constructor(api, roomsAPI) {
-        const request = api.createRequest(roomsAPI.search);
-        this.#requestedRooms = new RequestedArrayService(request, handlerDataRooms);
+    constructor() {
+        this.#requestedRooms = new RequestedArray(API.createRequest(RoomsAPI.search), handlerDataRooms);
         this.#requestedRoomsState = new StateStore();
         this.#search = new SearchStore();
     }

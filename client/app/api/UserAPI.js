@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class UserAPIService {
+class UserAPI {
     /**
      * @param {{ 
      *  params: { id: string }
@@ -14,3 +14,5 @@ export default class UserAPIService {
         });
     }
 }
+
+export default new UserAPI();

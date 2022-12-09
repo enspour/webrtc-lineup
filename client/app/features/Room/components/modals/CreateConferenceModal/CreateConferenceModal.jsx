@@ -1,6 +1,8 @@
 import React from "react"
 import { observer } from "mobx-react-lite";
 
+import ConferenceAPI from "@api/ConferenceAPI";
+
 import Modal from "@components/ui/Modal/Modal";
 import InputControl from "@components/ui/InputControl/InputControl";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
@@ -22,7 +24,7 @@ const CreateConferenceModal = observer(() => {
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
 
-    const request = useRequest(services.conferenceAPI.create);
+    const request = useRequest(ConferenceAPI.create);
     const { data } = useResponse(request);
 
     const create = () => {

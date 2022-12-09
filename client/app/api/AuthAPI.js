@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class AuthAPIService {
+class AuthAPI {
     /**
      * @param {{ 
      *  body: {
@@ -52,3 +52,5 @@ export default class AuthAPIService {
         });
     }
 }
+
+export default new AuthAPI();

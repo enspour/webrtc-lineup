@@ -1,5 +1,9 @@
-import RequestedArrayService from "app/services/RequestedArray.service";
-import RoomInfoService from "./RoomInfo.service";
+import API from "@api/API";
+import RoomAPI from "@api/RoomAPI";
+import ConferencesAPI from "@api/ConferencesAPI";
+
+import RequestedArray from "app/services/RequestedArray.service";
+import RoomInfo from "./RoomInfo.service";
 
 import handlerDataConferencesIntoStates from "@utils/handlersReceivedData/handlerDataConferencesIntoStates";
 import handlerRoom from "@utils/handlersReceivedData/handlerRoom";
@@ -10,25 +14,28 @@ export default class RoomService {
     #conferences;
     #signal;
 
-    constructor(signal, API, roomAPI, conferencesAPI) {
+    constructor(signal) {
         this.#signal = signal;
 
-        this.#roomInfo = new RoomInfoService(API.createRequest(roomAPI.findOne));
-        this.#conferences = new RequestedArrayService(
-            API.createRequest(conferencesAPI.findAll),
+        this.#roomInfo = new RoomInfo(API.createRequest(RoomAPI.findOne));
+        this.#conferences = new RequestedArray(
+            API.createRequest(ConferencesAPI.findAll),
             handlerDataConferencesIntoStates
         );
     }
 
     initialize() {
-        this.#roomInfo.initialize();
-        this.#conferences.initialize();
+        const roomInfoDestroyer = this.#roomInfo.initialize();
+        const conferenceDestroyer = this.#conferences.initialize();
 
         const offJoinRoom = this.#onJoinRoom();
         const offUpdateRoomInfo = this.#onUpdateRoomInfo();
         const offUpdateConferenceInfo = this.#onUpdateConferenceInfo();
 
         return () => {
+            roomInfoDestroyer();
+            conferenceDestroyer();
+
             offJoinRoom();
             offUpdateRoomInfo();
             offUpdateConferenceInfo();

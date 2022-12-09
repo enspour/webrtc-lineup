@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class ConferenceAPIService {
+class ConferenceAPI {
     /**
      * @param {{ 
      *  body: { room_id: string; name: string, description?: string }
@@ -51,3 +51,5 @@ export default class ConferenceAPIService {
         return await axios.post("/api/v1/room-service/conference/settings/enable_video", data.body, { signal });
     }
 }
+
+export default new ConferenceAPI();

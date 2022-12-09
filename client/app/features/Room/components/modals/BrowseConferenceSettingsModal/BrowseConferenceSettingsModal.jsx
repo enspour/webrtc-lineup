@@ -1,5 +1,7 @@
 import { observer } from "mobx-react-lite";
 
+import ConferenceAPI from "@api/ConferenceAPI";
+
 import Modal from "@components/ui/Modal/Modal";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 import EditInput from "@components/ui/EditInput/EditInput";
@@ -13,7 +15,7 @@ import styles from "./BrowseConferenceSettingsModal.module.scss";
 const ConferenceAudioSettings = observer(({ conference }) => {
     const settings = conference.settings;
     
-    const request = useRequest(services.conferenceAPI.updateEnableAudio);
+    const request = useRequest(ConferenceAPI.updateEnableAudio);
     
     const setEnableAudio = (value) => {
         const body = {
@@ -31,7 +33,7 @@ const ConferenceAudioSettings = observer(({ conference }) => {
 const ConferenceVideoSettings = observer(({ conference }) => {
     const settings = conference.settings;
 
-    const request = useRequest(services.conferenceAPI.updateEnableVideo);
+    const request = useRequest(ConferenceAPI.updateEnableVideo);
 
     const setEnableVideo = (value) => {
         const body = {

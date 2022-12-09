@@ -1,11 +1,14 @@
+import API from "@api/API";
+import AuthAPI from "@api/AuthAPI";
+
 import UserStore from "@stores/User.store";
 
 export default class UserService {
     #request;
     #userStore;
 
-    constructor(api, authAPI) {
-        this.#request = api.createRequest(authAPI.me);
+    constructor() {
+        this.#request = API.createRequest(AuthAPI.me);
         this.#userStore = new UserStore();
     }
 

@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
-
 import { useRouter } from "next/router";
+
+import AuthAPI from "@api/AuthAPI";
 
 import WelcomeLayout from "@components/layouts/WelcomeLayout/WelcomeLayout";
 
@@ -19,7 +20,7 @@ import styles from "@styles/pages/login.module.scss";
 const LoginWithEmail = React.memo(() => {
     const router = useRouter();
 
-    const request = useRequest(services.authAPI.login);
+    const request = useRequest(AuthAPI.login);
     const { data } = useResponse(request);
 
     const [email, setEmail] = React.useState("");

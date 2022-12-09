@@ -1,11 +1,11 @@
 import React from "react";
 
-import services from "@services";
+import API from "@api/API";
 
 const useRequest = (requestMethod) => {
     const [ isLoading, setIsLoading ] = React.useState(false);
    
-    const request = React.useRef(services.API.createRequest(requestMethod));
+    const request = React.useRef(API.createRequest(requestMethod));
 
     React.useEffect(() => {
         return request.current.onStart(() => { setIsLoading(true); });

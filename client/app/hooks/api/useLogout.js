@@ -1,13 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
 
+import AuthAPI from "@api/AuthAPI";
+
 import useRequest from "./useRequest"
 import useResponse from "./useResponse"
 
-import services from "@services"
-
 const useLogout = () => {
-    const request = useRequest(services.authAPI.logout);
+    const request = useRequest(AuthAPI.logout);
     const { data } = useResponse(request);
 
     const router = useRouter()

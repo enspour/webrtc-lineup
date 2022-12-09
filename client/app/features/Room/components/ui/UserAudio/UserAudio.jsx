@@ -1,9 +1,9 @@
 import React from "react";
 
+import UserAPI from "@api/UserAPI";
+
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
-
-import services from "@services";
 
 import styles from "./UserAudio.module.scss";
 
@@ -12,7 +12,7 @@ const UserAudio = ({ item }) => {
 
     const [user, setUser] = React.useState({});
 
-    const request = useRequest(services.userAPI.findOne);
+    const request = useRequest(UserAPI.findOne);
     const { data } = useResponse(request);
     
     React.useEffect(() => {

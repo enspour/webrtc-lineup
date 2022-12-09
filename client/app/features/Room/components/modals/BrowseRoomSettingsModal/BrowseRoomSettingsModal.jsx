@@ -1,6 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
+import RoomAPI from "@api/RoomAPI";
+
 import Modal from "@components/ui/Modal/Modal";
 import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
@@ -14,7 +16,7 @@ import styles from "./BrowseRoomSettingsModal.module.scss";
 const RoomNameSettings = () => {
     const [name, setName] = React.useState(services.room.Info.Name);
 
-    const request = useRequest(services.roomAPI.updateName);
+    const request = useRequest(RoomAPI.updateName);
 
     const save = () => {
         const body = {
@@ -36,7 +38,7 @@ const RoomNameSettings = () => {
 const RoomVisibilitySettings = observer(() => {
     const settings = services.room.Info.Settings;
 
-    const request = useRequest(services.roomAPI.updateVisibility);
+    const request = useRequest(RoomAPI.updateVisibility);
 
     const setVisibility = (value) => {
         const body = {

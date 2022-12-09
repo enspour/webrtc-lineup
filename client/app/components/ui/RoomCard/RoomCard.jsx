@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react-lite";
 
+import RoomAPI from "@api/RoomAPI";
+
 import Panel from "../Panel/Panel";
 import Svg from "../Svg/Svg";
 
@@ -18,7 +20,7 @@ import services from "@services";
 import styles from "./RoomCard.module.scss";
 
 const RemoveControl = ({ room }) => {
-    const request = useRequest(services.roomAPI.delete);
+    const request = useRequest(RoomAPI.delete);
     const { data } = useResponse(request);
 
     const remove = (e) => {
@@ -42,7 +44,7 @@ const RemoveControl = ({ room }) => {
 }
 
 const AddToFavoritesControl = ({ room }) => {
-    const request = useRequest(services.roomAPI.addToFavorites);
+    const request = useRequest(RoomAPI.addToFavorites);
     const { data } = useResponse(request);
 
     const add = (e) => {
@@ -66,7 +68,7 @@ const AddToFavoritesControl = ({ room }) => {
 }
 
 const RemoveFromFavoritesControl = ({ room }) => {
-    const request = useRequest(services.roomAPI.deleteFromFavorites);
+    const request = useRequest(RoomAPI.deleteFromFavorites);
     const { data } = useResponse(request);
 
     const remove = (e) => {

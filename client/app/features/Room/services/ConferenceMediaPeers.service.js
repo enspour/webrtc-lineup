@@ -100,7 +100,7 @@ class MediaPeerConnection {
     } 
 }
 
-export default class ConferenceMediaPeersService {
+export default class ConferenceMediaPeers {
     #conferenceInfo;
 
     #signal;

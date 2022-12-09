@@ -1,4 +1,5 @@
 import services from "@services";
+import AuthAPI from "./AuthAPI";
 
 const RequestEvents = {
     START: "request/start",
@@ -43,7 +44,7 @@ class Request {
 
     async #tryRefreshTokens(error) {
         if (error.response && error.response.status === 401) {
-            const response = await services.authAPI.refresh();
+            const response = await AuthAPI.refresh();
             if (response.status === 200) {
                 return true;
             }
@@ -72,7 +73,7 @@ class Request {
 }
 
 
-export default class APIService { 
+class API { 
     createRequest(requestMethod) {
         const wrappedRequest = this.#wrapRequest(requestMethod);
         return new Request(wrappedRequest);
@@ -94,3 +95,5 @@ export default class APIService {
         }
     }
 }
+
+export default new API();

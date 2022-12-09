@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class RoomAPIService {
+class RoomAPI {
     /**
      * @param {{ 
      *  params: { id: string }
@@ -112,3 +112,5 @@ export default class RoomAPIService {
         return await axios.post("/api/v1/room-service/room/settings/visibility", data.body, { signal });
     }
 }
+
+export default new RoomAPI();

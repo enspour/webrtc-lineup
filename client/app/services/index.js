@@ -1,10 +1,5 @@
-import APIService from "./APIServices/API.service";
-import AuthAPI from "./APIServices/AuthAPI.service";
-import RoomAPI from "./APIServices/RoomAPI.service";
-import RoomsAPI from "./APIServices/RoomsAPI.service";
-import ConferenceAPI from "./APIServices/ConferenceAPI.service";
-import ConferencesAPI from "./APIServices/ConferencesAPI.service";
-import UserAPI from "./APIServices/UserAPI.service";
+import API from "@api/API";
+import RoomsAPI from "@api/RoomsAPI";
 
 import RequestedArray from "./RequestedArray.service";
 
@@ -27,32 +22,16 @@ import { ConferenceService, RoomService, SignalService } from "@features/Room";
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 import { signalLogger } from "@utils/logger";
 
-const API = new APIService();
-const roomAPI = new RoomAPI();
-const roomsAPI = new RoomsAPI();
-const authAPI = new AuthAPI();
-const conferenceAPI = new ConferenceAPI();
-const conferencesAPI = new ConferencesAPI();
-const userAPI = new UserAPI();
-
-const user = new User(API, authAPI);
+const user = new User();
 const userDevices = new UserDevices();
 const userMedia = new UserMedia(userDevices);
 
 const signal = new SignalService();
 
-const room = new RoomService(signal, API, roomAPI, conferencesAPI);
+const room = new RoomService(signal);
 
 const services = {
-    API,
-    authAPI,
-    roomAPI,
-    roomsAPI,
-    conferenceAPI,
-    conferencesAPI,
-    userAPI,
-    
-    search: new Search(API, roomsAPI),
+    search: new Search(),
 
     contextMenu: new ContextMenu(),
     modals: new Modals(),
@@ -62,8 +41,8 @@ const services = {
     sessionStorage: new Storage(),
 
     user,
-    userRooms: new RequestedArray(API.createRequest(roomsAPI.findCreatedRooms), handlerDataRooms),
-    userFavoritesRooms: new RequestedArray(API.createRequest(roomsAPI.findFavoritesRooms), handlerDataRooms),
+    userRooms: new RequestedArray(API.createRequest(RoomsAPI.findCreatedRooms), handlerDataRooms),
+    userFavoritesRooms: new RequestedArray(API.createRequest(RoomsAPI.findFavoritesRooms), handlerDataRooms),
     userDevices,
     userMedia,
 

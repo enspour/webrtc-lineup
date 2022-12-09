@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class RoomsAPIService {
+class RoomsAPI {
     async findCreatedRooms(_, signal) {
         return await axios.get("/api/v1/room-service/rooms", {
             signal
@@ -30,3 +30,5 @@ export default class RoomsAPIService {
         })
     }
 }
+
+export default new RoomsAPI();

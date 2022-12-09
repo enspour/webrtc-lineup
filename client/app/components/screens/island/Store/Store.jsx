@@ -22,7 +22,7 @@ const Store = observer(() => {
 
                 if (rooms) {
                     setItems(
-                        [...rooms]
+                        rooms
                             .map(item => ({ ...item, owner: { id: userId, name: userName } }))
                             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     );

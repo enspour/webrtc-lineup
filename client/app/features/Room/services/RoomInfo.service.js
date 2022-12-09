@@ -3,7 +3,7 @@ import RoomStore from "../stores/Room.store";
 import handlerRoom from "@utils/handlersReceivedData/handlerRoom";
 import StateStore from "@stores/State.store";
 
-export default class RoomInfoService {
+export default class RoomInfo {
     #request;
     #rooms;
     #roomsState;

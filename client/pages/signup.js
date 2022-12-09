@@ -2,6 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import AuthAPI from "@api/AuthAPI";
+
+import WelcomeLayout from "@components/layouts/WelcomeLayout/WelcomeLayout";
 import FilledButton from "@components/ui/FilledButton/FilledButton";
 import InputControl from "@components/ui/InputControl/InputControl";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
@@ -12,12 +15,11 @@ import useResponse from "@hooks/api/useResponse";
 import services from "@services";
 
 import styles from "@styles/pages/signup.module.scss";
-import WelcomeLayout from "@components/layouts/WelcomeLayout/WelcomeLayout";
 
 const SignupWithEmail = () => {
     const router = useRouter();
 
-    const request = useRequest(services.authAPI.signup);
+    const request = useRequest(AuthAPI.signup);
     const { data } = useResponse(request);
 
     const [name, setName] = React.useState("");

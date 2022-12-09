@@ -2,6 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
+import ConferenceAPI from "@api/ConferenceAPI";
+
 import useContextMenu from "@hooks/useContextMenu";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
@@ -66,7 +68,7 @@ const BottomPanel = ({ conference }) => {
 const ConferenceCard = observer(({ conference }) => {
     const router = useRouter();
 
-    const request = useRequest(services.conferenceAPI.delete);
+    const request = useRequest(ConferenceAPI.delete);
     const { data } = useResponse(request);
 
     const [conferenceRef, appendMenu] = useContextMenu();
