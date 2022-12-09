@@ -36,6 +36,10 @@ export default class RequestedArrayService {
         return this.#requestedArrayState.state;
     }
 
+    get Store() {
+        return this.#requestedArray;
+    }
+
     async update(data) {
         await this.#request.start(data);
     }
