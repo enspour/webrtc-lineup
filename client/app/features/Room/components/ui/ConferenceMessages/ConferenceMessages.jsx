@@ -139,6 +139,14 @@ function useScrollAtOpening(ref) {
     const { subscribe, unsubscribe } = useChildrenObserver(ref, scroll);
 
     React.useEffect(() => {
+        const target = ref.current;
+
+        if (target) {
+            target.scrollTo({
+                top: target.scrollHeight,
+            })
+        }
+
         subscribe();
         return () => unsubscribe();
     }, []);
