@@ -4,6 +4,8 @@ import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/d
 
 import toJson from "core/utils/toJson";
 
+import logger from "@logger";
+
 import servicesConfig from "@configs/services.config";
 
 class SignalService {
@@ -20,7 +22,9 @@ class SignalService {
                 headers: { "Content-Type": "application/json" },
                 body
             });
-        } catch {}
+        } catch (e) {
+            logger.log(`Error send to SignalService: ${e}`);
+        }
     }
 
     async updateConferenceInformation(roomId: string, conference: Conference & { settings: ConferenceSettings }) {
@@ -36,7 +40,9 @@ class SignalService {
                 headers: { "Content-Type": "application/json" },
                 body
             });
-        } catch {}
+        } catch (e) {
+            logger.log(`Error send to SignalService: ${e}`);
+        }
     }
 }
 
