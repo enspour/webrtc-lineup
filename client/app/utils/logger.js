@@ -13,4 +13,6 @@ export const signalLogger = (signal) => {
     signal.onSendIceCandidate((status, message, data) => console.log(status, message, data))
     signal.onUserJoinConference(socketId => console.log("User join to conference", socketId))
     signal.onUserLeaveConference(socketId => console.log("User leave to conference", socketId))
+
+    signal.onSendMessage((status, message, data) => console.log(status, message, data))
 }
