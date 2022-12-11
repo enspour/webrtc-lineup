@@ -144,7 +144,9 @@ function useScrollAtOpening(ref) {
         if (target) {
             target.scrollTo({
                 top: target.scrollHeight,
-            })
+            });
+
+            unsubscribe();
         }
 
         subscribe();

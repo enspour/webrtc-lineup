@@ -1,6 +1,6 @@
 import ConferenceStore from "../stores/Conference.store";
 
-export default class ConferenceInfo {
+export default class ConferenceInfoService {
     #store;
 
     constructor() {

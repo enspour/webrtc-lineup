@@ -2,7 +2,7 @@ import { io, Socket } from "socket.io-client"
 
 import SignalActions from "./Signal.actions";
 
-export default class Signal {
+export default class SignalService {
     #socket;
 
     constructor() {

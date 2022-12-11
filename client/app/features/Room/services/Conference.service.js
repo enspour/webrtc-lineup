@@ -1,6 +1,6 @@
-import ConferenceInfo from "./ConferenceInfo.service";
-import ConferenceMediaPeers from "./ConferenceMediaPeers.service";
-import ConferenceMessages from "./ConferenceMessages.service";
+import ConferenceInfoService from "./ConferenceInfo.service";
+import ConferenceMediaPeersService from "./ConferenceMediaPeers.service";
+import ConferenceMessagesService from "./ConferenceMessages.service";
 
 export default class ConferenceService {
     #conferenceInfo;
@@ -13,14 +13,14 @@ export default class ConferenceService {
     #messages;
     
     constructor(signal, room, user, userMedia) {
-        this.#conferenceInfo = new ConferenceInfo();
+        this.#conferenceInfo = new ConferenceInfoService();
 
         this.#room = room;
         this.#signal = signal;
         this.#userMedia = userMedia;
         
-        this.#mediaPeers = new ConferenceMediaPeers(this.#conferenceInfo, signal, userMedia);
-        this.#messages = new ConferenceMessages(this.#conferenceInfo, signal, user);
+        this.#mediaPeers = new ConferenceMediaPeersService(this.#conferenceInfo, signal, userMedia);
+        this.#messages = new ConferenceMessagesService(this.#conferenceInfo, signal, user);
     }
 
     initialize() {

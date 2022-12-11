@@ -2,12 +2,12 @@ import API from "@api/API";
 import RoomAPI from "@api/RoomAPI";
 import ConferencesAPI from "@api/ConferencesAPI";
 
-import RequestedArray from "app/services/RequestedArray.service";
-import RoomInfo from "./RoomInfo.service";
+import RequestedArrayService from "app/services/RequestedArray.service";
+import RoomInfoService from "./RoomInfo.service";
 
-import handlerDataConferencesIntoStates from "@utils/handlersReceivedData/handlerDataConferencesIntoStates";
 import handlerRoom from "@utils/handlersReceivedData/handlerRoom";
 import handlerConference from "@utils/handlersReceivedData/handlerConference";
+import handlerDataConferencesIntoStates from "@utils/handlersReceivedData/handlerDataConferencesIntoStates";
 
 export default class RoomService {
     #roomInfo;
@@ -17,8 +17,8 @@ export default class RoomService {
     constructor(signal) {
         this.#signal = signal;
 
-        this.#roomInfo = new RoomInfo(API.createRequest(RoomAPI.findOne));
-        this.#conferences = new RequestedArray(
+        this.#roomInfo = new RoomInfoService(API.createRequest(RoomAPI.findOne));
+        this.#conferences = new RequestedArrayService(
             API.createRequest(ConferencesAPI.findAll),
             handlerDataConferencesIntoStates
         );

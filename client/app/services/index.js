@@ -1,19 +1,19 @@
 import API from "@api/API";
 import RoomsAPI from "@api/RoomsAPI";
 
-import RequestedArray from "./RequestedArray.service";
+import RequestedArrayService from "./RequestedArray.service";
 
-import User from "./user/User.service";
-import UserDevices from "./user/UserDevices.service";
-import UserMedia from "./user/UserMedia.service";
+import UserService from "./user/User.service";
+import UserDevicesService from "./user/UserDevices.service";
+import UserMediaService from "./user/UserMedia.service";
 
-import Search from "./Search.service";
+import SearchService from "./Search.service";
 
-import ContextMenu from "./ContextMenu.service";
-import Modals from "./Modals.service";
-import Themes from "./Themes.service";
+import ContextMenuService from "./ContextMenu.service";
+import ModalsService from "./Modals.service";
+import ThemesService from "./Themes.service";
 
-import Storage from "./Storage.service";
+import StorageService from "./Storage.service";
 
 import { IslandService } from "@features/Island";
 
@@ -22,27 +22,33 @@ import { ConferenceService, RoomService, SignalService } from "@features/Room";
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 import { signalLogger } from "@utils/logger";
 
-const user = new User();
-const userDevices = new UserDevices();
-const userMedia = new UserMedia(userDevices);
+const user = new UserService();
+const userDevices = new UserDevicesService();
+const userMedia = new UserMediaService(userDevices);
 
 const signal = new SignalService();
 
 const room = new RoomService(signal);
 
 const services = {
-    search: new Search(),
+    search: new SearchService(),
 
-    contextMenu: new ContextMenu(),
-    modals: new Modals(),
-    themes: new Themes(),
+    contextMenu: new ContextMenuService(),
+    modals: new ModalsService(),
+    themes: new ThemesService(),
 
-    localStorage: new Storage(),
-    sessionStorage: new Storage(),
+    localStorage: new StorageService(),
+    sessionStorage: new StorageService(),
 
     user,
-    userRooms: new RequestedArray(API.createRequest(RoomsAPI.findCreatedRooms), handlerDataRooms),
-    userFavoritesRooms: new RequestedArray(API.createRequest(RoomsAPI.findFavoritesRooms), handlerDataRooms),
+    userRooms: new RequestedArrayService(
+        API.createRequest(RoomsAPI.findCreatedRooms), 
+        handlerDataRooms
+    ),
+    userFavoritesRooms: new RequestedArrayService(
+        API.createRequest(RoomsAPI.findFavoritesRooms), 
+        handlerDataRooms
+    ),
     userDevices,
     userMedia,
 

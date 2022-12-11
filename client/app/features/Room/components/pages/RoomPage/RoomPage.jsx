@@ -32,6 +32,10 @@ const Conferences = observer(() => {
 });
 
 const RoomPage = () => {
+    React.useEffect(() => {
+        services.modals.browseRoom.setIsOpen(false);
+    }, []);
+
     return (
         <RoomLayout>
             <div className={styles.sections}>

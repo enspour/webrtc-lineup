@@ -3,12 +3,12 @@ import { nanoid } from "nanoid";
 import API from "@api/API";
 import MessagesAPI from "@api/MessagesAPI";
 
-import RequestedArray from "app/services/RequestedArray.service";
+import RequestedArrayService from "app/services/RequestedArray.service";
 
 import handlerMessage from "@utils/handlersReceivedData/handlerMessage";
 import handlerDataMessages from "@utils/handlersReceivedData/handlerDataMessages";
 
-export default class ConferenceMessages {
+export default class ConferenceMessagesService {
     #conferenceInfo;
 
     #signal;
@@ -22,7 +22,10 @@ export default class ConferenceMessages {
         this.#signal = signal;
         this.#user = user;
 
-        this.#messages = new RequestedArray(API.createRequest(MessagesAPI.findAll), handlerDataMessages);
+        this.#messages = new RequestedArrayService(
+            API.createRequest(MessagesAPI.findAll), 
+            handlerDataMessages
+        );
     }
 
     initialize() {
