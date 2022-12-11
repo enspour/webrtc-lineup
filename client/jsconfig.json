@@ -9,7 +9,8 @@
           "@hooks/*": ["app/hooks/*"],
           "@stores/*": ["app/stores/*"],
           "@features/*": ["app/features/*"],
-          "@utils/*": ["app/utils/*"]
+          "@utils/*": ["app/utils/*"],
+          "@api/*": ["app/api/*"]
       }
     }
 }
