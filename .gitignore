@@ -8,6 +8,10 @@ backend/room-service/.env
 backend/signal-service/build
 backend/signal-service/.env
 
+backend/chat-service/build
+backend/chat-service/.env
+backend/chat-service/database/cassandra
+
 backend/core/database/.env
 backend/core/database/prisma/migrations
 
