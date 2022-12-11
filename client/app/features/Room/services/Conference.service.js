@@ -107,6 +107,10 @@ export default class ConferenceService {
 
     #onJoin() {
         return this.#signal.onJoinConference((status) => {
+            if (status === 200) {
+                this.#messages.update();
+            }
+
             if (status !== 200) {
                 this.#userMedia.stopCapturedMedia();
                 this.#conferenceInfo.clear();

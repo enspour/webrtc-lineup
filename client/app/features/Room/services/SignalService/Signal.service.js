@@ -269,11 +269,12 @@ export default class Signal {
 
     /**
      * @param {string} conferenceId
-     * @param {{ tempId: string, text: string }} message  
+     * @param {string} tempId
+     * @param {string} text
      * @returns
      */
-    sendMessage(conferenceId, message) {
-        this.#socket.emit(SignalActions.SEND_MESSAGE, { conferenceId, message })
+    sendMessage(conferenceId, tempId, text) {
+        this.#socket.emit(SignalActions.SEND_MESSAGE, { conferenceId, tempId, text })
     }
 
     /**

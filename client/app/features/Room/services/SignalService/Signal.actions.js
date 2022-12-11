@@ -35,4 +35,9 @@ export default {
     SEND_ANSWER: "room:conference:send_answer",
     NOTIFY_SEND_ANSWER: "notify:room:conference:send_answer",
     ACCEPT_ANSWER: "room:conference:accept_answer",
+
+    
+    SEND_MESSAGE: "chat:send:message",
+    NOTIFY_SEND_MESSAGE: "notify:chat:send:message",
+    NOTIFY_NEW_MESSAGE: "notify:chat:new:message",
 }

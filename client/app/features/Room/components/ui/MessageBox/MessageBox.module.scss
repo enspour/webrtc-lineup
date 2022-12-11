@@ -1,6 +1,6 @@
-.message__box {
+.wrapper {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     gap: 2rem;
     padding: 1.2rem 2rem;
     width: 100%;
@@ -9,14 +9,19 @@
     border-radius: 2rem;
 }
 
-.message__box__input {
+.input {
     align-self: center;
     flex-grow: 1;
-    min-height: 2.2rem;
+    min-height: 2.1rem;
     max-height: calc(15rem - 2.5rem);
     font-size: 1.6rem;
     font-weight: 400;
     border: none;
     outline: none;
     overflow: auto;
+
+    &:empty:not(:focus):before{
+        content: attr(data-placeholder);
+        color: var(--theme-placeholder-quaternary);
+    }
 }
