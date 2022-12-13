@@ -16,7 +16,7 @@ export default class ConferenceMessagesService {
 
     #messages;
 
-    constructor(conferenceInfo, signal, user) {
+    constructor({ signal, user }, conferenceInfo) {
         this.#conferenceInfo = conferenceInfo;
 
         this.#signal = signal;

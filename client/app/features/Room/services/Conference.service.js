@@ -12,15 +12,15 @@ export default class ConferenceService {
     #mediaPeers;
     #messages;
     
-    constructor(signal, room, user, userMedia) {
+    constructor(services) {
         this.#conferenceInfo = new ConferenceInfoService();
 
-        this.#room = room;
-        this.#signal = signal;
-        this.#userMedia = userMedia;
+        this.#room = services.room;
+        this.#signal = services.signal;
+        this.#userMedia = services.userMedia;
         
-        this.#mediaPeers = new ConferenceMediaPeersService(this.#conferenceInfo, signal, userMedia);
-        this.#messages = new ConferenceMessagesService(this.#conferenceInfo, signal, user);
+        this.#mediaPeers = new ConferenceMediaPeersService(services, this.#conferenceInfo);
+        this.#messages = new ConferenceMessagesService(services, this.#conferenceInfo);
     }
 
     initialize() {

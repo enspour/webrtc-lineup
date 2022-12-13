@@ -22,57 +22,56 @@ import { ConferenceService, RoomService, SignalService } from "@features/Room";
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 import { signalLogger } from "@utils/logger";
 
-const user = new UserService();
-const userDevices = new UserDevicesService();
-const userMedia = new UserMediaService(userDevices);
+class Services {
+    constructor() {
+        this.localStorage = new StorageService(this);
+        this.sessionStorage = new StorageService(this);
 
-const signal = new SignalService();
+        this.search = new SearchService(this);
 
-const room = new RoomService(signal);
+        this.contextMenu = new ContextMenuService(this);
+        this.modals = new ModalsService(this);
+        this.themes = new ThemesService(this);
 
-const services = {
-    search: new SearchService(),
+        this.user = new UserService(this);
+        this.userDevices = new UserDevicesService(this);
+        this.userMedia = new UserMediaService(this);
 
-    contextMenu: new ContextMenuService(),
-    modals: new ModalsService(),
-    themes: new ThemesService(),
+        this.userRooms = new RequestedArrayService(
+            API.createRequest(RoomsAPI.findCreatedRooms), 
+            handlerDataRooms
+        );
+        this.userFavoritesRooms = new RequestedArrayService(
+            API.createRequest(RoomsAPI.findFavoritesRooms), 
+            handlerDataRooms
+        );
 
-    localStorage: new StorageService(),
-    sessionStorage: new StorageService(),
+        this.island = new IslandService(this);
 
-    user,
-    userRooms: new RequestedArrayService(
-        API.createRequest(RoomsAPI.findCreatedRooms), 
-        handlerDataRooms
-    ),
-    userFavoritesRooms: new RequestedArrayService(
-        API.createRequest(RoomsAPI.findFavoritesRooms), 
-        handlerDataRooms
-    ),
-    userDevices,
-    userMedia,
+        
+        this.signal = new SignalService(this);
+        this.room = new RoomService(this);
+        this.conference = new ConferenceService(this);
+    }
 
-    island: new IslandService(),
-
-    room,
-    conference: new ConferenceService(signal, room, user, userMedia),
-
-    initialize: function () {
+    initialize() {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
+        this.search.initialize();
+
         this.user.initialize();
         this.userDevices.initialize();
+
         this.userRooms.initialize();
         this.userFavoritesRooms.initialize();
 
-        this.search.initialize(this.localStorage);
 
         this.room.initialize();
         this.conference.initialize();
 
-        signalLogger(signal)
+        signalLogger(this.signal)
     }
 }
 
-export default services;
+export default new Services();

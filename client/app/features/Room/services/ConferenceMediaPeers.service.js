@@ -108,7 +108,7 @@ export default class ConferenceMediaPeersService {
 
     #peers;
 
-    constructor(conferenceInfo, signal, userMedia) {
+    constructor({ signal, userMedia }, conferenceInfo) {
         this.#conferenceInfo = conferenceInfo;
 
         this.#signal = signal;

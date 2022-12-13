@@ -16,22 +16,29 @@ export default class SearchService {
     #delay = 2000;
     #timeout;
 
+    #localStorage;
+
     #requestedRooms;
     #requestedRoomsState;
     #search;
 
-    constructor() {
-        this.#requestedRooms = new RequestedArray(API.createRequest(RoomsAPI.search), handlerDataRooms);
+    constructor({ localStorage }) {
+        this.#localStorage = localStorage;
+
+        this.#requestedRooms = new RequestedArray(
+            API.createRequest(RoomsAPI.search), 
+            handlerDataRooms
+        );
         this.#requestedRoomsState = new StateStore();
         this.#search = new SearchStore();
     }
 
-    initialize(localStorage) {
-        this.#loadHistory(localStorage);
+    initialize() {
+        this.#loadHistory();
         
         const destroyRoomsService = this.#requestedRooms.initialize();
 
-        const offSavingHistory = this.#onSavingHistory(localStorage);
+        const offSavingHistory = this.#onSavingHistory();
         const offPushingInHistory = this.#onPushingInHistory();
 
         return () => {
@@ -107,15 +114,15 @@ export default class SearchService {
         this.#requestedRooms.clear();
     }
 
-    #loadHistory(localStorage) {
-        const history = localStorage.get("__history") || [];
+    #loadHistory() {
+        const history = this.#localStorage.get("__history") || [];
         this.#search.setHistory(removeDuplicates(history));
     }
 
-    #onSavingHistory(localStorage) {
+    #onSavingHistory() {
         return autorun(() => {
             const history = this.#search.history;
-            localStorage.set("__history", history);
+            this.#localStorage.set("__history", history);
         })
     }
 

@@ -14,9 +14,8 @@ export default class RoomService {
     #conferences;
     #signal;
 
-    constructor(signal) {
+    constructor({ signal }) {
         this.#signal = signal;
-
         this.#roomInfo = new RoomInfoService(API.createRequest(RoomAPI.findOne));
         this.#conferences = new RequestedArrayService(
             API.createRequest(ConferencesAPI.findAll),
