@@ -29,13 +29,13 @@ export default class ConferenceMessagesService {
     }
 
     initialize() {
-        const messagesDestoryer = this.#messages.initialize();
+        const messagesDestroyer = this.#messages.initialize();
 
         const offSendMessage = this.#onSendMessage();
         const offNewMessage = this.#onNewMessage();
 
         return () => {
-            messagesDestoryer();
+            messagesDestroyer();
 
             offSendMessage();
             offNewMessage();

@@ -55,7 +55,7 @@ const ConferenceAudioVideoSettings = ({ conference }) => {
                 <div>Voice & Audio</div>
                 <div className="text-placeholder"> You can disable video or audio in conference</div>
             </div>
-            <div className={styles.settings__conference__voiceaudio}>
+            <div className={styles.settings__conference__videoaudio}>
                 <ConferenceAudioSettings conference={conference}/>
                 <ConferenceVideoSettings conference={conference}/>
             </div>

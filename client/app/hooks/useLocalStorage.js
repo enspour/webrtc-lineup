@@ -5,21 +5,21 @@ import useIsomorphicLayoutEffect from "./useIsomorphicLayoutEffect";
 import services from "@services";
 
 const useLocalStorage = (key, initial) => {
-    const [storagedValue, setStoragedValue] = React.useState(initial);
+    const [storageValue, setStorageValue] = React.useState(initial);
 
     const setValue = (value) => {
-        let _value = typeof value === "function" ? value(storagedValue) : value;
+        let _value = typeof value === "function" ? value(storageValue) : value;
         
         services.localStorage.set(key, _value);
-        setStoragedValue(_value);
+        setStorageValue(_value);
     }
 
     useIsomorphicLayoutEffect(() => {
         const value = services.localStorage.get(key);
-        if (value) setStoragedValue(value);
+        if (value) setStorageValue(value);
     }, []);
     
-    return [storagedValue, setValue];
+    return [storageValue, setValue];
 }
 
 export default useLocalStorage;
