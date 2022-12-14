@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import UserService from "@services/User.service";
 import JWTService from "@services/JWT.service";
 
-import { validatePassowrd, hashPassword } from "@utils/bcrypt";
+import { validatePassword, hashPassword } from "@utils/bcrypt";
 import { decodeAccessJWT } from "@utils/jwt";
 import { getCookie } from "@utils/cookie";
 
@@ -20,7 +20,7 @@ class AuthController {
         const userAuth = await UserService.findByEmail(email);
         
         if (userAuth) {
-            const isEqualPassword = await validatePassowrd(password, userAuth.password);
+            const isEqualPassword = await validatePassword(password, userAuth.password);
 
             if (isEqualPassword) {
                 const options = {
@@ -31,7 +31,7 @@ class AuthController {
                     }
                 }
                 JWTService.setTokens(options, res);
-                return new SuccessResponse("Login is successfull").send(res);
+                return new SuccessResponse("Login is successful").send(res);
             }
         }
 
@@ -58,7 +58,7 @@ class AuthController {
             }
 
             JWTService.setTokens(options, res);
-            return new CreatedResponse("Signup is successfull").send(res);
+            return new CreatedResponse("Signup is successful").send(res);
         }
 
         new BadRequestResponse("Email or password is invalid").send(res);

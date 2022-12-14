@@ -1,8 +1,8 @@
 import QueryError from "./QueryError";
 import TypesErrors from "./TypesErrors";
 
-export default class UnknowError extends QueryError {
+export default class UnknownError extends QueryError {
     constructor(public message: string) {
-        super(message, TypesErrors.UNKNOW);
+        super(message, TypesErrors.UNKNOWN);
     }
 }

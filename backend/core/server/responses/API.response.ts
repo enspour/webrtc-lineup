@@ -3,7 +3,7 @@ import express from "express";
 export default class APIResponse {
     constructor(public status: number, public body: any) {}
 
-    protected sanitaze<T extends APIResponse>(target: T) {
+    protected sanitize<T extends APIResponse>(target: T) {
         const _clone: T = <T>{};
         Object.assign(_clone, target);
 
@@ -18,7 +18,7 @@ export default class APIResponse {
 
     send(res: express.Response) {
         const response = JSON.stringify(
-            this.sanitaze(this), 
+            this.sanitize(this), 
             (_, value) => typeof value === "bigint" 
                 ? value.toString() 
                 : value

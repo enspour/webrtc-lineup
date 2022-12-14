@@ -15,7 +15,7 @@ import {
     Tag 
 } from "../types";
 
-import UnknowError from "../QueryError/UnknowError";
+import UnknownError from "../QueryError/UnknownError";
 
 export default class PrismaRepository implements IRepository {
     constructor(private prismaClient: PrismaClient) {}
@@ -291,7 +291,7 @@ export default class PrismaRepository implements IRepository {
             return clone;
         }
         
-        throw new UnknowError("Error creating user");
+        throw new UnknownError("Error creating user");
     }
 
     async createRoom(name: string, password: string, userId: bigint, tags: string[]): Promise<(Room & { tags: Tag[]})> {
