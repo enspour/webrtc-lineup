@@ -46,8 +46,8 @@ const InputTags = React.memo(({ tags, setTags }) => {
     const [tag, setTag] = React.useState("");
 
     const customSetTag = (value) => {
-        const splited = value.replace("#", "").split(" ");
-        setTag(splited.join(""));
+        const separated = value.replace("#", "").split(" ");
+        setTag(separated.join(""));
     }
 
     const appendTag = () => {

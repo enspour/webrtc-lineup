@@ -25,14 +25,14 @@ export default class ConferenceService {
 
     initialize() {
         const peersDestroyer = this.#mediaPeers.initialize();
-        const messagesDestoryer = this.#messages.initialize();
+        const messagesDestroyer = this.#messages.initialize();
 
         const offJoin = this.#onJoin();
         const offLeave = this.#onLeave();
 
         return () => {
             peersDestroyer();
-            messagesDestoryer();
+            messagesDestroyer();
 
             offJoin();
             offLeave();

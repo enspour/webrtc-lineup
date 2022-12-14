@@ -91,14 +91,14 @@ export default class SearchService {
     }
 
     async update() {
-        const splitedText = this.SearchedText.split(" ");
-        const tags = splitedText
+        const separatedText = this.SearchedText.split(" ");
+        const tags = separatedText
             .filter(item => item.startsWith("#"))
             .map(item => item.slice(1).toLowerCase())
             .filter(item => item)
             .join(",");
 
-        const words = splitedText
+        const words = separatedText
             .filter(item => !item.startsWith("#"))
             .filter(item => item)
             .join(",");

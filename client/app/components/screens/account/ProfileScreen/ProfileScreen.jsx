@@ -45,11 +45,11 @@ const ProfileScreen = () => {
     React.useEffect(
         () =>
             autorun(() => {
-                const username = services.user.Name;
-                const useremail = services.user.Email; 
+                const userName = services.user.Name;
+                const userEmail = services.user.Email; 
 
-                setName(username);
-                setEmail(useremail);
+                setName(userName);
+                setEmail(userEmail);
             }),
         []
     );

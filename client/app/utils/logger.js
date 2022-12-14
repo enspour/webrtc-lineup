@@ -3,7 +3,7 @@ export const signalLogger = (signal) => {
     signal.onLeaveRoom((status, message, data) => console.log(status, message, data))
     signal.onUserJoinRoom((socketId) => console.log("user connected to room", socketId))
     signal.onUserLeaveRoom((socketId) => console.log("user leaved from room", socketId))
-    signal.onConnectionError((err) => console.log("unknow error", err));
+    signal.onConnectionError((err) => console.log("unknown error", err));
     signal.onDisconnect((reason) => console.log("disconnecting, reason:", reason))
     signal.onRoomInformationUpdate(room => console.log(room));
     signal.onConferenceInformationUpdate(conference => console.log(conference));

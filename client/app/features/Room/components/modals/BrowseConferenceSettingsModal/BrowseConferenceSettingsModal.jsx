@@ -84,7 +84,7 @@ const ConferenceDescriptionSettings = ({ conference }) => {
     return (
         <div>
             <div className="mb-1"> Description </div>
-            <EditInput value={description} setValue={setDescription} placeholder="Desciprion"/>
+            <EditInput value={description} setValue={setDescription} placeholder="Description"/>
         </div>
     )
 }
