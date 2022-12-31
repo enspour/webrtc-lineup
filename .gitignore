@@ -16,3 +16,5 @@ backend/core/database/.env
 backend/core/database/prisma/migrations
 
 backend/node_modules
+
+backend/postgres/pgdata
