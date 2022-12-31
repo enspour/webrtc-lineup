@@ -1,24 +1,28 @@
 [Go to readme](../README.md)
 
-# Need to do:
+# Alpha 1.0.0
+
+## Need to do:
 - [x] Creating technical task.
 - [x] Prototyping site.
-- [ ] Creating Rest API docs.
 - [x] Designing database. 
-- [ ] Coding services.
+- [x] Coding services.
 - [x] Make design (layout).
-- [ ] Coding client part.
-- [ ] Creating balancer (NGINX)
+- [x] Coding client part.
+- [x] Creating balancer (NGINX)
 
 
-## Coding services.
-- [ ] Auth service
-- [ ] Signal service
-- [ ] Main service
+### Coding services.
+- [x] Auth service
+- [x] Room service
+- [x] Signal service
+- [x] Chat service
 
 
-## Coding client part.
-- [ ] Login / Signup
-- [ ] Home page
-- [ ] Room page
-- [ ] Account Page
+### Coding client part.
+- [x] Login / Sign up
+- [x] Home page
+- [x] Account Page
+- [x] Settings page
+- [x] Room page
+- [x] Conference page

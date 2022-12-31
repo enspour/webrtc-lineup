@@ -4,13 +4,16 @@
 
 ## Database
 - PostgreSQL
+- Cassandra
 
 ## Services
-- Main service
 - Auth service
+- Room service
+- Signal service
+- Chat service
 - Client
-- Balance
+- Gateway
 
 ## Schema
 
-![Schema](assets/architectureSchema.png)
+![Schema](assets/architecture.png)
