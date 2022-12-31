@@ -1,0 +1,64 @@
+.header {
+    height: 6rem;
+    max-width: 122rem;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    font-size: 1.4rem;
+}
+
+.header__logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    cursor: pointer;
+}
+
+
+.account {
+    height: 5rem;
+    min-width: 18rem;
+    max-width: 22rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 0 2.5rem;
+    border-radius: 2rem;
+    margin: auto 0;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background-color: var(--theme-bg-primary);
+        box-shadow: 0px 0px 15px -3px var(--theme-shadow-primary);
+    }
+}
+
+.account__active {
+    background-color: var(--theme-bg-primary);
+    box-shadow: 0px 0px 15px -3px var(--theme-shadow-primary);
+    border-radius: 2rem 2rem 0 0;
+}
+
+.account__avatar {
+    min-width: 3.5rem;
+    min-height: 3.5rem;
+    background-color: #696969;
+    border-radius: 50%;
+}
+
+.account__name {
+    color: var(--theme-color-primary);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

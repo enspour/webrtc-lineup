@@ -1,0 +1,61 @@
+.card {
+    width: 40rem;
+    height: 12rem;
+    cursor: pointer;
+}
+
+.room {
+    height: 100%;
+    padding: 1.5rem 3rem;
+}
+
+.room__name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--theme-color-primary);
+    margin: 1rem 0 .5rem 0;
+}
+
+.room__author__name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--theme-link-primary);
+}
+
+.room__controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: var(--theme-bg-secondary);
+    padding: 0 2rem;
+    border-radius: 1.5rem;
+    height: 3.5rem;
+}
+
+.room__tags {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.room__tag {
+    color: var(--theme-color-secondary);
+    background-color: var(--theme-bg-secondary);
+    border-radius: .7rem;
+    padding: 0 1rem;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+
+

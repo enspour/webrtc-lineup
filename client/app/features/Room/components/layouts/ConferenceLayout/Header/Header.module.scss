@@ -1,0 +1,57 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5rem;
+    height: 5rem;
+    background-color: var(--theme-bg-primary);
+    color: var(--theme-color-primary);
+    box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
+}
+
+.header__menu {
+    display: flex;
+    gap: 1.5rem;
+
+    div { cursor: pointer !important; }
+}
+
+.header__conference__name {
+    padding: 0 2.5rem;
+    max-width: 30rem;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-radius: 2rem;
+    color: var(--theme-color-secondary);
+    background-color: var(--theme-bg-secondary);
+}
+
+.header__controls {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.header__controls__mic {
+    width: 1.8rem;
+    div { margin: auto; }
+}
+
+.header__leave {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    width: 14.8rem;
+}
+
+.header__full {
+    div { cursor: pointer !important; }
+}

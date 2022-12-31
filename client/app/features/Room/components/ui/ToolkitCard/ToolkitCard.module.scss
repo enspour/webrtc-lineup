@@ -1,0 +1,31 @@
+.toolkit {
+    width: fit-content;
+    font-weight: 600;
+    border-radius: 2rem;
+    border: 0.1rem solid var(--theme-bg-tertiary);
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        border: 0.1rem solid var(--theme-bg-secondary);
+    }
+}
+
+.toolkit__wrapper {
+    padding: 1.5rem 3rem;
+}
+
+.toolkit__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--theme-color-primary);
+}
+
+.toolkit__hint {
+    font-size: 1.6rem;
+    margin-top: .5rem;
+    color: var(--theme-placeholder-primary);
+}

@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    border: .1rem solid var(--theme-border-primary);
+    border-radius: 2rem;
+
+    &:focus-within {
+        border: .1rem solid var(--theme-border-secondary);
+    }
+}
+
+.input {
+    width: 100%;
+    height: 4rem;
+    outline: none;
+    border: none;
+    font-size: 1.6rem;
+    font-weight: 500;
+    background-color: var(--theme-bg-primary);
+    color: var(--theme-color-primary);
+    padding-right: 2rem;
+}

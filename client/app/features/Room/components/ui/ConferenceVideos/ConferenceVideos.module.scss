@@ -1,0 +1,16 @@
+.videos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: var(--theme-color-primary);
+    background-color: var(--theme-bg-primary);
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+.videos__items {
+    display: grid;
+    gap: 1.5rem; 
+}

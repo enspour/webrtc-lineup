@@ -1,0 +1,43 @@
+.wrapper {
+    position: relative;
+}
+
+.select, .options {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}
+
+.select {
+    height: 4rem;
+    width: 100%;
+    padding: 0 2rem;
+    border-radius: 2rem;
+    background-color: var(--theme-bg-tertiary);
+    border: 0.1rem solid var(--theme-border-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.options {
+    z-index: 50;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 0;
+    background-color: var(--theme-bg-tertiary);
+    border-radius: 2rem;
+    border: 0.1rem solid var(--theme-border-primary);
+}
+
+.option {
+    padding: 1rem 2rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--theme-bg-primary);
+    }
+}

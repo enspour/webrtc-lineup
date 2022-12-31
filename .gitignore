@@ -1,3 +1,13 @@
+# dependencies
+client/node_modules
+
+# next.js
+client/.next/
+client/out/
+
+# production
+client/build
+
 backend/auth-service/build
 backend/auth-service/keys
 backend/auth-service/.env

@@ -1,0 +1,50 @@
+.conference {
+    width: fit-content;
+    font-weight: 600;
+    border-radius: 2rem;
+    border: 0.1rem solid var(--theme-bg-tertiary);
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        border: 0.1rem solid var(--theme-bg-secondary);
+    }
+}
+
+.conference__wrapper {
+    padding: 1.5rem 3rem;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.conference__name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--theme-color-primary);
+}
+
+.conference__description {
+    font-size: 1.6rem;
+    margin-top: .5rem;
+    height: 4rem;
+    overflow: hidden;
+    color: var(--theme-placeholder-primary);
+}
+
+.conference__bottom__panel {
+    display: flex;
+    justify-content: space-between;   
+    height: 2rem;
+    font-size: 1.4rem;
+    color: var(--theme-color-primary); 
+}
+
+.conference__bottom__panel__mic {
+    width: 1.2rem;
+    div { margin: auto; }
+}

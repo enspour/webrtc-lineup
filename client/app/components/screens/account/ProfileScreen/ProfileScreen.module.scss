@@ -1,0 +1,18 @@
+.profile {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.profile__avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background-color: #696969;
+}
+
+.profile__credentials {
+    padding: 3rem;   
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}

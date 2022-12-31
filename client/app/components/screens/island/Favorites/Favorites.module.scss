@@ -1,0 +1,34 @@
+.loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+}
+
+.favorites {
+    padding: 2rem;
+    padding-top: 6rem;
+}
+
+.favorites__empty {
+    padding-top: 6rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--theme-color-primary);
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}
+
+.items {
+    padding: 2rem;
+    padding-top: 3.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3.5rem 4rem;
+}

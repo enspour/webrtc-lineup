@@ -1,0 +1,9 @@
+@import "../../../styles/mixins.scss";
+
+.panel {
+    box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
+    border-radius: 2rem;
+    background-color: var(--theme-bg-primary);
+
+    @include fix_scroll_for_panel;
+}

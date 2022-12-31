@@ -1,0 +1,17 @@
+.btn {
+    width: 100%;
+    outline: none;
+    border: .1rem solid var(--theme-border-primary);
+    border-radius: 2rem;
+    background-color: var(--theme-bg-primary);
+    color: var(--theme-color-primary);
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 0;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--theme-bg-tertiary);
+    }
+}

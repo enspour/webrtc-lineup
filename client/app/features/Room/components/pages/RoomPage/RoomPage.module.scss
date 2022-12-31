@@ -1,0 +1,22 @@
+.sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    height: 100%;
+    overflow: auto;
+}
+
+.section__items {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.section__title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+}

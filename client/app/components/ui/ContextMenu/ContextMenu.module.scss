@@ -1,0 +1,23 @@
+.context__menu {
+    position: absolute;
+    min-width: 20rem;
+    padding: 1.3rem 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    background-color: var(--theme-bg-primary);
+    border: 0.1rem solid var(--theme-border-primary);
+    border-radius: 2rem;
+    z-index: 50;
+}
+
+.context__menu__item {
+    padding: 0.7rem 2rem;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--theme-color-secondary);
+        background-color: var(--theme-bg-secondary);
+    }
+}
+

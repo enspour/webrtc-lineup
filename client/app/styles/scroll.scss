@@ -1,0 +1,38 @@
+/* width */
+::-webkit-scrollbar {
+    display: block;
+    width: .5rem;
+    height: .5rem;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: var(--theme-scroll-track-tertiary);
+    border-radius: 1rem;
+}
+  
+/* Thumb */
+::-webkit-scrollbar-thumb {
+    background-color: var(--theme-scroll-thumb-tertiary);
+    border-radius: 1rem;
+
+    &:hover {
+        background-color: var(--theme-scroll-thumb-hover-tertiary);
+    }
+}
+
+::-webkit-scrollbar-track-piece:start {
+    display: none;
+}
+
+::-webkit-scrollbar-track-piece:end {
+    display: none;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-corner {
+    display: none;
+}

@@ -1,0 +1,51 @@
+.wrapper {
+    padding: 5rem;
+    min-width: 50rem; 
+}
+
+.title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--theme-color-primary);
+}
+
+.singup {
+    margin-bottom: 3rem;
+}
+
+.singup__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    margin: 2.5rem 0;
+}
+
+.singup__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.singup__remember_me {
+    margin-bottom: 4.5rem;
+    margin-top: 2.5rem;
+    margin-left: 2rem;
+}
+
+.singup__btn {
+    margin: 0 auto;
+    max-width: 30rem;
+}
+
+.login {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center; 
+    color: var(--theme-color-primary);
+}
+
+.login__link {
+    color: var(--theme-link-primary);
+    cursor: pointer;
+}
