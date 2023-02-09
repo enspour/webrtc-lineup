@@ -1,4 +1,4 @@
-import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/database/src/types"
+import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/postgresql/types"
 
 import BroadcastAll from "@socket/notifications/BroadcastAll.notification"
 

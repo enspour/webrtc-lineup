@@ -1,4 +1,4 @@
-import { repository } from "core/database/src/connection";
+import { repository } from "core/postgresql/connection";
 
 class UserService {
     async findById(id: bigint) {
