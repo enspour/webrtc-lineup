@@ -11,7 +11,7 @@ tmux send-keys "cd client && npm run dev" Enter;
 
 
 tmux new-window;
-tmux send-keys -t lineup_dev "cd gateway && docker compose -f docker-compose.dev.yml up" Enter;
+tmux send-keys -t lineup_dev "cd backend/gateway && docker compose -f docker-compose.dev.yml up" Enter;
 
 tmux new-window;
 tmux send-keys "cd backend/auth-service && npm run dev" Enter;
