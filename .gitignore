@@ -22,9 +22,8 @@ backend/chat-service/build
 backend/chat-service/.env
 backend/chat-service/database/cassandra
 
-backend/core/database/.env
-backend/core/database/prisma/migrations
+backend/core/postgresql/.env
+backend/core/postgresql/prisma/migrations
+backend/core/postgresql/docker/pgdata
 
 backend/node_modules
-
-backend/postgres/pgdata

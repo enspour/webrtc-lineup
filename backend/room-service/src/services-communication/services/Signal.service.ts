@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/database/src/types"; 
+import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/postgresql/types"; 
 
 import toJson from "core/utils/toJson";
 

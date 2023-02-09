@@ -49,7 +49,7 @@ openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 - Postgres settings
 
 ``` bash
-cd backend/core/database/ && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
+cd backend/core && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
 ```
 
 
@@ -58,13 +58,13 @@ cd backend/core/database/ && echo "DATABASE_URL=postgresql://admin:mysecretpassw
 - Run postgres
 
 ``` bash
-cd backend/postgres && docker compose -f docker-compose.dev.yml up
+cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up
 ```
 
 - Initialize (**current folder is core folder of project**)
 
 ``` bash
-cd backend/core/database/ && npx prisma generate && npx prisma db push
+cd backend/core && npx prisma generate && npx prisma db push
 ```
 
 5. Run 

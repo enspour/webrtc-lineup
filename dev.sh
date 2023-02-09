@@ -1,7 +1,7 @@
 #!/bin/bash
 
 tmux new-session -d -s lineup_dev;
-tmux send-keys "cd backend/postgres && docker compose -f docker-compose.dev.yml up" Enter;
+tmux send-keys "cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up" Enter;
 
 tmux split-window -v;
 tmux send-keys "cd backend/chat-service/database && docker compose -f docker-compose.dev.yml up" Enter;
