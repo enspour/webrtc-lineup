@@ -1,3 +1,4 @@
+# client
 # dependencies
 client/node_modules
 
@@ -8,6 +9,7 @@ client/out/
 # production
 client/build
 
+# backend
 backend/auth-service/build
 backend/auth-service/keys
 backend/auth-service/.env
@@ -22,8 +24,9 @@ backend/chat-service/build
 backend/chat-service/.env
 backend/chat-service/database/cassandra
 
-backend/core/postgresql/.env
+backend/core/.env
 backend/core/postgresql/prisma/migrations
 backend/core/postgresql/docker/pgdata
 
+# dependencies
 backend/node_modules

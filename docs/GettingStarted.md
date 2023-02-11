@@ -1,20 +1,20 @@
 [Go to readme](../README.md)
 
-## Development mode
+## Set up the project manually 
 
-1. Install all dependencies (**current folder is core folder of project**)
+1. Install all dependencies. **Start to run this command in base folder of project.**
 
 ``` bash
-cd backend/ && npm install
+cd backend && npm install
 ```
 
 ``` bash
-cd ../client/ && npm install
+cd ../client && npm install
 ```
 
-2. Need to create ssh-keys for Auth Service (**current folder is core folder of project**)
+2. Creating ssh-keys for Auth Service. **Start to run this command in base folder of project.**
 
-- **creating folders for keys**
+- Creating folders for keys
  
 ``` bash
 cd backend/auth-service/ && mkdir keys && cd keys
@@ -24,7 +24,7 @@ cd backend/auth-service/ && mkdir keys && cd keys
 mkdir accessToken && mkdir refreshToken
 ```
 
-- generate ssh keys for access token
+- Generate ssh keys for access token
 
 ``` bash
 cd accessToken && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
@@ -34,7 +34,7 @@ cd accessToken && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 ```
 
-- generate ssh keys for refresh token
+- Generate ssh keys for refresh token
 
 ``` bash
 cd ../refreshToken && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
@@ -44,7 +44,7 @@ cd ../refreshToken && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 ```
 
-3. Setting environment variables (**current folder is core folder of project**).
+3. Setting environment variables. **Start to run this command in base folder of project.**
 
 - Postgres settings
 
@@ -52,25 +52,32 @@ openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 cd backend/core && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
 ```
 
+4. Initialize prisma. 
 
-4. Initialize prisma (**current folder is core folder of project**)
-
-- Run postgres
+- Run postgresql in docker. **Start to run this command in base folder of project.**
 
 ``` bash
 cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up
 ```
 
-- Initialize (**current folder is core folder of project**)
+- Generate and push db. **Start to run this command in base folder of project.**
 
 ``` bash
 cd backend/core && npx prisma generate && npx prisma db push
 ```
+- Stop postgresql docker container.
 
-5. Run 
 
-- With tmux
+## Set up the project with script 
 
 ``` bash
-sh dev.sh
+./scripts/getting-started.sh
+```
+
+## Run service in development mode
+
+- Run lineup with tmux
+
+``` bash
+./scripts/tmux-development.sh
 ```
