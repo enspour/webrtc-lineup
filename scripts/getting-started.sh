@@ -4,6 +4,14 @@ workdir=$(pwd)
 
 clear
 
+# Downloading necessary images of docker
+echo "-- Downloading necessary images of docker"
+docker pull nginx:1.23.2-alpine
+docker pull postgres:14.5-alpine
+docker pull cassandra:4.1
+
+clear
+
 # Installing all dependencies
 # Installing backend dependencies
 echo "-- Installing backend dependencies...";
