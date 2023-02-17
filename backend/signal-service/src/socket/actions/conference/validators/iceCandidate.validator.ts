@@ -9,6 +9,7 @@ export interface IceCandidatePayload {
         candidate: string;
         sdpMid: string;
         sdpMLineIndex: number;
+        usernameFragment: string;
     };
 };
 
@@ -23,6 +24,7 @@ const schema: JSONSchemaType<IceCandidatePayload> = {
                 candidate: { type: "string" },
                 sdpMid: { type: "string"},
                 sdpMLineIndex: { type: "integer" },
+                usernameFragment: { type: "string" },
             },
             required: ["candidate", "sdpMid", "sdpMLineIndex"],
             additionalProperties: false
