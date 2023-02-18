@@ -22,7 +22,8 @@ import { IslandService } from "@features/Island";
 import { ConferenceService, RoomService, SignalService } from "@features/Room";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
-import { signalLogger } from "@utils/logger";
+
+import SignalLogger from "@logs/Signal.logger";
 
 class Services {
     constructor() {
@@ -73,7 +74,7 @@ class Services {
         this.room.initialize();
         this.conference.initialize();
 
-        signalLogger(this.signal)
+        SignalLogger.initialize(this.signal);
     }
 }
 

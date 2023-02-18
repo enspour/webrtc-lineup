@@ -10,7 +10,8 @@
         "@stores/*": ["app/stores/*"],
         "@features/*": ["app/features/*"],
         "@utils/*": ["app/utils/*"],
-        "@api/*": ["app/api/*"]
+        "@api/*": ["app/api/*"],
+        "@logs/*": ["app/logs/*"]
     }
   }
 }

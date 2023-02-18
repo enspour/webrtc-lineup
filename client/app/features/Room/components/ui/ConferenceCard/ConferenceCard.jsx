@@ -82,9 +82,8 @@ const ConferenceCard = observer(({ conference }) => {
             audio: conference.settings.enableAudio, 
             video: conference.settings.enableVideo, 
         };
+
         const response = await services.conference.join(conference, constraints);
-        console.log(response);
-    
         if (response.status === 200) {
             const roomId = services.room.Info.Id;
             const conferenceId = conference.id;
