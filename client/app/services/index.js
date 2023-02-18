@@ -7,7 +7,7 @@ import UserService from "./user/User.service";
 import UserDevicesService from "./user/UserDevices.service";
 import UserMediaService from "./user/UserMedia.service";
 
-import SearchService from "./Search.service";
+import { SearchService } from "../features/Search";
 
 import ContextMenuService from "./ContextMenu.service";
 import ModalsService from "./Modals.service";

@@ -2,16 +2,24 @@ import { observer } from "mobx-react-lite";
 
 import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
 
-import IslandScreen from "@components/screens/island/IslandScreen/IslandScreen";
+import { IslandPanel } from "@features/Island";
 
 import services from "@services";
+
+import styles from "@styles/pages/index.module.scss"
 
 const Home = observer(() => {
     const current = services.island.Current;
 
     return (
         <LobbyLayout title={`Lineup | ${current.name}`}> 
-            <IslandScreen />
+            <div className={styles.island}>
+                <IslandPanel />
+            </div>
+
+            <div>
+                { current.component }
+            </div>
         </LobbyLayout>
     );
 })
