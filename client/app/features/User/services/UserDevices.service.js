@@ -2,7 +2,7 @@ import { autorun } from "mobx";
 
 import DevicesStore from "@stores/Devices.store";
 
-export default class UserDevices {
+export default class UserDevicesService {
     #inputAudioDevices;
     #inputVideoDevices;
 

@@ -3,9 +3,11 @@ import RoomsAPI from "@api/RoomsAPI";
 
 import RequestedArrayService from "./RequestedArray.service";
 
-import UserService from "./user/User.service";
-import UserDevicesService from "./user/UserDevices.service";
-import UserMediaService from "./user/UserMedia.service";
+import { 
+    UserService, 
+    UserDevicesService, 
+    UserMediaService 
+} from "../features/User";
 
 import { SearchService } from "../features/Search";
 

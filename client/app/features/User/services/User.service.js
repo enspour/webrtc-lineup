@@ -1,7 +1,7 @@
 import API from "@api/API";
 import AuthAPI from "@api/AuthAPI";
 
-import UserStore from "@stores/User.store";
+import { UserStore }from "@features/User";
 
 export default class UserService {
     #request;
