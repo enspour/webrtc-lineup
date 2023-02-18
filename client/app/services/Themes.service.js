@@ -4,6 +4,16 @@ const themes = [
 ]
 
 export default class ThemesService {
+    initialize(localStorage) {
+        const theme = localStorage.get("__theme");
+
+        if (theme) {
+            this.set(theme);
+        } else {
+            this.set(themes[0]);
+        }
+    }
+
     switch(oldTheme, newTheme) {
         document.body.classList.remove(oldTheme.name);
         document.body.classList.add(newTheme.name);

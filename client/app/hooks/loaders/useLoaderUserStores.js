@@ -3,7 +3,7 @@ import { autorun } from "mobx";
 
 import services from "@services";
 
-const useLoaderStore = () => {
+const useLoaderUserStores = () => {
     React.useEffect(() => {
         const cleaner = autorun(() => {
             const userId = services.user.Id;
@@ -22,4 +22,4 @@ const useLoaderStore = () => {
     }, []);
 }
 
-export default useLoaderStore;
+export default useLoaderUserStores;

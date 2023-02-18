@@ -1,7 +1,5 @@
 import useLoaderServices from "@hooks/loaders/useLoaderServices";
-import useLoaderTheme from "@hooks/loaders/useLoaderTheme";
-import useLoaderStore from "@hooks/loaders/useLoaderStore";
-import useLoaderUser from "@hooks/loaders/useLoaderUser";
+import useLoaderUserStores from "@hooks/loaders/useLoaderUserStores";
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
 
@@ -17,9 +15,7 @@ import "@styles/themes/dark.scss";
 
 function MyApp({ Component, pageProps }) {
     useLoaderServices();
-    useLoaderTheme();
-    useLoaderStore();
-    useLoaderUser();
+    useLoaderUserStores();
 
     return (
         <MainLayout>

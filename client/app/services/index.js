@@ -60,6 +60,8 @@ class Services {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
+        this.themes.initialize(this.localStorage)
+
         this.search.initialize();
 
         this.user.initialize();
@@ -67,7 +69,6 @@ class Services {
 
         this.userRooms.initialize();
         this.userFavoritesRooms.initialize();
-
 
         this.room.initialize();
         this.conference.initialize();
