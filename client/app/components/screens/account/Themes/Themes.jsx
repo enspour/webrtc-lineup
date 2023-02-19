@@ -1,14 +1,15 @@
 import React from "react";
+import { observer } from "mobx-react-lite";
 
-import useThemes from "@hooks/useThemes";
+import services from "@services";
 
-import styles from "./ThemesScreen.module.scss";
+import styles from "./Themes.module.scss";
 
-const ThemeItem = ({ active, theme, setTheme }) => {
+const ThemeItem = ({ active, theme }) => {
     return (
         <div 
             className={styles.themes__item} 
-            onClick={() => setTheme(theme)}
+            onClick={() => services.themes.set(theme)}
             style={
                 active 
                     ? { border: ".2rem solid var(--theme-border-secondary)" } 
@@ -27,44 +28,37 @@ const ThemeItem = ({ active, theme, setTheme }) => {
     )
 }
 
-const Themes = () => {
-    const [theme, setTheme, themes] = useThemes();
+const ThemesItems = observer(() => {
+    const theme = services.themes.Theme;
 
     return (
         <div className={styles.themes__items}>
             {   
-                themes.map(item => 
+                services.themes.Themes.map(item => 
                     <ThemeItem
                         key={item.id} 
                         active={theme.id === item.id} 
                         theme={item} 
-                        setTheme={setTheme}
                     />
                 ) 
             }
         </div>
     )
-}
+})
 
-const ThemesTitle = () => {
-    return (
-        <div className="w-100">
-            <div className="text-primary">Theme</div>
-            <div className="text-placeholder">
-                Choose a theme that interests you.
-            </div>
-        </div>
-    )
-}
-
-
-const ThemesScreen = () => {
+const Themes = () => {
     return (
         <div className={styles.themes}>
-            <ThemesTitle />
-            <Themes />
+            <div className="w-100">
+                <div className="text-primary">Theme</div>
+                <div className="text-placeholder">
+                    Choose a theme that interests you.
+                </div>
+            </div>
+
+            <ThemesItems />
         </div>
     )
 }
 
-export default React.memo(ThemesScreen);
+export default React.memo(Themes);
