@@ -4,7 +4,7 @@ import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
 import Panel from "@components/ui/Panel/Panel";
 
 import Themes from "@components/screens/account/Themes/Themes";
-import ProfileScreen from "@components/screens/account/ProfileScreen/ProfileScreen";
+import Profile from "@components/screens/account/Profile/Profile";
 
 import styles from "@styles/pages/account.module.scss";
 
@@ -14,7 +14,7 @@ const Account = () => {
             <div className={styles.container}>
                 <Panel maxHeight="calc(100vh - 6rem - 10rem)">
                     <div className={styles.wrapper}>
-                        <ProfileScreen />
+                        <Profile />
                         <Themes />
                     </div>
                 </Panel>
