@@ -6,7 +6,7 @@ import OutlinedButton from "@components/ui/OutlinedButton/OutlinedButton";
 
 import services from "@services";
 
-import styles from "./VideoAudioScreen.module.scss";
+import styles from "./VideoAudio.module.scss";
 
 const AudioInputsSection = observer(() => {
     const audios = services.userDevices.AudioInputs;
@@ -73,7 +73,7 @@ const VideoInputsSection = observer(() => {
 
 const VideoAudioScreen = () => {
     return (
-        <div className={styles.videoaudio}>
+        <div className={styles.video__audio}>
             <div>
                 <div className="text-primary">
                     Video & Audio
