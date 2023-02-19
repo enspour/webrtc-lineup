@@ -5,6 +5,7 @@ import { SpeechService } from "@features/Speech";
 export default class UserMediaService {
     #userDevices;
     #speech;
+    #localStorage;
 
     #mediaData;
 
@@ -15,6 +16,16 @@ export default class UserMediaService {
         this.#speech = new SpeechService();
 
         this.#mediaData = new MediaDataStore();
+    }
+
+    initialize(localStorage) {
+        this.#localStorage = localStorage;
+
+        const audio = localStorage.get("__muted_audio");
+        const video = localStorage.get("__muted_video");
+
+        this.#mediaData.setMutedAudio(!!audio)
+        this.#mediaData.setMutedVideo(!!video)
     }
 
     get Stream() {
@@ -100,6 +111,7 @@ export default class UserMediaService {
         }
 
         this.#mediaData.setMutedAudio(true);
+        this.#localStorage.set("__muted_audio", true);
     }
 
     unmuteAudio() {
@@ -110,6 +122,7 @@ export default class UserMediaService {
         }
 
         this.#mediaData.setMutedAudio(false);
+        this.#localStorage.set("__muted_audio", false);
     }
 
     muteVideo() {
@@ -120,6 +133,7 @@ export default class UserMediaService {
         }
         
         this.#mediaData.setMutedVideo(true);
+        this.#localStorage.set("__muted_video", true);
     }
 
     unmuteVideo() {
@@ -130,5 +144,6 @@ export default class UserMediaService {
         }
 
         this.#mediaData.setMutedVideo(false);
+        this.#localStorage.set("__muted_video", false);
     }
 }

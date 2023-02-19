@@ -44,13 +44,13 @@ class Services {
             API.createRequest(RoomsAPI.findCreatedRooms), 
             handlerDataRooms
         );
+
         this.userFavoritesRooms = new RequestedArrayService(
             API.createRequest(RoomsAPI.findFavoritesRooms), 
             handlerDataRooms
         );
 
         this.island = new IslandService(this);
-
         
         this.signal = new SignalService(this);
         this.room = new RoomService(this);
@@ -61,12 +61,13 @@ class Services {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
-        this.themes.initialize(this.localStorage)
+        this.themes.initialize(this.localStorage);
 
         this.search.initialize();
 
         this.user.initialize();
         this.userDevices.initialize();
+        this.userMedia.initialize(this.localStorage);
 
         this.userRooms.initialize();
         this.userFavoritesRooms.initialize();
