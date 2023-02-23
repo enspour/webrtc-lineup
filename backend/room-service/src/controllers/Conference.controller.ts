@@ -39,6 +39,48 @@ class ConferenceController {
         new NotFoundResponse("Conference is not found.").send(res);
     }
 
+    async updateName(req: Request, res: Response) {
+        const roomId = req.body.room_id;
+        const conferenceId = req.body.conference_id;
+        const name = req.body.name;
+
+        const user = getUser(req);
+
+        const count = await ConferenceService.updateName(conferenceId, user.id, name);
+
+        if (count > 0) {
+            const conference = await ConferenceService.findByIdPrivilege(conferenceId);
+            if (conference) {
+                SignalService.updateConferenceInformation(roomId, conference);
+            }
+
+            return new SuccessResponse({ name }).send(res);
+        }
+
+        new NotFoundResponse("Room is not found.").send(res);
+    }
+
+    async updateDescription(req: Request, res: Response) {
+        const roomId = req.body.room_id;
+        const conferenceId = req.body.conference_id;
+        const description = req.body.description;
+
+        const user = getUser(req);
+
+        const count = await ConferenceService.updateDescription(conferenceId, user.id, description);
+
+        if (count > 0) {
+            const conference = await ConferenceService.findByIdPrivilege(conferenceId);
+            if (conference) {
+                SignalService.updateConferenceInformation(roomId, conference);
+            }
+
+            return new SuccessResponse({ description }).send(res);
+        }
+
+        new NotFoundResponse("Room is not found.").send(res);
+    }
+
     async updateEnableAudio(req: Request, res: Response) {
         const roomId = req.body.room_id;
         const conferenceId = req.body.conference_id;

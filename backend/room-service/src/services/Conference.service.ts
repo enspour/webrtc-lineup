@@ -16,6 +16,14 @@ class ConferenceService {
         return await repository.deleteConference(conferenceId, userId);
     }
 
+    async updateName(id: string, userId: bigint, name: string): Promise<number> {
+        return await repository.updateConferenceName(id, userId, name);
+    }
+
+    async updateDescription(id: string, userId: bigint, description: string): Promise<number> {
+        return await repository.updateConferenceDescription(id, userId, description);
+    }
+
     async updateEnableAudio(conferenceId: string, userId: bigint, enableAudio: boolean) {
         return await repository.updateConferenceSettingsEnableAudio(conferenceId, userId, enableAudio);
     }

@@ -437,6 +437,42 @@ export default class PrismaRepository implements IRepository {
         return result.count
     }
 
+    async updateConferenceName(
+        conference_id: string, 
+        user_id: bigint, 
+        name: string
+    ): Promise<number> {
+        const result = await this.prismaClient.conference.updateMany({
+            where: {
+                id: conference_id,
+                room: { owner_id: user_id }
+            },
+            data: {
+                name
+            }
+        });
+
+        return result.count;
+    }
+
+    async updateConferenceDescription(
+        conference_id: string, 
+        user_id: bigint, 
+        description: string
+    ): Promise<number> {
+        const result = await this.prismaClient.conference.updateMany({
+            where: {
+                id: conference_id,
+                room: { owner_id: user_id }
+            },
+            data: {
+                description
+            }
+        });
+
+        return result.count;
+    }
+
     async updateConferenceSettingsEnableAudio(
         conference_id: string, 
         user_id: bigint, 

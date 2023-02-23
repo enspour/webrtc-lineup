@@ -70,6 +70,18 @@ export interface IRepository {
     updateRoomName(room_id: bigint, user_id: bigint, name: string): Promise<number>;
     updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number>;
     
+    updateConferenceName(
+        conference_id: string, 
+        user_id: bigint, 
+        name: string
+    ): Promise<number>;
+
+    updateConferenceDescription(
+        conference_id: string, 
+        user_id: bigint, 
+        description: string
+    ): Promise<number>;
+
     updateConferenceSettingsEnableAudio(
         conference_id: string, 
         user_id: bigint, 
@@ -193,6 +205,30 @@ export default class Repository implements IRepository {
 
     async updateRoomSettingsVisibility(room_id: bigint, user_id: bigint, visibility: boolean): Promise<number> {
         return await this._repository.updateRoomSettingsVisibility(room_id, user_id, visibility);
+    }
+
+    updateConferenceName(
+        conference_id: string, 
+        user_id: bigint, 
+        name: string
+    ): Promise<number> {
+        return this._repository.updateConferenceName(
+            conference_id,
+            user_id,
+            name
+        );
+    }
+
+    updateConferenceDescription(
+        conference_id: string, 
+        user_id: bigint, 
+        description: string
+    ): Promise<number> {
+        return this._repository.updateConferenceDescription(
+            conference_id,
+            user_id,
+            description
+        );
     }
 
     async updateConferenceSettingsEnableAudio(

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import ConferenceAPI from "@api/ConferenceAPI";
@@ -64,27 +65,59 @@ const ConferenceAudioVideoSettings = ({ conference }) => {
 }
 
 const ConferenceNameSettings = ({ conference }) => {
-    const name = conference.name;
+    const [name, setName] = useState(conference.name);
 
-    const setName = value => {}
+    const request = useRequest(ConferenceAPI.updateName);
+
+    const updateName = () => {
+        const body = {
+            room_id: services.room.Info.Id,
+            conference_id: conference.id,
+            name
+        }
+
+        request.start({ body });
+    }
 
     return (
         <div>
             <div className="mb-1"> Name </div>
-            <EditInput value={name} setValue={setName} placeholder="Name"/>
+
+            <EditInput 
+                value={name} 
+                setValue={setName} 
+                placeholder="Name" 
+                onClick={updateName}
+            />
         </div>
     )
 }
 
 const ConferenceDescriptionSettings = ({ conference }) => {
-    const description = conference.description;
+    const [description, setDescription] = useState(conference.description);
 
-    const setDescription = value => {}
+    const request = useRequest(ConferenceAPI.updateDescription);
+
+    const updateDescription = () => {
+        const body = {
+            room_id: services.room.Info.Id,
+            conference_id: conference.id,
+            description
+        }
+
+        request.start({ body });
+    }
 
     return (
         <div>
             <div className="mb-1"> Description </div>
-            <EditInput value={description} setValue={setDescription} placeholder="Description"/>
+
+            <EditInput 
+                value={description} 
+                setValue={setDescription} 
+                placeholder="Description" 
+                onClick={updateDescription}
+            />
         </div>
     )
 }
