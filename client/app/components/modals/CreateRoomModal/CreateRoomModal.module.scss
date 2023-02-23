@@ -1,53 +1,46 @@
-.room__private {
-    margin: 3rem 0 2rem 2rem;
+.modal {
     font-size: 1.6rem;
     font-weight: 600;
+    color: var(--theme-color-primary);
 }
 
-.room__password {
-    max-height: 4rem;
-    transition: max-height .4s ease-out;
+.modal__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-.room__hidden {
-    max-height: 0;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden; 
-}
-
-.room__tag {
+.modal__fields__tag {
     display: flex;
     gap: 2rem;
-    padding: 2rem;
 }
 
-.room__tag__btn {
+.modal__fields__tag__btn {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 4rem;
 }
 
-.room__tags {
+.modal__fields__tags {
     display: flex;
     gap: 2rem;
-    padding: 0 2rem 3rem 2rem;
+    padding: 2rem;
 }
 
-.room__tags__title {
+.modal__fields__tags__title {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--theme-color-primary);
 }
 
-.room__tags__items {
+.modal__fields__tags__items {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.room__tags__item {
+.modal__fields__tags__item {
     color: var(--theme-color-secondary);
     background-color: var(--theme-bg-secondary);
     border-radius: .7rem;
