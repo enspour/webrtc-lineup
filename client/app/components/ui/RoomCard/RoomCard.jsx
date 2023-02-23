@@ -134,7 +134,7 @@ const RoomCard = ({ room }) => {
     
     return (
         <div className={styles.card} onClick={openRoomModal}>
-            <Panel>
+            <Panel width="40rem" height="12rem" overflow="hidden">
                 <div className={styles.room}>
                     <div className="fl g-2">
                         <div className={styles.room__tags}>

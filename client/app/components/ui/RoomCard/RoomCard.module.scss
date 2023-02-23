@@ -1,7 +1,12 @@
 .card {
-    width: 40rem;
-    height: 12rem;
+    border-radius: 2rem;
+    border: 0.1rem solid var(--theme-bg-tertiary);
+    transition: 0.3s;
     cursor: pointer;
+
+    &:hover {
+        border: 0.1rem solid var(--theme-bg-secondary);
+    }
 }
 
 .room {
