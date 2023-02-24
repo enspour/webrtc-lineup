@@ -1,5 +1,5 @@
 import { repository } from "@cassandra/connection";
-import { User } from "@cassandra/Repository/types";
+import { User } from "@cassandra/types";
 
 class MessageService {
     async create(conferenceId: string, text: string, owner: User) {

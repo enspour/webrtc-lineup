@@ -1,4 +1,4 @@
-import { repository } from "core/postgresql/connection";
+import { repository } from "core/postgresql/src/connection";
 
 class RoomService {
     async findByIdPrivilege(id: bigint) {

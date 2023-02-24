@@ -1,7 +1,7 @@
 import cassandra from "cassandra-driver";
 import { nanoid } from "nanoid";
 
-import { Message, User } from "./types";
+import { Message, User } from "../types";
 
 const toMessage = (row: cassandra.types.Row): Message => {
     const result: Message = {

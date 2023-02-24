@@ -5,7 +5,7 @@ services:
     ports:
       - 9042:9042
     volumes:
-      - ./cassandra:/var/lib/cassandra
+      - ./data:/var/lib/cassandra
     environment:
       - CASSANDRA_CLUSTER_NAME=lineup
   

@@ -1,5 +1,11 @@
 [Go to readme](../README.md)
 
+## Set up the project with script 
+
+``` bash
+./scripts/getting-started-development.sh
+```
+
 ## Set up the project manually 
 
 1. Install all dependencies. **Start to run this command in base folder of project.**
@@ -66,13 +72,6 @@ cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up
 cd backend/core && npx prisma generate && npx prisma db push
 ```
 - Stop postgresql docker container.
-
-
-## Set up the project with script 
-
-``` bash
-./scripts/getting-started.sh
-```
 
 ## Run service in development mode
 

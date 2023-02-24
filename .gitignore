@@ -22,11 +22,11 @@ backend/signal-service/.env
 
 backend/chat-service/build
 backend/chat-service/.env
-backend/chat-service/database/cassandra
+backend/chat-service/cassandra/docker/data
 
 backend/core/.env
 backend/core/postgresql/prisma/migrations
-backend/core/postgresql/docker/pgdata
+backend/core/postgresql/docker/data
 
 # dependencies
 backend/node_modules

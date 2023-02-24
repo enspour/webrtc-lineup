@@ -8,7 +8,7 @@ tmux send-keys "cd backend/core/postgresql/docker && docker compose -f docker-co
 
 # Launch Cassandra
 tmux split-window -v;
-tmux send-keys "cd backend/chat-service/database && docker compose -f docker-compose.dev.yml up" Enter;
+tmux send-keys "cd backend/chat-service/cassandra/docker && docker compose -f docker-compose.dev.yml up" Enter;
 
 # Launch gateway (nginx)
 tmux new-window;

@@ -1,6 +1,6 @@
 import cassandra from "cassandra-driver";
 
-import Repository from "./Repository/Repository";
+import Repository from "./Repositories/Repository";
 
 import serverConfig from "@configs/server.config";
 
