@@ -71,7 +71,7 @@ echo "-- You need to launch postgresql in docker. Run the following commands."
 echo 1. cd $workdir/backend/core/postgresql/docker
 echo 2. docker compose -f docker-compose.dev.yml up
 
-echo "-- Press any key to continue."
+echo "-- Wait for the database to start. After that press any key to continue."
 read -N 1 -s -r
 
 cd $workdir/backend/core
