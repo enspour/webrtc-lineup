@@ -3,10 +3,10 @@ import { autorun } from "mobx";
 import API from "@api/API";
 import RoomsAPI from "@api/RoomsAPI";
 
-import RequestedArray from "../../../services/RequestedArray.service";
+import RequestedArray from "@services/RequestedArray.service";
 
 import StateStore from "@stores/State.store";
-import { SearchStore } from "@features/Search";
+import SearchStore from "../store/Search.store";
 
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 import removeDuplicates from "@utils/removeDuplicates";

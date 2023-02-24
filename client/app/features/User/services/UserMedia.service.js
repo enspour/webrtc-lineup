@@ -1,6 +1,6 @@
-import MediaDataStore from "@stores/MediaData.store";
-
 import { SpeechService } from "@features/Speech";
+
+import MediaDataStore from "../store/MediaData.store";
 
 export default class UserMediaService {
     #userDevices;

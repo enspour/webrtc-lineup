@@ -6,6 +6,7 @@
         "@assets/*": ["app/assets/*"],
         "@styles/*": ["app/styles/*"],
         "@services": ["app/services"],
+        "@services/*": ["app/services/*"],
         "@hooks/*": ["app/hooks/*"],
         "@stores/*": ["app/stores/*"],
         "@features/*": ["app/features/*"],
