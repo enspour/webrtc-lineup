@@ -12,7 +12,11 @@ const ProfileCredentials = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
 
-    const changePassword = () => {}
+    const saveEmail = () => {}
+
+    const saveName = () => {}
+
+    const reset = () => {}
 
     useEffect(
         () =>
@@ -30,18 +34,18 @@ const ProfileCredentials = () => {
         <div className={styles.profile__credentials}>
             <div>
                 <div className="mb-1 text-primary">Email Address</div>
-                <EditInput value={email} setValue={setEmail} placeholder="Email"/>
+                <EditInput value={email} setValue={setEmail} placeholder="Email" onClick={saveEmail}/>
             </div>
 
             <div className="fl jf-between">
                 <div className="w-60">
                     <div className="mb-1 text-primary">Name</div>
-                    <EditInput value={name} setValue={setName} placeholder="Name"/>
+                    <EditInput value={name} setValue={setName} placeholder="Name" onClick={saveName}/>
                 </div>
 
                 <div className="w-35">
                     <div className="mb-1 text-primary">Password</div>
-                    <FilledButton onClick={changePassword}> Reset </FilledButton>
+                    <FilledButton onClick={reset}> Reset </FilledButton>
                 </div>
             </div>
         </div>
