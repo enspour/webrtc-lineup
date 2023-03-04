@@ -67,7 +67,7 @@ const InputTag = ({ setTags }) => {
 
 const CreateRoomModalTags = ({ tags, setTags }) => {
     return (
-        <div>
+        <div className="mt-1">
             <div className="mb-1">
                 <div>Tags</div>
                 <div className="text-placeholder"> Add tags to make it easier to find the room </div>

@@ -55,10 +55,18 @@ const CreateConferenceModal = observer(() => {
             setIsOpen={setIsOpenModal}
             width="40rem"
         >
-            <div className={styles.conference}>
+            <div className={styles.modal}>
+                <div>
+                    <div>General</div>
+
+                    <div className="text-placeholder"> 
+                        Fill in the required fields to create a conference
+                    </div>
+                </div>
+
                 <InputControl 
                     type="text" 
-                    placeholder="Name" 
+                    placeholder="Name*" 
                     value={name} 
                     setValue={setName}
                 />
@@ -70,7 +78,7 @@ const CreateConferenceModal = observer(() => {
                     setValue={setDescription}
                 />
 
-                <div className="w-50 m-auto">
+                <div className="w-50 m-auto mt-1">
                     <FilledButton onClick={create}> Create </FilledButton>
                 </div>
             </div>
