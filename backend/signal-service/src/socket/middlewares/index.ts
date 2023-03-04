@@ -1,9 +1,9 @@
 import { Server } from "socket.io";
 
-import guard from "./guard.middleware";
+// import guard from "./guard.middleware";
 
 const initMiddlewares = (io: Server) => {
-    io.use(guard)
+    // io.use(guard)
 }
 
 export default initMiddlewares;

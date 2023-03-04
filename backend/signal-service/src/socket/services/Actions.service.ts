@@ -7,9 +7,10 @@ import BadRequest from "@socket/notifications/BadRequest.notification";
 import Broadcast from "@socket/notifications/Broadcast.notification";
 import NotFound from "@socket/notifications/NotFound.notification";
 import Success from "@socket/notifications/Success.notification";
+import ServerError from "@socket/notifications/ServerError.notification";
+import Unauthorized from "@socket/notifications/Unauthorized.notification";
 
 import parseId from "@utils/parseId";
-import ServerError from "@socket/notifications/ServerError.notification";
 
 class Client {
     private userId;
@@ -97,13 +98,19 @@ export default class ActionsService {
         },
     ) {
         return (payload: T) => {
-            const context = new ActionContext(socket, payload, this.roomsService);
-
-            if (validation && validation.validate(payload).length) {
-                return context.badRequest(validation.action, "Payload is invalid");
+            try {
+                const context = new ActionContext(socket, payload, this.roomsService);
+    
+                if (validation && validation.validate(payload).length) {
+                    return context.badRequest(validation.action, "Payload is invalid");
+                }
+    
+                handler(context);
+            } catch (err) {
+                if (err instanceof Error && validation) {
+                    return new Unauthorized(validation.action, err.message).notify(socket);
+                }
             }
-
-            handler(context);
         }
     }
 }

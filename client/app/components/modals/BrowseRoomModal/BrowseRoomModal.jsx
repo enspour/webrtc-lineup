@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
 import RoomAPI from "@api/RoomAPI";
+import AuthAPI from "@api/AuthAPI";
 
 import Modal from "@components/ui/Modal/Modal";
 import InputButtonGroup from "@components/ui/InputButtonGroup/InputButtonGroup";
@@ -109,7 +110,13 @@ const JoinButton = () => {
 
     const join = async () => {
         const id = services.modals.browseRoom.Room.id;
-        const response = await services.room.join(id, password);
+        
+        let response = await services.room.join(id, password);
+
+        if (response.status === 401) {
+            await AuthAPI.refresh();
+            response = await services.room.join(id, password);
+        }
         
         if (response.status === 200) {
             services.room.Conferences.update({ params: { room_id: id } });
