@@ -12,6 +12,7 @@ import InputControl from "@components/ui/InputControl/InputControl";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
+import useError from "@hooks/api/useError";
 
 import services from "@services";
 
@@ -22,6 +23,7 @@ const LoginWithEmail = React.memo(() => {
 
     const request = useRequest(AuthAPI.login);
     const { data } = useResponse(request);
+    useError(request)
 
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");

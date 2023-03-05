@@ -11,6 +11,7 @@ import CreateRoomModalTags from "./CreateRoomModalTags";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
+import useError from "@hooks/api/useError";
 
 import services from "@services";
 
@@ -29,6 +30,7 @@ const CreateRoomModal = observer(() => {
     
     const request = useRequest(RoomAPI.create);
     const { data } = useResponse(request);
+    useError(request)
 
     const create = () => {
         const body = {

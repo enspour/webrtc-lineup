@@ -11,6 +11,7 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
+import useError from "@hooks/api/useError";
 
 import services from "@services";
 
@@ -21,6 +22,7 @@ const SignupWithEmail = () => {
 
     const request = useRequest(AuthAPI.signup);
     const { data } = useResponse(request);
+    useError(request);
 
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");

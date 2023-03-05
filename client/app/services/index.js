@@ -24,6 +24,7 @@ import { ConferenceService, RoomService, SignalService } from "@features/Room";
 import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
 
 import SignalLogger from "@logs/Signal.logger";
+import { NotificationService } from "@features/Notifications";
 
 class Services {
     constructor() {
@@ -55,6 +56,8 @@ class Services {
         this.signal = new SignalService(this);
         this.room = new RoomService(this);
         this.conference = new ConferenceService(this);
+
+        this.notification = new NotificationService(this);
     }
 
     initialize() {

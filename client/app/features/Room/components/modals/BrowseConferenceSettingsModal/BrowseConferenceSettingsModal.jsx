@@ -8,6 +8,7 @@ import CheckBox from "@components/ui/CheckBox/CheckBox";
 import EditInput from "@components/ui/EditInput/EditInput";
 
 import useRequest from '@hooks/api/useRequest';
+import useError from "@hooks/api/useError";
 
 import services from "@services";
 
@@ -68,6 +69,7 @@ const ConferenceNameSettings = ({ conference }) => {
     const [name, setName] = useState(conference.name);
 
     const request = useRequest(ConferenceAPI.updateName);
+    useError(request)
 
     const updateName = () => {
         const body = {
@@ -97,6 +99,7 @@ const ConferenceDescriptionSettings = ({ conference }) => {
     const [description, setDescription] = useState(conference.description);
 
     const request = useRequest(ConferenceAPI.updateDescription);
+    useError(request)
 
     const updateDescription = () => {
         const body = {

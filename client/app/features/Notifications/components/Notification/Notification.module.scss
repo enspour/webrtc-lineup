@@ -1,0 +1,25 @@
+.notification {
+    width: 100%;
+    max-height: 12rem;
+    color: var(--theme-color-primary);
+    background-color: var(--theme-bg-primary);
+    font-size: 1.6rem;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: 0.1rem solid var(--theme-border-primary);
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.notification__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notification__header__title {
+    font-weight: 600;
+}
+
+.notification__message {
+    padding: 1rem;
+}

@@ -8,6 +8,7 @@ import EditInput from "@components/ui/EditInput/EditInput";
 import CheckBox from "@components/ui/CheckBox/CheckBox";
 
 import useRequest from "@hooks/api/useRequest";
+import useError from "@hooks/api/useError";
 
 import services from "@services";
 
@@ -17,6 +18,7 @@ const RoomNameSettings = () => {
     const [name, setName] = React.useState(services.room.Info.Name);
 
     const request = useRequest(RoomAPI.updateName);
+    useError(request)
 
     const save = () => {
         const body = {

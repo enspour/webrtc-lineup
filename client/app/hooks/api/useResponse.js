@@ -1,16 +1,15 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 const useResponse = ({ error, response, isLoading, makeRequest }) => {
-    const [data, setData] = React.useState(null); 
+    const [data, setData] = useState(null); 
 
-    React.useEffect(() => {
-        if (
-            !isLoading 
+    useEffect(() => {
+        if (!isLoading 
             && response 
             && (response.status === 200 || response.status === 201)
         ) {
-            setData(response.data); 
-        } 
+            setData(response.data);
+        }
     }, [isLoading]);
 
     return { data }
