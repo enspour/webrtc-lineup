@@ -35,7 +35,7 @@ class AuthController {
             }
         }
 
-        return new BadRequestResponse("Email or password is invalid").send(res);
+        return new BadRequestResponse("Invalid Credentials. Please check the entered data.").send(res);
     }
 
     async signup(req: Request, res: Response) {
@@ -61,7 +61,7 @@ class AuthController {
             return new CreatedResponse("Signup is successful").send(res);
         }
 
-        new BadRequestResponse("Email or password is invalid").send(res);
+        new BadRequestResponse("Invalid Credentials. Please check the entered data.").send(res);
     }
 
     async logout(req: Request, res: Response) {
@@ -79,7 +79,7 @@ class AuthController {
             }
         }
 
-        return new BadRequestResponse("Refresh token is invalid").send(res);
+        return new BadRequestResponse("Refresh token is invalid.").send(res);
     }
 
     async me(req: Request, res: Response) {

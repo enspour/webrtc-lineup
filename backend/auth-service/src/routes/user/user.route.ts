@@ -14,7 +14,7 @@ const router = Router();
 router.get("/:id",
     guardMiddleware,
     idValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(UserController.findOne)
 );
 

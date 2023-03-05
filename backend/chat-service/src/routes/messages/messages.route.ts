@@ -14,7 +14,7 @@ const router = Router();
 router.get("/:conference_id",
     guardMiddleware,
     findAllValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(MessagesController.findAll)
 )
 

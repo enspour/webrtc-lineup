@@ -11,7 +11,7 @@ const router = Router();
 
 router.post("/", 
     createValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(MessageController.create)
 )
 

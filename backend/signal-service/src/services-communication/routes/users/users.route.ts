@@ -12,13 +12,13 @@ const router = Router();
 
 router.put("/update-room-information", 
     updateRoomValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(UsersController.updateRoomInformation)
 );
 
 router.put("/update-conference-information",
     updateConferenceValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(UsersController.updateConferenceInformation)
 )
 

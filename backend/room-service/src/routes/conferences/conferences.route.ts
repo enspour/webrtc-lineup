@@ -14,7 +14,7 @@ const router = Router();
 router.get("/:room_id",
     guardMiddleware,
     findAllValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(ConferencesController.findAll)    
 )
 

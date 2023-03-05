@@ -12,7 +12,7 @@ const router = Router();
 router.get(
     "/:room_id/users",
     getUsersValidator, 
-    validatorMiddleware,
+    validatorMiddleware(),
     AsyncHandler(RoomController.getUsers)
 );
 

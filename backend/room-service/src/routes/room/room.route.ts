@@ -17,49 +17,49 @@ const router = Router();
 router.get("/:id", 
     guardMiddleware,
     idValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(RoomController.findOne)
 );
 
 router.post("/", 
     guardMiddleware, 
     createValidator, 
-    validatorMiddleware, 
+    validatorMiddleware("Incorrectly entered data. Please fill in the required fields."), 
     asyncHandler(RoomController.create)
 );
 
 router.delete("/:id", 
     guardMiddleware, 
     idValidator, 
-    validatorMiddleware, 
+    validatorMiddleware(), 
     asyncHandler(RoomController.delete)
 );
 
 router.post("/favorites/:id",
     guardMiddleware,
     idValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(RoomController.addRoomToFavorites)
 );
 
 router.delete("/favorites/:id",
     guardMiddleware,
     idValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(RoomController.deleteRoomFromFavorites)
 );
 
 router.post("/name",
     guardMiddleware,
     updateNameValidator,
-    validatorMiddleware,
+    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
     asyncHandler(RoomController.updateName)
 )
 
 router.post("/settings/visibility", 
     guardMiddleware,
     updateVisibilityValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(RoomController.updateVisibility)
 );
 

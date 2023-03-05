@@ -3,7 +3,7 @@ import { validationResult } from "express-validator";
 
 import BadRequest from "../responses/BadRequest.response"
 
-const validatorMiddleware = (req: Request, res: Response, next: NextFunction) => {
+const validatorMiddleware = (message: string = "Bad request") => (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         const body = errors.array().map(item => ({
@@ -11,7 +11,7 @@ const validatorMiddleware = (req: Request, res: Response, next: NextFunction) =>
             message: item.msg
         }))
 
-        return new BadRequest("Bad request", body).send(res);
+        return new BadRequest(message, body).send(res);
     }
 
     next();

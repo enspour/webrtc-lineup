@@ -24,7 +24,7 @@ router.get("/favorites",
 router.get("/search",
     guardMiddleware,
     searchValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(RoomsController.search)
 );
 

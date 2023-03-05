@@ -12,9 +12,20 @@ import asyncHandler from "core/server/AsyncHandler";
 
 const router = Router();
 
-router.post("/login", loginValidator, validatorMiddleware, asyncHandler(AuthController.login));
-router.post("/signup", signupValidator, validatorMiddleware, asyncHandler(AuthController.signup));
+router.post("/login", 
+    loginValidator, 
+    validatorMiddleware("Invalid Credentials. Please check the entered data."), 
+    asyncHandler(AuthController.login)
+);
+
+router.post("/signup", 
+    signupValidator, 
+    validatorMiddleware("Invalid Credentials. Please check the entered data."), 
+    asyncHandler(AuthController.signup)
+);
+
 router.post("/logout", guardMiddleware, asyncHandler(AuthController.logout));
+
 router.post("/refresh", asyncHandler(AuthController.refresh));
 
 router.get("/me", guardMiddleware, asyncHandler(AuthController.me));

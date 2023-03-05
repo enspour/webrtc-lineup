@@ -19,42 +19,42 @@ const router = Router();
 router.post("/",
     guardMiddleware,
     createValidator,
-    validatorMiddleware,
+    validatorMiddleware("Incorrectly entered data. Please fill in the required fields."),
     asyncHandler(ConferenceController.create)
 );
 
 router.delete("/:id",
     guardMiddleware,
     deleteValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(ConferenceController.delete)
 );
 
 router.post("/name",
     guardMiddleware,
     updateNameValidator,
-    validatorMiddleware,
+    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
     asyncHandler(ConferenceController.updateName)
 );
 
 router.post("/description",
     guardMiddleware,
     updateDescriptionValidator,
-    validatorMiddleware,
+    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
     asyncHandler(ConferenceController.updateDescription)
 );
 
 router.post("/settings/enable_audio", 
     guardMiddleware,
     updateEnableAudioValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(ConferenceController.updateEnableAudio)
 );
 
 router.post("/settings/enable_video", 
     guardMiddleware,
     updateEnableVideoValidator,
-    validatorMiddleware,
+    validatorMiddleware(),
     asyncHandler(ConferenceController.updateEnableVideo)
 );
 
