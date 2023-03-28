@@ -12,20 +12,20 @@
 
 ### Main page
 
-![Main page](./docs/assets/alpha-1.0.0-preview/main-page.png)
+![Main page](./docs/assets/alpha-1.0.0/preview/main-page.png)
 
 ### Modal window of room
 
-![Modal window of room](./docs/assets/alpha-1.0.0-preview/room-modal.png)
+![Modal window of room](./docs/assets/alpha-1.0.0/preview/room-modal.png)
 
 ###  Room page
 
-![Main page](./docs/assets/alpha-1.0.0-preview/room-page.png)
+![Main page](./docs/assets/alpha-1.0.0/preview/room-page.png)
 
 ### Conference settings
 
-![Main page](./docs/assets/alpha-1.0.0-preview/conference-settings.png)
+![Main page](./docs/assets/alpha-1.0.0/preview/conference-settings.png)
 
 ### Video conference 
 
-![Main page](./docs/assets/alpha-1.0.0-preview/video-conference.png)
+![Main page](./docs/assets/alpha-1.0.0/preview/video-conference.png)
