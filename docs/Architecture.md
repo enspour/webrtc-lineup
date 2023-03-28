@@ -16,4 +16,4 @@
 
 ## Schema
 
-![Schema](assets/architecture.png)
+![Schema](assets/alpha-1.0.2/architecture.png)
