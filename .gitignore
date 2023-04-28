@@ -10,20 +10,21 @@ app/client/out/
 app/client/build
 
 # backend
-app/backend/auth-service/build
-app/backend/auth-service/keys
-app/backend/auth-service/.env
+app/backend/services/auth-service/build
+app/backend/services/auth-service/keys
+app/backend/services/auth-service/.env
 
-app/backend/room-service/build
-app/backend/room-service/.env
+app/backend/services/room-service/build
+app/backend/services/room-service/.env
 
-app/backend/signal-service/build
-app/backend/signal-service/.env
+app/backend/services/signal-service/build
+app/backend/services/signal-service/.env
 
-app/backend/chat-service/build
-app/backend/chat-service/.env
+app/backend/services/chat-service/build
+app/backend/services/chat-service/.env
 
-app/backend/core/postgresql/prisma/migrations
+app/backend/databases/postgresql/prisma/migrations
+app/backend/databases/postgresql/.env
 
 # dependencies
 app/backend/node_modules

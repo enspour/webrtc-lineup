@@ -26,23 +26,22 @@ services:
         condition: service_started
 
   client:
-    build: "./client"
+    image: node:18.16
+    command: bash -c "cd /usr/src/app && npm run dev"
     environment:
       - GATEWAY=gateway:8080
     volumes:
       - ./client:/usr/src/app
 
   auth-service:
-    build: 
-      context: ./backend
-      dockerfile: ./auth-service/Dockerfile
+    image: node:18.16 
+    command: bash -c "cd /usr/src/app/services/auth-service && npm run dev"
     environment:
       - PORT=3000
       - environment=development
       - DATABASE_URL=postgresql://admin:mysecretpassword@postgresql:5432/lineup
     volumes:
-      - ./backend/auth-service:/usr/src/app/auth-service
-      - ./backend/core:/usr/src/app/core
+      - ./backend:/usr/src/app
     depends_on:
       postgresql:
         condition: service_healthy
@@ -53,9 +52,8 @@ services:
       retries: 5
 
   room-service:
-    build: 
-      context: ./backend
-      dockerfile: ./room-service/Dockerfile
+    image: node:18.16 
+    command: bash -c "cd /usr/src/app/services/room-service && npm run dev"
     environment:
       - PORT=3000
       - environment=development
@@ -63,8 +61,7 @@ services:
       - SIGNAL_SERVICE=signal-service:3000
       - DATABASE_URL=postgresql://admin:mysecretpassword@postgresql:5432/lineup
     volumes:
-      - ./backend/room-service:/usr/src/app/room-service
-      - ./backend/core:/usr/src/app/core
+      - ./backend:/usr/src/app
     depends_on:
       postgresql:
         condition: service_healthy
@@ -72,9 +69,8 @@ services:
         condition: service_healthy
 
   signal-service:
-    build: 
-      context: ./backend
-      dockerfile: ./signal-service/Dockerfile
+    image: node:18.16 
+    command: bash -c "cd /usr/src/app/services/signal-service && npm run dev"
     environment:
       - PORT=3000
       - environment=development
@@ -82,24 +78,21 @@ services:
       - ROOM_SERVICE=room-service:3000
       - CHAT_SERVICE=chat-service:3000
     volumes:
-      - ./backend/signal-service:/usr/src/app/signal-service
-      - ./backend/core:/usr/src/app/core
+      - ./backend:/usr/src/app
     depends_on:
       auth-service:
         condition: service_healthy
 
   chat-service:
-    build: 
-      context: ./backend
-      dockerfile: ./chat-service/Dockerfile
+    image: node:18.16 
+    command: bash -c "cd /usr/src/app/services/chat-service && npm run dev"
     environment:
       - PORT=3000
       - environment=development
       - AUTH_SERVICE=auth-service:3000
       - CASSANDRA_URL=cassandra
     volumes:
-      - ./backend/chat-service:/usr/src/app/chat-service
-      - ./backend/core:/usr/src/app/core
+      - ./backend:/usr/src/app
     depends_on:
       cassandra:
         condition: service_started
