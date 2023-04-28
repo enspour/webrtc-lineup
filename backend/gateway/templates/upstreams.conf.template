@@ -1,0 +1,19 @@
+upstream client {
+    server ${CLIENT};
+}
+
+upstream auth {
+    server ${AUTH_SERVICE};
+}
+
+upstream room {
+    server ${ROOM_SERVICE};
+}
+
+upstream signal {
+    server ${SIGNAL_SERVICE};
+}
+
+upstream chat {
+    server ${CHAT_SERVICE};
+}
