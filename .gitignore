@@ -1,32 +1,32 @@
 # client
 # dependencies
-client/node_modules
+app/client/node_modules
 
 # next.js
-client/.next/
-client/out/
+app/client/.next/
+app/client/out/
 
 # production
-client/build
+app/client/build
 
 # backend
-backend/auth-service/build
-backend/auth-service/keys
-backend/auth-service/.env
+app/backend/auth-service/build
+app/backend/auth-service/keys
+app/backend/auth-service/.env
 
-backend/room-service/build
-backend/room-service/.env
+app/backend/room-service/build
+app/backend/room-service/.env
 
-backend/signal-service/build
-backend/signal-service/.env
+app/backend/signal-service/build
+app/backend/signal-service/.env
 
-backend/chat-service/build
-backend/chat-service/.env
-backend/chat-service/cassandra/docker/data
+app/backend/chat-service/build
+app/backend/chat-service/.env
 
-backend/core/.env
-backend/core/postgresql/prisma/migrations
-backend/core/postgresql/docker/data
+app/backend/core/postgresql/prisma/migrations
 
 # dependencies
-backend/node_modules
+app/backend/node_modules
+
+# docker data
+app/data
