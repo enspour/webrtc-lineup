@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/postgresql/src/types"; 
+import { User, Room, RoomSettings, Conference, ConferenceSettings } from "core/postgresql/types"; 
 
 import toJson from "core/utils/toJson";
 
@@ -13,7 +13,7 @@ class SignalService {
         try {
             const { signal } = servicesConfig;
             const url = 
-                `${signal}/services-communication/signal-service/users/update-room-information/`;
+                `http://${signal}/services-communication/signal-service/users/update-room-information/`;
             
             const body = toJson({ room });
 
@@ -31,7 +31,7 @@ class SignalService {
         try {
             const { signal } = servicesConfig;
             const url = 
-                `${signal}/services-communication/signal-service/users/update-conference-information/`;
+                `http://${signal}/services-communication/signal-service/users/update-conference-information/`;
 
             const body = toJson({ room_id: roomId, conference });
 

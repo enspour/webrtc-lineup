@@ -9,7 +9,7 @@ class AuthService {
         try {
             const { auth } = servicesConfig;
         
-            const url = `${auth}/services-communication/auth-service/user/${userId}`;
+            const url = `http://${auth}/services-communication/auth-service/user/${userId}`;
     
             const response = await fetch(url);
 

@@ -10,7 +10,7 @@ class RoomService {
             const { room } = servicesConfig;
         
             const response = await fetch(
-                `${room}/services-communication/room-service/room/with-auth?id=${roomId}&user_id=${userId}`
+                `http://${room}/services-communication/room-service/room/with-auth?id=${roomId}&user_id=${userId}`
             );
     
             if (response.status === 200) {

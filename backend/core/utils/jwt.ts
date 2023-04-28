@@ -23,8 +23,8 @@ export const verifyAccessToken = (token: string, key: string) => {
     }
 }
 
-export const loadPublicKeyAccessToken = async (backend: string) => {
-    const response = await fetch(`${backend}/services-communication/auth-service/auth/access-token/public-key`);
+export const loadPublicKeyAccessToken = async (auth: string) => {
+    const response = await fetch(`http://${auth}/services-communication/auth-service/auth/access-token/public-key`);
 
     if (response.status === 200) {
         const data = await response.json();

@@ -1,7 +1,7 @@
 import { PrismaClient }  from "@prisma/client";
 
-import PrismaRepository from "./Repositories/PrismaRepository";
-import Repository from "./Repositories/Repository";
+import PrismaRepository from "./repositories/PrismaRepository";
+import Repository from "./repositories/Repository";
 
 let repository: Repository;
 

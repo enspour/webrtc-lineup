@@ -4,8 +4,5 @@
   "description": "",
   "keywords": [],
   "author": "",
-  "prisma": {
-    "schema": "postgresql/prisma/schema.prisma"
-  },
   "license": "ISC"
 }

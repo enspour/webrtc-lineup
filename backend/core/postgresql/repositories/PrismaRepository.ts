@@ -15,7 +15,7 @@ import {
     Tag 
 } from "../types";
 
-import UnknownError from "../QueryError/UnknownError";
+import UnknownError from "../errors/UnknownError";
 
 export default class PrismaRepository implements IRepository {
     constructor(private prismaClient: PrismaClient) {}

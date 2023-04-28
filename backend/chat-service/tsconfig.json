@@ -15,7 +15,7 @@
       "@middlewares/*": ["middlewares/*"],
       "@services/*": ["services/*"],
       "@services-communication/*": ["services-communication/*"],
-      "@cassandra/*": ["../cassandra/src/*"],
+      "@cassandra/*": ["cassandra/*"],
     },
     "resolveJsonModule": true,
     "allowJs": true,

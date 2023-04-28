@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-import { repository } from "core/postgresql/src/connection";
+import { repository } from "core/postgresql/connection";
 
 class ConferenceService {
     async findByIdPrivilege(id: string) {

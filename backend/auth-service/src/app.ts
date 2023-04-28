@@ -2,7 +2,7 @@ import { loadKeysAccessJWT, loadKeysRefreshJWT } from "@loaders/jwt.keys";
 import createServer from "@loaders/http";
 import createApp from "@loaders/app";
 
-import { connect } from "core/postgresql/src/connection";
+import { connect } from "core/postgresql/connection";
 
 import logger from "@logger";
 

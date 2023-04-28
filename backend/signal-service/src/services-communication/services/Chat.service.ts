@@ -11,7 +11,7 @@ class ChatService {
         try {
             const { chat } = servicesConfig;
         
-            const url = `${chat}/services-communication/chat-service/message`;
+            const url = `http://${chat}/services-communication/chat-service/message`;
     
             const body = toJson({ 
                 conference_id,
