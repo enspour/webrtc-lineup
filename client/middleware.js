@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 
-const domain = process.env.DOMAIN || "http://localhost:8080";
+const gateway = process.env.GATEWAY || "localhost:8080";
 
 export async function middleware(request) {
     const cookies = request.cookies;
 
-    const meResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/auth/me`, cookies);
+    const meResponse = await fetchWithCookies(`http://${gateway}/api/v1/auth-service/auth/me`, cookies);
 
     if (meResponse.status === 200) {
         const response = NextResponse.next();
@@ -14,7 +14,7 @@ export async function middleware(request) {
     }
 
     if (meResponse.status === 401) {
-        const refreshResponse = await fetchWithCookies(`${domain}/api/v1/auth-service/auth/refresh`, cookies, "POST");
+        const refreshResponse = await fetchWithCookies(`http://${gateway}/api/v1/auth-service/auth/refresh`, cookies, "POST");
         if (refreshResponse.status === 200) {
             const response = NextResponse.next();
             pipeCookies(refreshResponse, response);
@@ -31,14 +31,14 @@ export const config = {
     ],
 }
 
-async function pipeCookies (from, to) {
+async function pipeCookies(from, to) {
     const setCookieHeader = from.headers.get("set-cookie");
     if (setCookieHeader) {
         to.headers.set("set-cookie", setCookieHeader);
     }
 }
 
-async function fetchWithCookies (url, cookies, method = "GET") {
+async function fetchWithCookies(url, cookies, method = "GET") {
     return await fetch(url, {
         method,
         headers: [ createHeaderCookies(cookies) ]
