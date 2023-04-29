@@ -7,23 +7,30 @@
 ```
 
 ## Set up the project manually 
+1. Download necessary docker images
+``` bash
+docker pull node:18.16
+docker pull nginx:1.23.2-alpine
+docker pull postgres:14.5-alpine
+docker pull cassandra:4.1
+```
 
-1. Install all dependencies. **Start to run this command in base folder of project.**
+2. Install all dependencies. **Start to run this command in base folder of project.**
 
 ``` bash
-cd backend && npm install
+cd app/backend && npm install
 ```
 
 ``` bash
 cd ../client && npm install
 ```
 
-2. Creating ssh-keys for Auth Service. **Start to run this command in base folder of project.**
+3. Creating ssh-keys for Auth Service. **Start to run this command in base folder of project.**
 
 - Creating folders for keys
  
 ``` bash
-cd backend/auth-service/ && mkdir keys && cd keys
+cd app/backend/services/auth-service/ && mkdir keys && cd keys
 ```
 
 ``` bash
@@ -55,7 +62,7 @@ openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 - Postgres settings
 
 ``` bash
-cd backend/core && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
+cd app/backend/databases/postgresql && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
 ```
 
 4. Initialize prisma. 
@@ -63,13 +70,18 @@ cd backend/core && echo "DATABASE_URL=postgresql://admin:mysecretpassword@localh
 - Run postgresql in docker. **Start to run this command in base folder of project.**
 
 ``` bash
-cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up
+docker run --rm \
+    -e POSTGRES_USER=admin \
+    -e POSTGRES_PASSWORD=mysecretpassword \
+    -v app/data/postgresql:/var/lib/postgresql/data \
+    -p 5432:5432 \
+    postgres:14.5-alpine
 ```
 
 - Generate and push db. **Start to run this command in base folder of project.**
 
 ``` bash
-cd backend/core && npx prisma generate && npx prisma db push
+cd app/backend/databases/postgresql && npx prisma generate && npx prisma db push
 ```
 - Stop postgresql docker container.
 
