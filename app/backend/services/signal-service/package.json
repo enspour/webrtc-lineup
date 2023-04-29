@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "core": "../../core",
     "ajv": "^8.11.0",
     "cookie": "^0.5.0",
+    "core": "../../core",
     "socket.io": "^4.5.2"
   }
 }
