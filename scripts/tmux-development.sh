@@ -26,7 +26,7 @@ tmux send-keys "docker logs -f lineup_dev_gateway" Enter;
 
 # Watch client logs
 tmux new-window;
-tmux send-keys "docker logs -f lineup_dev_gateway" Enter;
+tmux send-keys "docker logs -f lineup_dev_client" Enter;
 
 # Watch auth service logs
 tmux new-window;
