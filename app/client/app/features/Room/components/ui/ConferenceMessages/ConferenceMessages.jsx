@@ -3,16 +3,18 @@ import { observer } from "mobx-react-lite";
 
 import styles from "./ConferenceMessages.module.scss";
 
-import services from "@services";
-import useChildrenObserver from "@hooks/useChildrenObserver";
+import useScrollDownAtOpening from "../../../hooks/useScrollDownAtOpening";
+import useWatchScroll from "../../../hooks/useWatchScroll";
 
-const checkTime = (message, previosMessage) => {
+import services from "@services";
+
+const checkTime = (message, previousMessage) => {
     const createdAt = new Date(message.createdAt);
-    const previosCreatedAt = new Date(previosMessage.createdAt);
+    const previousCreatedAt = new Date(previousMessage.createdAt);
 
     const minute = 1000 * 60
 
-    return (createdAt - previosCreatedAt) <= minute;
+    return (createdAt - previousCreatedAt) <= minute;
 }
 
 const isHide = (index) => {
@@ -20,11 +22,11 @@ const isHide = (index) => {
 
     if (0 < index && index < messages.length) {
         const message = messages[index];
-        const previosMessage = messages[index - 1];
+        const previousMessage = messages[index - 1];
 
         if (
-            previosMessage.owner.id === message.owner.id
-            && checkTime(message, previosMessage) 
+            previousMessage.owner.id === message.owner.id
+            && checkTime(message, previousMessage) 
         ) {
             return true;
         }
@@ -113,7 +115,7 @@ const ConferenceMessages = observer(() => {
     
     const messagesRef = React.useRef();
 
-    useScrollAtOpening(messagesRef);
+    useScrollDownAtOpening(messagesRef);
     useWatchScroll(messagesRef);
 
     return (
@@ -126,65 +128,5 @@ const ConferenceMessages = observer(() => {
         </div>
     )
 });
-
-function useScrollAtOpening(ref) {
-    const scroll = (target, unsubscribe) => {
-        unsubscribe();
-
-        target.scrollTo({
-            top: target.scrollHeight,
-        })
-    }
-
-    const { subscribe, unsubscribe } = useChildrenObserver(ref, scroll);
-
-    React.useEffect(() => {
-        const target = ref.current;
-
-        if (target) {
-            target.scrollTo({
-                top: target.scrollHeight,
-            });
-
-            unsubscribe();
-        }
-
-        subscribe();
-        return () => unsubscribe();
-    }, []);
-}
-
-function useWatchScroll(ref) {
-    const scroll = (target) => {
-        target.scrollTo({
-            top: target.scrollHeight,
-            behavior: "smooth"    
-        })
-    }
-
-    const { subscribe, unsubscribe } = useChildrenObserver(ref, scroll);
-
-    React.useEffect(() => {
-        const current = ref.current;
-        if (current) {
-            const event = (e) => {
-                const target = e.target;
-                if (target.offsetHeight + target.scrollTop >= target.scrollHeight) {
-                    subscribe();
-                } else {
-                    unsubscribe();
-                }
-            }
-
-            current.addEventListener("scroll", event);
-
-            return () => {
-                unsubscribe();
-                current?.removeEventListener("scroll", event);
-            }
-        }
-    }, []);
-}
-
 
 export default ConferenceMessages;

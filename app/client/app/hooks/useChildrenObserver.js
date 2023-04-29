@@ -1,11 +1,11 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
 const config = {
     childList: true,
 };
 
 const useChildrenObserver = (ref, event) => {
-    const observerRef = React.useRef();
+    const observerRef = useRef();
 
     const subscribe = () => {
         if (ref.current && observerRef.current) {
@@ -22,12 +22,12 @@ const useChildrenObserver = (ref, event) => {
     const callback = (mutations) => {
         for (let mutation of mutations) {
             if (mutation.type === 'childList') {
-                event(ref.current, unsubscribe);
+                event(ref.current);
             }
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (ref.current) {
             observerRef.current = new MutationObserver(callback);
         }
