@@ -2,6 +2,7 @@ version: '3.9'
 services:
   gateway:
     image: nginx:1.23.2-alpine
+    container_name: lineup_dev_gateway
     environment:
       - CLIENT=client:3000
       - AUTH_SERVICE=auth-service:3000
@@ -27,6 +28,7 @@ services:
 
   client:
     image: node:18.16
+    container_name: lineup_dev_client
     command: bash -c "cd /usr/src/app && npm run dev"
     environment:
       - GATEWAY=gateway:8080
@@ -35,6 +37,7 @@ services:
 
   auth-service:
     image: node:18.16 
+    container_name: lineup_dev_auth-service
     command: bash -c "cd /usr/src/app/services/auth-service && npm run dev"
     environment:
       - PORT=3000
@@ -53,6 +56,7 @@ services:
 
   room-service:
     image: node:18.16 
+    container_name: lineup_dev_room-service
     command: bash -c "cd /usr/src/app/services/room-service && npm run dev"
     environment:
       - PORT=3000
@@ -69,7 +73,8 @@ services:
         condition: service_healthy
 
   signal-service:
-    image: node:18.16 
+    image: node:18.16
+    container_name: lineup_dev_signal-service
     command: bash -c "cd /usr/src/app/services/signal-service && npm run dev"
     environment:
       - PORT=3000
@@ -85,6 +90,7 @@ services:
 
   chat-service:
     image: node:18.16 
+    container_name: lineup_dev_chat-service
     command: bash -c "cd /usr/src/app/services/chat-service && npm run dev"
     environment:
       - PORT=3000
@@ -101,6 +107,7 @@ services:
 
   postgresql:
     image: postgres:14.5-alpine
+    container_name: lineup_dev_postgresql
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=mysecretpassword
@@ -114,6 +121,7 @@ services:
 
   cassandra:
     image: cassandra:4.1
+    container_name: lineup_dev_cassandra
     environment:
       - CASSANDRA_CLUSTER_NAME=lineup
     volumes:

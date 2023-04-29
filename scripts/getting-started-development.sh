@@ -1,11 +1,16 @@
 #!/bin/bash
 
-workdir=$(pwd)
+SCRIPT_DIR=$(dirname $0)
+
+cd $SCRIPT_DIR/..
+
+WORK_DIR=$(pwd)
 
 clear
 
 # Downloading necessary images of docker
 echo "-- Downloading necessary images of docker"
+docker pull node:18.16
 docker pull nginx:1.23.2-alpine
 docker pull postgres:14.5-alpine
 docker pull cassandra:4.1
@@ -16,21 +21,21 @@ clear
 # Installing backend dependencies
 echo "-- Installing backend dependencies...";
 
-cd $workdir/backend/ && npm install;
+cd $WORK_DIR/app/backend/ && npm install;
 
 clear
 
 # Installing frontend dependencies
 echo "-- Installing frontend dependencies...";
 
-cd $workdir/client/ && npm install;
+cd $WORK_DIR/app/client/ && npm install;
 
 clear
 
 # Generation ssh keys for auth service.
 echo "-- Generating ssh-keys...";
 
-cd $workdir/backend/auth-service/;
+cd $WORK_DIR/app/backend/services/auth-service/;
 
 # Create folder for keys
 mkdir keys;
@@ -44,7 +49,7 @@ clear
 
 # Generate ssh keys for access token
 echo "-- Generating ssh keys for access token...";
-cd $workdir/backend/auth-service/keys/accessToken;
+cd $WORK_DIR/app/backend/services/auth-service/keys/accessToken;
 ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key -N "";
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 
@@ -52,7 +57,7 @@ clear
 
 # Generate ssh keys for refresh token
 echo "-- Generating ssh keys for refresh token...";
-cd $workdir/backend/auth-service/keys/refreshToken;
+cd $WORK_DIR/app/backend/services/auth-service/keys/refreshToken;
 ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key -N "";
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 
@@ -61,21 +66,27 @@ clear
 # Setting environment variables
 echo "-- Setting environment variables...";
 
-cd $workdir/backend/core;
+cd $WORK_DIR/app/backend/databases/postgresql;
+
 echo "DATABASE_URL=postgresql://admin:mysecretpassword@localhost:5432/lineup" > .env
 
-clear
+CONTAINER_ID=$(docker run --rm -d \
+	    -e POSTGRES_USER=admin \
+		-e POSTGRES_PASSWORD=mysecretpassword \
+	    -v $WORK_DIR/app/data/postgresql:/var/lib/postgresql/data \
+        -p 5432:5432 \
+		--health-cmd='pg_isready -U admin' \
+		--health-interval=10s \
+		--health-timeout=5s \
+		--health-retries=5 \
+	    postgres:14.5-alpine
+    )
 
-# Initializing prisma
-echo "-- You need to launch postgresql in docker. Run the following commands."
-echo 1. cd $workdir/backend/core/postgresql/docker
-echo 2. docker compose -f docker-compose.dev.yml up
+until [ "`docker inspect -f {{.State.Health.Status}} $CONTAINER_ID`"=="healthy" ]; do
+    sleep 0.5;
+done;
 
-echo "-- Wait for the database to start. After that press any key to continue."
-read -N 1 -s -r
-
-cd $workdir/backend/core
 npx prisma generate
 npx prisma db push
 
-echo "-- Stop postgresql docker container"
+docker stop $CONTAINER_ID

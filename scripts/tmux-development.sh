@@ -1,39 +1,51 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(dirname $0)
+
+cd $SCRIPT_DIR/..
+
+WORK_DIR=$(pwd)
+
+cd $WORK_DIR/app
+
+docker compose -f docker-compose.dev.yml up --build -d
+
 # Create new session
 tmux new-session -d -s lineup_dev;
 
-# Launch PostgreSQL
-tmux send-keys "cd backend/core/postgresql/docker && docker compose -f docker-compose.dev.yml up" Enter;
+# Watch postgresql logs
+tmux send-keys "docker logs -f lineup_dev_postgresql" Enter;
 
-# Launch Cassandra
+# Watch cassandra logs
 tmux split-window -v;
-tmux send-keys "cd backend/chat-service/cassandra/docker && docker compose -f docker-compose.dev.yml up" Enter;
+tmux send-keys "docker logs -f lineup_dev_cassandra" Enter;
 
-# Launch gateway (nginx)
+# Watch gateway (nginx) logs
 tmux new-window;
-tmux send-keys -t lineup_dev "cd backend/gateway && docker compose -f docker-compose.dev.yml up" Enter;
+tmux send-keys "docker logs -f lineup_dev_gateway" Enter;
 
-# Launch client (frontend)
+# Watch client logs
 tmux new-window;
-tmux send-keys "cd client && npm run dev" Enter;
+tmux send-keys "docker logs -f lineup_dev_gateway" Enter;
 
-# Launch auth service (development mode)
+# Watch auth service logs
 tmux new-window;
-tmux send-keys "cd backend/auth-service && npm run dev" Enter;
+tmux send-keys "docker logs -f lineup_dev_auth-service" Enter;
 
 sleep 10;
 
-# Launch signal service (development mode)
+# Watch signal service logs
 tmux split-window -v;
-tmux send-keys "cd backend/signal-service && npm run dev" Enter;
+tmux send-keys "docker logs -f lineup_dev_signal-service" Enter;
 
-# Launch room service (development mode)
+# Watch room service logs
 tmux split-window -h -t 0;
-tmux send-keys  "cd backend/room-service && npm run dev" Enter;
+tmux send-keys  "docker logs -f lineup_dev_room-service" Enter;
 
-# Launch chat service (development mode)
+# Watch chat service logs
 tmux split-window -h -t 2;
-tmux send-keys "cd backend/chat-service && npm run dev" Enter;
+tmux send-keys "docker logs -f lineup_dev_chat-service" Enter;
 
 tmux attach -t lineup_dev;
+
+docker compose -f docker-compose.dev.yml down
