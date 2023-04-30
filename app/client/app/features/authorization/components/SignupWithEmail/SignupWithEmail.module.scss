@@ -1,0 +1,27 @@
+.sing__up {
+    margin-bottom: 3rem;
+}
+
+.sing__up__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--theme-color-primary);
+    margin: 2.5rem 0;
+}
+
+.sing__up____inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sing__up__remember_me {
+    margin-bottom: 4.5rem;
+    margin-top: 2.5rem;
+    margin-left: 2rem;
+}
+
+.sing__up__btn {
+    margin: 0 auto;
+    max-width: 30rem;
+}

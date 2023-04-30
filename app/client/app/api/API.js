@@ -1,4 +1,3 @@
-import services from "@services";
 import AuthAPI from "./AuthAPI";
 
 const RequestEvents = {

@@ -1,0 +1,23 @@
+.container {
+    padding: 5rem;
+    min-width: 50rem; 
+}
+
+.title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--theme-color-primary);
+}
+
+.sign__up {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center; 
+    color: var(--theme-color-primary);
+}
+
+.sign__up__link {
+    color: var(--theme-link-primary);
+    cursor: pointer;
+}
