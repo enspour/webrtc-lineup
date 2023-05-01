@@ -1,7 +1,4 @@
 export const RoomActionsTypes = {
-    GET_USERS: "room:get_users",
-    NOTIFY_GET_USERS: "notify:room:get_users",
-
     JOIN_ROOM: "room:join",
     NOTIFY_JOIN: "notify:room:join",
 
@@ -12,34 +9,35 @@ export const RoomActionsTypes = {
     NOTIFY_USER_JOIN: "notify:room:user_join",
 
     NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
-    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
 };
 
 export const ConferenceActionsTypes = {
-    JOIN_CONFERENCE: "room:conference:join",
-    NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",
+    JOIN_CONFERENCE: "conference:join",
+    NOTIFY_JOIN_CONFERENCE: "notify:conference:join",
 
-    LEAVE_CONFERENCE: "room:conference:leave",
-    NOTIFY_LEAVE_CONFERENCE: "notify:room:conference:leave",
+    LEAVE_CONFERENCE: "conference:leave",
+    NOTIFY_LEAVE_CONFERENCE: "notify:conference:leave",
 
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:room:conference:user_join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:room:conference:user_leave",
+    NOTIFY_USER_JOIN_CONFERENCE: "notify:conference:user_join",
+    NOTIFY_USER_LEAVE_CONFERENCE: "notify:conference:user_leave",
 
-    SEND_ICE_CANDIDATE: "room:conference:send_ice-candidate",
-    NOTIFY_SEND_ICE_CANDIDATE: "notify:room:conference:send_ice-candidate",
-    ACCEPT_ICE_CANDIDATE: "room:conference:accept_ice-candidate",
+    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
 
-    SEND_OFFER: "room:conference:send_offer",
-    NOTIFY_SEND_OFFER: "notify:room:conference:send_offer",
-    ACCEPT_OFFER: "room:conference:accept_offer",
-
-    SEND_ANSWER: "room:conference:send_answer",
-    NOTIFY_SEND_ANSWER: "notify:room:conference:send_answer",
-    ACCEPT_ANSWER: "room:conference:accept_answer",
+    SEND_MESSAGE: "conference:chat:send:message",
+    NOTIFY_SEND_MESSAGE: "notify:conference:chat:send:message",
+    NOTIFY_NEW_MESSAGE: "notify:conference:chat:new:message",
 };
 
-export const ChatActionsTypes = {
-    SEND_MESSAGE: "chat:send:message",
-    NOTIFY_SEND_MESSAGE: "notify:chat:send:message",
-    NOTIFY_NEW_MESSAGE: "notify:chat:new:message",
+export const MediaPeersConnectionActionsTypes = {
+    SEND_ICE_CANDIDATE: "channel:send_ice-candidate",
+    NOTIFY_SEND_ICE_CANDIDATE: "notify:channel:send_ice-candidate",
+    ACCEPT_ICE_CANDIDATE: "channel:accept_ice-candidate",
+
+    SEND_OFFER: "channel:send_offer",
+    NOTIFY_SEND_OFFER: "notify:channel:send_offer",
+    ACCEPT_OFFER: "channel:accept_offer",
+
+    SEND_ANSWER: "channel:send_answer",
+    NOTIFY_SEND_ANSWER: "notify:channel:send_answer",
+    ACCEPT_ANSWER: "channel:accept_answer",
 }

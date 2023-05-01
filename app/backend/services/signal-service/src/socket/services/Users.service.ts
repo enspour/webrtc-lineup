@@ -2,7 +2,7 @@ import { User, Room, RoomSettings, Conference, ConferenceSettings } from "postgr
 
 import BroadcastAll from "@socket/notifications/BroadcastAll.notification"
 
-import { RoomActionsTypes } from "@socket/types"
+import { RoomActionsTypes, ConferenceActionsTypes } from "@socket/types"
 
 import toJson from "core/utils/toJson";
 
@@ -19,7 +19,7 @@ export default class UsersService {
         const data = JSON.parse(toJson(conference));
 
         new BroadcastAll(
-            RoomActionsTypes.NOTIFY_UPDATE_CONFERENCE_INFORMATION, 
+            ConferenceActionsTypes.NOTIFY_UPDATE_CONFERENCE_INFORMATION, 
             { conference: data }
         ).notify(roomId);
     }

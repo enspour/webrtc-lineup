@@ -1,12 +1,12 @@
 import { JSONSchemaType } from "ajv";
 import validator from "@utils/validator";
 
-export interface JoinRoomPayload {
+export interface JoinPayload {
     id: string
     password: string
 }
 
-const schema: JSONSchemaType<JoinRoomPayload> = {
+const schema: JSONSchemaType<JoinPayload> = {
     type: "object",
     properties: {
         id: { type: "string" },
@@ -16,4 +16,4 @@ const schema: JSONSchemaType<JoinRoomPayload> = {
     additionalProperties: false
 }
 
-export const joinRoomValidator = (payload: JoinRoomPayload) => validator(schema, payload);
+export const joinValidator = (payload: JoinPayload) => validator(schema, payload);

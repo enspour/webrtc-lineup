@@ -3,8 +3,8 @@ import { JSONSchemaType } from "ajv";
 import validator from "@utils/validator";
 
 export interface IceCandidatePayload {
-    conferenceId: string;
-    destinationId: string;
+    channelId: string;
+    peerId: string;
     iceCandidate: {
         candidate: string;
         sdpMid: string;
@@ -16,8 +16,8 @@ export interface IceCandidatePayload {
 const schema: JSONSchemaType<IceCandidatePayload> = {
     type: "object",
     properties: {
-        conferenceId: { type: "string" },
-        destinationId: { type: "string" },
+        channelId: { type: "string" },
+        peerId: { type: "string" },
         iceCandidate: {
             type: "object",
             properties: {
@@ -30,7 +30,7 @@ const schema: JSONSchemaType<IceCandidatePayload> = {
             additionalProperties: false
         },
     },
-    required: ["conferenceId", "destinationId", "iceCandidate"],
+    required: ["channelId", "peerId", "iceCandidate"],
     additionalProperties: false
 }
 

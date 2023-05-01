@@ -1,14 +1,13 @@
-import { io } from "@socket/io";
-
 import { ActionContext } from "@socket/services/Actions.service";
 
 import { ConferenceActionsTypes } from "@socket/types";
 
 import { IdPayload } from "../validators/id.validator";
 import { JoinPayload } from "./validators/join.validator";
-import { OfferPayload } from "./validators/offer.validator";
-import { AnswerPayload } from "./validators/answer.validator";
-import { IceCandidatePayload } from "./validators/iceCandidate.validator";
+import { SendMessagePayload } from "./validators/sendMessage.validator";
+
+import AuthService from "@services-communication/services/Auth.service";
+import ChatService from "@services-communication/services/Chat.service";
 
 class ConferenceActions {
     async join(context: ActionContext<JoinPayload>) {
@@ -76,74 +75,44 @@ class ConferenceActions {
         );
     }
 
-    sendOffer(context: ActionContext<OfferPayload>) {
-        const { conferenceId, destinationId, offer } = context.Payload;
+    async sendMessage(context: ActionContext<SendMessagePayload>) {
+        const conferenceId = context.Payload.conferenceId;
 
         if (context.Client.has(conferenceId)) {
-            const payload = { 
-                socketId: context.Client.SocketId, 
-                userId: context.Client.UserId, 
-                offer,
-            };
+            const userId = context.Client.UserId;
+            const { text } = context.Payload;
 
-            io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_OFFER, payload);
-            
-            return context.success(
-                ConferenceActionsTypes.NOTIFY_SEND_OFFER, 
-                `Success send offer to ${destinationId}`
+            const user = await AuthService.findUser(userId);
+
+            if (user) {
+                const message = await ChatService.createMessage(conferenceId, text, user);
+    
+                if (message) {
+                    const tempId = context.Payload.tempId;
+    
+                    context.broadcast(
+                        conferenceId, 
+                        ConferenceActionsTypes.NOTIFY_NEW_MESSAGE, 
+                        { message }
+                    );
+                    
+                    return context.success(
+                        ConferenceActionsTypes.NOTIFY_SEND_MESSAGE, 
+                        "Success send message.", 
+                        { tempId, message }
+                    );
+                }
+            }
+
+            return context.serverError(
+                ConferenceActionsTypes.NOTIFY_SEND_MESSAGE,
+                "Woops... Server error."
             );
         }
-
+       
         context.badRequest(
-            ConferenceActionsTypes.NOTIFY_SEND_OFFER, 
-            "You are not connected to conference"
-        );
-    }
-
-    sendAnswer(context: ActionContext<AnswerPayload>) {
-        const { conferenceId, destinationId, answer } = context.Payload;
-
-        if (context.Client.has(conferenceId)) {
-            const payload = { 
-                socketId: context.Client.SocketId, 
-                userId: context.Client.UserId,
-                answer,
-            };
-
-            io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ANSWER, payload);
-            
-            return context.success(
-                ConferenceActionsTypes.NOTIFY_SEND_ANSWER, 
-                `Success send answer to ${destinationId}`
-            );
-        }
-
-        context.badRequest(
-            ConferenceActionsTypes.NOTIFY_SEND_ANSWER, 
-            "You are not connected to conference"
-        );
-    }
-
-    sendIceCandidate(context: ActionContext<IceCandidatePayload>) {
-        const { conferenceId, destinationId, iceCandidate } = context.Payload;
-
-        if (context.Client.has(conferenceId)) {
-            const payload = { 
-                socketId: context.Client.SocketId, 
-                iceCandidate 
-            };
-            
-            io.to(destinationId).emit(ConferenceActionsTypes.ACCEPT_ICE_CANDIDATE, payload);
-            
-            return context.success(
-                ConferenceActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
-                `Success send ice candidate to ${destinationId}`
-            );
-        }
-
-        context.badRequest(
-            ConferenceActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
-            "You are not connected to conference"
+            ConferenceActionsTypes.NOTIFY_SEND_MESSAGE,
+            "You are not connected to room."
         );
     }
 }

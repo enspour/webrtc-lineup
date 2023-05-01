@@ -3,14 +3,12 @@ import { ActionContext } from "@socket/services/Actions.service";
 import { RoomActionsTypes } from "@socket/types";
 
 import { IdPayload } from "../validators/id.validator";
-import { JoinRoomPayload } from "./validators/joinRoom.validator";
+import { JoinPayload } from "./validators/join.validator";
 
 import RoomService from "@services-communication/services/Room.service";
 
-import services from "@socket/services";
-
 class RoomsActions { 
-    async join(context: ActionContext<JoinRoomPayload>) {
+    async join(context: ActionContext<JoinPayload>) {
         const { id, password } = context.Payload;
 
         const userId = context.Client.UserId;
@@ -62,22 +60,6 @@ class RoomsActions {
         }
 
         context.success(RoomActionsTypes.NOTIFY_LEAVE, "Already leaved");
-    }
-
-    getClients(context: ActionContext<IdPayload>) {
-        const { id } = context.Payload;
-
-        if (context.Client.has(id)) {
-            const clients = services.rooms.getClients(id);
-            
-            return context.success(
-                RoomActionsTypes.NOTIFY_GET_USERS, 
-                "Success send sockets", 
-                { users: clients }
-            );
-        }
-
-        context.badRequest(RoomActionsTypes.NOTIFY_GET_USERS, "Bad request")
     }
 }
 

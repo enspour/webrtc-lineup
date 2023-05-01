@@ -2,21 +2,21 @@ import { JSONSchemaType } from "ajv";
 
 import validator from "@utils/validator";
 
-export interface OfferPayload {
-    conferenceId: string;
-    destinationId: string;
-    offer: {
+export interface AnswerPayload {
+    channelId: string;
+    peerId: string;
+    answer: {
         type: string;
         sdp: string;
     };
 }
 
-const schema: JSONSchemaType<OfferPayload> = {
+const schema: JSONSchemaType<AnswerPayload> = {
     type: "object",
     properties: {
-        conferenceId: { type: "string" },
-        destinationId: { type: "string" },
-        offer: { 
+        channelId: { type: "string" },
+        peerId: { type: "string" },
+        answer: { 
             type: "object",
             properties: {
                 type: { type: "string" },
@@ -26,8 +26,8 @@ const schema: JSONSchemaType<OfferPayload> = {
             additionalProperties: false
         },
     },
-    required: ["conferenceId", "destinationId", "offer"],
+    required: ["channelId", "peerId", "answer"],
     additionalProperties: false
 }
 
-export const offerValidator = (payload: OfferPayload) => validator(schema, payload);
+export const answerValidator = (payload: AnswerPayload) => validator(schema, payload);

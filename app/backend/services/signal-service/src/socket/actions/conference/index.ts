@@ -5,9 +5,7 @@ import ConferenceActions from "./conference.actions";
 
 import { idValidator } from "../validators/id.validator";
 import { joinValidator } from "./validators/join.validator";
-import { offerValidator } from "./validators/offer.validator";
-import { answerValidator } from "./validators/answer.validator";
-import { iceCandidateValidator } from "./validators/iceCandidate.validator";
+import { sendMessageValidator } from "./validators/sendMessage.validator";
 
 import services from "@socket/services";
 
@@ -21,20 +19,10 @@ const leaveValidation = {
     action: ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE,
 };
 
-const sendOfferValidation = {
-    validate: offerValidator,
-    action: ConferenceActionsTypes.NOTIFY_SEND_OFFER
-};
-
-const sendAnswerValidation = {
-    validate: answerValidator,
-    action: ConferenceActionsTypes.NOTIFY_SEND_ANSWER
-};
-
-const sendIceCandidateValidation = {
-    validate: iceCandidateValidator,
-    action: ConferenceActionsTypes.NOTIFY_SEND_ICE_CANDIDATE
-};
+const sendMessageValidation = {
+    validate: sendMessageValidator,
+    action: ConferenceActionsTypes.NOTIFY_SEND_MESSAGE
+}
 
 const initConferenceActions = (socket: Socket) => {
     socket.on(
@@ -48,18 +36,8 @@ const initConferenceActions = (socket: Socket) => {
     );
 
     socket.on(
-        ConferenceActionsTypes.SEND_OFFER,
-        services.actions.create(socket, ConferenceActions.sendOffer, sendOfferValidation)
-    );
-
-    socket.on(
-        ConferenceActionsTypes.SEND_ANSWER,
-        services.actions.create(socket, ConferenceActions.sendAnswer, sendAnswerValidation)
-    );
-
-    socket.on(
-        ConferenceActionsTypes.SEND_ICE_CANDIDATE,
-        services.actions.create(socket, ConferenceActions.sendIceCandidate, sendIceCandidateValidation)
+        ConferenceActionsTypes.SEND_MESSAGE,
+        services.actions.create(socket, ConferenceActions.sendMessage, sendMessageValidation)
     );
 }
 
