@@ -1,4 +1,4 @@
-import ThemeStore from "@stores/Theme.store";
+import ThemeStore from "../store/Theme.store";
 
 const themes = [
     { id: 1, name: "light", primary: "#FFFFFF", secondary: "#526A7D" },
@@ -7,29 +7,32 @@ const themes = [
 
 export default class ThemesService {
     #localStorage;
+
     #themeStore;
 
-    constructor() {
+    constructor(localStorage) {
+        this.#localStorage = localStorage;
+        
         this.#themeStore = new ThemeStore();
     }
 
-    initialize(localStorage) {
-        this.#localStorage = localStorage;
-
-        const theme = localStorage.get("__theme");
+    initialize() {
+        const theme = this.#localStorage.get("__theme");
 
         if (theme) {
             this.set(theme);
         } else {
             this.set(themes[0]);
         }
+
+        return () => {};
     }
 
-    get Themes() {
+    get Available() {
         return themes;
     }
 
-    get Theme() {
+    get CurrentTheme() {
         return this.#themeStore.theme;
     }
 

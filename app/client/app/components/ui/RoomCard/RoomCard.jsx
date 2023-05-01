@@ -29,7 +29,7 @@ const RemoveControl = ({ room }) => {
     }
 
     React.useEffect(() => {
-        if (data) services.userRooms.update();
+        if (data) services.userCreatedRooms.update();
     }, [data]);
 
     return (
@@ -103,7 +103,7 @@ const FavoritesControl = observer(({ room }) => {
 });
 
 const MultipleControl = observer(({ room }) => {
-    const userId = services.user.Id;
+    const userId = services.user.Info.Id;
 
     if (room.owner.id === userId) {
         return <RemoveControl room={room}/>

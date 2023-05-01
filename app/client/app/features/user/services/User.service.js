@@ -1,56 +1,52 @@
-import API from "@api/API";
-import AuthAPI from "@api/AuthAPI";
+import UserDevicesService from "./UserDevices.service";
+import UserInfoService from "./UserInfo.service";
+import UserMediaService from "./UserMedia.service";
+import UserSettingsService from "./UserSettings.service";
 
 import UserStore from "../store/User.store";
 
 export default class UserService {
-    #request;
     #userStore;
+    #userInfo;
+    #userDevices;
+    #userMedia;
+    #userSettings;
 
-    constructor() {
-        this.#request = API.createRequest(AuthAPI.me);
+    constructor({ localStorage }) {
         this.#userStore = new UserStore();
+        this.#userInfo = new UserInfoService(this.#userStore);
+        this.#userDevices = new UserDevicesService();
+        this.#userMedia = new UserMediaService(this.#userDevices, localStorage);
+        this.#userSettings = new UserSettingsService(localStorage);
     }
 
     initialize() {
-        const offResponse = this.#onResponse();
-
-        this.update();
+        const userInfoDestroyer = this.#userInfo.initialize();
+        const userDevicesDestroyer = this.#userDevices.initialize();
+        const userMediaDestroyer = this.#userMedia.initialize();
+        const userSettingsDestroyer = this.#userSettings.initialize();
 
         return () => {
-            offResponse();
+            userInfoDestroyer();
+            userDevicesDestroyer();
+            userMediaDestroyer();
+            userSettingsDestroyer();
         }
     }
 
-    get Name() {
-        return this.#userStore.name;
+    get Info() {
+        return this.#userInfo;
     }
 
-    get Email() {
-        return this.#userStore.email;
+    get Devices() {
+        return this.#userDevices;
     }
 
-    get Id() {
-        return this.#userStore.id;
+    get Media() {
+        return this.#userMedia;
     }
 
-    async update() {
-        await this.#request.start({});
-    }
-
-    #onResponse() {
-        return this.#request.onResponse(response => {
-            if (response && response.status === 200) {
-                const user = response.data.body.user;
-                this.#userStore.setUser(user);
-            }
-        });
-    }
-
-    toObject() {
-        return {
-            id: this.Id,
-            name: this.Name
-        }
+    get Settings() {
+        return this.#userSettings;
     }
 }

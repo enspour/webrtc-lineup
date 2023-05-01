@@ -4,29 +4,31 @@ import MediaDataStore from "../store/MediaData.store";
 
 export default class UserMediaService {
     #userDevices;
-    #speechRecognizer;
     #localStorage;
+
+    #speechRecognizer;
 
     #mediaData;
 
     #stream;
 
-    constructor({ userDevices }) {
+    constructor(userDevices, localStorage) {
         this.#userDevices = userDevices;
+        this.#localStorage = localStorage;
         
         this.#speechRecognizer = new SpeechRecognizerService();
 
         this.#mediaData = new MediaDataStore();
     }
 
-    initialize(localStorage) {
-        this.#localStorage = localStorage;
-
-        const audio = localStorage.get("__muted_audio");
-        const video = localStorage.get("__muted_video");
+    initialize() {
+        const audio = this.#localStorage.get("__muted_audio");
+        const video = this.#localStorage.get("__muted_video");
 
         this.#mediaData.setMutedAudio(!!audio)
         this.#mediaData.setMutedVideo(!!video)
+
+        return () => {}
     }
 
     get Stream() {

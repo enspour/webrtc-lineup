@@ -9,7 +9,7 @@ const ThemeItem = ({ active, theme }) => {
     return (
         <div 
             className={styles.themes__item} 
-            onClick={() => services.themes.set(theme)}
+            onClick={() => services.user.Settings.Themes.set(theme)}
             style={
                 active 
                     ? { border: ".2rem solid var(--theme-border-secondary)" } 
@@ -29,12 +29,12 @@ const ThemeItem = ({ active, theme }) => {
 }
 
 const ThemesItems = observer(() => {
-    const theme = services.themes.Theme;
+    const theme = services.user.Settings.Themes.CurrentTheme;
 
     return (
         <div className={styles.themes__items}>
             {   
-                services.themes.Themes.map(item => 
+                services.user.Settings.Themes.Available.map(item => 
                     <ThemeItem
                         key={item.id} 
                         active={theme.id === item.id} 

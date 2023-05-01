@@ -9,10 +9,10 @@ import services from "@services";
 import styles from "./VideoAudio.module.scss";
 
 const AudioInputsSection = observer(() => {
-    const audios = services.userDevices.AudioInputs;
-    const selectedAudio = services.userDevices.SelectedAudioInputDevice;
+    const audios = services.user.Devices.AudioInputs;
+    const selectedAudio = services.user.Devices.SelectedAudioInputDevice;
 
-    const setSelectedAudio = item => services.userDevices.setSelectedAudioInputDevice(item.id);
+    const setSelectedAudio = item => services.user.Devices.setSelectedAudioInputDevice(item.id);
 
     return (
         <div>
@@ -31,7 +31,7 @@ const AudioInputsSection = observer(() => {
                     />
                 </div>
 
-                <OutlinedButton onClick={() => services.userDevices.checkAudioInputPermission()}>
+                <OutlinedButton onClick={() => services.user.Devices.checkAudioInputPermission()}>
                     Permission
                 </OutlinedButton>
             </div>
@@ -40,10 +40,10 @@ const AudioInputsSection = observer(() => {
 })
 
 const VideoInputsSection = observer(() => {
-    const videos = services.userDevices.VideoInputs;
-    const selectedVideo = services.userDevices.SelectedVideoInputDevice;
+    const videos = services.user.Devices.VideoInputs;
+    const selectedVideo = services.user.Devices.SelectedVideoInputDevice;
 
-    const setSelectedVideo = item => services.userDevices.setSelectedVideoInputDevice(item.id);
+    const setSelectedVideo = item => services.user.Devices.setSelectedVideoInputDevice(item.id);
 
     return (
         <div>
@@ -62,7 +62,7 @@ const VideoInputsSection = observer(() => {
                     />
                 </div>
 
-                <OutlinedButton onClick={() => services.userDevices.checkVideoInputPermission()}>
+                <OutlinedButton onClick={() => services.user.Devices.checkVideoInputPermission()}>
                     Permission
                 </OutlinedButton>
             </div>

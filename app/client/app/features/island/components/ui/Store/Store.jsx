@@ -10,16 +10,16 @@ import services from "@services";
 import styles from "./Store.module.scss";
 
 const Store = observer(() => {
-    const state = services.userRooms.Status;
+    const state = services.userCreatedRooms.Status;
 
     const [items, setItems] = React.useState([]);
 
     React.useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userRooms.Array;
-                const userId = services.user.Id;
-                const userName = services.user.Name;
+                const rooms = services.userCreatedRooms.Array;
+                const userId = services.user.Info.Id;
+                const userName = services.user.Info.Name;
 
                 if (rooms) {
                     setItems(

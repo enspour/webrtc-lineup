@@ -62,7 +62,7 @@ export default class ConferenceChatService {
             const message = {
                 id: tempId,
                 text,
-                owner: this.#user.toObject(),
+                owner: this.#user.Info.toObject(),
                 createdAt: Date.now(),
                 modifiedAt: Date.now()
             }

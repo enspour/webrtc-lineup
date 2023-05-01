@@ -20,10 +20,10 @@ import styles from "./Header.module.scss"
 
 const CameraControl = observer(() => {
     const settings = services.conference.Info.Settings;
-    const mutedVideo = services.userMedia.MutedVideo;
+    const mutedVideo = services.user.Media.MutedVideo;
 
-    const mute = () => services.userMedia.muteVideo();
-    const unmute = () => services.userMedia.unmuteVideo();
+    const mute = () => services.user.Media.muteVideo();
+    const unmute = () => services.user.Media.unmuteVideo();
 
     if (!settings.enableVideo) {
         return "";
@@ -42,10 +42,10 @@ const CameraControl = observer(() => {
 
 const MicrophoneControl = observer(() => {
     const settings = services.conference.Info.Settings;
-    const mutedAudio = services.userMedia.MutedAudio;
+    const mutedAudio = services.user.Media.MutedAudio;
 
-    const mute = () => services.userMedia.muteAudio();
-    const unmute = () => services.userMedia.unmuteAudio();
+    const mute = () => services.user.Media.muteAudio();
+    const unmute = () => services.user.Media.unmuteAudio();
 
     if (!settings.enableAudio) {
         return "";

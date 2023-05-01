@@ -1,18 +1,12 @@
-import React from "react";
-
-import useIsomorphicLayoutEffect from "../useIsomorphicLayoutEffect";
+import { useEffect } from "react";
 
 import services from "@services";
 
 const useLoaderServices = () => {
-    const isInitRef = React.useRef(false); 
-
-    useIsomorphicLayoutEffect(() => {
-        if (typeof window !== 'undefined' && !isInitRef.current) {
-            services.initialize();
-            isInitRef.current = true;
-        }
-    }, []); 
+    useEffect(() => {
+        const destroyer = services.initialize();
+        return () => destroyer()
+    }, []);
 }
 
 export default useLoaderServices;

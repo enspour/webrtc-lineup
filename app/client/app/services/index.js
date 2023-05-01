@@ -6,14 +6,9 @@ import RoomsAPI from "@api/RoomsAPI";
 import RequestedArrayService from "./RequestedArray.service";
 import ContextMenuService from "./ContextMenu.service";
 import ModalsService from "./Modals.service";
-import ThemesService from "./Themes.service";
 import StorageService from "./Storage.service";
 
-import { 
-    UserService, 
-    UserDevicesService, 
-    UserMediaService 
-} from "../features/user";
+import { UserService } from "@features/user";
 import { RoomService, transformToRooms } from "@features/room";
 import { IslandService, SearchService } from "@features/island";
 import { ConferenceService } from "@features/conference";
@@ -34,13 +29,10 @@ class Services {
 
         this.contextMenu = new ContextMenuService(this);
         this.modals = new ModalsService(this);
-        this.themes = new ThemesService(this);
 
         this.user = new UserService(this);
-        this.userDevices = new UserDevicesService(this);
-        this.userMedia = new UserMediaService(this);
 
-        this.userRooms = new RequestedArrayService(
+        this.userCreatedRooms = new RequestedArrayService(
             API.createRequest(RoomsAPI.findCreatedRooms), 
             (data) => transformToRooms(data.body.rooms)
         );
@@ -60,19 +52,27 @@ class Services {
         this.localStorage.initialize("local");
         this.sessionStorage.initialize("session");
 
-        this.themes.initialize(this.localStorage);
+        const searchDestroyer = this.search.initialize();
 
-        this.search.initialize();
+        const userDestroyer = this.user.initialize();
 
-        this.user.initialize();
-        this.userDevices.initialize();
-        this.userMedia.initialize(this.localStorage);
+        const userCreatedRoomsDestroyer = this.userCreatedRooms.initialize();
+        const userFavoritesRoomsDestroyer = this.userFavoritesRooms.initialize();
 
-        this.userRooms.initialize();
-        this.userFavoritesRooms.initialize();
+        const roomDestroyer = this.room.initialize();
+        const conferenceDestroyer = this.conference.initialize();
 
-        this.room.initialize();
-        this.conference.initialize();
+        return () => {
+            searchDestroyer();
+
+            userDestroyer();
+
+            userCreatedRoomsDestroyer();
+            userFavoritesRoomsDestroyer();
+
+            roomDestroyer();
+            conferenceDestroyer();
+        }
     }
 }
 

@@ -29,7 +29,7 @@ const AccountMenu = ({ isOpen }) => {
 }
 
 const Account = observer(() => {
-    const name = services.user.Name;
+    const name = services.user.Info.Name;
 
     const accountRef = React.useRef();
 

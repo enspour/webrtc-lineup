@@ -34,7 +34,7 @@ const isHide = (index) => {
 }
 
 const isOwner = (owner) => {
-    return owner.id === services.user.Id;
+    return owner.id === services.user.Info.Id;
 }
 
 const OwnerAvatar = ({ owner, hide }) => {

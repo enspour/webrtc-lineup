@@ -21,8 +21,8 @@ const ProfileCredentials = () => {
     useEffect(
         () =>
             autorun(() => {
-                const userName = services.user.Name;
-                const userEmail = services.user.Email; 
+                const userName = services.user.Info.Name;
+                const userEmail = services.user.Info.Email; 
 
                 setName(userName);
                 setEmail(userEmail);

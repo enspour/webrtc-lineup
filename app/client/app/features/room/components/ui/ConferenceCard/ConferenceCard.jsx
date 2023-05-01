@@ -99,7 +99,7 @@ const ConferenceCard = observer(({ conference }) => {
     React.useEffect(() => {
         appendMenu({ id: 1, name: "Open", onClick: openConference });
 
-        if (services.room.Info.Owner.id === services.user.Id) {
+        if (services.room.Info.Owner.id === services.user.Info.Id) {
             appendMenu({ id: 2, name: "Delete", onClick: deleteConference });
             appendMenu({ id: 3, name: "Settings", onClick: openSettings });
         }

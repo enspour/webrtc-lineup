@@ -45,9 +45,9 @@ const ConferenceAudios = () => {
         autorun(() => {
             const local = {
                 peerId: "local",
-                userId: services.user.Id,
-                stream: services.userMedia.Stream,
-                active: services.userMedia.IsSpeaking,
+                userId: services.user.Info.Id,
+                stream: services.user.Media.Stream,
+                active: services.user.Media.IsSpeaking,
                 muted: true,
             };
             

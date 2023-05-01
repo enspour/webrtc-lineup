@@ -1,20 +1,20 @@
-import React from "react";
+import { useEffect } from "react";
 import { autorun } from "mobx";
 
 import services from "@services";
 
 const useLoaderUserStores = () => {
-    React.useEffect(() => {
+    useEffect(() => {
         const cleaner = autorun(() => {
-            const userId = services.user.Id;
+            const userId = services.user.Info.Id;
             if (userId) {
-                services.userRooms.update();
+                services.userCreatedRooms.update();
                 services.userFavoritesRooms.update();
             }
         })
 
         return () => {
-            services.userRooms.clear();
+            services.userCreatedRooms.clear();
             services.userFavoritesRooms.clear();
 
             cleaner();

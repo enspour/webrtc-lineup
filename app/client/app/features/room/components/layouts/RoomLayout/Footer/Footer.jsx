@@ -14,14 +14,14 @@ import services from "@services";
 import styles from "./Footer.module.scss";
 
 const VideoControl = observer(() => {
-    const mutedVideo = services.userMedia.MutedVideo;
+    const mutedVideo = services.user.Media.MutedVideo;
 
     const setMutedVideo = value => {
         if (value) {
-            return services.userMedia.unmuteVideo();
+            return services.user.Media.unmuteVideo();
         }
 
-        services.userMedia.muteVideo();
+        services.user.Media.muteVideo();
     }
 
     return (
@@ -34,14 +34,14 @@ const VideoControl = observer(() => {
 });
 
 const AudioControl = observer(() => {
-    const mutedAudio = services.userMedia.MutedAudio;
+    const mutedAudio = services.user.Media.MutedAudio;
 
     const setMutedAudio = value => {
         if (value) {
-            return services.userMedia.unmuteAudio();
+            return services.user.Media.unmuteAudio();
         }
 
-        services.userMedia.muteAudio();
+        services.user.Media.muteAudio();
     }
     
     return (
@@ -60,7 +60,7 @@ const SettingsControl = observer(() => {
         services.modals.browseRoomSettings.setIsOpen(true);
     }
 
-    if (owner.id !== services.user.Id) {
+    if (owner.id !== services.user.Info.Id) {
         return "";
     }
 
@@ -91,7 +91,7 @@ const CreateControl = () => {
         services.modals.createConference.setIsOpen(true);
     }
 
-    if (owner.id !== services.user.Id) {
+    if (owner.id !== services.user.Info.Id) {
         return "";
     }
 

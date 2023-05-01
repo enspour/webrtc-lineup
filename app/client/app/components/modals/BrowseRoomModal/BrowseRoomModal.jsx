@@ -113,12 +113,11 @@ const JoinButton = () => {
         const id = services.modals.browseRoom.Room.id;
         
         let response = await services.room.join(id, password);
-        console.log(response)
+
         if (response.status === 401) {
             await AuthAPI.refresh();
             response = await services.room.join(id, password);
         }
-        console.log(response)
         
         if (response.status === 200) {
             services.room.Conferences.update();

@@ -49,7 +49,7 @@ const CreateRoomModal = observer(() => {
 
     useEffect(() => {
         if (data) {
-            services.userRooms.update();
+            services.userCreatedRooms.update();
         }
     }, [data]);
 

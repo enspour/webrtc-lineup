@@ -7,8 +7,8 @@ import ConferenceStore from "../stores/Conference.store";
 import ConferenceLoggerService from "./ConferenceLogger.service";
 
 export default class ConferenceService {
-    #userMedia;
     #room;
+    #user;
     #socket;
 
     #conferenceSignal;
@@ -20,9 +20,9 @@ export default class ConferenceService {
     #mediaPeersConnection;
     #mediaPeersConnectionDestroyer;
     
-    constructor({ room, user, userMedia }, socket) {
+    constructor({ room, user }, socket) {
         this.#room = room;
-        this.#userMedia = userMedia;
+        this.#user = user;
         this.#socket = socket;
 
         this.#conferenceSignal = new ConferenceSignalService(socket);
@@ -80,11 +80,11 @@ export default class ConferenceService {
             if (roomId && conferenceId) {
                 this.#conferenceStore.setConference(conference);
 
-                await this.#userMedia.captureMedia(constraints);
+                await this.#user.Media.captureMedia(constraints);
 
                 this.#mediaPeersConnection = new MediaPeersConnectionService(
                     this.#conferenceInfo.Id, 
-                    this.#userMedia.Stream,
+                    this.#user.Media.Stream,
                     this.#conferenceInfo.Settings,
                     this.#socket
                 );
@@ -133,7 +133,7 @@ export default class ConferenceService {
     #onJoin() {
         return this.#conferenceSignal.onJoinConference((status) => {
             if (status !== 200) {
-                this.#userMedia.stopCapturedMedia();
+                this.#user.Media.stopCapturedMedia();
                 this.#conferenceStore.clear();
                 this.#conferenceChat.clear();
                 this.#mediaPeersConnection.disconnectAll();
@@ -149,7 +149,7 @@ export default class ConferenceService {
     #onLeave() {
         return this.#conferenceSignal.onLeaveConference((status) => {
             if (status === 200) {
-                this.#userMedia.stopCapturedMedia();
+                this.#user.Media.stopCapturedMedia();
                 this.#conferenceStore.clear();
                 this.#conferenceChat.clear();
                 this.#mediaPeersConnection.disconnectAll();

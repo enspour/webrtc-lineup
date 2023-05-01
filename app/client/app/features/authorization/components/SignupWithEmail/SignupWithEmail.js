@@ -41,7 +41,7 @@ const SignupWithEmail = () => {
 
     useEffect(() => {
         if (data) {
-            services.user.update();
+            services.user.Info.update();
             router.push("/");
         }
     }, [data]);
