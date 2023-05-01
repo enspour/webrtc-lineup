@@ -14,9 +14,7 @@ const Search = observer(() => {
     const state = services.search.Status;
     const rooms = services.search.Rooms;
 
-    const runExample = React.useCallback(() => {
-        services.search.SearchedText = "#example #lineup Lineup";
-    }, []);
+    const runExample = () => services.search.SearchedText = "#example #lineup Lineup"
 
     React.useEffect(() => {
         return () => services.search.clear();
@@ -57,7 +55,7 @@ const Search = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.rooms__empty}>
-                ¯\_(ツ)_/¯
+                Sorry. Couldn't find a room.
             </div>
         )
     }

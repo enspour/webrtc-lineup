@@ -1,6 +1,6 @@
-import Store from "@components/screens/island/Store/Store";
-import Favorites from "@components/screens/island/Favorites/Favorites";
-import Search from "@components/screens/island/Search/Search";
+import Store from "../components/ui/Store/Store";
+import Favorites from "../components/ui/Favorites/Favorites";
+import Search from "../components/ui/Search/Search";
 
 export const IslandStoreTab = { id: 1, name: "Store", component: <Store /> };
 export const IslandFavoritesTab = { id: 2, name: "Favorites", component: <Favorites /> };

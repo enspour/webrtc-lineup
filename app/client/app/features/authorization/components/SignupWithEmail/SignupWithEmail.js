@@ -80,7 +80,7 @@ const SignupWithEmail = () => {
                 />
             </div>
 
-            <div className={styles.sing__up__remember_me}>
+            <div className={styles.sing__up__remember__me}>
                 <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
             </div>
 

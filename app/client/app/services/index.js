@@ -14,13 +14,10 @@ import {
     UserDevicesService, 
     UserMediaService 
 } from "../features/user";
-import { SearchService } from "../features/search";
 import { RoomService, transformToRooms } from "@features/room";
-import { IslandService } from "@features/island";
+import { IslandService, SearchService } from "@features/island";
 import { ConferenceService } from "@features/conference";
 import { NotificationService } from "@features/notifications";
-
-
 
 const socket = io({ 
     path: "/api/v1/signal-service/socket/socket.io", 
@@ -33,6 +30,7 @@ class Services {
         this.sessionStorage = new StorageService(this);
 
         this.search = new SearchService(this);
+        this.island = new IslandService(this);
 
         this.contextMenu = new ContextMenuService(this);
         this.modals = new ModalsService(this);
@@ -51,8 +49,6 @@ class Services {
             API.createRequest(RoomsAPI.findFavoritesRooms), 
             (data) => transformToRooms(data.body.rooms)
         );
-
-        this.island = new IslandService(this);
         
         this.room = new RoomService(this, socket);
         this.conference = new ConferenceService(this, socket);

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 
 import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
 
-import { IslandPanel } from "@features/island";
+import { Island } from "@features/island";
 
 import services from "@services";
 
@@ -14,7 +14,7 @@ const Home = observer(() => {
     return (
         <LobbyLayout title={`Lineup | ${current.name}`}> 
             <div className={styles.island}>
-                <IslandPanel />
+                <Island />
             </div>
 
             <div>

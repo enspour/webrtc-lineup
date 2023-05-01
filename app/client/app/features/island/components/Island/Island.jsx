@@ -4,9 +4,9 @@ import { autorun } from "mobx";
 
 import { IslandSearchTab, IslandViewTabs } from "@features/island/stores/Island.states";
 
-import SearchControl from "@components/ui/SearchControl/SearchControl";
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
+import SearchControl from "../../../../components/ui/SearchControl/SearchControl";
 
 import useSaveStateIsland from "@features/island/hooks/useSaveStateIsland";
 
@@ -18,7 +18,7 @@ import SearchIcon from "@assets/images/island/search.svg";
 import AddIcon from "@assets/images/island/add.svg";
 import BackIcon from "@assets/images/island/back.svg";
 
-import styles from "./IslandPanel.module.scss"; 
+import styles from "./Island.module.scss"; 
 
 const classes = (...classes) => {
     return classes.join(" ");
@@ -26,27 +26,21 @@ const classes = (...classes) => {
 
 const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
     const searchedText = services.search.SearchedText;
-    const history = services.search.History;
+    const history = services.search.History.Array;
 
-    const setSearchedText = React.useCallback(
-        text => services.search.SearchedText = text
-    , []);
+    const setSearchedText = text => services.search.SearchedText = text
 
-    const pushHistoryItem = React.useCallback(
-        text => services.search.pushHistoryItem(text)
-    , []);
+    const pushHistoryItem = text => services.search.History.push(text)
 
-    const removeHistoryItem = React.useCallback(
-        text => services.search.removeHistoryItem(text)
-    ,[]);
+    const removeHistoryItem = text => services.search.History.remove(text)
 
-    const gotoBack = React.useCallback(() => {
+    const gotoBack = () => {
         removeStyleSearchActive();
         removeStyleGotoSearch(400);
         setTimeout(() => {
             services.island.undo();
         }, 400)
-    }, []);
+    };
 
     return (
         <div className={styles.island__search}>
@@ -84,7 +78,7 @@ const Tabs = observer(() => (
     </div> 
 ));
 
-const IslandPanel = observer(() => {   
+const Island = observer(() => {   
     useSaveStateIsland();
     
     const islandRef = React.useRef();
@@ -143,4 +137,4 @@ const IslandPanel = observer(() => {
     )
 });
 
-export default IslandPanel;
+export default Island;
