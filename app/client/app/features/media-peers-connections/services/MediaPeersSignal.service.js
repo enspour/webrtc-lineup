@@ -1,17 +1,17 @@
 import SignalService from "@services/Signal.service";
 
 const SignalActions = {
-    SEND_ICE_CANDIDATE: "room:conference:send_ice-candidate",
-    NOTIFY_SEND_ICE_CANDIDATE: "notify:room:conference:send_ice-candidate",
-    ACCEPT_ICE_CANDIDATE: "room:conference:accept_ice-candidate",
+    SEND_ICE_CANDIDATE: "channel:send_ice-candidate",
+    NOTIFY_SEND_ICE_CANDIDATE: "notify:channel:send_ice-candidate",
+    ACCEPT_ICE_CANDIDATE: "channel:accept_ice-candidate",
 
-    SEND_OFFER: "room:conference:send_offer",
-    NOTIFY_SEND_OFFER: "notify:room:conference:send_offer",
-    ACCEPT_OFFER: "room:conference:accept_offer",
+    SEND_OFFER: "channel:send_offer",
+    NOTIFY_SEND_OFFER: "notify:channel:send_offer",
+    ACCEPT_OFFER: "channel:accept_offer",
 
-    SEND_ANSWER: "room:conference:send_answer",
-    NOTIFY_SEND_ANSWER: "notify:room:conference:send_answer",
-    ACCEPT_ANSWER: "room:conference:accept_answer",
+    SEND_ANSWER: "channel:send_answer",
+    NOTIFY_SEND_ANSWER: "notify:channel:send_answer",
+    ACCEPT_ANSWER: "channel:accept_answer",
 }
 
 export default class MediaPeersSignalService extends SignalService {
@@ -23,7 +23,7 @@ export default class MediaPeersSignalService extends SignalService {
     }
 
     sendOffer(channelId, peerId, offer) {
-        const payload = { conferenceId: channelId, destinationId: peerId, offer };
+        const payload = { channelId, peerId, offer };
         this.#socket.emit(SignalActions.SEND_OFFER, payload);
     }
 
@@ -48,7 +48,7 @@ export default class MediaPeersSignalService extends SignalService {
     }
 
     sendAnswer(channelId, peerId, answer) {
-        const payload = { conferenceId: channelId, destinationId: peerId, answer };
+        const payload = { channelId, peerId, answer };
         this.#socket.emit(SignalActions.SEND_ANSWER, payload);
     }
 
@@ -73,7 +73,7 @@ export default class MediaPeersSignalService extends SignalService {
     }
 
     sendIceCandidate(channelId, peerId, iceCandidate) {
-        const payload = { conferenceId: channelId, destinationId: peerId, iceCandidate };
+        const payload = { channelId, peerId, iceCandidate };
         this.#socket.emit(SignalActions.SEND_ICE_CANDIDATE, payload);
     }
 

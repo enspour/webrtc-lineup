@@ -1,20 +1,20 @@
 import SignalService from "@services/Signal.service";
 
 const SignalActions = {
-    JOIN_CONFERENCE: "room:conference:join",
-    NOTIFY_JOIN_CONFERENCE: "notify:room:conference:join",
+    JOIN_CONFERENCE: "conference:join",
+    NOTIFY_JOIN_CONFERENCE: "notify:conference:join",
 
-    LEAVE_CONFERENCE: "room:conference:leave",
-    NOTIFY_LEAVE_CONFERENCE: "notify:room:conference:leave",
+    LEAVE_CONFERENCE: "conference:leave",
+    NOTIFY_LEAVE_CONFERENCE: "notify:conference:leave",
 
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:room:conference:user_join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:room:conference:user_leave",
-    
+    NOTIFY_USER_JOIN_CONFERENCE: "notify:conference:user_join",
+    NOTIFY_USER_LEAVE_CONFERENCE: "notify:conference:user_leave",
+
     NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
 
-    SEND_MESSAGE: "chat:send:message",
-    NOTIFY_SEND_MESSAGE: "notify:chat:send:message",
-    NOTIFY_NEW_MESSAGE: "notify:chat:new:message",
+    SEND_MESSAGE: "conference:chat:send:message",
+    NOTIFY_SEND_MESSAGE: "notify:conference:chat:send:message",
+    NOTIFY_NEW_MESSAGE: "notify:conference:chat:new:message",
 }
 
 export default class ConferenceSignalService extends SignalService {
