@@ -3,13 +3,14 @@ import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import RoomCard from "@components/ui/RoomCard/RoomCard";
+import Loader from "@components/ui/Loader/Loader";
 
 import services from "@services";
 
 import styles from "./Store.module.scss";
 
 const Store = observer(() => {
-    const state = services.userRooms.State;
+    const state = services.userRooms.Status;
 
     const [items, setItems] = React.useState([]);
 
@@ -34,7 +35,7 @@ const Store = observer(() => {
     if (state === "pending") {
         return (
             <div className={styles.loader}>
-                <div className="loader"></div>
+                <Loader />
             </div>
         );
     }

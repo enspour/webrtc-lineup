@@ -1,3 +1,3 @@
-import { Search } from "@features/Search";
+import { Search } from "@features/search";
 
 export default Search;

@@ -1,30 +1,31 @@
+import { io } from "socket.io-client"
+
 import API from "@api/API";
 import RoomsAPI from "@api/RoomsAPI";
 
 import RequestedArrayService from "./RequestedArray.service";
+import ContextMenuService from "./ContextMenu.service";
+import ModalsService from "./Modals.service";
+import ThemesService from "./Themes.service";
+import StorageService from "./Storage.service";
 
 import { 
     UserService, 
     UserDevicesService, 
     UserMediaService 
-} from "../features/User";
+} from "../features/user";
+import { SearchService } from "../features/search";
+import { RoomService, transformToRooms } from "@features/room";
+import { IslandService } from "@features/island";
+import { ConferenceService } from "@features/conference";
+import { NotificationService } from "@features/notifications";
 
-import { SearchService } from "../features/Search";
 
-import ContextMenuService from "./ContextMenu.service";
-import ModalsService from "./Modals.service";
-import ThemesService from "./Themes.service";
 
-import StorageService from "./Storage.service";
-
-import { IslandService } from "@features/Island";
-
-import { ConferenceService, RoomService, SignalService } from "@features/Room";
-
-import handlerDataRooms from "@utils/handlersReceivedData/handlerDataRooms";
-
-import SignalLogger from "@logs/Signal.logger";
-import { NotificationService } from "@features/Notifications";
+const socket = io({ 
+    path: "/api/v1/signal-service/socket/socket.io", 
+    autoConnect: false
+});
 
 class Services {
     constructor() {
@@ -43,19 +44,18 @@ class Services {
 
         this.userRooms = new RequestedArrayService(
             API.createRequest(RoomsAPI.findCreatedRooms), 
-            handlerDataRooms
+            (data) => transformToRooms(data.body.rooms)
         );
 
         this.userFavoritesRooms = new RequestedArrayService(
             API.createRequest(RoomsAPI.findFavoritesRooms), 
-            handlerDataRooms
+            (data) => transformToRooms(data.body.rooms)
         );
 
         this.island = new IslandService(this);
         
-        this.signal = new SignalService(this);
-        this.room = new RoomService(this);
-        this.conference = new ConferenceService(this);
+        this.room = new RoomService(this, socket);
+        this.conference = new ConferenceService(this, socket);
 
         this.notification = new NotificationService(this);
     }
@@ -77,8 +77,6 @@ class Services {
 
         this.room.initialize();
         this.conference.initialize();
-
-        SignalLogger.initialize(this.signal);
     }
 }
 

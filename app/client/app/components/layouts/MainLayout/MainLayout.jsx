@@ -1,6 +1,6 @@
 import ContextMenu from "@components/ui/ContextMenu/ContextMenu";
 
-import { NotificationsList } from "@features/Notifications";
+import { NotificationsList } from "@features/notifications";
 
 const MainLayout = ({ children }) => {
     return (

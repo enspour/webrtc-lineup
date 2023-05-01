@@ -3,13 +3,14 @@ import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
 import RoomCard from "@components/ui/RoomCard/RoomCard";
+import Loader from "@components/ui/Loader/Loader";
 
 import services from "@services";
 
 import styles from "./Favorites.module.scss";
 
 const Favorites = observer(() => {
-    const state = services.userFavoritesRooms.State;
+    const state = services.userFavoritesRooms.Status;
 
     const [items, setItems] = React.useState([]);
 
@@ -28,7 +29,7 @@ const Favorites = observer(() => {
     if (state === "pending") {
         return (
             <div className={styles.loader}>
-                <div className="loader"></div>
+                <Loader />
             </div>
         );
     }

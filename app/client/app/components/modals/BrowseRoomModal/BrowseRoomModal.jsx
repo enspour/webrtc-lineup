@@ -8,6 +8,7 @@ import AuthAPI from "@api/AuthAPI";
 
 import Modal from "@components/ui/Modal/Modal";
 import InputButtonGroup from "@components/ui/InputButtonGroup/InputButtonGroup";
+import Loader from "@components/ui/Loader/Loader";
 
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
@@ -51,7 +52,7 @@ const ConnectedUsers = observer(() => {
     if (request.isLoading) {
         return (
             <div className={styles.room__users__loading}>
-                <div className="loader"></div>
+                <Loader />
             </div>
         )
     }
@@ -112,14 +113,15 @@ const JoinButton = () => {
         const id = services.modals.browseRoom.Room.id;
         
         let response = await services.room.join(id, password);
-
+        console.log(response)
         if (response.status === 401) {
             await AuthAPI.refresh();
             response = await services.room.join(id, password);
         }
+        console.log(response)
         
         if (response.status === 200) {
-            services.room.Conferences.update({ params: { room_id: id } });
+            services.room.Conferences.update();
             router.push(`/room/${id}`); 
         }
     }

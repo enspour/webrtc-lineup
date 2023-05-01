@@ -1,0 +1,33 @@
+.user__container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--theme-color-tertiary);
+    background-color: var(--theme-bg-tertiary);
+    box-shadow: 0px 0px 15px 0 var(--theme-shadow-primary);
+    border-radius: 2rem;
+    padding: 1.5rem 2rem;
+    width: 25rem;
+    height: 8rem;
+    
+    &:hover {
+        border: 0.2rem solid var(--theme-border-primary) !important;
+    }
+}
+
+.user__avatar {
+    min-width: 4.5rem;
+    max-width: 4.5rem;
+    height: 4.5rem;
+    background-color: #696969;
+    border-radius: 50%;
+}
+
+.user__name {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

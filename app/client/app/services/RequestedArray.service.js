@@ -1,19 +1,19 @@
 import ArrayStore from "@stores/Array.store";
-import StateStore from "@stores/State.store";
+import StatusStore from "@stores/Status.store";
 
 export default class RequestedArrayService {
     #request;
     #handlerReceivedData;
 
     #requestedArray;
-    #requestedArrayState;
+    #requestedArrayStatus;
 
     constructor(request, handlerReceivedData) {
         this.#request = request;
         this.#handlerReceivedData = handlerReceivedData;
 
         this.#requestedArray = new ArrayStore();
-        this.#requestedArrayState = new StateStore();
+        this.#requestedArrayStatus = new StatusStore();
     }
 
     initialize() {
@@ -32,8 +32,8 @@ export default class RequestedArrayService {
         return this.#requestedArray.array;
     }
 
-    get State() {
-        return this.#requestedArrayState.state;
+    get Status() {
+        return this.#requestedArrayStatus.status;
     }
 
     get Store() {
@@ -46,13 +46,13 @@ export default class RequestedArrayService {
 
     clear() {
         this.#requestedArray.clear();
-        this.#requestedArrayState.clear();
+        this.#requestedArrayStatus.clear();
     }
 
     #onStart() {
         return this.#request.onStart(() => {
             this.#requestedArray.clear();
-            this.#requestedArrayState.setState("pending");
+            this.#requestedArrayStatus.setStatus("pending");
         })
     }
 
@@ -61,7 +61,7 @@ export default class RequestedArrayService {
             if (response && response.status === 200) {
                 this.#requestedArray.clear();
                 this.#requestedArray.appendMany(this.#handlerReceivedData(response.data));
-                this.#requestedArrayState.setState("done");
+                this.#requestedArrayStatus.setStatus("done");
             }
         })
     }
@@ -70,7 +70,7 @@ export default class RequestedArrayService {
         return this.#request.onError(error => {
             if (error) {
                 this.#requestedArray.clear();
-                this.#requestedArrayState.setState("error");
+                this.#requestedArrayStatus.setStatus("error");
             }
         });
     }
