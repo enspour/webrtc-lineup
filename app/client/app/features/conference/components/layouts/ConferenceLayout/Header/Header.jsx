@@ -72,6 +72,31 @@ const ConferenceName = observer(() => {
     )
 })
 
+const ConferenceWorkflowControls = () => {
+    const toggleLS = () => {
+        if (services.conference.Workflow.IsOpenLS) {
+            return services.conference.Workflow.closeLS();
+        }
+        
+        services.conference.Workflow.openLS("chat");
+    }
+
+    const toggleRS = () => {
+        if (services.conference.Workflow.IsOpenRS) {
+            return services.conference.Workflow.closeRS();
+        }
+        
+        services.conference.Workflow.openRS("chat");
+    }
+
+    return (
+        <>
+            <Svg url={MenuLeftIcon} width="1.8" height="1.5" onClick={toggleLS}/>
+            <Svg url={MenuRightIcon} width="1.8" height="1.5" onClick={toggleRS}/>
+        </>
+    )
+}
+
 const Header = () => {
     const router = useRouter();
 
@@ -85,8 +110,7 @@ const Header = () => {
         <div className={styles.header}>
             <div className="fl al-center g-3">
                 <div className={styles.header__menu}>
-                    <Svg url={MenuLeftIcon} width="1.8" height="1.5"/>
-                    <Svg url={MenuRightIcon} width="1.8" height="1.5"/>
+                    <ConferenceWorkflowControls />
                 </div>
 
                 <div className={styles.header__full}>

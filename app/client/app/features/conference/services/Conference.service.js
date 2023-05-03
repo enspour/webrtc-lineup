@@ -5,6 +5,7 @@ import ConferenceChatService from "./ConferenceChat.service";
 
 import ConferenceStore from "../stores/Conference.store";
 import ConferenceLoggerService from "./ConferenceLogger.service";
+import ConferenceWorkflowService from "./ConferenceWorkflow.service";
 
 export default class ConferenceService {
     #room;
@@ -16,6 +17,7 @@ export default class ConferenceService {
     #conferenceInfo;
     #conferenceChat;
     #conferenceLogger;
+    #conferenceWorkflow;
 
     #mediaPeersConnection;
     #mediaPeersConnectionDestroyer;
@@ -30,12 +32,14 @@ export default class ConferenceService {
         this.#conferenceInfo = new ConferenceInfoService(this.#conferenceStore, this.#conferenceSignal);
         this.#conferenceChat = new ConferenceChatService(user, this.#conferenceStore, this.#conferenceSignal);
         this.#conferenceLogger = new ConferenceLoggerService(this.#conferenceSignal);
+        this.#conferenceWorkflow = new ConferenceWorkflowService(this.#conferenceStore);
     }
 
     initialize() {
         const conferenceInfoDestroyer = this.#conferenceInfo.initialize();
         const conferenceChatDestroyer = this.#conferenceChat.initialize();
         const conferenceLoggerDestroyer = this.#conferenceLogger.initialize();
+        const conferenceWorkflowDestroyer = this.#conferenceWorkflow.initialize();
 
         const offJoin = this.#onJoin();
         const offLeave = this.#onLeave();
@@ -46,6 +50,7 @@ export default class ConferenceService {
             conferenceInfoDestroyer();
             conferenceChatDestroyer();
             conferenceLoggerDestroyer();
+            conferenceWorkflowDestroyer();
 
             offJoin();
             offLeave();
@@ -64,6 +69,10 @@ export default class ConferenceService {
 
     get Chat() {
         return this.#conferenceChat;
+    }
+
+    get Workflow() {
+        return this.#conferenceWorkflow;
     }
 
     get Peers() {

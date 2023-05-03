@@ -1,0 +1,48 @@
+.workflow {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+
+    --sidebar-width: 22vw;
+    --sidebar-transition: .4s;
+}
+
+.main {
+    flex-grow: 1;
+    min-width: calc(100vw - 2 * var(--sidebar-width) - 8rem);
+    margin: 0 2rem;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    transition: width var(--sidebar-transition);
+
+    &.sidebar__open {
+        width: var(--sidebar-width);
+
+        .sidebar__left {
+            transform: translateX(0);
+        }
+
+        .sidebar__left, .sidebar__right {
+            opacity: 1;
+        }
+    }
+}
+
+.sidebar__left, .sidebar__right {
+    width: var(--sidebar-width);
+    padding: 1rem;
+    opacity: 0;
+}
+
+.sidebar__left {
+    transform: translateX(-100%);
+    transition: opacity var(--sidebar-transition), transform var(--sidebar-transition);
+}
+
+.sidebar__right {
+    transition: opacity var(--sidebar-transition);
+}
