@@ -1,9 +1,9 @@
-import Notification from "./components/Notification/Notification";
-import NotificationsList from "./components/NotificationsList/NotificationsList";
+import Notifications from "./components/Notifications/Notifications";
+
 import NotificationService from "./services/Notification.service";
 
 export {
-    Notification,
-    NotificationsList,
+    Notifications,
+
     NotificationService
 }

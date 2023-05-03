@@ -19,9 +19,11 @@
     border: none;
     outline: none;
     overflow: auto;
+    cursor: text;
 
     &:empty:not(:focus):before{
         content: attr(data-placeholder);
         color: var(--theme-placeholder-quaternary);
+        pointer-events: none;
     }
 }

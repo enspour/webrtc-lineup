@@ -89,7 +89,7 @@ export default class RoomService {
     }
 
     #onJoinRoom() {
-        return this.#roomSignal.onJoinRoom((status, _, data) => {
+        return this.#roomSignal.onJoinRoom((status) => {
             if (status !== 200) {
                 this.#roomSignal.disconnect();
             }

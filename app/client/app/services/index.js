@@ -8,10 +8,10 @@ import ContextMenuService from "./ContextMenu.service";
 import ModalsService from "./Modals.service";
 import StorageService from "./Storage.service";
 
+import { IslandService, SearchService } from "@features/island";
 import { UserService } from "@features/user";
 import { RoomService, transformToRooms } from "@features/room";
-import { IslandService, SearchService } from "@features/island";
-import { ConferenceService } from "@features/conference";
+import { ConferenceService, ConferenceWorkflowService } from "@features/conference";
 import { NotificationService } from "@features/notifications";
 
 const socket = io({ 
@@ -49,8 +49,8 @@ class Services {
     }
 
     initialize() {
-        this.localStorage.initialize("local");
-        this.sessionStorage.initialize("session");
+        const localStorageDestroyer = this.localStorage.initialize("local");
+        const sessionStorageDestroyer = this.sessionStorage.initialize("session");
 
         const searchDestroyer = this.search.initialize();
 
@@ -60,9 +60,13 @@ class Services {
         const userFavoritesRoomsDestroyer = this.userFavoritesRooms.initialize();
 
         const roomDestroyer = this.room.initialize();
+
         const conferenceDestroyer = this.conference.initialize();
 
         return () => {
+            localStorageDestroyer();
+            sessionStorageDestroyer();
+
             searchDestroyer();
 
             userDestroyer();

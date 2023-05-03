@@ -5,6 +5,8 @@ export default class StorageService {
         } else if (type === "session") {
             this.storage = window.sessionStorage;
         }
+
+        return () => {}
     }
 
     get(key) {

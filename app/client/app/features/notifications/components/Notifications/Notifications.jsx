@@ -4,9 +4,9 @@ import Notification from '../Notification/Notification';
 
 import services from '@services';
 
-import styles from "./NotificationsList.module.scss";
+import styles from "./Notifications.module.scss";
 
-const NotificationsList = observer(() => {
+const Notifications = observer(() => {
     const notifications = services.notification.Notifications;
 
     return (
@@ -20,4 +20,4 @@ const NotificationsList = observer(() => {
     )
 })
 
-export default NotificationsList
+export default Notifications

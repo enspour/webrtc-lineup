@@ -8,10 +8,12 @@ import ConferenceChatHeader from "./ConferenceChatHeader";
 
 import styles from "./ConferenceChat.module.scss";
 
-const ConferenceChat = () => {
+const ConferenceChat = ({
+    height = "calc(100vh - 5rem - 4rem)"
+}) => {
     return (
         <div className={styles.container}>
-            <Panel height="calc(100vh - 5rem - 4rem)">
+            <Panel height={height}>
                 <div className={styles.chat}>
                     <ConferenceChatHeader />
 

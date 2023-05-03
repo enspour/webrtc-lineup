@@ -1,6 +1,6 @@
 import ContextMenu from "@components/ui/ContextMenu/ContextMenu";
 
-import { NotificationsList } from "@features/notifications";
+import { Notifications } from "@features/notifications";
 
 const MainLayout = ({ children }) => {
     return (
@@ -8,7 +8,7 @@ const MainLayout = ({ children }) => {
             { children }
 
             <ContextMenu />
-            <NotificationsList />
+            <Notifications />
         </>
     )
 }

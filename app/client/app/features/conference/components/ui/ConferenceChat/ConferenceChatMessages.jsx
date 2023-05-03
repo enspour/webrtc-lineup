@@ -15,10 +15,9 @@ const Messages = observer(() => {
     const messages = services.conference.Chat.Messages;
 
     const messagesRef = useRef();
-    const messagesEndRef = useRef();
 
+    useScrollDownAtOpening(messagesRef);
     useMessagesFollower(messagesRef);
-    useScrollDownAtOpening(messagesEndRef);
 
     return (
         <div ref={messagesRef} className={styles.chat__messages}>
@@ -31,7 +30,6 @@ const Messages = observer(() => {
                     />
                 )
             }
-            <div ref={messagesEndRef}/>
         </div>
     )
 });

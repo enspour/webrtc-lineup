@@ -5,9 +5,11 @@ const useScrollDownAtOpening = (ref) => {
         const target = ref.current;
 
         if (target) {
-            target.scrollIntoView();
+            target.scrollTo({
+                top: target.scrollHeight,
+            });
         }
-    }, [])
+    }, []);
 }
 
-export default useScrollDownAtOpening
+export default useScrollDownAtOpening;
