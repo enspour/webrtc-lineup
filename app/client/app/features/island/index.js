@@ -1,4 +1,4 @@
-import Island from "./components/Island/Island";
+import Island from "./components/screens/Island/Island";
 
 import IslandService from "./services/Island.service";
 

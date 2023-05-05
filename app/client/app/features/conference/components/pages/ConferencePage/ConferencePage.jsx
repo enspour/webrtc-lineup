@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 
 import ConferenceLayout from "../../layouts/ConferenceLayout/ConferenceLayout";
-import ConferenceWorkflow from "../../ui/ConferenceWorkflow/ConferenceWorkflow";
+import ConferenceWorkflow from "../../screens/ConferenceWorkflow/ConferenceWorkflow";
 
 const ConferencePage = observer(() => {
     return (

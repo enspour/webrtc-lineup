@@ -1,4 +1,4 @@
-import Notifications from "./components/Notifications/Notifications";
+import Notifications from "./components/screens/Notifications/Notifications";
 
 import NotificationService from "./services/Notification.service";
 

@@ -1,5 +1,5 @@
-import Login from "./components/Login/Login";
-import Signup from "./components/Signup/Signup";
+import Login from "./components/pages/Login/Login";
+import Signup from "./components/pages/Signup/Signup";
 
 export {
     Login,

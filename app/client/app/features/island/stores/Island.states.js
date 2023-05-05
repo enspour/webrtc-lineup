@@ -1,6 +1,7 @@
-import Store from "../components/tabs/Store/Store";
-import Favorites from "../components/tabs/Favorites/Favorites";
-import Search from "../components/tabs/Search/Search";
+import Store from "../components/screens/Store/Store";
+import Favorites from "../components/screens/Favorites/Favorites";
+import Search from "../components/screens/Search/Search";
+
 import services from "@services";
 
 export const IslandStoreTab = { 

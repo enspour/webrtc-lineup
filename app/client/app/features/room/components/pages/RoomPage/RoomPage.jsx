@@ -1,8 +1,9 @@
 import { useEffect, memo } from "react";
 
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
-import Conferences from "../../ui/Conferences/Conferences";
-import ToolKits from "../../ui/ToolKits/ToolKits";
+
+import Conferences from "../../screens/Conferences/Conferences";
+import ToolKits from "../../screens/ToolKits/ToolKits";
 
 import services from "@services";
 
