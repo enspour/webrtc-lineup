@@ -12,14 +12,14 @@ export default class UsersService {
         
         const data = JSON.parse(toJson(room));
 
-        new BroadcastAll(RoomActionsTypes.NOTIFY_UPDATE_ROOM_INFORMATION, { room: data }).notify(roomId);
+        new BroadcastAll(RoomActionsTypes.NOTIFY_ROOM_INFO_UPDATED, { room: data }).notify(roomId);
     }
 
     updateConferenceInformation(roomId: string, conference: (Conference & { settings: ConferenceSettings })) {
         const data = JSON.parse(toJson(conference));
 
         new BroadcastAll(
-            ConferenceActionsTypes.NOTIFY_UPDATE_CONFERENCE_INFORMATION, 
+            ConferenceActionsTypes.NOTIFY_CONFERENCE_INFO_UPDATED, 
             { conference: data }
         ).notify(roomId);
     }

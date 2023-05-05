@@ -21,7 +21,7 @@ const leaveValidation = {
 
 const sendMessageValidation = {
     validate: sendMessageValidator,
-    action: ConferenceActionsTypes.NOTIFY_SEND_MESSAGE
+    action: ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT
 }
 
 const initConferenceActions = (socket: Socket) => {
@@ -36,7 +36,7 @@ const initConferenceActions = (socket: Socket) => {
     );
 
     socket.on(
-        ConferenceActionsTypes.SEND_MESSAGE,
+        ConferenceActionsTypes.SEND_MESSAGE_CONFERENCE_CHAT,
         services.actions.create(socket, ConferenceActions.sendMessage, sendMessageValidation)
     );
 }

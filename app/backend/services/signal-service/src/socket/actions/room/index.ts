@@ -10,22 +10,22 @@ import services from "@socket/services";
 
 const joinValidation = {
     validate: joinValidator,
-    action: RoomActionsTypes.NOTIFY_JOIN
+    action: RoomActionsTypes.NOTIFY_ROOM_JOIN
 };
 
 const leaveValidation = {
     validate: idValidator,
-    action: RoomActionsTypes.NOTIFY_LEAVE,
+    action: RoomActionsTypes.NOTIFY_ROOM_LEAVE,
 };
 
 const initRoomActions = (socket: Socket) => {
     socket.on(
-        RoomActionsTypes.JOIN_ROOM,
+        RoomActionsTypes.ROOM_JOIN,
         services.actions.create(socket, RoomActions.join, joinValidation)    
     );
 
     socket.on(
-        RoomActionsTypes.LEAVE_ROOM,
+        RoomActionsTypes.ROOM_LEAVE,
         services.actions.create(socket, RoomActions.leave, leaveValidation)
     );
 }

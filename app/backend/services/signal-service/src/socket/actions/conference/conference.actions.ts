@@ -24,7 +24,7 @@ class ConferenceActions {
                 
                 context.broadcast(
                     conferenceId, 
-                    ConferenceActionsTypes.NOTIFY_USER_JOIN_CONFERENCE, 
+                    ConferenceActionsTypes.NOTIFY_CONFERENCE_USER_JOINED, 
                     payload
                 );
                 
@@ -59,7 +59,7 @@ class ConferenceActions {
             
             context.broadcast(
                 id, 
-                ConferenceActionsTypes.NOTIFY_USER_LEAVE_CONFERENCE, 
+                ConferenceActionsTypes.NOTIFY_CONFERENCE_USER_LEFT, 
                 payload
             );
             
@@ -92,12 +92,12 @@ class ConferenceActions {
     
                     context.broadcast(
                         conferenceId, 
-                        ConferenceActionsTypes.NOTIFY_NEW_MESSAGE, 
+                        ConferenceActionsTypes.NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE, 
                         { message }
                     );
                     
                     return context.success(
-                        ConferenceActionsTypes.NOTIFY_SEND_MESSAGE, 
+                        ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT, 
                         "Success send message.", 
                         { tempId, message }
                     );
@@ -105,13 +105,13 @@ class ConferenceActions {
             }
 
             return context.serverError(
-                ConferenceActionsTypes.NOTIFY_SEND_MESSAGE,
+                ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
                 "Woops... Server error."
             );
         }
        
         context.badRequest(
-            ConferenceActionsTypes.NOTIFY_SEND_MESSAGE,
+            ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
             "You are not connected to room."
         );
     }

@@ -29,11 +29,11 @@ const initEvents = (_io: Server) => {
                 
                 if (roomId.includes("|")) {
                     return new Broadcast(
-                        ConferenceActionsTypes.NOTIFY_USER_LEAVE_CONFERENCE, { socketId: socket.id }
+                        ConferenceActionsTypes.NOTIFY_CONFERENCE_USER_LEFT, { socketId: socket.id }
                     ).notify(socket, roomId);
                 }
 
-                new Broadcast(RoomActionsTypes.NOTIFY_USER_LEAVE, { socketId: socket.id }).notify(socket, roomId);
+                new Broadcast(RoomActionsTypes.NOTIFY_ROOM_USER_LEFT, { socketId: socket.id }).notify(socket, roomId);
             }
         });
     }

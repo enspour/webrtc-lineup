@@ -1,14 +1,14 @@
 export const RoomActionsTypes = {
-    JOIN_ROOM: "room:join",
-    NOTIFY_JOIN: "notify:room:join",
+    ROOM_JOIN: "room:join",
+    NOTIFY_ROOM_JOIN: "notify:room:join",
 
-    LEAVE_ROOM: "room:leave",
-    NOTIFY_LEAVE: "notify:room:leave",
+    ROOM_LEAVE: "room:leave",
+    NOTIFY_ROOM_LEAVE: "notify:room:leave",
 
-    NOTIFY_USER_LEAVE: "notify:room:user_leave",
-    NOTIFY_USER_JOIN: "notify:room:user_join",
+    NOTIFY_ROOM_USER_JOINED: "notify:room:user_joined",
+    NOTIFY_ROOM_USER_LEFT: "notify:room:user_left",
 
-    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
+    NOTIFY_ROOM_INFO_UPDATED: "notify:room:info_updated",
 };
 
 export const ConferenceActionsTypes = {
@@ -18,14 +18,14 @@ export const ConferenceActionsTypes = {
     LEAVE_CONFERENCE: "conference:leave",
     NOTIFY_LEAVE_CONFERENCE: "notify:conference:leave",
 
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:conference:user_join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:conference:user_leave",
+    NOTIFY_CONFERENCE_USER_JOINED: "notify:conference:user_joined",
+    NOTIFY_CONFERENCE_USER_LEFT: "notify:conference:user_left",
 
-    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
+    NOTIFY_CONFERENCE_INFO_UPDATED: "notify:conference:info_updated",
 
-    SEND_MESSAGE: "conference:chat:send:message",
-    NOTIFY_SEND_MESSAGE: "notify:conference:chat:send:message",
-    NOTIFY_NEW_MESSAGE: "notify:conference:chat:new:message",
+    SEND_MESSAGE_CONFERENCE_CHAT: "conference:chat:send_message",
+    NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT: "notify:conference:chat:send_message",
+    NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE: "notify:conference:chat:new_message",
 };
 
 export const MediaPeersConnectionActionsTypes = {
