@@ -1,4 +1,4 @@
-.videos {
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
     padding: 2rem;
 }
 
-.videos__items {
+.users {
     display: grid;
     gap: 1.5rem; 
 }

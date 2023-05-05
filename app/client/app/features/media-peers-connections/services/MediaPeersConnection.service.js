@@ -1,6 +1,6 @@
 import ArrayStore from "@stores/Array.store";
 
-import MediaPeerConnectionService from "./MediaPeerConnection.service";
+import MediaPeerConnection from "./MediaPeerConnection";
 import MediaPeersConnectionLogger from "./MediaPeersConnectionLogger.service";
 import MediaPeersSignalService from "./MediaPeersSignal.service";
 
@@ -52,7 +52,7 @@ export default class MediaPeersConnectionService {
         const { enableVideo, enableAudio } = this.#mediaInfo;
 
         if (enableVideo || enableAudio) {
-            const peer = new MediaPeerConnectionService(
+            const peer = new MediaPeerConnection(
                 this.#mediaPeersConnectionSignal,
                 this.#channelId,
                 peerId,
@@ -90,7 +90,7 @@ export default class MediaPeersConnectionService {
             const { enableVideo, enableAudio } = this.#mediaInfo;
 
             if (enableVideo || enableAudio) {
-                const peer = new MediaPeerConnectionService(
+                const peer = new MediaPeerConnection(
                     this.#mediaPeersConnectionSignal,
                     this.#channelId,
                     peerId,

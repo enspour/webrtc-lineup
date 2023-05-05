@@ -1,4 +1,4 @@
-import { action, autorun, makeAutoObservable, observable, runInAction } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 
 export default class SpeechRecognizerStore {
     lastAudioActive = 0;
@@ -9,18 +9,15 @@ export default class SpeechRecognizerStore {
             isSpeaking: observable,
             lastAudioActive: observable,
             setIsSpeaking: action,
-        });
-
-        autorun(() => {
-            if (this.isSpeaking) {
-                runInAction(() => {
-                    this.lastAudioActive = Date.now();
-                })
-            }
+            setLastAudioActive: action,
         });
     }
 
     setIsSpeaking(isSpeaking) {
         this.isSpeaking = isSpeaking;
+    }
+
+    setLastAudioActive(lastAudioActive) {
+        this.lastAudioActive = lastAudioActive;
     }
 }

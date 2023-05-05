@@ -5,7 +5,7 @@ import useChildrenObserver from "@hooks/useChildrenObserver";
 const useMessagesFollower = (ref) => {
     const { subscribe, unsubscribe } = useChildrenObserver(ref, scroll);
     
-    function scroll (target) {
+    function scroll(target) {
         target.scrollTo({
             top: target.scrollHeight,
             behavior: "smooth"    

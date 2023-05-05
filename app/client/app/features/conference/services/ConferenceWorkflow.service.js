@@ -18,7 +18,7 @@ export default class ConferenceWorkflowService {
     }
 
     initialize() {
-        const watcherTypeMainDestroyer = autorun(() => {
+        const watchTypeMainDestroyer = autorun(() => {
             const settings = this.#conferenceStore.settings;
             
             if (settings.enableVideo) {
@@ -36,7 +36,7 @@ export default class ConferenceWorkflowService {
         const rightSidebarDestroyer = this.#rightSidebar.initialize();
 
         return () => {
-            watcherTypeMainDestroyer();
+            watchTypeMainDestroyer();
 
             leftSidebarDestroyer();
             rightSidebarDestroyer();

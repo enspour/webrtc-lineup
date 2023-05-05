@@ -1,14 +1,21 @@
-import React from "react";
+import { useEffect, useState, useRef, useMemo, memo } from "react";
 import { autorun } from "mobx";
 import _debounce from "lodash/debounce";
 
 import UserVideo from "../../ui/UserVideo/UserVideo";
 
+import useSubscriberAtResizing from "@hooks/useSubscriberAtResizing";
+
 import services from "@services";
 
 import styles from "./ConferenceVideos.module.scss";
 
-const getGridColumnsRows = count => {
+const MAX_NUMBER_USERS = 9;
+const PADDINGS = 40;
+const RATIO = 4 / 3;
+const SCALE = 0.85;
+
+const getGridOptions = (count) => {
     switch (count) {
         case 1: 
             return { columns: 1, rows: 1 }
@@ -51,42 +58,43 @@ const getMinTotalAreaByRatio = (width, height, ratio) => {
     return Math.min(areaByWidth, areaByHeight)
 }
 
-const getGridOptions = (parent, count) => {
-    const PADDINGS = 40;
-    const RATIO = 4 / 3;
-    const SCALE = 0.85;
-
-    const options = getGridColumnsRows(count);
+const getOptions = (parent, count) => {
+    const gridOptions = getGridOptions(count);
 
     const { width, height } = getWidthHeightByElement(parent, PADDINGS);
 
-    const totalArea = getMinTotalAreaByRatio(width / options.columns, height / options.rows, RATIO)
+    const totalArea = getMinTotalAreaByRatio(width / gridOptions.columns, height / gridOptions.rows, RATIO)
     
-    const areaForChild = totalArea * SCALE;
+    const areaForElement = totalArea * SCALE;
 
-    const child = getWidthHeightByRatio(areaForChild, RATIO);
+    const elementOptions = getWidthHeightByRatio(areaForElement, RATIO);
     
-    return { ...options, child }
+    return { ...gridOptions, ...elementOptions };
 }
 
 const ConferenceVideos = () => {    
-    const videosRef = React.useRef();
+    const usersRef = useRef();
 
-    const [videos, setVideos] = React.useState([]);
-    const [gridOptions, setGridOptions] = React.useState({ child: {} });
+    const [options, setOptions] = useState({});
+    
+    const [users, setUsers] = useState([]);
 
-    const updateGridOptions = () => {
-        if (videosRef.current) {
-            const count = videos.length;
-            const options = getGridOptions(videosRef.current, count);
-            setGridOptions(options)
+    const updateOptions = () => {
+        const target = usersRef.current;
+
+        if (target) {
+            setOptions(getOptions(target, users.length));
         }
     }
 
-    React.useEffect(() =>
+    const debouncedUpdateOptions = useMemo(
+        () => _debounce(updateOptions, 250)
+    , [users]);
+
+    useSubscriberAtResizing(usersRef, debouncedUpdateOptions);
+
+    useEffect(() => 
         autorun(() => {
-            const MAX_COUNT_VIDEOS = 9;
-            
             const local = {
                 peerId: "local",
                 userId: services.user.Info.Id,
@@ -95,9 +103,9 @@ const ConferenceVideos = () => {
                 muted: true,
             };
             
-            const remotePeers = [...services.conference.Peers]
+            const peers = [...services.conference.Peers]
                 .sort((a, b) => b.LastAudioActive - a.LastAudioActive)
-                .slice(0, MAX_COUNT_VIDEOS - 1)
+                .slice(0, MAX_NUMBER_USERS - 1)
                 .map(item => ({
                     peerId: item.PeerId,
                     userId: item.UserId,
@@ -105,36 +113,24 @@ const ConferenceVideos = () => {
                     active: item.IsSpeaking,
                     muted: false,
                 }));
-
-            setVideos([ 
-                local,  
-                ...remotePeers 
-            ]);
+    
+            setUsers([local, ...peers]);
         })
-    , [])
-
-    React.useEffect(() => {
-        updateGridOptions();
-
-        const event = _debounce(updateGridOptions, 250);
-        
-        window.addEventListener("resize", event);
-        return () => window.removeEventListener("resize", event);
-    }, [videos])
+    , []);
 
     return (
-        <div ref={videosRef} className={styles.videos}>
+        <div ref={usersRef} className={styles.container}>
             <div 
-                className={styles.videos__items}
+                className={styles.users}
                 style={{
-                    gridTemplateColumns: `repeat(${gridOptions.columns}, ${gridOptions.child.width}px)`,
-                    gridTemplateRows: `repeat(${gridOptions.rows}, ${gridOptions.child.height}px)`,
+                    gridTemplateColumns: `repeat(${options.columns}, ${options.width}px)`,
+                    gridTemplateRows: `repeat(${options.rows}, ${options.height}px)`,
                 }}
             > 
-                { videos.map(item => <UserVideo key={item.peerId} item={item} options={gridOptions.child}/>) }
+                { users.map(item => <UserVideo key={item.peerId} item={item} options={options}/>) }
             </div>
         </div>
     )
-}
+};
 
-export default React.memo(ConferenceVideos);
+export default memo(ConferenceVideos);

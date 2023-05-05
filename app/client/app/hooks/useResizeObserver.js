@@ -1,10 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const config = {
-    childList: true,
-};
-
-const useChildrenObserver = (ref, callback) => {
+const useResizeObserver = (ref, callback) => {
     const observerRef = useRef();
 
     const [isObserve, setIsObserve] = useState(false);
@@ -14,35 +10,28 @@ const useChildrenObserver = (ref, callback) => {
         const observer = observerRef.current;
 
         if (target && observer) {
-            observer.observe(target, config);
+            observer.observe(target);
             setIsObserve(true);
         }
     }
 
     const unsubscribe = () => {
         const observer = observerRef.current;
-
         if (observer) {
             observer.disconnect();
             setIsObserve(false);
         }
     }
-
+    
     const handle = useCallback(
-        (mutations) => {
-            for (let mutation of mutations) {
-                if (mutation.type === 'childList') {
-                    callback(ref.current);
-                }
-            }
-        }
-    , [callback])
+        (entries) => callback(entries)
+    , [callback]);
 
     useEffect(() => {
         const target = ref.current;
 
         if (target) {
-            observerRef.current = new MutationObserver(handle);
+            observerRef.current = new ResizeObserver(handle);
             if (isObserve) {
                 subscribe();
             }
@@ -54,7 +43,7 @@ const useChildrenObserver = (ref, callback) => {
         }
     }, [ref, handle]);
 
-    return { subscribe, unsubscribe };
+    return { subscribe, unsubscribe }
 }
 
-export default useChildrenObserver;
+export default useResizeObserver;

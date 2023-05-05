@@ -1,8 +1,8 @@
 import iceServersConfig from "app/configs/iceServers.config";
 
-import { SpeechRecognizerService } from "@features/speech-recognizer";
+import { SpeechRecognizer } from "@features/speech-recognizer";
 
-export default class MediaPeerConnectionService {
+export default class MediaPeerConnection {
     #mediaPeerConnectionSignal;
     
     #channelId;
@@ -24,7 +24,7 @@ export default class MediaPeerConnectionService {
         
         this.#remoteMediaStream = new MediaStream();
         
-        this.#speechRecognizer = new SpeechRecognizerService();
+        this.#speechRecognizer = new SpeechRecognizer();
 
         if (mediaStream) {
             mediaStream.getTracks().forEach(track => {
@@ -41,7 +41,7 @@ export default class MediaPeerConnectionService {
                 this.#peerConnection.connectionState === "connected" 
                 && this.#remoteMediaStream.getAudioTracks().length
             ) {
-                this.#speechRecognizer.initialize(this.#remoteMediaStream);
+                this.#speechRecognizer.start(this.#remoteMediaStream);
             }
         }
 
@@ -73,6 +73,7 @@ export default class MediaPeerConnectionService {
     }
 
     close() {
+        this.#speechRecognizer.stop();
         this.#peerConnection.close();
     }
 

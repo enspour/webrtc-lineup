@@ -1,4 +1,4 @@
-import { SpeechRecognizerService } from "@features/speech-recognizer";
+import { SpeechRecognizer } from "@features/speech-recognizer";
 
 import MediaDataStore from "../store/MediaData.store";
 
@@ -16,7 +16,7 @@ export default class UserMediaService {
         this.#userDevices = userDevices;
         this.#localStorage = localStorage;
         
-        this.#speechRecognizer = new SpeechRecognizerService();
+        this.#speechRecognizer = new SpeechRecognizer();
 
         this.#mediaData = new MediaDataStore();
     }
@@ -83,7 +83,7 @@ export default class UserMediaService {
                         track.enabled = !this.#mediaData.mutedAudio;
                     })
 
-                    this.#speechRecognizer.initialize(stream);
+                    this.#speechRecognizer.start(stream);
                 }
 
                 if (constraints.video) {
@@ -100,6 +100,8 @@ export default class UserMediaService {
     }
 
     stopCapturedMedia() {
+        this.#speechRecognizer.stop();
+
         if (this.#stream) {
             this.#stream.getTracks().forEach(track => track.stop());
             this.#stream = null;

@@ -1,5 +1,5 @@
-import SpeechRecognizerService from "./services/SpeechRecognizer.service"
+import SpeechRecognizer from "./services/SpeechRecognizer"
 
 export {
-    SpeechRecognizerService
+    SpeechRecognizer
 }

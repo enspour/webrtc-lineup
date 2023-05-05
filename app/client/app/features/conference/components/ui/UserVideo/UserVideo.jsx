@@ -13,7 +13,7 @@ const UserVideo = ({ item, options }) => {
 
     return (
         <div 
-            className={styles.user__container}
+            className={styles.container}
             style={{
                 border: `.2rem solid ${
                     item.active 

@@ -14,17 +14,15 @@ const Favorites = observer(() => {
 
     const [items, setItems] = useState([]);
 
-    useEffect(
-        () =>
-            autorun(() => {
-                const rooms = services.user.FavoritesRooms.Rooms;
+    useEffect(() =>
+        autorun(() => {
+            const rooms = services.user.FavoritesRooms.Rooms;
 
-                if (rooms) {
-                    setItems([...rooms]);
-                }
-            })
-        , []
-    )
+            if (rooms) {
+                setItems([...rooms]);
+            }
+        })
+    , [])
 
     if (state === "pending") {
         return (

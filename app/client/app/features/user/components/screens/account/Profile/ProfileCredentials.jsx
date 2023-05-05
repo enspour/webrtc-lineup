@@ -18,17 +18,15 @@ const ProfileCredentials = () => {
 
     const reset = () => {}
 
-    useEffect(
-        () =>
-            autorun(() => {
-                const userName = services.user.Info.Name;
-                const userEmail = services.user.Info.Email; 
+    useEffect(() =>
+        autorun(() => {
+            const userName = services.user.Info.Name;
+            const userEmail = services.user.Info.Email; 
 
-                setName(userName);
-                setEmail(userEmail);
-            }),
-        []
-    );
+            setName(userName);
+            setEmail(userEmail);
+        }),
+    []);
 
     return (
         <div className={styles.profile__credentials}>

@@ -14,23 +14,21 @@ const Store = observer(() => {
 
     const [items, setItems] = useState([]);
 
-    useEffect(
-        () =>
-            autorun(() => {
-                const rooms = services.user.CreatedRooms.Rooms;
-                const userId = services.user.Info.Id;
-                const userName = services.user.Info.Name;
+    useEffect(() =>
+        autorun(() => {
+            const rooms = services.user.CreatedRooms.Rooms;
+            const userId = services.user.Info.Id;
+            const userName = services.user.Info.Name;
 
-                if (rooms) {
-                    setItems(
-                        rooms
-                            .map(item => ({ ...item, owner: { id: userId, name: userName } }))
-                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    );
-                }
-            })
-        , []
-    )
+            if (rooms) {
+                setItems(
+                    rooms
+                        .map(item => ({ ...item, owner: { id: userId, name: userName } }))
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                );
+            }
+        })
+    , []);
 
     if (state === "pending") {
         return (

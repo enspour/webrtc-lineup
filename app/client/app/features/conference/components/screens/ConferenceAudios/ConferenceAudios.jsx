@@ -1,12 +1,19 @@
-import React from "react";
+import { useEffect, useState, useRef, useMemo, memo } from "react";
 import { autorun } from "mobx";
 import _debounce from "lodash/debounce";
 
 import UserAudio from "../../ui/UserAudio/UserAudio";
 
+import useSubscriberAtResizing from "@hooks/useSubscriberAtResizing";
+
 import services from "@services";
 
 import styles from "./ConferenceAudios.module.scss";
+
+const PADDINGS = 40;
+const ELEMENT_WIDTH = 250;
+const ELEMENT_HEIGHT = 80;
+const GAP = 20;
 
 const getWidthHeightByElement = (element, paddings) => {
     const height = element.offsetHeight - paddings;
@@ -15,12 +22,7 @@ const getWidthHeightByElement = (element, paddings) => {
     return { width, height };
 }
 
-const getMaxCountAudios = (parent) => {
-    const PADDINGS = 40;
-    const ELEMENT_WIDTH = 250;
-    const ELEMENT_HEIGHT = 80;
-    const GAP = 20;
-
+const getNumberUsers = (parent) => {
     const { width, height } = getWidthHeightByElement(parent, PADDINGS)
 
     const columns = width / (ELEMENT_WIDTH + GAP);
@@ -30,18 +32,27 @@ const getMaxCountAudios = (parent) => {
 }
 
 const ConferenceAudios = () => {
-    const audiosRef = React.useRef();
+    const usersRef = useRef();
     
-    const [maxCountAudios, setMaxCountAudios] = React.useState(1);
-    const [audios, setAudios] = React.useState([]);
+    const [users, setUsers] = useState([]);
 
-    const updateMaxCountAudios = () => {
-        if (audiosRef.current) {
-            setMaxCountAudios(getMaxCountAudios(audiosRef.current))
+    const [numberUsers, setNumberUsers] = useState(0);
+
+    const updateNumberUsers = () => {
+        const target = usersRef.current;
+
+        if (target) {
+            setNumberUsers(getNumberUsers(target))
         }
-    } 
+    }
 
-    React.useEffect(() =>
+    const debouncedUpdateNumberUsers = useMemo(
+        () => _debounce(updateNumberUsers, 250)
+    , []);
+
+    useSubscriberAtResizing(usersRef, debouncedUpdateNumberUsers);
+
+    useEffect(() =>
         autorun(() => {
             const local = {
                 peerId: "local",
@@ -51,9 +62,9 @@ const ConferenceAudios = () => {
                 muted: true,
             };
             
-            const remotePeers = [...services.conference.Peers]
+            const peers = [...services.conference.Peers]
                 .sort((a, b) => b.LastAudioActive - a.LastAudioActive)
-                .slice(0, maxCountAudios - 1)
+                .slice(0, numberUsers - 1)
                 .map(item => ({
                     peerId: item.PeerId,
                     userId: item.UserId,
@@ -62,29 +73,17 @@ const ConferenceAudios = () => {
                     muted: false,
                 }));
 
-            setAudios([
-                local,  
-                ...remotePeers 
-            ]);
+            setUsers([local, ...peers]);
         })
-    , [maxCountAudios])
-
-    React.useEffect(() => {
-        updateMaxCountAudios();
-
-        const event = _debounce(updateMaxCountAudios, 250);
-        
-        window.addEventListener("resize", event);
-        return () => window.removeEventListener("resize", event);
-    }, [])
+    , [numberUsers]);
 
     return (
-        <div ref={audiosRef} className={styles.audios}>
-            <div className={styles.audios__items}> 
-                { audios.map(item => <UserAudio key={item.peerId} item={item}/>) }
+        <div ref={usersRef} className={styles.container}>
+            <div className={styles.users}> 
+                { users.map(item => <UserAudio key={item.peerId} item={item}/>) }
             </div>
         </div>
     )
 }
 
-export default React.memo(ConferenceAudios);
+export default memo(ConferenceAudios);
