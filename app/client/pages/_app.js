@@ -1,5 +1,4 @@
-import useLoaderServices from "@hooks/loaders/useLoaderServices";
-import useLoaderUserStores from "@hooks/loaders/useLoaderUserStores";
+import useServices from "@hooks/useServices";
 
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
 
@@ -14,8 +13,7 @@ import "@styles/themes/light.scss";
 import "@styles/themes/dark.scss";
 
 function MyApp({ Component, pageProps }) {
-    useLoaderServices();
-    useLoaderUserStores();
+    useServices();
 
     return (
         <MainLayout>

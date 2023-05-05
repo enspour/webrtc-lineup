@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import RoomAPI from "@api/RoomAPI";
@@ -15,7 +15,7 @@ import services from "@services";
 import styles from "./BrowseRoomSettingsModal.module.scss";
 
 const RoomNameSettings = () => {
-    const [name, setName] = React.useState(services.room.Info.Name);
+    const [name, setName] = useState(services.room.Info.Name);
 
     const request = useRequest(RoomAPI.updateName);
     useError(request)
@@ -69,15 +69,15 @@ const BrowseRoomSettingsModal = observer(() => {
 
     const isOpenModal = services.modals.browseRoomSettings.IsOpen;
 
-    const setIsOpenModal = value => {
-        services.modals.browseRoomSettings.setIsOpen(value);
+    const close = () => {
+        services.modals.browseRoomSettings.close();
     }
 
     return (
         <Modal
             title={`Room Settings | ${name}`}
             isOpen={isOpenModal}
-            setIsOpen={setIsOpenModal}
+            close={close}
             width="90rem"
         >
             <div className={styles.settings}>
@@ -90,6 +90,6 @@ const BrowseRoomSettingsModal = observer(() => {
             </div>
         </Modal>
     )
-})
+});
 
 export default BrowseRoomSettingsModal;

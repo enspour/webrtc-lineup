@@ -7,6 +7,10 @@ export default class ContextMenuService {
         this.#store = new ContextMenuStore();
     }
 
+    initialize() {
+        return () => {};
+    }
+
     get Menu() {
         return this.#store.menu;
     }

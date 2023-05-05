@@ -1,0 +1,29 @@
+.tabs {
+    display: flex;
+    gap: 1rem;
+}
+
+.tab {
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 3rem;
+    width: 11rem;
+    height: 3rem;
+    border-radius: 2rem;
+    background-color: var(--theme-bg-primary);
+    color: var(--theme-color-primary);
+    transition: 0.3s;
+    cursor: pointer;
+    
+    &:hover {
+        color: var(--theme-color-secondary);
+        background-color: var(--theme-bg-secondary);
+    }
+
+}
+ 
+.tab__active {
+    color: var(--theme-color-secondary);
+    background-color: var(--theme-bg-secondary);
+}

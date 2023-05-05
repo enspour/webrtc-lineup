@@ -12,6 +12,7 @@ export default class ConferenceWorkflowService {
 
     constructor(conferenceStore) {
         this.#conferenceStore = conferenceStore;
+        
         this.#leftSidebar = new SidebarService();
         this.#rightSidebar = new SidebarService();
     }

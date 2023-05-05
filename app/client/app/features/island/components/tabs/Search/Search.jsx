@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
@@ -10,27 +10,26 @@ import services from "@services";
 import styles from "./Search.module.scss";
 
 const Search = observer(() => {
-    const text = services.search.SearchedText;
-    const state = services.search.Status;
-    const rooms = services.search.Rooms;
+    const text = services.island.Search.Text;
+    const state = services.island.Search.Status;
+    const rooms = services.island.Search.Rooms;
 
-    const runExample = () => services.search.SearchedText = "#example #lineup Lineup"
+    const runExample = () => services.island.Search.Text = "#lineup Lineup";
 
-    React.useEffect(() => {
-        return () => services.search.clear();
+    useEffect(() => {
+        return () => services.island.Search.clear();
     }, []);
 
-    React.useEffect(() => 
-            autorun(() => {
-                const searchedText = services.search.SearchedText;
-                if (searchedText) {
-                    services.search.update();
-                } else {
-                    services.search.clear();
-                }
-            })
-        , []
-    )
+    useEffect(() => 
+        autorun(() => {
+            const text = services.island.Search.Text;
+            if (text) {
+                services.island.Search.update();
+            } else {
+                services.island.Search.clear();
+            }
+        })
+    , [])
 
     if (state === "pending") {
         return (
@@ -46,7 +45,7 @@ const Search = observer(() => {
                 <div>Type in some text to find rooms. You can also use tags for a more precise search.</div>
                 <div>
                     <span>Example:&nbsp;</span> 
-                    <span className={styles.search__example} onClick={runExample}>#example #lineup Lineup</span>
+                    <span className={styles.search__example} onClick={runExample}>#lineup Lineup</span>
                 </div>
             </div>
         )
@@ -55,7 +54,7 @@ const Search = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.rooms__empty}>
-                Sorry. Couldn't find a room.
+                Sorry, the room could not be found, it may be hidden.
             </div>
         )
     }

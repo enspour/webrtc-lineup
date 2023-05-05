@@ -1,35 +1,42 @@
 import RoomStore from "../stores/Room.store";
+
 import RoomInfoService from "./RoomInfo.service";
 import RoomSignalService from "./RoomSignal.service";
 import RoomConferencesService from "./RoomConferences.service";
 import RoomLoggerService from "./RoomLogger.service";
 
 export default class RoomService {
-    #store;
+    #roomStore;
     #roomInfo;
     #roomSignal;
     #roomConferences;
     #roomLogger;
 
     constructor(_, socket) {
-        this.#store = new RoomStore();
+        this.#roomStore = new RoomStore();
+
         this.#roomSignal = new RoomSignalService(socket);
-        this.#roomInfo = new RoomInfoService(this.#store, this.#roomSignal);
-        this.#roomConferences = new RoomConferencesService(this.#store, this.#roomSignal);
+        this.#roomInfo = new RoomInfoService(this.#roomStore, this.#roomSignal);
+        this.#roomConferences = new RoomConferencesService(this.#roomStore, this.#roomSignal);
+        
         this.#roomLogger = new RoomLoggerService(this.#roomSignal);
     }
 
     initialize() {
-        const RoomInfoDestroyer = this.#roomInfo.initialize();
-        const RoomConferencesDestroyer = this.#roomConferences.initialize();
-        const RoomLoggerDestroyer = this.#roomLogger.initialize();
+        const roomSignalDestroyer = this.#roomSignal.initialize();
+        const roomInfoDestroyer = this.#roomInfo.initialize();
+        const roomConferencesDestroyer = this.#roomConferences.initialize();
+
+        const roomLoggerDestroyer = this.#roomLogger.initialize();
 
         const offJoinRoom = this.#onJoinRoom();
 
         return () => {
-            RoomInfoDestroyer();
-            RoomConferencesDestroyer();
-            RoomLoggerDestroyer();
+            roomSignalDestroyer();
+            roomInfoDestroyer();
+            roomConferencesDestroyer();
+
+            roomLoggerDestroyer();
 
             offJoinRoom();
         }

@@ -1,4 +1,4 @@
-import React from "react"
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import ConferenceAPI from "@api/ConferenceAPI";
@@ -18,16 +18,16 @@ import styles from "./CreateConferenceModal.module.scss";
 const CreateConferenceModal = observer(() => {
     const isOpenModal = services.modals.createConference.IsOpen;
 
-    const setIsOpenModal = value => {
-        services.modals.createConference.setIsOpen(value);
-    }
-
-    const [name, setName] = React.useState("");
-    const [description, setDescription] = React.useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
 
     const request = useRequest(ConferenceAPI.create);
     const { data } = useResponse(request);
     useError(request);
+
+    const close = () => {
+        services.modals.createConference.close();
+    }
 
     const create = () => {
         const body = {
@@ -40,10 +40,10 @@ const CreateConferenceModal = observer(() => {
 
         setName("");
         setDescription("");
-        setIsOpenModal(false);
+        close(false);
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (data && data.status === 200) {
             services.room.Conferences.update();
         }
@@ -53,7 +53,7 @@ const CreateConferenceModal = observer(() => {
         <Modal
             title="Create Conference"
             isOpen={isOpenModal}
-            setIsOpen={setIsOpenModal}
+            close={close}
             width="40rem"
         >
             <div className={styles.modal}>
@@ -85,6 +85,6 @@ const CreateConferenceModal = observer(() => {
             </div>
         </Modal>
     )
-})
+});
 
 export default CreateConferenceModal;

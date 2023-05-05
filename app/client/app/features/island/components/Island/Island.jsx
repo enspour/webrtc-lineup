@@ -1,14 +1,13 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
 
-import { IslandSearchTab, IslandViewTabs } from "@features/island/stores/Island.states";
+import { IslandSearchTab } from "@features/island/stores/Island.states";
 
 import Panel from "@components/ui/Panel/Panel";
 import Svg from "@components/ui/Svg/Svg";
-import SearchControl from "../../../../components/ui/SearchControl/SearchControl";
-
-import useSaveStateIsland from "@features/island/hooks/useSaveStateIsland";
+import IslandSearch from "../IslandSearch/IslandSearch";
+import IslandTabs from "../IslandTabs/IslandTabs";
 
 import useManualCssAnimation from "@hooks/css/useManualCssAnimation";
 
@@ -20,118 +19,67 @@ import BackIcon from "@assets/images/island/back.svg";
 
 import styles from "./Island.module.scss"; 
 
-const classes = (...classes) => {
-    return classes.join(" ");
-}
+const Island = observer(() => {   
+    const islandRef = useRef();
 
-const Search = observer(({ removeStyleGotoSearch, removeStyleSearchActive }) => {
-    const searchedText = services.search.SearchedText;
-    const history = services.search.History.Array;
+    const [addStyleOpeningSearch, removeStyleOpeningSearch]
+        = useManualCssAnimation(islandRef, styles.island__opening__search);
+    const [addStyleOpenSearch, removeStyleOpenSearch] 
+        = useManualCssAnimation(islandRef, styles.island__open__search);
 
-    const setSearchedText = text => services.search.SearchedText = text
+    const openSearch = () => {
+        services.island.Tabs.openSearch();
+    }
 
-    const pushHistoryItem = text => services.search.History.push(text)
-
-    const removeHistoryItem = text => services.search.History.remove(text)
-
-    const gotoBack = () => {
-        removeStyleSearchActive();
-        removeStyleGotoSearch(400);
+    const back = () => {
+        removeStyleOpenSearch();
+        removeStyleOpeningSearch(400);
         setTimeout(() => {
-            services.island.undo();
+            services.island.Tabs.back();
         }, 400)
     };
 
-    return (
-        <div className={styles.island__search}>
-            <div className={styles.island__search__btn}>
-                <Svg url={BackIcon} width="1.2" height="1.9" onClick={gotoBack}/>
-            </div>
-
-            <SearchControl 
-                placeholder="Type here" 
-                value={searchedText} 
-                setValue={setSearchedText}
-                history={history}
-                pushHistoryItem={pushHistoryItem}
-                removeHistoryItem={removeHistoryItem}
-            />
-        </div>
-    )
-})
-
-const Tabs = observer(() => (
-    <div className={styles.tabs}>
-        {
-            IslandViewTabs.map(item => 
-                <div 
-                    key={item.id}
-                    className={
-                        classes(styles.tab, services.island.CurrentId === item.id ? styles.tab__active : "")
-                    }
-                    onClick={() => services.island.CurrentId = item.id}
-                >
-                    {item.name}
-                </div>
-            )
-        } 
-    </div> 
-));
-
-const Island = observer(() => {   
-    useSaveStateIsland();
-    
-    const islandRef = React.useRef();
-
-    const [addStyleGotoSearch, removeStyleGotoSearch]
-        = useManualCssAnimation(islandRef, styles.island__goto_search);
-    const [addStyleSearchActive, removeStyleSearchActive] 
-        = useManualCssAnimation(islandRef, styles.island__search__active);
-
-    const gotoSearch = () => {
-        services.island.CurrentId = IslandSearchTab.id;
+    const openCreateRoomModal = () => {
+        services.modals.createRoom.open();
     }
 
-    const setIsOpenAddRoom = value => {
-        services.modals.createRoom.setIsOpen(value);
-    }
-
-    React.useEffect(
-        () => 
-            autorun(() => {
-                if (services.island.CurrentId === IslandSearchTab.id) {
-                    addStyleGotoSearch();
-                    addStyleSearchActive(400); 
-                }
-            }) 
-        , []
-    )
+    useEffect(() => 
+        autorun(() => {
+            if (services.island.Tabs.CurrentId === IslandSearchTab.id) {
+                addStyleOpeningSearch();
+                addStyleOpenSearch(400); 
+            }
+        }) 
+    , [])
 
     return (
-        <div className={styles.island} ref={islandRef}>
+        <div ref={islandRef} className={styles.island}>
             <Panel>
-                <div className={styles.wrapper}>
+                <div className={styles.container}>
                     <Svg 
                         url={SearchIcon}
                         width="1.8" 
                         height="1.8" 
-                        onClick={gotoSearch}
+                        onClick={openSearch}
                     />
                     
-                    <Tabs/>
+                    <IslandTabs/>
                     
                     <Svg 
                         url={AddIcon}
                         width="1.4"
                         height="1.4"
-                        onClick={() => setIsOpenAddRoom(true)}
+                        onClick={openCreateRoomModal}
                     />
                 </div>
 
-                <Search 
-                    removeStyleGotoSearch={removeStyleGotoSearch} 
-                    removeStyleSearchActive={removeStyleSearchActive}
-                />
+                <div className={styles.island__search}>
+                    <div>
+                        <Svg url={BackIcon} width="1.2" height="1.9" onClick={back}/>
+                    </div>
+
+                    <IslandSearch placeholder="Search"/>
+                </div>
             </Panel>
         </div>  
     )

@@ -10,7 +10,7 @@ import styles from "./Modal.module.scss";
 const Modal = ({ 
     title, 
     isOpen, 
-    setIsOpen, 
+    close, 
 
     width = "inherit",
 
@@ -22,11 +22,9 @@ const Modal = ({
 
     const outsideClick = e => {
         if (modalContentRef.current && !modalContentRef.current.contains(e.target)) {
-            setIsOpen(false);
+            close();
         }
     }
-
-    const closeModal = () => setIsOpen(false);
 
     if (!isOpen) return "";
 
@@ -41,7 +39,7 @@ const Modal = ({
             >
                 <PanelPlusHeader 
                     title={title} 
-                    onClick={closeModal} 
+                    onClick={close} 
                     maxHeight="100vh"
                 >
                     {children}
@@ -54,7 +52,7 @@ const Modal = ({
 Modal.propTypes = {
     title: PropTypes.string.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    setIsOpen: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
 }
 
 export default React.memo(Modal);

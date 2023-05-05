@@ -11,11 +11,11 @@ export default class RoomInfoService {
 
     initialize() {
         const offJoinRoom = this.#onJoinRoom();
-        const offUpdateRoomInfo = this.#onUpdateRoomInfo();
+        const offRoomInfoUpdated = this.#onRoomInfoUpdated();
         
         return () => {
             offJoinRoom();
-            offUpdateRoomInfo();
+            offRoomInfoUpdated();
         }
     }
 
@@ -52,8 +52,8 @@ export default class RoomInfoService {
         });
     }
 
-    #onUpdateRoomInfo() {
-        return this.#roomSignal.onRoomInformationUpdate((data) => {
+    #onRoomInfoUpdated() {
+        return this.#roomSignal.onRoomInfoUpdated((data) => {
             const room = transformToRoom(data);
             this.#roomStore.setRoom(room);
         });

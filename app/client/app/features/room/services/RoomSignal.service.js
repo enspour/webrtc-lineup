@@ -1,17 +1,17 @@
 import SignalService from "@services/Signal.service";
 
 const SignalActions = {
-    JOIN_ROOM: "room:join",
-    NOTIFY_JOIN: "notify:room:join",
+    ROOM_JOIN: "room:join",
+    NOTIFY_ROOM_JOIN: "notify:room:join",
 
-    LEAVE_ROOM: "room:leave",
-    NOTIFY_LEAVE: "notify:room:leave",
+    ROOM_LEAVE: "room:leave",
+    NOTIFY_ROOM_LEAVE: "notify:room:leave",
 
-    NOTIFY_USER_LEAVE: "notify:room:user_leave",
-    NOTIFY_USER_JOIN: "notify:room:user_join",
+    NOTIFY_ROOM_USER_JOINED: "notify:room:user_joined",
+    NOTIFY_ROOM_USER_LEFT: "notify:room:user_left",
 
-    NOTIFY_UPDATE_ROOM_INFORMATION: "notify:room:info_update",
-    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
+    NOTIFY_ROOM_INFO_UPDATED: "notify:room:info_updated",
+    NOTIFY_CONFERENCE_INFO_UPDATED: "notify:conference:info_updated",
 }
 
 export default class RoomSignalService extends SignalService {
@@ -22,8 +22,16 @@ export default class RoomSignalService extends SignalService {
         this.#socket = socket;
     }
 
+    initialize() {
+        const signalDestroyer = super.initialize();
+
+        return () => {
+            signalDestroyer();
+        };
+    }
+
     join(id, password) {
-        this.#socket.emit(SignalActions.JOIN_ROOM, { id, password })
+        this.#socket.emit(SignalActions.ROOM_JOIN, { id, password })
     }
 
     /**
@@ -32,12 +40,12 @@ export default class RoomSignalService extends SignalService {
      */
     onJoinRoom(handler) {
         const event = async ({ status, message, data }) => await handler(status, message, data);
-        this.#socket.on(SignalActions.NOTIFY_JOIN, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_JOIN, event);
+        this.#socket.on(SignalActions.NOTIFY_ROOM_JOIN, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_ROOM_JOIN, event);
     }
 
     leave(id) {
-        this.#socket.emit(SignalActions.LEAVE_ROOM, { id })
+        this.#socket.emit(SignalActions.ROOM_LEAVE, { id })
     }
 
     /**
@@ -46,47 +54,47 @@ export default class RoomSignalService extends SignalService {
      */
     onLeaveRoom(handler) {
         const event = async ({ status, message, data }) => await handler(status, message, data);
-        this.#socket.on(SignalActions.NOTIFY_LEAVE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_LEAVE, event);
+        this.#socket.on(SignalActions.NOTIFY_ROOM_LEAVE, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_ROOM_LEAVE, event);
     }
 
     /**
      * @param {(socketId: string) => Promise<void>} handler 
      * @returns 
      */
-    onUserLeaveRoom(handler) {
+    onRoomUserJoined(handler) {
         const event = async ({ socketId }) => await handler(socketId);
-        this.#socket.on(SignalActions.NOTIFY_USER_LEAVE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE, event);
+        this.#socket.on(SignalActions.NOTIFY_ROOM_USER_JOINED, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_ROOM_USER_JOINED, event);
     }
 
     /**
      * @param {(socketId: string) => Promise<void>} handler 
      * @returns 
      */
-    onUserJoinRoom(handler) {
+    onRoomUserLeft(handler) {
         const event = async ({ socketId }) => await handler(socketId);
-        this.#socket.on(SignalActions.NOTIFY_USER_JOIN, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_USER_JOIN, event);
+        this.#socket.on(SignalActions.NOTIFY_ROOM_USER_LEFT, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_ROOM_USER_LEFT, event);
     }
 
     /**
      * @param {(room) => Promise<void>} handler 
      * @returns 
      */
-    onRoomInformationUpdate(handler) {
+    onRoomInfoUpdated(handler) {
         const event = async ({ room }) => await handler(room);
-        this.#socket.on(SignalActions.NOTIFY_UPDATE_ROOM_INFORMATION, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_ROOM_INFORMATION, event);
+        this.#socket.on(SignalActions.NOTIFY_ROOM_INFO_UPDATED, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_ROOM_INFO_UPDATED, event);
     }
 
     /**
      * @param {(conference) => Promise<void>} handler 
      * @returns 
      */
-    onConferenceInformationUpdate(handler) {
+    onConferenceInfoUpdated(handler) {
         const event = async ({ conference }) => await handler(conference);
-        this.#socket.on(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
+        this.#socket.on(SignalActions.NOTIFY_CONFERENCE_INFO_UPDATED, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_CONFERENCE_INFO_UPDATED, event);
     }
 }

@@ -11,6 +11,7 @@ import {
 export default class RoomConferencesService {
     #roomStore;
     #roomSignal;
+
     #conferences;
 
     constructor(roomStore, roomSignal) {
@@ -24,14 +25,14 @@ export default class RoomConferencesService {
     }
 
     initialize() {
-        const ConferencesDestroyer = this.#conferences.initialize();
+        const conferencesDestroyer = this.#conferences.initialize();
 
-        const offUpdateConferenceInfo = this.#onUpdateConferenceInfo();
+        const offConferenceInfoUpdated = this.#onConferenceInfoUpdated();
 
         return () => {
-            ConferencesDestroyer();
+            conferencesDestroyer();
 
-            offUpdateConferenceInfo();
+            offConferenceInfoUpdated();
         }
     }
 
@@ -43,8 +44,8 @@ export default class RoomConferencesService {
         await this.#conferences.update({ params: { room_id: this.#roomStore.id } })
     }
 
-    #onUpdateConferenceInfo() {
-        return this.#roomSignal.onConferenceInformationUpdate((data) => {
+    #onConferenceInfoUpdated() {
+        return this.#roomSignal.onConferenceInfoUpdated((data) => {
             const conference = transformToConference(data);
             
             const index = this.#conferences.Array.findIndex(item => item.id === conference.id);

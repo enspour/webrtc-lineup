@@ -9,12 +9,12 @@
     }
 }
 
-.room {
+.wrapper {
     height: 100%;
     padding: 1.5rem 3rem;
 }
 
-.room__name {
+.card__name {
     font-size: 1.6rem;
     font-weight: 600;
     overflow: hidden;
@@ -24,7 +24,7 @@
     margin: 1rem 0 .5rem 0;
 }
 
-.room__author__name {
+.card__author__name {
     font-weight: 600;
     overflow: hidden;
     white-space: nowrap;
@@ -32,7 +32,7 @@
     color: var(--theme-link-primary);
 }
 
-.room__controls {
+.card__controls {
     display: flex;
     align-items: center;
     gap: 1.5rem;
@@ -42,7 +42,7 @@
     height: 3.5rem;
 }
 
-.room__tags {
+.card__tags {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -50,7 +50,7 @@
     overflow: hidden;
 }
 
-.room__tag {
+.card__tag {
     color: var(--theme-color-secondary);
     background-color: var(--theme-bg-secondary);
     border-radius: .7rem;

@@ -9,6 +9,10 @@ export default class NotificationService {
         this.#notifications = new ArrayStore();
     }
 
+    initialize() {
+        return () => {};
+    }
+
     get Notifications() {
         return this.#notifications.array;
     }

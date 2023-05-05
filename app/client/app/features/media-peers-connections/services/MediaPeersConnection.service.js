@@ -1,15 +1,15 @@
 import ArrayStore from "@stores/Array.store";
 
 import MediaPeerConnectionService from "./MediaPeerConnection.service";
-import MediaPeersSignalService from "./MediaPeersSignal.service";
 import MediaPeersConnectionLogger from "./MediaPeersConnectionLogger.service";
+import MediaPeersSignalService from "./MediaPeersSignal.service";
 
 export default class MediaPeersConnectionService {
     #channelId;
 
     #mediaStream;
     #mediaInfo;
-    #mediaPeersSignal;
+    #mediaPeersConnectionSignal;
     #mediaPeersConnectionLogger;
 
     #peers;
@@ -20,13 +20,14 @@ export default class MediaPeersConnectionService {
         this.#mediaStream = mediaStream;
         this.#mediaInfo = mediaInfo;
 
-        this.#mediaPeersSignal = new MediaPeersSignalService(socket);
-        this.#mediaPeersConnectionLogger = new MediaPeersConnectionLogger(this.#mediaPeersSignal);
+        this.#mediaPeersConnectionSignal = new MediaPeersSignalService(socket);
+        this.#mediaPeersConnectionLogger = new MediaPeersConnectionLogger(this.#mediaPeersConnectionSignal);
 
         this.#peers = new ArrayStore();
     }
 
     initialize() {
+        const mediaPeersConnectionSignalDestroyer = this.#mediaPeersConnectionSignal.initialize();
         const mediaPeersConnectionLoggerDestroyer = this.#mediaPeersConnectionLogger.initialize();
 
         const offAcceptOffer = this.#onAcceptOffer();
@@ -34,6 +35,7 @@ export default class MediaPeersConnectionService {
         const offAcceptIceCandidate = this.#onAcceptIceCandidate();
 
         return () => {
+            mediaPeersConnectionSignalDestroyer();
             mediaPeersConnectionLoggerDestroyer();
 
             offAcceptOffer();
@@ -51,7 +53,7 @@ export default class MediaPeersConnectionService {
 
         if (enableVideo || enableAudio) {
             const peer = new MediaPeerConnectionService(
-                this.#mediaPeersSignal,
+                this.#mediaPeersConnectionSignal,
                 this.#channelId,
                 peerId,
                 userId,
@@ -84,12 +86,12 @@ export default class MediaPeersConnectionService {
     }
 
     #onAcceptOffer() {
-        return this.#mediaPeersSignal.onAcceptOffer(async (peerId, userId, offer) => {
+        return this.#mediaPeersConnectionSignal.onAcceptOffer(async (peerId, userId, offer) => {
             const { enableVideo, enableAudio } = this.#mediaInfo;
 
             if (enableVideo || enableAudio) {
                 const peer = new MediaPeerConnectionService(
-                    this.#mediaPeersSignal,
+                    this.#mediaPeersConnectionSignal,
                     this.#channelId,
                     peerId,
                     userId,
@@ -107,7 +109,7 @@ export default class MediaPeersConnectionService {
     }
 
     #onAcceptAnswer() {
-        return this.#mediaPeersSignal.onAcceptAnswer(async (peerId, userId, answer) => {
+        return this.#mediaPeersConnectionSignal.onAcceptAnswer(async (peerId, userId, answer) => {
             const peer = this.#peers.array.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.acceptAnswer(answer);
@@ -116,7 +118,7 @@ export default class MediaPeersConnectionService {
     }
 
     #onAcceptIceCandidate() {
-        return this.#mediaPeersSignal.onAcceptIceCandidate(async (peerId, iceCandidate) => {
+        return this.#mediaPeersConnectionSignal.onAcceptIceCandidate(async (peerId, iceCandidate) => {
             const peer = this.#peers.array.find(item => item.PeerId === peerId);
             if (peer) {
                 await peer.addIceCandidate(iceCandidate);

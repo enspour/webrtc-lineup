@@ -2,7 +2,7 @@ import { autorun } from "mobx";
 
 import removeDuplicates from "@utils/removeDuplicates";
 
-export default class SearchHistoryService {
+export default class IslandSearchHistoryService {
     #size = 50;
     #delay = 2000;
     #timeout;
@@ -34,17 +34,21 @@ export default class SearchHistoryService {
     push(text) {
         this.remove(text);
 
-        this.#searchStore.setHistory([text, ...this.History])
+        const history = this.#searchStore.history;
 
-        while (this.History.length > this.#size) {
-            this.#searchStore.setHistory(this.History.slice(0, this.History.length - 1))
+        this.#searchStore.setHistory([text, ...history])
+
+        while (history.length > this.#size) {
+            this.#searchStore.setHistory(history.slice(0, history.length - 1))
         }
     }
 
     remove(text) {
-        const index = this.History.findIndex(item => item === text);
+        const history = this.#searchStore.history;
+        
+        const index = history.findIndex(item => item === text);
         if (index !== -1) {
-            this.#searchStore.setHistory([...this.History.slice(0, index), ...this.History.slice(index + 1)])
+            this.#searchStore.setHistory([...history.slice(0, index), ...history.slice(index + 1)])
         }
     }
 
@@ -62,9 +66,11 @@ export default class SearchHistoryService {
 
     #onAutoPush() {
         return autorun(() => {
-            if (this.SearchedText) {
+            const text = this.#searchStore.text;
+
+            if (text) {
                 clearTimeout(this.#timeout);
-                this.#timeout = setTimeout(() => this.pushHistoryItem(this.SearchedText), this.#delay)
+                this.#timeout = setTimeout(() => this.push(text), this.#delay)
             } else {
                 clearTimeout(this.#timeout);
             }

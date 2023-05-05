@@ -26,7 +26,7 @@
     }
 }
 
-.helper {
+.history {
     z-index: 50;
     position: absolute;
     top: 6rem;
@@ -41,7 +41,7 @@
     overflow: hidden;
 }
 
-.helper__items {
+.history__items {
     max-height: 27vh;
     overflow: auto; 
 
@@ -50,7 +50,7 @@
     }
 }
 
-.helper__item {
+.history__item {
     cursor: pointer;
     padding: 1rem 2rem;
     color: var(--theme-color-primary);
@@ -64,11 +64,11 @@
     }
 }
 
-.helper__item__body {
+.history__item__body {
     display: flex;
     gap: 3rem;
 }
 
-.helper__item__text {
+.history__item__text {
     line-height: 2.4rem;
 }

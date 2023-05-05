@@ -57,7 +57,7 @@ const SettingsControl = observer(() => {
     const owner = services.room.Info.Owner;
 
     const openSettings = () => {
-        services.modals.browseRoomSettings.setIsOpen(true);
+        services.modals.browseRoomSettings.open();
     }
 
     if (owner.id !== services.user.Info.Id) {
@@ -88,7 +88,7 @@ const CreateControl = () => {
     const owner = services.room.Info.Owner;
     
     const open = () => {
-        services.modals.createConference.setIsOpen(true);
+        services.modals.createConference.open();
     }
 
     if (owner.id !== services.user.Info.Id) {

@@ -2,11 +2,11 @@ import { useEffect } from "react";
 
 import services from "@services";
 
-const useLoaderServices = () => {
+const useServices = () => {
     useEffect(() => {
         const destroyer = services.initialize();
         return () => destroyer()
     }, []);
 }
 
-export default useLoaderServices;
+export default useServices;

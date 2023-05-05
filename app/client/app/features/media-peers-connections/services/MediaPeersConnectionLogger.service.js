@@ -1,17 +1,17 @@
 import Logger from "@logs/Logger";
 
 export default class MediaPeersConnectionLogger {
-    #mediaPeerSignal;
+    #mediaPeerConnectionSignal;
     #logger;
 
-    constructor(mediaPeerSignal) {
-        this.#mediaPeerSignal = mediaPeerSignal;
+    constructor(mediaPeerConnectionSignal) {
+        this.#mediaPeerConnectionSignal = mediaPeerConnectionSignal;
 
         this.#logger = new Logger("MediaPeersConnection Logger");
     }
 
     initialize() {
-        const offSendOffer = this.#mediaPeerSignal.onSendOffer((status, message, data) => {
+        const offSendOffer = this.#mediaPeerConnectionSignal.onSendOffer((status, message, data) => {
             this.#logger.log(
                 `Offer has been sent! Result of sending: \n` +
                 `Status: ${status}, \n` + 
@@ -20,7 +20,7 @@ export default class MediaPeersConnectionLogger {
             )
         });
 
-        const offAcceptOffer = this.#mediaPeerSignal.onAcceptOffer((peerId, userId, offer) => {
+        const offAcceptOffer = this.#mediaPeerConnectionSignal.onAcceptOffer((peerId, userId, offer) => {
             this.#logger.log(
                 `Offer has been accepted! Result of sending: \n` +
                 `PeerId: ${peerId}, \n` + 
@@ -29,7 +29,7 @@ export default class MediaPeersConnectionLogger {
             )
         });        
         
-        const offSendAnswer = this.#mediaPeerSignal.onSendAnswer((status, message, data) => {
+        const offSendAnswer = this.#mediaPeerConnectionSignal.onSendAnswer((status, message, data) => {
             this.#logger.log(
                 `Answer has been sent! Result of sending: \n` +
                 `Status: ${status}, \n` + 
@@ -38,7 +38,7 @@ export default class MediaPeersConnectionLogger {
             )
         });
 
-        const offAcceptAnswer = this.#mediaPeerSignal.onAcceptAnswer((peerId, userId, answer) => {
+        const offAcceptAnswer = this.#mediaPeerConnectionSignal.onAcceptAnswer((peerId, userId, answer) => {
             this.#logger.log(
                 `Answer has been accepted! Result of sending: \n` +
                 `PeerId: ${peerId}, \n` + 
@@ -47,7 +47,7 @@ export default class MediaPeersConnectionLogger {
             )
         });
     
-        const offSendIceCandidate = this.#mediaPeerSignal.onSendIceCandidate((status, message, data) => {
+        const offSendIceCandidate = this.#mediaPeerConnectionSignal.onSendIceCandidate((status, message, data) => {
             this.#logger.log(
                 `Ice Candidate has been sent! Result of sending: \n` +
                 `Status: ${status}, \n` + 
@@ -56,7 +56,7 @@ export default class MediaPeersConnectionLogger {
             )
         });
 
-        const offAcceptIceCandidate = this.#mediaPeerSignal.onAcceptIceCandidate((socketId, iceCandidate) => {
+        const offAcceptIceCandidate = this.#mediaPeerConnectionSignal.onAcceptIceCandidate((socketId, iceCandidate) => {
             this.#logger.log(
                 `IceCandidate has been sent! Result of sending: \n` +
                 `SocketId: ${socketId}, \n` + 

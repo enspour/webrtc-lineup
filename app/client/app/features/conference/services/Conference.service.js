@@ -1,11 +1,12 @@
 import { MediaPeersConnectionService } from "@features/media-peers-connections";
-import ConferenceSignalService from "./ConferenceSignal.service";
+
 import ConferenceInfoService from "./ConferenceInfo.service";
+import ConferenceSignalService from "./ConferenceSignal.service";
 import ConferenceChatService from "./ConferenceChat.service";
+import ConferenceWorkflowService from "./ConferenceWorkflow.service";
+import ConferenceLoggerService from "./ConferenceLogger.service";
 
 import ConferenceStore from "../stores/Conference.store";
-import ConferenceLoggerService from "./ConferenceLogger.service";
-import ConferenceWorkflowService from "./ConferenceWorkflow.service";
 
 export default class ConferenceService {
     #room;
@@ -27,19 +28,23 @@ export default class ConferenceService {
         this.#user = user;
         this.#socket = socket;
 
-        this.#conferenceSignal = new ConferenceSignalService(socket);
         this.#conferenceStore = new ConferenceStore();
+        
+        this.#conferenceSignal = new ConferenceSignalService(socket);
         this.#conferenceInfo = new ConferenceInfoService(this.#conferenceStore, this.#conferenceSignal);
         this.#conferenceChat = new ConferenceChatService(user, this.#conferenceStore, this.#conferenceSignal);
-        this.#conferenceLogger = new ConferenceLoggerService(this.#conferenceSignal);
         this.#conferenceWorkflow = new ConferenceWorkflowService(this.#conferenceStore);
+
+        this.#conferenceLogger = new ConferenceLoggerService(this.#conferenceSignal);
     }
 
     initialize() {
+        const conferenceSignalDestroyer = this.#conferenceSignal.initialize();
         const conferenceInfoDestroyer = this.#conferenceInfo.initialize();
         const conferenceChatDestroyer = this.#conferenceChat.initialize();
-        const conferenceLoggerDestroyer = this.#conferenceLogger.initialize();
         const conferenceWorkflowDestroyer = this.#conferenceWorkflow.initialize();
+
+        const conferenceLoggerDestroyer = this.#conferenceLogger.initialize();
 
         const offJoin = this.#onJoin();
         const offLeave = this.#onLeave();
@@ -47,10 +52,12 @@ export default class ConferenceService {
         const offUserLeave = this.#onUserLeave();
 
         return () => {
+            conferenceSignalDestroyer();
             conferenceInfoDestroyer();
             conferenceChatDestroyer();
-            conferenceLoggerDestroyer();
             conferenceWorkflowDestroyer();
+            
+            conferenceLoggerDestroyer();
 
             offJoin();
             offLeave();
@@ -172,7 +179,7 @@ export default class ConferenceService {
     }
 
     #onUserJoin() {
-        return this.#conferenceSignal.onUserJoinConference(
+        return this.#conferenceSignal.onConferenceUserJoined(
             async (peerId, userId) => {
                 await this.#mediaPeersConnection.connect(peerId, userId)
             }
@@ -180,7 +187,7 @@ export default class ConferenceService {
     }
 
     #onUserLeave() {
-        return this.#conferenceSignal.onUserLeaveConference((peerId, userId) => {
+        return this.#conferenceSignal.onConferenceUserLeft((peerId, userId) => {
             this.#mediaPeersConnection.disconnect(peerId)
         })
     }

@@ -1,15 +1,15 @@
-import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
 import ConferenceAPI from "@api/ConferenceAPI";
 
+import Panel from "@components/ui/Panel/Panel";
+import Svg from "@components/ui/Svg/Svg";
+
 import useContextMenu from "@hooks/useContextMenu";
 import useRequest from "@hooks/api/useRequest";
 import useResponse from "@hooks/api/useResponse";
-
-import Panel from "@components/ui/Panel/Panel";
-import Svg from "@components/ui/Svg/Svg";
 
 import services from "@services";
 
@@ -39,7 +39,7 @@ const BottomPanelAudio = observer(({ conference }) => {
     const settings = conference.settings;
 
     return (
-        <div className={styles.conference__bottom__panel__mic}>
+        <div className={styles.card__bottom__panel__mic}>
             { 
                 settings.enableAudio 
                     ? <Svg url={MicrophoneIcon} width="1" height="1.3"/>
@@ -51,7 +51,7 @@ const BottomPanelAudio = observer(({ conference }) => {
 
 const BottomPanel = ({ conference }) => {
     return (
-        <div className={styles.conference__bottom__panel}>
+        <div className={styles.card__bottom__panel}>
             <div className="fl al-center">
                 <Svg url={PeopleIcon} width="1.1" height="1.1"/>
                 <div>1</div>
@@ -71,7 +71,7 @@ const ConferenceCard = observer(({ conference }) => {
     const request = useRequest(ConferenceAPI.delete);
     const { data } = useResponse(request);
 
-    const [conferenceRef, appendMenu] = useContextMenu();
+    const [cardRef, appendMenu] = useContextMenu();
 
     const deleteConference = () => {
         request.start({ params: { id: conference.id } })
@@ -92,11 +92,11 @@ const ConferenceCard = observer(({ conference }) => {
     }
 
     const openSettings = () => {
-        services.modals.browseConferenceSettings.setConference(conference);
-        services.modals.browseConferenceSettings.setIsOpen(true);
+        services.modals.browseConferenceSettings.setData(conference);
+        services.modals.browseConferenceSettings.open();
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         appendMenu({ id: 1, name: "Open", onClick: openConference });
 
         if (services.room.Info.Owner.id === services.user.Info.Id) {
@@ -105,19 +105,19 @@ const ConferenceCard = observer(({ conference }) => {
         }
     }, [])
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (data && data.status === 200) {
             services.room.Conferences.update()
         }
     }, [data])
 
     return (
-        <div ref={conferenceRef} className={styles.conference} onClick={openConference}>
+        <div ref={cardRef} className={styles.card} onClick={openConference}>
             <Panel height="12.5rem" width="30rem" overflow="hidden">
-                <div className={styles.conference__wrapper}>
+                <div className={styles.wrapper}>
                     <div>
-                        <div className={styles.conference__name}>{ conference.name }</div>
-                        <div className={styles.conference__description}>
+                        <div className={styles.card__name}>{ conference.name }</div>
+                        <div className={styles.card__description}>
                             {
                                 conference.description 
                                 || `You can join the conference to start a conversation here.`

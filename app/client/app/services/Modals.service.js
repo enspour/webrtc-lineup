@@ -2,63 +2,45 @@ import ModalStore from "@stores/Modal.store";
 
 class Modal {
     #store;
+    #data;
 
     constructor() {
         this.#store = new ModalStore();
+        this.#data = {};
     }
 
     get IsOpen() {
         return this.#store.isOpenModal;
     }
 
-    setIsOpen(value) {
-        return this.#store.setIsOpenModal(value);
-    }
-}
-
-class RoomModal extends Modal {
-    #room;
-
-    constructor() {
-        super();
-
-        this.#room = {}
-    } 
-
-    get Room() {
-        return this.#room;
+    get Data() {
+        return this.#data;
     }
 
-    setRoom(room) {
-        this.#room = room;
-    }
-}
-
-class ConferenceModal extends Modal {
-    #conference;
-
-    constructor() {
-        super();
-
-        this.#conference = {};
+    open() {
+        this.#store.setIsOpenModal(true);
     }
 
-    get Conference() {
-        return this.#conference;
+    close() {
+        this.#store.setIsOpenModal(false);
     }
 
-    setConference(conference) {
-        this.#conference = conference
+    setData(data) {
+        this.#data = data;
     }
 }
 
 export default class ModalsService {
     constructor() {
         this.createRoom = new Modal();
-        this.browseRoom = new RoomModal();
+        this.browseRoom = new Modal();
         this.browseRoomSettings = new Modal();
 
         this.createConference = new Modal();
-        this.browseConferenceSettings = new ConferenceModal();
+        this.browseConferenceSettings = new Modal();
+    }
+
+    initialize() {
+        return () => {};
     }
 }

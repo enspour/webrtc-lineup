@@ -1,10 +1,10 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
 import services from "@services";
 
 const useContextMenu = () => {
-    const ref = React.useRef();
-    const mapRef = React.useRef(new Map())
+    const ref = useRef();
+    const mapRef = useRef(new Map())
 
     const append = (...items) => items.forEach(item => mapRef.current.set(item.id, item));
 
@@ -14,15 +14,15 @@ const useContextMenu = () => {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener("click", clickOutside);
         return () => document.removeEventListener("click", clickOutside);
     }, []);
 
-    React.useEffect(() => {
-        const contextmenu = ref.current;
+    useEffect(() => {
+        const target = ref.current;
 
-        if (contextmenu) {
+        if (target) {
             const event = e => {
                 e.preventDefault();
 
@@ -33,9 +33,9 @@ const useContextMenu = () => {
                 services.contextMenu.setIsOpen(true);
             }
     
-            contextmenu.addEventListener("contextmenu", event);
+            target.addEventListener("contextmenu", event);
             
-            return () => contextmenu.removeEventListener("contextmenu", event);
+            return () => target.removeEventListener("contextmenu", event);
         }
     }, []);
 

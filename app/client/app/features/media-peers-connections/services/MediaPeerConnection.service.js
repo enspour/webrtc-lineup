@@ -3,7 +3,7 @@ import iceServersConfig from "app/configs/iceServers.config";
 import { SpeechRecognizerService } from "@features/speech-recognizer";
 
 export default class MediaPeerConnectionService {
-    #mediaPeerSignal;
+    #mediaPeerConnectionSignal;
     
     #channelId;
     #peerId;
@@ -14,8 +14,8 @@ export default class MediaPeerConnectionService {
 
     #speechRecognizer;
     
-    constructor(mediaPeerSignal, channelId, peerId, userId, mediaStream) {
-        this.#mediaPeerSignal = mediaPeerSignal;
+    constructor(mediaPeerConnectionSignal, channelId, peerId, userId, mediaStream) {
+        this.#mediaPeerConnectionSignal = mediaPeerConnectionSignal;
 
         this.#channelId = channelId;
         this.#peerId = peerId;
@@ -47,7 +47,7 @@ export default class MediaPeerConnectionService {
 
         this.#peerConnection.onicecandidate = event => {
             if (event.candidate) {
-                this.#mediaPeerSignal.sendIceCandidate(this.#channelId, this.#peerId, event.candidate);
+                this.#mediaPeerConnectionSignal.sendIceCandidate(this.#channelId, this.#peerId, event.candidate);
             }
         }
     }
@@ -79,7 +79,7 @@ export default class MediaPeerConnectionService {
     async sendOffer(options) {
         const offer = await this.#peerConnection.createOffer(options);
         await this.#peerConnection.setLocalDescription(offer);
-        this.#mediaPeerSignal.sendOffer(this.#channelId, this.#peerId, offer);
+        this.#mediaPeerConnectionSignal.sendOffer(this.#channelId, this.#peerId, offer);
     }
 
     async acceptOffer(offer) {
@@ -91,7 +91,7 @@ export default class MediaPeerConnectionService {
     async sendAnswer() {
         const answer = await this.#peerConnection.createAnswer();
         await this.#peerConnection.setLocalDescription(answer);
-        this.#mediaPeerSignal.sendAnswer(this.#channelId, this.#peerId, answer);
+        this.#mediaPeerConnectionSignal.sendAnswer(this.#channelId, this.#peerId, answer);
     }
 
     async acceptAnswer(answer) {

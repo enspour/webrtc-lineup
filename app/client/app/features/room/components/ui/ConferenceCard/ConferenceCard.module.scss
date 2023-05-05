@@ -1,4 +1,4 @@
-.conference {
+.card {
     width: fit-content;
     font-weight: 600;
     border-radius: 2rem;
@@ -11,7 +11,7 @@
     }
 }
 
-.conference__wrapper {
+.wrapper {
     padding: 1.5rem 3rem;
     height: inherit;
     display: flex;
@@ -19,7 +19,7 @@
     justify-content: space-between;
 }
 
-.conference__name {
+.card__name {
     font-size: 1.8rem;
     font-weight: 600;
     white-space: nowrap;
@@ -28,7 +28,7 @@
     color: var(--theme-color-primary);
 }
 
-.conference__description {
+.card__description {
     font-size: 1.6rem;
     margin-top: .5rem;
     height: 4rem;
@@ -36,7 +36,7 @@
     color: var(--theme-placeholder-primary);
 }
 
-.conference__bottom__panel {
+.card__bottom__panel {
     display: flex;
     justify-content: space-between;   
     height: 2rem;
@@ -44,7 +44,7 @@
     color: var(--theme-color-primary); 
 }
 
-.conference__bottom__panel__mic {
+.card__bottom__panel__mic {
     width: 1.2rem;
     div { margin: auto; }
 }

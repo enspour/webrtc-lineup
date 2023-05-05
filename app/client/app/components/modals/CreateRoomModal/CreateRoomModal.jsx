@@ -20,10 +20,6 @@ import styles from "./CreateRoomModal.module.scss";
 const CreateRoomModal = observer(() => {
     const isOpenModal = services.modals.createRoom.IsOpen;
 
-    const setIsOpenModal = value => {
-        services.modals.createRoom.setIsOpen(value);
-    }
-
     const [name, setName] = useState("");
     const [password, setPassword] = useState(""); 
     const [tags, setTags] = useState(new Set());
@@ -31,6 +27,10 @@ const CreateRoomModal = observer(() => {
     const request = useRequest(RoomAPI.create);
     const { data } = useResponse(request);
     useError(request)
+
+    const close = () => {
+        services.modals.createRoom.close();
+    }
 
     const create = () => {
         const body = {
@@ -44,12 +44,12 @@ const CreateRoomModal = observer(() => {
         setName("");
         setPassword("");
         setTags(new Set());
-        setIsOpenModal(false);
+        close();
     }
 
     useEffect(() => {
         if (data) {
-            services.userCreatedRooms.update();
+            services.user.CreatedRooms.update();
         }
     }, [data]);
 
@@ -57,7 +57,7 @@ const CreateRoomModal = observer(() => {
         <Modal
             title="Create Room"
             isOpen={isOpenModal} 
-            setIsOpen={setIsOpenModal}
+            close={close}
             width="50rem"
         >
             <div className={styles.modal}>

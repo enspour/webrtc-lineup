@@ -7,14 +7,14 @@ const SignalActions = {
     LEAVE_CONFERENCE: "conference:leave",
     NOTIFY_LEAVE_CONFERENCE: "notify:conference:leave",
 
-    NOTIFY_USER_JOIN_CONFERENCE: "notify:conference:user_join",
-    NOTIFY_USER_LEAVE_CONFERENCE: "notify:conference:user_leave",
+    NOTIFY_CONFERENCE_USER_JOINED: "notify:conference:user_joined",
+    NOTIFY_CONFERENCE_USER_LEFT: "notify:conference:user_left",
 
-    NOTIFY_UPDATE_CONFERENCE_INFORMATION: "notify:conference:info_update",
+    NOTIFY_CONFERENCE_INFO_UPDATED: "notify:conference:info_updated",
 
-    SEND_MESSAGE: "conference:chat:send:message",
-    NOTIFY_SEND_MESSAGE: "notify:conference:chat:send:message",
-    NOTIFY_NEW_MESSAGE: "notify:conference:chat:new:message",
+    SEND_MESSAGE_CONFERENCE_CHAT: "conference:chat:send_message",
+    NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT: "notify:conference:chat:send_message",
+    NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE: "notify:conference:chat:new_message",
 }
 
 export default class ConferenceSignalService extends SignalService {
@@ -23,6 +23,14 @@ export default class ConferenceSignalService extends SignalService {
     constructor(socket) {
         super(socket);
         this.#socket = socket;
+    }
+
+    initialize() {
+        const signalDestroyer = super.initialize();
+
+        return () => {
+            signalDestroyer();
+        };
     }
 
     joinConference(roomId, conferenceId) {
@@ -57,30 +65,30 @@ export default class ConferenceSignalService extends SignalService {
      * @param {(socketId: string, userId: string) => Promise<void>} handler 
      * @returns 
      */
-    onUserJoinConference(handler) {
+    onConferenceUserJoined(handler) {
         const event = async ({ socketId, userId }) => await handler(socketId, userId);
-        this.#socket.on(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_USER_JOIN_CONFERENCE, event);
+        this.#socket.on(SignalActions.NOTIFY_CONFERENCE_USER_JOINED, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_CONFERENCE_USER_JOINED, event);
     }
 
     /**
      * @param {(socketId: string, userId: string) => Promise<void>} handler 
      * @returns 
      */
-    onUserLeaveConference(handler) {
+    onConferenceUserLeft(handler) {
         const event = async ({ socketId, userId }) => await handler(socketId, userId);
-        this.#socket.on(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_USER_LEAVE_CONFERENCE, event);
+        this.#socket.on(SignalActions.NOTIFY_CONFERENCE_USER_LEFT, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_CONFERENCE_USER_LEFT, event);
     }
 
     /**
      * @param {(conference) => Promise<void>} handler 
      * @returns 
      */
-    onConferenceInformationUpdate(handler) {
+    onConferenceInfoUpdated(handler) {
         const event = async ({ conference }) => await handler(conference);
-        this.#socket.on(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_UPDATE_CONFERENCE_INFORMATION, event);
+        this.#socket.on(SignalActions.NOTIFY_CONFERENCE_INFO_UPDATED, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_CONFERENCE_INFO_UPDATED, event);
     }
 
     /**
@@ -89,27 +97,27 @@ export default class ConferenceSignalService extends SignalService {
      * @param {string} text
      * @returns
      */
-    sendMessage(conferenceId, tempId, text) {
-        this.#socket.emit(SignalActions.SEND_MESSAGE, { conferenceId, tempId, text })
+    sendMessageConferenceChat(conferenceId, tempId, text) {
+        this.#socket.emit(SignalActions.SEND_MESSAGE_CONFERENCE_CHAT, { conferenceId, tempId, text })
     }
 
     /**
      * @param {(status: number, message: string, data: any) => Promise<void>} handler 
      * @returns
      */
-    onSendMessage(handler) {
+    onSendMessageConferenceChat(handler) {
         const event = async ({ status, message, data }) => await handler(status, message, data);
-        this.#socket.on(SignalActions.NOTIFY_SEND_MESSAGE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_SEND_MESSAGE, event);
+        this.#socket.on(SignalActions.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT, event);
     }
 
     /**
      * @param {(message) => Promise<void>} handler 
      * @returns
      */
-    onNewMessage(handler) {
+    onConferenceChatNewMessage(handler) {
         const event = async ({ message }) => await handler(message);
-        this.#socket.on(SignalActions.NOTIFY_NEW_MESSAGE, event);
-        return () => this.#socket.off(SignalActions.NOTIFY_NEW_MESSAGE, event);
+        this.#socket.on(SignalActions.NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE, event);
+        return () => this.#socket.off(SignalActions.NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE, event);
     }
 }

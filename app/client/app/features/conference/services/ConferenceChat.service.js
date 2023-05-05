@@ -10,15 +10,18 @@ import transformToConferenceMessages from "../utils/transformToConferenceMessage
 
 export default class ConferenceChatService {
     #user;
+
     #conferenceStore;
+
     #conferenceSignal;
     #conferenceMessages;
 
     constructor(user, conferenceStore, conferenceSignal) {
         this.#user = user;
-        this.#conferenceStore = conferenceStore;
-        this.#conferenceSignal = conferenceSignal;
 
+        this.#conferenceStore = conferenceStore;
+        
+        this.#conferenceSignal = conferenceSignal;
         this.#conferenceMessages = new RequestedArrayService(
             API.createRequest(MessagesAPI.findAll), 
             (data) => transformToConferenceMessages(data.body.messages)
@@ -28,14 +31,14 @@ export default class ConferenceChatService {
     initialize() {
         const messagesDestroyer = this.#conferenceMessages.initialize();
 
-        const offSendMessage = this.#onSendMessage();
-        const offNewMessage = this.#onNewMessage();
+        const offSendMessageConferenceChat = this.#onSendMessageConferenceChat();
+        const offConferenceChatNewMessage = this.#onConferenceChatNewMessage();
 
         return () => {
             messagesDestroyer();
 
-            offSendMessage();
-            offNewMessage();
+            offSendMessageConferenceChat();
+            offConferenceChatNewMessage();
         }
     }
 
@@ -57,7 +60,7 @@ export default class ConferenceChatService {
         if (conferenceId) {
             const tempId = nanoid();
 
-            this.#conferenceSignal.sendMessage(conferenceId, tempId, text);
+            this.#conferenceSignal.sendMessageConferenceChat(conferenceId, tempId, text);
 
             const message = {
                 id: tempId,
@@ -76,8 +79,8 @@ export default class ConferenceChatService {
         await this.#conferenceMessages.update({ params });
     }
 
-    #onSendMessage() {
-        return this.#conferenceSignal.onSendMessage((status, message, data) => {
+    #onSendMessageConferenceChat() {
+        return this.#conferenceSignal.onSendMessageConferenceChat((status, message, data) => {
             if (status === 200) {
                 const { tempId, message } = data;
                 
@@ -90,8 +93,8 @@ export default class ConferenceChatService {
         });
     }
 
-    #onNewMessage() {
-        return this.#conferenceSignal.onNewMessage(message => {
+    #onConferenceChatNewMessage() {
+        return this.#conferenceSignal.onConferenceChatNewMessage(message => {
             this.#conferenceMessages.Store.append(transformToConferenceMessage(message));
         });
     }

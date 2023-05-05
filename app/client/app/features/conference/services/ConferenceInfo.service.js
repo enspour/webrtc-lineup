@@ -10,10 +10,10 @@ export default class ConferenceInfoService {
     }
 
     initialize() {
-        const offUpdateConferenceInfo = this.#onUpdateConferenceInfo();
+        const offConferenceInfoUpdated = this.#onConferenceInfoUpdated();
 
         return () => {
-            offUpdateConferenceInfo();
+            offConferenceInfoUpdated();
         }
     }
 
@@ -41,8 +41,8 @@ export default class ConferenceInfoService {
         return this.#conferenceStore.modifiedAt;
     }
 
-    #onUpdateConferenceInfo() {
-        return this.#conferenceSignal.onConferenceInformationUpdate((data) => {
+    #onConferenceInfoUpdated() {
+        return this.#conferenceSignal.onConferenceInfoUpdated((data) => {
             const conference = transformToConference(data);
             
             if (conference.id === this.Id) {

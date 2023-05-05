@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import { autorun } from "mobx";
@@ -18,8 +18,8 @@ import services from "@services";
 import styles from "./BrowseRoomModal.module.scss";
 
 const Information = observer(() => {
-    const name = services.modals.browseRoom.Room.name;
-    const owner = services.modals.browseRoom.Room.owner;
+    const name = services.modals.browseRoom.Data.name;
+    const owner = services.modals.browseRoom.Data.owner;
 
     return (
         <div>
@@ -33,19 +33,19 @@ const Information = observer(() => {
 });
 
 const ConnectedUsers = observer(() => {
-    const [users, setUsers] = React.useState([]);
+    const [users, setUsers] = useState([]);
 
     const request = useRequest(RoomAPI.getUsersInRoom);
     const { data } = useResponse(request);
 
-    React.useEffect(() => 
+    useEffect(() => 
         autorun(() => {
-            const id = services.modals.browseRoom.Room.id;
+            const id = services.modals.browseRoom.Data.id;
             request.start({ params: { roomId: id }});
         })
     , []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (data) setUsers(data.body.users);
     }, [data])
 
@@ -75,13 +75,13 @@ const ConnectedUsers = observer(() => {
 });
 
 const Tags = observer(() => { 
-    const tags = services.modals.browseRoom.Room.tags;
+    const tags = services.modals.browseRoom.Data.tags;
 
     const searchByTags = (e, name) => {
         e.stopPropagation();
-        services.modals.browseRoom.setIsOpen(false);
-        services.island.goSearch();
-        services.search.SearchedText = `#${name}`;
+        services.modals.browseRoom.close();
+        services.island.Tabs.openSearch();
+        services.island.Search.Text = `#${name}`;
     }
 
     return (
@@ -107,10 +107,10 @@ const Tags = observer(() => {
 const JoinButton = () => {
     const router = useRouter();
 
-    const [password, setPassword] = React.useState("");
+    const [password, setPassword] = useState("");
 
     const join = async () => {
-        const id = services.modals.browseRoom.Room.id;
+        const id = services.modals.browseRoom.Data.id;
         
         let response = await services.room.join(id, password);
 
@@ -143,15 +143,15 @@ const JoinButton = () => {
 const RoomModal = observer(() => {
     const isOpenRoom = services.modals.browseRoom.IsOpen;
 
-    const setIsOpenRoom = value => {
-        services.modals.browseRoom.setIsOpen(value);
+    const close = () => {
+        services.modals.browseRoom.close();
     }
 
     return (
         <Modal 
             title="Join To Room"
             isOpen={isOpenRoom} 
-            setIsOpen={setIsOpenRoom}
+            close={close}
             width="60rem"
         >
             <Information />

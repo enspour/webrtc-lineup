@@ -62,7 +62,7 @@ const ConferenceAudioVideoSettings = ({ conference }) => {
                 <ConferenceVideoSettings conference={conference}/>
             </div>
         </div>
-    )
+    );
 }
 
 const ConferenceNameSettings = ({ conference }) => {
@@ -92,7 +92,7 @@ const ConferenceNameSettings = ({ conference }) => {
                 onClick={updateName}
             />
         </div>
-    )
+    );
 }
 
 const ConferenceDescriptionSettings = ({ conference }) => {
@@ -126,19 +126,19 @@ const ConferenceDescriptionSettings = ({ conference }) => {
 }
 
 const BrowseConferenceSettingsModal = observer(() => {
-    const conference = services.modals.browseConferenceSettings.Conference;
+    const conference = services.modals.browseConferenceSettings.Data;
 
     const isOpenModal = services.modals.browseConferenceSettings.IsOpen;
 
-    const setIsOpenModal = value => {
-        services.modals.browseConferenceSettings.setIsOpen(value);
+    const close = () => {
+        services.modals.browseConferenceSettings.close();
     }
 
     return (
         <Modal
             title={`Conference Settings | ${conference.name}`}
             isOpen={isOpenModal}
-            setIsOpen={setIsOpenModal}
+            close={close}
             width="90rem"
         >
             <div className={styles.settings}> 
@@ -151,7 +151,7 @@ const BrowseConferenceSettingsModal = observer(() => {
                 </div>
             </div>
         </Modal>
-    )
-})
+    );
+});
 
 export default BrowseConferenceSettingsModal;

@@ -9,7 +9,7 @@ import services from "@services";
 import styles from "@styles/pages/index.module.scss"
 
 const Home = observer(() => {
-    const current = services.island.Current;
+    const current = services.island.Tabs.Current;
 
     return (
         <LobbyLayout title={`Lineup | ${current.name}`}> 

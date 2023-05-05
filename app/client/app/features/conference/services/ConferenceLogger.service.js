@@ -29,22 +29,22 @@ export default class ConferenceLoggerService {
             )
         });
 
-        const offUserJoinConference = this.#conferenceSignal.onUserJoinConference(socketId => {
+        const offConferenceUserJoined = this.#conferenceSignal.onConferenceUserJoined(socketId => {
             this.#logger.log(`User joined to conference! Socket id of user: ${socketId}`)
         });
     
-        const offUserLeaveConference = this.#conferenceSignal.onUserLeaveConference(socketId => {
+        const offConferenceUserLeft = this.#conferenceSignal.onConferenceUserLeft(socketId => {
             this.#logger.log(`User leaved from conference! Socket id of user: ${socketId}`)
         });
 
-        const offConferenceInformationUpdate = this.#conferenceSignal.onConferenceInformationUpdate(conference => {
+        const offConferenceInfoUpdated = this.#conferenceSignal.onConferenceInfoUpdated(conference => {
             this.#logger.log(
                 `Information of conference will be updated: \n` + 
                 `${JSON.stringify(conference, null, 4)}`
             )
         });
 
-        const offSendMessage = this.#conferenceSignal.onSendMessage((status, message, data) => {
+        const offSendMessageConferenceChat = this.#conferenceSignal.onSendMessageConferenceChat((status, message, data) => {
             this.#logger.log(
                 `Message has been sent! Result of sending: \n` +
                 `Status: ${status}, \n` + 
@@ -56,10 +56,10 @@ export default class ConferenceLoggerService {
         return () => {
             offJoinConference();
             offLeaveConference();
-            offUserJoinConference();
-            offUserLeaveConference();
-            offConferenceInformationUpdate();
-            offSendMessage();
+            offConferenceUserJoined();
+            offConferenceUserLeft();
+            offConferenceInfoUpdated();
+            offSendMessageConferenceChat();
         }
     }
 }

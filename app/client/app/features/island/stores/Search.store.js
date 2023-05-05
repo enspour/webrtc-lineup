@@ -1,12 +1,12 @@
 import { action, makeAutoObservable, observable } from "mobx"
 
 export default class SearchStore {
-    searchedText = "";
+    text = "";
     history = [];
 
     constructor() {
         makeAutoObservable(this, {
-            searchedText: observable,
+            text: observable,
             setSearchedText: action,
             
             history: observable,
@@ -14,8 +14,8 @@ export default class SearchStore {
         });
     }
 
-    setSearchedText(text) {
-        this.searchedText = text;
+    setText(text) {
+        this.text = text;
     }
 
     setHistory(history) {

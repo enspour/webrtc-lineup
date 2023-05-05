@@ -2,25 +2,27 @@ import API from "@api/API";
 import RoomsAPI from "@api/RoomsAPI";
 
 import RequestedArrayService from "@services/RequestedArray.service";
-import SearchHistoryService from "./SearchHistory.service";
+import IslandSearchHistoryService from "./IslandSearchHistory.service";
 
 import SearchStore from "../stores/Search.store";
 
 import { transformToRooms } from "@features/room";
 
-export default class SearchService {
+export default class IslandSearchService {
     #requestedRooms;
+    
     #searchStore;
     #searchHistory;
 
-    constructor({ localStorage }) {
+    constructor(localStorage) {
         this.#requestedRooms = new RequestedArrayService(
             API.createRequest(RoomsAPI.search), 
             (data) => transformToRooms(data.body.rooms)
         );
 
         this.#searchStore = new SearchStore();
-        this.#searchHistory = new SearchHistoryService(localStorage, this.#searchStore);
+        
+        this.#searchHistory = new IslandSearchHistoryService(localStorage, this.#searchStore);
     }
 
     initialize() {
@@ -37,13 +39,13 @@ export default class SearchService {
         return this.#searchHistory;
     }
 
-    get SearchedText() {
-        return this.#searchStore.searchedText;
+    get Text() {
+        return this.#searchStore.text;
     }
 
-    set SearchedText(text) {
+    set Text(text) {
         if (typeof text === "string") {
-            return this.#searchStore.setSearchedText(text);
+            return this.#searchStore.setText(text);
         }
 
         throw new Error("Text is invalid. It's must be string.")
@@ -58,14 +60,14 @@ export default class SearchService {
     }
 
     async update() {
-        const separatedText = this.SearchedText.split(" ");
-        const tags = separatedText
+        const splitText = this.Text.split(" ");
+        const tags = splitText
             .filter(item => item.startsWith("#"))
             .map(item => item.slice(1).toLowerCase())
             .filter(item => item)
             .join(",");
 
-        const words = separatedText
+        const words = splitText
             .filter(item => !item.startsWith("#"))
             .filter(item => item)
             .join(",");

@@ -29,22 +29,22 @@ export default class RoomLoggerService {
             )
         });
 
-        const offUserJoinRoom = this.#roomSignal.onUserJoinRoom((socketId) => {
+        const offRoomUserJoined = this.#roomSignal.onRoomUserJoined((socketId) => {
             this.#logger.log(`User connected to the room! Socket id of user: ${socketId}`)
         });
     
-        const offUserLeaveRoom = this.#roomSignal.onUserLeaveRoom((socketId) => {
+        const offRoomUserLeft = this.#roomSignal.onRoomUserLeft((socketId) => {
             this.#logger.log(`User leaved from room! Socket id of user: ${socketId}`)
         });
 
-        const offRoomInformationUpdate = this.#roomSignal.onRoomInformationUpdate(room => {
+        const offRoomInfoUpdated = this.#roomSignal.onRoomInfoUpdated(room => {
             this.#logger.log(
                 `Information of room will be updated: \n` + 
                 `${JSON.stringify(room, null, 4)}`
             )
         });
 
-        const offConferenceInformationUpdate = this.#roomSignal.onConferenceInformationUpdate(conference => {
+        const offConferenceInfoUpdated = this.#roomSignal.onConferenceInfoUpdated(conference => {
             this.#logger.log(
                 `Information of conference will be updated: \n` + 
                 `${JSON.stringify(conference, null, 4)}`
@@ -54,10 +54,10 @@ export default class RoomLoggerService {
         return () => {
             offJoinRoom();
             offLeaveRoom();
-            offUserJoinRoom();
-            offUserLeaveRoom();
-            offRoomInformationUpdate();
-            offConferenceInformationUpdate();
+            offRoomUserJoined();
+            offRoomUserLeft();
+            offRoomInfoUpdated();
+            offConferenceInfoUpdated();
         }
     }
 }

@@ -5,6 +5,10 @@ export default class SignalService {
         this.#socket = socket;
     }
 
+    initialize() {
+        return () => {};
+    }
+
     get SocketId() {
         return this.#socket.id;
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, memo } from "react";
 
 import RoomLayout from "../../layouts/RoomLayout/RoomLayout";
 import Conferences from "../../ui/Conferences/Conferences";
@@ -9,8 +9,8 @@ import services from "@services";
 import styles from "./RoomPage.module.scss";
 
 const RoomPage = () => {
-    React.useEffect(() => {
-        services.modals.browseRoom.setIsOpen(false);
+    useEffect(() => {
+        services.modals.browseRoom.close();
     }, []);
 
     return (
@@ -27,7 +27,7 @@ const RoomPage = () => {
                 </div>
             </div>
         </RoomLayout>
-    )
+    );
 }
 
-export default React.memo(RoomPage);
+export default memo(RoomPage);

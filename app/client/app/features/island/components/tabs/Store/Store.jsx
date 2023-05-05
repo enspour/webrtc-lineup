@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
@@ -10,14 +10,14 @@ import services from "@services";
 import styles from "./Store.module.scss";
 
 const Store = observer(() => {
-    const state = services.userCreatedRooms.Status;
+    const state = services.user.CreatedRooms.Status;
 
-    const [items, setItems] = React.useState([]);
+    const [items, setItems] = useState([]);
 
-    React.useEffect(
+    useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userCreatedRooms.Array;
+                const rooms = services.user.CreatedRooms.Rooms;
                 const userId = services.user.Info.Id;
                 const userName = services.user.Info.Name;
 

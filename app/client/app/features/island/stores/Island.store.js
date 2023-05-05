@@ -1,4 +1,5 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
+
 import { IslandTabs } from "./Island.states";
 
 export default class IslandStore {
@@ -11,7 +12,7 @@ export default class IslandStore {
             current: computed,
             setCurrentId: action,
             setHistory: action,
-            undo: action,
+            back: action,
         }); 
     }
 
@@ -31,7 +32,7 @@ export default class IslandStore {
         this.history = history;
     }
 
-    undo () {
+    back() {
         this.setCurrentId(this.history[1]);
     }
 }

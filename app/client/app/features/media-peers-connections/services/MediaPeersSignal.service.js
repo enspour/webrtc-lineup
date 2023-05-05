@@ -22,6 +22,14 @@ export default class MediaPeersSignalService extends SignalService {
         this.#socket = socket;
     }
 
+    initialize() {
+        const signalDestroyer = super.initialize();
+
+        return () => {
+            signalDestroyer();
+        };
+    }
+
     sendOffer(channelId, peerId, offer) {
         const payload = { channelId, peerId, offer };
         this.#socket.emit(SignalActions.SEND_OFFER, payload);

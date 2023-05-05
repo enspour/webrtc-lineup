@@ -1,40 +1,36 @@
-import { IslandSearchTab } from "../stores/Island.states";
 import IslandStore from "../stores/Island.store";
+
+import IslandTabsService from "./IslandTabs.service";
+import IslandSearchService from "./IslandSearch.service";
 
 export default class IslandService {
     #islandStore;
+    
+    #islandTabs;
+    #islandSearch;
 
-    constructor() {
+    constructor({ localStorage }) {
         this.#islandStore = new IslandStore();
+
+        this.#islandTabs = new IslandTabsService(localStorage, this.#islandStore);
+        this.#islandSearch = new IslandSearchService(localStorage);
     }
 
-    get Current() {
-        return this.#islandStore.current;
+    initialize() {
+        const islandTabsDestroyer = this.#islandTabs.initialize();
+        const islandSearchDestroyer = this.#islandSearch.initialize();
+
+        return () => {
+            islandTabsDestroyer();
+            islandSearchDestroyer();
+        };
     }
 
-    get CurrentId() {
-        return this.#islandStore.currentId;
+    get Tabs() {
+        return this.#islandTabs;
     }
 
-    set CurrentId(id) {
-        if (this.#islandStore.history[0] !== id) {
-            this.#islandStore.setCurrentId(id);
-        }
-    }
-
-    get History() {
-        return this.#islandStore.history;
-    }
-
-    set History(history) {
-        this.#islandStore.setHistory(history);
-    }
-
-    undo() {
-        this.#islandStore.undo();
-    }
-
-    goSearch() {
-        this.CurrentId = IslandSearchTab.id;
+    get Search() {
+        return this.#islandSearch;
     }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { autorun } from "mobx";
 import { observer } from "mobx-react-lite";
 
@@ -10,14 +10,14 @@ import services from "@services";
 import styles from "./Favorites.module.scss";
 
 const Favorites = observer(() => {
-    const state = services.userFavoritesRooms.Status;
+    const state = services.user.FavoritesRooms.Status;
 
-    const [items, setItems] = React.useState([]);
+    const [items, setItems] = useState([]);
 
-    React.useEffect(
+    useEffect(
         () =>
             autorun(() => {
-                const rooms = services.userFavoritesRooms.Array;
+                const rooms = services.user.FavoritesRooms.Rooms;
 
                 if (rooms) {
                     setItems([...rooms]);
