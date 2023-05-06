@@ -1,27 +1,28 @@
-import { observer } from "mobx-react-lite";
-
 import LobbyLayout from "@components/layouts/LobbyLayout/LobbyLayout";
+import UserLayout from "@components/layouts/UserLayout/UserLayout";
 
-import { Island } from "@features/island";
-
-import services from "@services";
+import { Island, IslandContent } from "@features/island";
 
 import styles from "@styles/pages/index.module.scss"
 
-const Home = observer(() => {
-    const current = services.island.Tabs.Current;
-
+export default function Page() {
     return (
-        <LobbyLayout title={`Lineup | ${current.name}`}> 
+        <div>
             <div className={styles.island}>
                 <Island />
             </div>
 
-            <div>
-                { current.component }
-            </div>
-        </LobbyLayout>
+            <IslandContent />
+        </div>
     );
-})
+}
 
-export default Home;
+Page.getLayout = function getLayout(page) {
+    return (
+        <UserLayout>
+            <LobbyLayout title="Lineup | Home">
+                {page}
+            </LobbyLayout>
+        </UserLayout>
+    )
+}

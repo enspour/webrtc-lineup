@@ -18,11 +18,7 @@ export default class UserFavoritesRoomsService {
     initialize() {
         const roomsDestroyer = this.#rooms.initialize();
 
-        this.update();
-
         return () => {
-            this.#clear();
-
             roomsDestroyer();
         }
     }
@@ -39,7 +35,7 @@ export default class UserFavoritesRoomsService {
         await this.#rooms.update();
     }
 
-    #clear() {
+    clear() {
         this.#rooms.clear();
     }
 }

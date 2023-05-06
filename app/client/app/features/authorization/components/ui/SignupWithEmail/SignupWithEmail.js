@@ -11,8 +11,6 @@ import useError from '@hooks/api/useError';
 import useRequest from '@hooks/api/useRequest';
 import useResponse from '@hooks/api/useResponse';
 
-import services from '@services';
-
 import styles from "./SignupWithEmail.module.scss";
 
 const SignupWithEmail = () => {
@@ -41,7 +39,6 @@ const SignupWithEmail = () => {
 
     useEffect(() => {
         if (data) {
-            services.user.Info.update();
             router.push("/");
         }
     }, [data]);

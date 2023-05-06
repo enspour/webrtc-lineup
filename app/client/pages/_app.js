@@ -1,5 +1,3 @@
-import useServices from "@hooks/useServices";
-
 import MainLayout from "@components/layouts/MainLayout/MainLayout";
 
 import "@assets/fonts/stylesheet.css";
@@ -13,13 +11,13 @@ import "@styles/themes/light.scss";
 import "@styles/themes/dark.scss";
 
 function MyApp({ Component, pageProps }) {
-    useServices();
+    const getLayout = Component.getLayout || ((page) => page);
 
-    return (
+    return getLayout(
         <MainLayout>
             <Component {...pageProps} />
         </MainLayout>
-    )
+    );
 }
 
 export default MyApp;

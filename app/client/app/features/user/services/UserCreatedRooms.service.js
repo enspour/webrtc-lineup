@@ -18,11 +18,7 @@ export default class UserCreatedRoomsService {
     initialize() {
         const roomsDestroyer = this.#rooms.initialize();
 
-        this.update();
-
         return () => {
-            this.#clear();
-
             roomsDestroyer();
         }
     }
@@ -39,7 +35,7 @@ export default class UserCreatedRoomsService {
         await this.#rooms.update();
     }
 
-    #clear() {
+    clear() {
         this.#rooms.clear();
     }
 }

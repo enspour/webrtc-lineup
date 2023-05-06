@@ -1,4 +1,7 @@
-import ConferencePage from "./components/pages/ConferencePage/ConferencePage";
+import Conference from "./components/pages/Conference/Conference";
+
+import ConnectionLayout from "./components/layouts/ConnectionLayout/ConnectionLayout";
+import ConferenceLayout from "./components/layouts/ConferenceLayout/ConferenceLayout";
 
 import ConferenceService from "./services/Conference.service";
 
@@ -6,7 +9,10 @@ import transformToConference from "./utils/transformToConference";
 import transformToConferencesStores from "./utils/transformToConferencesStores";
 
 export {
-    ConferencePage,
+    Conference,
+
+    ConnectionLayout,
+    ConferenceLayout,
     
     ConferenceService,
 

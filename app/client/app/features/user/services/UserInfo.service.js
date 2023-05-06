@@ -15,8 +15,6 @@ export default class UserInfoService {
     initialize() {
         const offResponse = this.#onResponse();
 
-        this.update();
-
         return () => {
             offResponse();
         }

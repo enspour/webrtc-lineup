@@ -1,7 +1,5 @@
-import React from "react";
+import { memo } from "react";
 import Head from "next/head";
-
-import ConnectionLayout from "../../layouts/ConnectionLayout/ConnectionLayout";
 
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
@@ -14,27 +12,25 @@ import styles from "./RoomLayout.module.scss"
 
 const RoomLayout = ({ title = "Lineup | Room", children }) => {
     return (
-        <ConnectionLayout>
-            <div>
-                <Head>
-                    <title>{title}</title>
-                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                </Head>
+        <div>
+            <Head>
+                <title>{title}</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
 
-                <Header />
-                
-                <div className={styles.room__content}>
-                    { children }
-                </div>
-
-                <Footer />
-
-                <CreateConferenceModal />
-                <BrowseConferenceSettingsModal />
-                <BrowseRoomSettingsModal />
+            <Header />
+            
+            <div className={styles.room__content}>
+                { children }
             </div>
-        </ConnectionLayout>
-    )
+
+            <Footer />
+
+            <CreateConferenceModal />
+            <BrowseConferenceSettingsModal />
+            <BrowseRoomSettingsModal />
+        </div>
+    );
 }
 
-export default React.memo(RoomLayout);
+export default memo(RoomLayout);

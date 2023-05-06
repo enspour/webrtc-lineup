@@ -47,7 +47,7 @@ const ConferenceAudios = () => {
     }
 
     const debouncedUpdateNumberUsers = useMemo(
-        () => _debounce(updateNumberUsers, 250)
+        () => _debounce(updateNumberUsers, 0)
     , []);
 
     useSubscriberAtResizing(usersRef, debouncedUpdateNumberUsers);

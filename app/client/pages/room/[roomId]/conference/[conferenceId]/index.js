@@ -1,3 +1,23 @@
-import { ConferencePage } from "@features/conference"
+import UserLayout from "@components/layouts/UserLayout/UserLayout"
 
-export default ConferencePage;
+import { 
+    Conference,
+    ConnectionLayout,
+    ConferenceLayout,
+} from "@features/conference"
+
+export default function Page() {
+    return <Conference />
+};
+
+Page.getLayout = function getLayout(page) {
+    return (
+        <UserLayout>
+            <ConnectionLayout>
+                <ConferenceLayout>
+                    {page}
+                </ConferenceLayout>
+            </ConnectionLayout> 
+        </UserLayout>
+    )
+}

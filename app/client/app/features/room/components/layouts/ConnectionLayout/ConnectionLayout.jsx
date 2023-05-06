@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, memo } from "react";
 import { useRouter } from "next/router";
 
 import Loader from "@components/ui/Loader/Loader";
@@ -8,11 +8,11 @@ import services from "@services";
 const ConnectionLayout = ({ children }) => {
     const router = useRouter();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!services.room.Connected) {
             router.push("/");
         }
-    }, [])
+    }, []);
 
     if (!services.room.Connected) {
         return (
@@ -25,4 +25,4 @@ const ConnectionLayout = ({ children }) => {
     return children;
 }
 
-export default React.memo(ConnectionLayout);
+export default memo(ConnectionLayout);

@@ -88,7 +88,7 @@ const ConferenceVideos = () => {
     }
 
     const debouncedUpdateOptions = useMemo(
-        () => _debounce(updateOptions, 250)
+        () => _debounce(updateOptions, 0)
     , [users]);
 
     useSubscriberAtResizing(usersRef, debouncedUpdateOptions);

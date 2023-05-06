@@ -1,13 +1,19 @@
-import RoomService from "./services/Room.service";
+import Room from "./components/pages/Room/Room";
 
-import RoomPage from "./components/pages/RoomPage/RoomPage";
+import ConnectionLayout from "./components/layouts/ConnectionLayout/ConnectionLayout";
+import RoomLayout from "./components/layouts/RoomLayout/RoomLayout";
+
+import RoomService from "./services/Room.service";
 
 import transformToRooms from "./utils/transformToRooms";
 
 export {
-    RoomService,
+    Room,
 
-    RoomPage,
+    ConnectionLayout,
+    RoomLayout,
+    
+    RoomService,
 
     transformToRooms
 }

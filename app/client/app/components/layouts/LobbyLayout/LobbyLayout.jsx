@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import Head from "next/head";
 
 import Header from "./Header/Header";
@@ -26,4 +26,4 @@ const LobbyLayout = ({ children, title = "Lineup" }) => {
     )
 }
 
-export default React.memo(LobbyLayout);
+export default memo(LobbyLayout);
