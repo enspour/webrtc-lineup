@@ -27,7 +27,7 @@ class RoomsActions {
             await context.Client.join(id);
     
             const payload = {
-                id: room.id.toString(),
+                id: room.id,
                 name: room.name,
                 owner: {
                     id: room.owner.id.toString(),

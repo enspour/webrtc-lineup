@@ -8,7 +8,7 @@ import SuccessResponse from "core/server/responses/Success.response";
 
 class ConferencesController {
     async findAll(req: Request, res: Response) {
-        const roomId = BigInt(req.params.room_id);
+        const roomId = req.params.room_id;
 
         const user = getUser(req);
 

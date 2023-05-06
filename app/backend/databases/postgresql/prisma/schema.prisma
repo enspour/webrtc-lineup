@@ -12,7 +12,8 @@ datasource db {
 }
 
 model User {
-  id          BigInt   @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
+
   name        String
   created_at  DateTime @default(now())
   modified_at DateTime @default(now())
@@ -25,74 +26,73 @@ model User {
 }
 
 model UserAuth {
-  id       BigInt @id @default(autoincrement())
+  id    BigInt @id
+  user  User   @relation(fields: [id], references: [id], onDelete: Cascade)
+
   email    String @unique
   password String
-
-  user_id BigInt @unique
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("users_auth")
 }
 
 model Room {
-  id          BigInt   @id @default(autoincrement())
+  id String   @id
+
   name        String
   created_at  DateTime @default(now())
   modified_at DateTime @default(now())
 
-  auth        RoomAuth?
-  settings    RoomSettings?
   owner_id    BigInt
   owner       User          @relation(fields: [owner_id], references: [id], onDelete: Cascade)
-  tags        Tag[]
+  auth        RoomAuth?
+  settings    RoomSettings?
   conferences Conference[]
   subs        User[]        @relation("users_favorites_rooms")
+  tags        Tag[]
 
   @@map("rooms")
 }
 
 model RoomAuth {
-  id       BigInt  @id @default(autoincrement())
-  password String?
+  id    String @id
+  room  Room   @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  room_id BigInt @unique
-  room    Room   @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  password String?
 
   @@map("rooms_auth")
 }
 
 model RoomSettings {
-  id         BigInt  @id @default(autoincrement())
-  visibility Boolean
+  id         String   @id
+  room       Room     @relation(fields: [id], references: [id], onDelete: Cascade)
 
-  room_id BigInt @unique
-  room    Room   @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  visibility Boolean
 
   @@map("rooms_settings")
 }
 
 model Conference {
-  id          String   @id
+  id String @id
+
   name        String
   description String?
   modified_at DateTime @default(now())
   created_at  DateTime @default(now())
 
   settings ConferenceSettings?
-  room_id  BigInt
-  room     Room                @relation(fields: [room_id], references: [id], onDelete: Cascade)
 
+  room_id  String
+  room     Room        @relation(fields: [room_id], references: [id], onDelete: Cascade)
+  
   @@map("conferences")
 }
 
 model ConferenceSettings {
-  id           BigInt  @id @default(autoincrement())
+  id         String     @id
+  conference Conference @relation(fields: [id], references: [id], onDelete: Cascade)
+
   enable_audio Boolean
   enable_video Boolean
-
-  conference_id String     @unique
-  conference    Conference @relation(fields: [conference_id], references: [id], onDelete: Cascade)
 
   @@map("conferences_settings")
 }

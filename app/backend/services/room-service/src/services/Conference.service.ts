@@ -7,9 +7,9 @@ class ConferenceService {
         return await repository.findConferenceByIdPrivilege(id);
     } 
 
-    async create(roomId: bigint, userId: bigint, name: string, description: string) {
-        const conferenceId = nanoid();
-        return await repository.createConference(conferenceId, name, description, roomId, userId);
+    async create(roomId: string, userId: bigint, name: string, description: string) {
+        const id = nanoid();
+        return await repository.createConference(id, name, description, roomId, userId);
     }
 
     async delete(conferenceId: string, userId: bigint) {

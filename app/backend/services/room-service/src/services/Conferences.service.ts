@@ -1,7 +1,7 @@
 import { repository } from "postgresql/src/connection";
 
 class ConferencesService {
-    async findAll(roomId: bigint, userId: bigint) {
+    async findAll(roomId: string, userId: bigint) {
         return await repository.findConferences(roomId, userId);
     }
 }

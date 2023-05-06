@@ -11,7 +11,7 @@ import BadRequestResponse from "core/server/responses/BadRequest.response";
 
 class RoomController {
     async findOne(req: Request, res: Response) {
-        const id = BigInt(req.params.id);
+        const id = req.params.id;
 
         const user = getUser(req);
 
@@ -37,7 +37,7 @@ class RoomController {
     }
 
     async delete(req: Request, res: Response) {
-        const id = BigInt(req.params.id);
+        const id = req.params.id;
 
         const user = getUser(req);
 
@@ -51,7 +51,7 @@ class RoomController {
     }
 
     async addRoomToFavorites(req: Request, res: Response) {
-        const id = BigInt(req.params.id);
+        const id = req.params.id;
         const user = getUser(req);
 
         const room = await RoomService.addToFavorites(id, user.id);
@@ -64,7 +64,7 @@ class RoomController {
     }
 
     async deleteRoomFromFavorites(req: Request, res: Response) {
-        const id = BigInt(req.params.id);
+        const id = req.params.id;
         const user = getUser(req);
 
         const room = await RoomService.deleteFromFavorites(id, user.id);
@@ -77,7 +77,7 @@ class RoomController {
     }
 
     async updateName(req: Request, res: Response) {
-        const id = BigInt(req.body.id);
+        const id = req.body.id;
         const name = req.body.name;
 
         const user = getUser(req);
@@ -97,7 +97,7 @@ class RoomController {
     }
 
     async updateVisibility(req: Request, res: Response) {
-        const id = BigInt(req.body.id);
+        const id = req.body.id;
         const visibility = req.body.visibility;
         
         const user = getUser(req);

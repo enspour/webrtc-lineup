@@ -10,7 +10,7 @@ class RoomController {
         const id = String(req.query.id);
         const userId = String(req.query.user_id);
 
-        const room = await RoomService.findByIdWithAuth(BigInt(id), BigInt(userId));
+        const room = await RoomService.findByIdWithAuth(id, BigInt(userId));
         if (room) {
             return new SuccessResponse({ room }).send(res);
         }

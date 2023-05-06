@@ -10,7 +10,7 @@ import SuccessResponse from "core/server/responses/Success.response";
 
 class ConferenceController {
     async create(req: Request, res: Response) {
-        const roomId = BigInt(req.body.room_id);
+        const roomId = req.body.room_id;
         const name = req.body.name;
         const description = req.body.description;
 
