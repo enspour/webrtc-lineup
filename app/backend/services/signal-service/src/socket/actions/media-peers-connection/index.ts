@@ -1,43 +1,44 @@
-import { Socket } from "socket.io";
+import SocketRouter from "@socket/utils/SocketRouter";
 
-import { MediaPeersConnectionActionsTypes } from "@socket/types";
 import MediaPeersConnectionActions from "./mediaPeersConnection";
+import ActionsTypes from "./actions.types";
 
 import { offerValidator } from "./validators/offer.validator";
 import { answerValidator } from "./validators/answer.validator";
 import { iceCandidateValidator } from "./validators/iceCandidate.validator";
 
-import services from "@socket/services";
-
 const sendOfferValidation = {
     validate: offerValidator,
-    action: MediaPeersConnectionActionsTypes.NOTIFY_SEND_OFFER
+    action: ActionsTypes.NOTIFY_SEND_OFFER
 };
 
 const sendAnswerValidation = {
     validate: answerValidator,
-    action: MediaPeersConnectionActionsTypes.NOTIFY_SEND_ANSWER
+    action: ActionsTypes.NOTIFY_SEND_ANSWER
 };
 
 const sendIceCandidateValidation = {
     validate: iceCandidateValidator,
-    action: MediaPeersConnectionActionsTypes.NOTIFY_SEND_ICE_CANDIDATE
+    action: ActionsTypes.NOTIFY_SEND_ICE_CANDIDATE
 };
 
-const initMediaPeersConnectionActions = (socket: Socket) => {
-    socket.on(
-        MediaPeersConnectionActionsTypes.SEND_OFFER,
-        services.actions.create(socket, MediaPeersConnectionActions.sendOffer, sendOfferValidation)
+const initMediaPeersConnectionActions = (router: SocketRouter) => {
+    router.register(
+        ActionsTypes.SEND_OFFER,
+        MediaPeersConnectionActions.sendOffer,
+        sendOfferValidation
     );
 
-    socket.on(
-        MediaPeersConnectionActionsTypes.SEND_ANSWER,
-        services.actions.create(socket, MediaPeersConnectionActions.sendAnswer, sendAnswerValidation)
+    router.register(
+        ActionsTypes.SEND_ANSWER,
+        MediaPeersConnectionActions.sendAnswer, 
+        sendAnswerValidation
     );
 
-    socket.on(
-        MediaPeersConnectionActionsTypes.SEND_ICE_CANDIDATE,
-        services.actions.create(socket, MediaPeersConnectionActions.sendIceCandidate, sendIceCandidateValidation)
+    router.register(
+        ActionsTypes.SEND_ICE_CANDIDATE,
+        MediaPeersConnectionActions.sendIceCandidate,
+        sendIceCandidateValidation
     );
 }
 

@@ -8,7 +8,7 @@ class UsersController {
     async updateRoomInformation(req: Request, res: Response) {
         const room = req.body.room;
 
-        services.users.updateRoomInformation(room);
+        services.users.notifyRoomInfoUpdated(room);
         
         new SuccessResponse("Success notify users.").send(res);
     }
@@ -17,7 +17,7 @@ class UsersController {
         const roomId = req.body.room_id;
         const conference = req.body.conference;
 
-        services.users.updateConferenceInformation(roomId, conference);
+        services.users.notifyConferenceInfoUpdated(roomId, conference);
 
         return new SuccessResponse("Success notify users.").send(res);
     }

@@ -1,81 +1,81 @@
 import { io } from "@socket/io";
 
-import { ActionContext } from "@socket/services/Actions.service";
+import Context from "@socket/utils/SocketRouter/Context";
 
-import { MediaPeersConnectionActionsTypes } from "@socket/types";
+import ActionsTypes from "./actions.types";
 
 import { OfferPayload } from "./validators/offer.validator";
 import { AnswerPayload } from "./validators/answer.validator";
 import { IceCandidatePayload } from "./validators/iceCandidate.validator";
 
 class MediaPeersConnectionActions {
-    sendOffer(context: ActionContext<OfferPayload>) {
+    sendOffer(context: Context<OfferPayload>) {
         const { channelId, peerId, offer } = context.Payload;
 
-        if (context.Client.has(channelId)) {
+        if (context.User.Channels.has(channelId)) {
             const payload = { 
-                socketId: context.Client.SocketId, 
-                userId: context.Client.UserId, 
+                socketId: context.User.SocketId, 
+                userId: context.User.Id, 
                 offer,
             };
 
-            io.to(peerId).emit(MediaPeersConnectionActionsTypes.ACCEPT_OFFER, payload);
+            io.to(peerId).emit(ActionsTypes.ACCEPT_OFFER, payload);
             
             return context.success(
-                MediaPeersConnectionActionsTypes.NOTIFY_SEND_OFFER, 
+                ActionsTypes.NOTIFY_SEND_OFFER, 
                 `Success send offer to ${peerId}`
             );
         }
 
         context.badRequest(
-            MediaPeersConnectionActionsTypes.NOTIFY_SEND_OFFER, 
+            ActionsTypes.NOTIFY_SEND_OFFER, 
             "You are not connected to channel"
         );
     }
 
-    sendAnswer(context: ActionContext<AnswerPayload>) {
+    sendAnswer(context: Context<AnswerPayload>) {
         const { channelId, peerId, answer } = context.Payload;
 
-        if (context.Client.has(channelId)) {
+        if (context.User.Channels.has(channelId)) {
             const payload = { 
-                socketId: context.Client.SocketId, 
-                userId: context.Client.UserId,
+                socketId: context.User.SocketId, 
+                userId: context.User.Id,
                 answer,
             };
 
-            io.to(peerId).emit(MediaPeersConnectionActionsTypes.ACCEPT_ANSWER, payload);
+            io.to(peerId).emit(ActionsTypes.ACCEPT_ANSWER, payload);
             
             return context.success(
-                MediaPeersConnectionActionsTypes.NOTIFY_SEND_ANSWER, 
+                ActionsTypes.NOTIFY_SEND_ANSWER, 
                 `Success send answer to ${peerId}`
             );
         }
 
         context.badRequest(
-            MediaPeersConnectionActionsTypes.NOTIFY_SEND_ANSWER, 
+            ActionsTypes.NOTIFY_SEND_ANSWER, 
             "You are not connected to channel"
         );
     }
 
-    sendIceCandidate(context: ActionContext<IceCandidatePayload>) {
+    sendIceCandidate(context: Context<IceCandidatePayload>) {
         const { channelId, peerId, iceCandidate } = context.Payload;
 
-        if (context.Client.has(channelId)) {
+        if (context.User.Channels.has(channelId)) {
             const payload = { 
-                socketId: context.Client.SocketId, 
+                socketId: context.User.SocketId, 
                 iceCandidate 
             };
             
-            io.to(peerId).emit(MediaPeersConnectionActionsTypes.ACCEPT_ICE_CANDIDATE, payload);
+            io.to(peerId).emit(ActionsTypes.ACCEPT_ICE_CANDIDATE, payload);
             
             return context.success(
-                MediaPeersConnectionActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
+                ActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
                 `Success send ice candidate to ${peerId}`
             );
         }
 
         context.badRequest(
-            MediaPeersConnectionActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
+            ActionsTypes.NOTIFY_SEND_ICE_CANDIDATE, 
             "You are not connected to channel"
         );
     }

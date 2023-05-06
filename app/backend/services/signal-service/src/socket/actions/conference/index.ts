@@ -1,43 +1,44 @@
-import { Socket } from "socket.io";
+import SocketRouter from "@socket/utils/SocketRouter";
 
-import { ConferenceActionsTypes } from "@socket/types";
 import ConferenceActions from "./conference.actions";
+import ActionsTypes from "./actions.types";
 
 import { idValidator } from "../validators/id.validator";
 import { joinValidator } from "./validators/join.validator";
 import { sendMessageValidator } from "./validators/sendMessage.validator";
 
-import services from "@socket/services";
-
 const joinValidation = {
     validate: joinValidator,
-    action: ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE
+    action: ActionsTypes.NOTIFY_JOIN_CONFERENCE
 };
 
 const leaveValidation = {
     validate: idValidator,
-    action: ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE,
+    action: ActionsTypes.NOTIFY_LEAVE_CONFERENCE,
 };
 
 const sendMessageValidation = {
     validate: sendMessageValidator,
-    action: ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT
+    action: ActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT
 }
 
-const initConferenceActions = (socket: Socket) => {
-    socket.on(
-        ConferenceActionsTypes.JOIN_CONFERENCE,
-        services.actions.create(socket, ConferenceActions.join, joinValidation)
+const initConferenceActions = (router: SocketRouter) => {
+    router.register(
+        ActionsTypes.JOIN_CONFERENCE,
+        ConferenceActions.join, 
+        joinValidation
     );
 
-    socket.on(
-        ConferenceActionsTypes.LEAVE_CONFERENCE,
-        services.actions.create(socket, ConferenceActions.leave, leaveValidation)
+    router.register(
+        ActionsTypes.LEAVE_CONFERENCE,
+        ConferenceActions.leave, 
+        leaveValidation
     );
 
-    socket.on(
-        ConferenceActionsTypes.SEND_MESSAGE_CONFERENCE_CHAT,
-        services.actions.create(socket, ConferenceActions.sendMessage, sendMessageValidation)
+    router.register(
+        ActionsTypes.SEND_MESSAGE_CONFERENCE_CHAT,
+        ConferenceActions.sendMessage, 
+        sendMessageValidation
     );
 }
 

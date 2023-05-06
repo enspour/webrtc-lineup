@@ -8,7 +8,7 @@ class RoomController {
     async getUsers(req: Request, res: Response) {
         const roomId = req.params.room_id;
 
-        const users = services.rooms.getUsersIds(roomId);
+        const users = services.channels.getUsersIds(roomId);
 
         return new SuccessResponse({ users }).send(res);
     }

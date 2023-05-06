@@ -1,6 +1,6 @@
-import { ActionContext } from "@socket/services/Actions.service";
+import Context from "@socket/utils/SocketRouter/Context";
 
-import { ConferenceActionsTypes } from "@socket/types";
+import ActionsTypes from "./actions.types";
 
 import { IdPayload } from "../validators/id.validator";
 import { JoinPayload } from "./validators/join.validator";
@@ -10,76 +10,76 @@ import AuthService from "@services-communication/services/Auth.service";
 import ChatService from "@services-communication/services/Chat.service";
 
 class ConferenceActions {
-    async join(context: ActionContext<JoinPayload>) {
+    async join(context: Context<JoinPayload>) {
         const { roomId, conferenceId } = context.Payload;
 
-        if (context.Client.has(roomId)) {
-            if (!context.Client.has(conferenceId)) {
-                await context.Client.join(conferenceId);
+        if (context.User.Channels.has(roomId)) {
+            if (!context.User.Channels.has(conferenceId)) {
+                await context.User.Channels.join(conferenceId, "conference");
 
-                const payload = { 
-                    socketId: context.Client.SocketId,
-                    userId: context.Client.UserId, 
+                const payload = {
+                    socketId: context.User.SocketId,
+                    userId: context.User.Id, 
                 }
                 
                 context.broadcast(
                     conferenceId, 
-                    ConferenceActionsTypes.NOTIFY_CONFERENCE_USER_JOINED, 
+                    ActionsTypes.NOTIFY_CONFERENCE_USER_JOINED, 
                     payload
                 );
                 
                 return context.success(
-                    ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
+                    ActionsTypes.NOTIFY_JOIN_CONFERENCE, 
                     "Success to join to conference"
                 );
             }
 
             return context.success(
-                ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
+                ActionsTypes.NOTIFY_JOIN_CONFERENCE, 
                 "Already connected to conference"
             );
         }
 
         context.badRequest(
-            ConferenceActionsTypes.NOTIFY_JOIN_CONFERENCE, 
+            ActionsTypes.NOTIFY_JOIN_CONFERENCE, 
             "You are not connected to room"
         );
     }
 
-    async leave(context: ActionContext<IdPayload>) {
+    async leave(context: Context<IdPayload>) {
         const { id } = context.Payload;
 
-        if (context.Client.has(id)) {
-            await context.Client.leave(id);
+        if (context.User.Channels.has(id)) {
+            await context.User.Channels.leave(id);
             
             const payload = {
-                socketId: context.Client.SocketId,
-                userId: context.Client.UserId,
+                socketId: context.User.SocketId,
+                userId: context.User.Id,
             }
             
             context.broadcast(
                 id, 
-                ConferenceActionsTypes.NOTIFY_CONFERENCE_USER_LEFT, 
+                ActionsTypes.NOTIFY_CONFERENCE_USER_LEFT, 
                 payload
             );
             
             return context.success(
-                ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE, 
+                ActionsTypes.NOTIFY_LEAVE_CONFERENCE, 
                 "Success leave from conference"
             );
         }
 
         context.badRequest(
-            ConferenceActionsTypes.NOTIFY_LEAVE_CONFERENCE, 
+            ActionsTypes.NOTIFY_LEAVE_CONFERENCE, 
             "You are not connected to conference"
         );
     }
 
-    async sendMessage(context: ActionContext<SendMessagePayload>) {
+    async sendMessage(context: Context<SendMessagePayload>) {
         const conferenceId = context.Payload.conferenceId;
 
-        if (context.Client.has(conferenceId)) {
-            const userId = context.Client.UserId;
+        if (context.User.Channels.has(conferenceId)) {
+            const userId = context.User.Id;
             const { text } = context.Payload;
 
             const user = await AuthService.findUser(userId);
@@ -92,12 +92,12 @@ class ConferenceActions {
     
                     context.broadcast(
                         conferenceId, 
-                        ConferenceActionsTypes.NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE, 
+                        ActionsTypes.NOTIFY_CONFERENCE_CHAT_NEW_MESSAGE, 
                         { message }
                     );
                     
                     return context.success(
-                        ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT, 
+                        ActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT, 
                         "Success send message.", 
                         { tempId, message }
                     );
@@ -105,13 +105,13 @@ class ConferenceActions {
             }
 
             return context.serverError(
-                ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
+                ActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
                 "Woops... Server error."
             );
         }
        
         context.badRequest(
-            ConferenceActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
+            ActionsTypes.NOTIFY_SEND_MESSAGE_CONFERENCE_CHAT,
             "You are not connected to room."
         );
     }
