@@ -10,19 +10,8 @@ import services from "@services";
 import styles from "./Favorites.module.scss";
 
 const Favorites = observer(() => {
+    const rooms = services.user.FavoritesRooms.Rooms;
     const state = services.user.FavoritesRooms.Status;
-
-    const [items, setItems] = useState([]);
-
-    useEffect(() =>
-        autorun(() => {
-            const rooms = services.user.FavoritesRooms.Rooms;
-
-            if (rooms) {
-                setItems([...rooms]);
-            }
-        })
-    , [])
 
     if (state === "pending") {
         return (
@@ -32,9 +21,9 @@ const Favorites = observer(() => {
         );
     }
 
-    if (items.length === 0) {
+    if (rooms.length === 0) {
         return (
-            <div className={styles.favorites__empty}>
+            <div className={styles.favorites__empty__rooms}>
                 Your favorite rooms will be stored here.
             </div>
         )
@@ -42,10 +31,10 @@ const Favorites = observer(() => {
 
     return (
         <div className={styles.favorites}>
-            <div className={styles.title}>Favorites rooms</div>
+            <div className={styles.favorites__title}>Favorites rooms</div>
 
-            <div className={styles.items}>
-                { items.map(room => <RoomCard key={room.id} room={room} />) }
+            <div className={styles.favorites__rooms}>
+                { rooms.map(room => <RoomCard key={room.id} room={room} />) }
             </div>
         </div>
     )

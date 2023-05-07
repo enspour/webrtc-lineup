@@ -12,7 +12,7 @@ import styles from "./Store.module.scss";
 const Store = observer(() => {
     const state = services.user.CreatedRooms.Status;
 
-    const [items, setItems] = useState([]);
+    const [rooms, setRooms] = useState([]);
 
     useEffect(() =>
         autorun(() => {
@@ -21,11 +21,11 @@ const Store = observer(() => {
             const userName = services.user.Info.Name;
 
             if (rooms) {
-                setItems(
-                    rooms
-                        .map(item => ({ ...item, owner: { id: userId, name: userName } }))
-                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                );
+                const updatedRooms = rooms
+                    .map(item => ({ ...item, owner: { id: userId, name: userName } }))
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                setRooms(updatedRooms);
             }
         })
     , []);
@@ -38,9 +38,9 @@ const Store = observer(() => {
         );
     }
 
-    if (items.length === 0) {
+    if (rooms.length === 0) {
         return (
-            <div className={styles.store__empty}>
+            <div className={styles.store__empty__rooms}>
                 Your rooms will be stored here.
             </div>
         )
@@ -48,10 +48,10 @@ const Store = observer(() => {
 
     return (
         <div className={styles.store}>
-            <div className={styles.title}>My rooms</div>
+            <div className={styles.store__title}>My rooms</div>
 
-            <div className={styles.items}>
-                { items.map(room => <RoomCard key={room.id} room={room} />) }
+            <div className={styles.store__rooms}>
+                { rooms.map(room => <RoomCard key={room.id} room={room} />) }
             </div>
         </div>
     )

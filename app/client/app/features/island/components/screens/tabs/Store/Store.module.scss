@@ -9,7 +9,7 @@
     padding-top: 6rem;
 }
 
-.store__empty {
+.store__empty__rooms {
     padding-top: 6rem;
     font-size: 1.8rem;
     font-weight: 500;
@@ -17,14 +17,14 @@
     text-align: center;
 }
 
-.title {
+.store__title {
     text-align: center;
     font-size: 2rem;
     font-weight: 600;
     color: var(--theme-color-primary);
 }
 
-.items {
+.store__rooms {
     padding: 2rem;
     padding-top: 3.5rem;
     display: flex;
