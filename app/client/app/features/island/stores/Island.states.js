@@ -1,6 +1,6 @@
-import Store from "../components/screens/Store/Store";
-import Favorites from "../components/screens/Favorites/Favorites";
-import Search from "../components/screens/Search/Search";
+import Store from "../components/screens/tabs/Store/Store";
+import Favorites from "../components/screens/tabs/Favorites/Favorites";
+import Search from "../components/screens/tabs/Search/Search";
 
 import services from "@services";
 

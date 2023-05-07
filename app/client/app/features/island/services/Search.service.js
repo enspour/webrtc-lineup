@@ -2,13 +2,13 @@ import API from "@api/API";
 import RoomsAPI from "@api/RoomsAPI";
 
 import RequestedArrayService from "@services/RequestedArray.service";
-import IslandSearchHistoryService from "./IslandSearchHistory.service";
+import SearchHistoryService from "./SearchHistory.service";
 
 import SearchStore from "../stores/Search.store";
 
 import { transformToRooms } from "@features/room";
 
-export default class IslandSearchService {
+export default class SearchService {
     #requestedRooms;
     
     #searchStore;
@@ -22,7 +22,7 @@ export default class IslandSearchService {
 
         this.#searchStore = new SearchStore();
         
-        this.#searchHistory = new IslandSearchHistoryService(localStorage, this.#searchStore);
+        this.#searchHistory = new SearchHistoryService(localStorage, this.#searchStore);
     }
 
     initialize() {

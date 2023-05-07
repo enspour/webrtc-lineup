@@ -2,10 +2,8 @@ import { autorun } from "mobx";
 
 import removeDuplicates from "@utils/removeDuplicates";
 
-export default class IslandSearchHistoryService {
+export default class SearchHistoryService {
     #size = 50;
-    #delay = 2000;
-    #timeout;
 
     #localStorage;
     #searchStore;
@@ -19,11 +17,9 @@ export default class IslandSearchHistoryService {
         this.#load();
 
         const offAutoSave = this.#onAutoSave();
-        const offAutoPush = this.#onAutoPush();
 
         return () => {
             offAutoSave();
-            offAutoPush();
         }
     }
 
@@ -61,19 +57,6 @@ export default class IslandSearchHistoryService {
         return autorun(() => {
             const history = this.#searchStore.history;
             this.#localStorage.set("__history", history);
-        })
-    }
-
-    #onAutoPush() {
-        return autorun(() => {
-            const text = this.#searchStore.text;
-
-            if (text) {
-                clearTimeout(this.#timeout);
-                this.#timeout = setTimeout(() => this.push(text), this.#delay)
-            } else {
-                clearTimeout(this.#timeout);
-            }
         })
     }
 }

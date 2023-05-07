@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.search__input {
+.input {
     width: 100%;
     height: 4rem;
     position: relative;
@@ -24,6 +24,12 @@
         background-color: var(--theme-bg-primary);
         color: var(--theme-color-primary);
     }
+}
+
+.input__controls {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 .history {

@@ -1,28 +1,31 @@
 import IslandStore from "../stores/Island.store";
 
 import IslandTabsService from "./IslandTabs.service";
-import IslandSearchService from "./IslandSearch.service";
+import SearchService from "./Search.service";
 
 export default class IslandService {
     #islandStore;
     
     #islandTabs;
-    #islandSearch;
+    
+    #search;
 
     constructor({ localStorage }) {
         this.#islandStore = new IslandStore();
 
         this.#islandTabs = new IslandTabsService(localStorage, this.#islandStore);
-        this.#islandSearch = new IslandSearchService(localStorage);
+        
+        this.#search = new SearchService(localStorage);
     }
 
     initialize() {
         const islandTabsDestroyer = this.#islandTabs.initialize();
-        const islandSearchDestroyer = this.#islandSearch.initialize();
+
+        const searchDestroyer = this.#search.initialize();
 
         return () => {
             islandTabsDestroyer();
-            islandSearchDestroyer();
+            searchDestroyer();
         };
     }
 
@@ -31,6 +34,6 @@ export default class IslandService {
     }
 
     get Search() {
-        return this.#islandSearch;
+        return this.#search;
     }
 }
