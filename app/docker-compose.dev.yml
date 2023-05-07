@@ -101,7 +101,7 @@ services:
       - ./backend:/usr/src/app
     depends_on:
       cassandra:
-        condition: service_started
+        condition: service_healthy
       auth-service:
         condition: service_healthy
 
@@ -126,3 +126,8 @@ services:
       - CASSANDRA_CLUSTER_NAME=lineup
     volumes:
       - ./data/cassandra:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD-SHELL", "cqlsh -e 'describe cluster' > /dev/null"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
