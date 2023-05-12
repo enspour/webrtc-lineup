@@ -1,0 +1,23 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register src/app.ts",
+    "start:prod": "npm run build && node -r ./tsconfig-paths-bootstrap.js ./build/src/app.js",
+    "dev": "nodemon --config nodemon.json",
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "core": "../core"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2"
+  }
+}

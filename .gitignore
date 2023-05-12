@@ -1,3 +1,5 @@
+# CLIENT
+
 # dependencies
 client/node_modules
 
@@ -8,3 +10,24 @@ client/out/
 # production
 client/build
 
+# BACKEND
+backend/auth-service/build
+backend/auth-service/keys
+backend/auth-service/.env
+
+backend/room-service/build
+backend/room-service/.env
+
+backend/signal-service/build
+backend/signal-service/.env
+
+backend/chat-service/build
+backend/chat-service/.env
+backend/chat-service/database/cassandra
+
+backend/core/database/.env
+backend/core/database/prisma/migrations
+
+backend/node_modules
+
+backend/postgres/pgdata
