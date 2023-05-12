@@ -1,4 +1,4 @@
-# client
+# --- CLIENT ---
 # dependencies
 app/client/node_modules
 
@@ -9,25 +9,33 @@ app/client/out/
 # production
 app/client/build
 
-# backend
+# --- BACKEND ---
+# dependencies
+app/backend/node_modules
+
+# auth service
 app/backend/services/auth-service/build
 app/backend/services/auth-service/keys
 app/backend/services/auth-service/.env
 
+# room service
 app/backend/services/room-service/build
 app/backend/services/room-service/.env
 
+# signal service
 app/backend/services/signal-service/build
 app/backend/services/signal-service/.env
 
+# chat service
 app/backend/services/chat-service/build
 app/backend/services/chat-service/.env
 
+# postgresql
 app/backend/databases/postgresql/prisma/migrations
 app/backend/databases/postgresql/.env
 
-# dependencies
-app/backend/node_modules
+# cassandra
+app/backend/databases/cassandra/.env
 
 # docker data
 app/data
