@@ -117,6 +117,7 @@ const Tags = ({ tags }) => {
         e.stopPropagation();
         services.island.Tabs.openSearch();
         services.island.Search.Text = `#${name}`;
+        services.island.Search.update();
     }
 
     return tags.map(tag => (
