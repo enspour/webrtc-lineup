@@ -13,11 +13,11 @@ import "@styles/themes/dark.scss";
 function MyApp({ Component, pageProps }) {
     const getLayout = Component.getLayout || ((page) => page);
 
-    return getLayout(
+    return (
         <MainLayout>
-            <Component {...pageProps} />
+            { getLayout(<Component {...pageProps} />) }
         </MainLayout>
-    );
+    )
 }
 
 export default MyApp;

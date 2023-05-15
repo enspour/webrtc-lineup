@@ -2,13 +2,12 @@
     width: 100%;
     min-height: 100vh;
     background-color: var(--theme-bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     max-width: 90%;
     max-height: 100vh;
 }
