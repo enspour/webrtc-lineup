@@ -42,32 +42,32 @@ const LoginWithEmail = () => {
 
     return (
         <div className={styles.login}>
-            <div className={styles.login__title}>Login</div>
+            <div className={styles.login__title}>Войти в аккаунт</div>
             
             <div className={styles.login__inputs}>
                 <InputControl 
                     type="text" 
-                    placeholder="Enter your email" 
+                    placeholder="Введите свой email" 
                     value={email}
                     setValue={setEmail}
                 />
                 
                 <InputControl 
                     type="password" 
-                    placeholder="Enter your password"
+                    placeholder="Введите свой пароль"
                     value={password}
                     setValue={setPassword}
                 />
             </div>
             
-            <div className={styles.login__recovery}>Recovery Password</div>
+            <div className={styles.login__recovery}>Восстановить пароль</div>
             
             <div className={styles.login__remember__me}>
-                <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
+                <CheckBox label="Запомнить меня" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
             <div className={styles.login__btn}>
-                <FilledButton onClick={login}> Login </FilledButton>
+                <FilledButton onClick={login}> Войти в аккаунт </FilledButton>
             </div>
         </div>
     )

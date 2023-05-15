@@ -24,7 +24,7 @@ router.get("/:id",
 router.post("/", 
     guardMiddleware, 
     createValidator, 
-    validatorMiddleware("Incorrectly entered data. Please fill in the required fields."), 
+    validatorMiddleware("Не удалось создать комнату. Пожалуйста, проверьте введенные данные."), 
     asyncHandler(RoomController.create)
 );
 
@@ -52,7 +52,7 @@ router.delete("/favorites/:id",
 router.post("/name",
     guardMiddleware,
     updateNameValidator,
-    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
+    validatorMiddleware("Не удалось изменить название комнаты. Пожалуйста, проверьте введенные данные."),
     asyncHandler(RoomController.updateName)
 )
 

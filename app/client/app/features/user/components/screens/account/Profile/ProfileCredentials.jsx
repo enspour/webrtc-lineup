@@ -31,19 +31,19 @@ const ProfileCredentials = () => {
     return (
         <div className={styles.profile__credentials}>
             <div>
-                <div className="mb-1 text-primary">Email Address</div>
+                <div className="mb-1 text-primary">Email</div>
                 <EditInput value={email} setValue={setEmail} placeholder="Email" onClick={saveEmail}/>
             </div>
 
             <div className="fl jf-between">
                 <div className="w-60">
-                    <div className="mb-1 text-primary">Name</div>
+                    <div className="mb-1 text-primary">Имя</div>
                     <EditInput value={name} setValue={setName} placeholder="Name" onClick={saveName}/>
                 </div>
 
                 <div className="w-35">
-                    <div className="mb-1 text-primary">Password</div>
-                    <FilledButton onClick={reset}> Reset </FilledButton>
+                    <div className="mb-1 text-primary">Пароль</div>
+                    <FilledButton onClick={reset}> Сбросить </FilledButton>
                 </div>
             </div>
         </div>

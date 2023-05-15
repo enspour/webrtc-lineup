@@ -10,7 +10,7 @@ export default function Page() {
 Page.getLayout = function getLayout(page) {
     return (
         <UserLayout>
-            <LobbyLayout title="Lineup | Settings">
+            <LobbyLayout title="Lineup | Настройки">
                 {page}
             </LobbyLayout>
         </UserLayout>

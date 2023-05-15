@@ -55,26 +55,26 @@ const CreateRoomModal = observer(() => {
 
     return (
         <Modal
-            title="Create Room"
+            title="Создание комнаты"
             isOpen={isOpenModal} 
             close={close}
             width="50rem"
         >
             <div className={styles.modal}>
                 <div className="mb-1">
-                    <div>General</div>
+                    <div>Основное</div>
 
                     <div className="text-placeholder"> 
-                        Fill in the required fields to create a room
+                        Заполните все необходимые поля, чтобы создать комнату
                     </div>
                 </div>
 
                 <div className={styles.modal__fields}>
-                    <InputControl type="text" placeholder="Name*" value={name} setValue={setName}/>
+                    <InputControl type="text" placeholder="Название*" value={name} setValue={setName}/>
 
                     <InputControl 
                         type="password"
-                        placeholder="Password" 
+                        placeholder="Пароль" 
                         value={password} 
                         setValue={setPassword}
                     />
@@ -83,7 +83,7 @@ const CreateRoomModal = observer(() => {
                 </div>
 
                 <div className="w-50 m-auto">
-                    <FilledButton onClick={create}> Create </FilledButton>
+                    <FilledButton onClick={create}> Создать </FilledButton>
                 </div>
             </div>
         </Modal>

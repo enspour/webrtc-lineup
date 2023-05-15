@@ -26,7 +26,7 @@ const VideoControl = observer(() => {
 
     return (
         <CheckBox
-            label="Camera" 
+            label="Камера" 
             value={!mutedVideo} 
             setValue={setMutedVideo}
         />
@@ -46,7 +46,7 @@ const AudioControl = observer(() => {
     
     return (
         <CheckBox
-            label="Microphone"
+            label="Микрофон"
             value={!mutedAudio} 
             setValue={setMutedAudio}
         />
@@ -78,7 +78,7 @@ const LeaveControl = () => {
     return (
         <div className={styles.header__control__leave}>
             <FilledButton onClick={leave} height="3.5rem">
-                Leave
+                Покинуть
             </FilledButton>
         </div>
     )

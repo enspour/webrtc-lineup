@@ -12,7 +12,7 @@ const Conferences = observer(() => {
     if (conferences.length === 0) {
         return (
             <div className={styles.conferences__empty}>
-                Your conferences will be located here. Create your first conference.
+                Ваши конференции будут храниться здесь. Создайте вашу первую конференцию.
             </div>
         )
     }

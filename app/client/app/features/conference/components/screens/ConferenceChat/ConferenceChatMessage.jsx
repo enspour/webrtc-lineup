@@ -51,7 +51,7 @@ const OwnerName = ({ owner, hide }) => {
     }
 
     if (isOwner(owner)) {
-        return <div className={styles.chat__message__owner__name}>You</div>
+        return <div className={styles.chat__message__owner__name}>Вы</div>
     }
 
     return <div className={styles.chat__message__owner__name}>{owner.name}</div>

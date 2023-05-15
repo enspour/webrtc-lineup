@@ -14,7 +14,7 @@ const AddedTags = ({ tags, setTags }) => {
 
     return (
         <div className={styles.modal__fields__tags}>
-            <div className={styles.modal__fields__tags__title}>Added</div>
+            <div className={styles.modal__fields__tags__title}>Добавленные</div>
             <div className={styles.modal__fields__tags__items}>
                 {
                     Array.from(tags).map(item => (
@@ -51,7 +51,7 @@ const InputTag = ({ setTags }) => {
 
     return (
         <div className={styles.modal__fields__tag}>
-            <InputControl type="text" placeholder="Tag" value={input} setValue={setInput}/>
+            <InputControl type="text" placeholder="Тэг" value={input} setValue={setInput}/>
             
             <div className={styles.modal__fields__tag__btn}>
                 <Svg 
@@ -70,7 +70,7 @@ const CreateRoomModalTags = ({ tags, setTags }) => {
         <div className="mt-1">
             <div className="mb-1">
                 <div>Tags</div>
-                <div className="text-placeholder"> Add tags to make it easier to find the room </div>
+                <div className="text-placeholder"> Добавьте теги, чтобы в дальнейшем было проще пользователям найти вашу комнату. </div>
             </div>
 
             <InputTag setTags={setTags}/>

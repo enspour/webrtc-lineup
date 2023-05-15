@@ -41,14 +41,14 @@ const Store = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.store__empty__rooms}>
-                Your rooms will be stored here.
+                Комнаты созданные вами будут храниться здесь.
             </div>
         )
     }
 
     return (
         <div className={styles.store}>
-            <div className={styles.store__title}>My rooms</div>
+            <div className={styles.store__title}>Мои комнаты</div>
 
             <div className={styles.store__rooms}>
                 { rooms.map(room => <RoomCard key={room.id} room={room} />) }

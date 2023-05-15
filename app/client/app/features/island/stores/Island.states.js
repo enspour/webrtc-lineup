@@ -6,7 +6,7 @@ import services from "@services";
 
 export const IslandStoreTab = { 
     id: 1, 
-    name: "Store", 
+    name: "Хранилище", 
     component: <Store />,
     open: () => {
         services.island.Tabs.openStore();
@@ -15,7 +15,7 @@ export const IslandStoreTab = {
 
 export const IslandFavoritesTab = { 
     id: 2, 
-    name: "Favorites", 
+    name: "Избранное", 
     component: <Favorites />,
     open: () => {
         services.island.Tabs.openFavorites();
@@ -24,7 +24,7 @@ export const IslandFavoritesTab = {
 
 export const IslandSearchTab = { 
     id: 3, 
-    name: "Search", 
+    name: "Поиск", 
     component: <Search />,
     open: () => {
         services.island.Tabs.openSearch();

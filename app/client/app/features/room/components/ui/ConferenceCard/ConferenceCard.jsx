@@ -97,11 +97,11 @@ const ConferenceCard = observer(({ conference }) => {
     }
 
     useEffect(() => {
-        appendMenu({ id: 1, name: "Open", onClick: openConference });
+        appendMenu({ id: 1, name: "Присоединиться", onClick: openConference });
 
         if (services.room.Info.Owner.id === services.user.Info.Id) {
-            appendMenu({ id: 2, name: "Delete", onClick: deleteConference });
-            appendMenu({ id: 3, name: "Settings", onClick: openSettings });
+            appendMenu({ id: 2, name: "Удалить", onClick: deleteConference });
+            appendMenu({ id: 3, name: "Настройки", onClick: openSettings });
         }
     }, [])
 
@@ -120,7 +120,7 @@ const ConferenceCard = observer(({ conference }) => {
                         <div className={styles.card__description}>
                             {
                                 conference.description 
-                                || `You can join the conference to start a conversation here.`
+                                || `Нажми, чтобы присоединиться к конференции.`
                             }
                         </div>
                     </div>

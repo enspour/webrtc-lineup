@@ -78,7 +78,7 @@ const Island = observer(() => {
                         <Svg url={BackIcon} width="1.2" height="1.9" onClick={back}/>
                     </div>
 
-                    <IslandSearch placeholder="Search"/>
+                    <IslandSearch />
                 </div>
             </Panel>
         </div>  

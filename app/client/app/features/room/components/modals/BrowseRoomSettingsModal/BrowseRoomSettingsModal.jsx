@@ -31,8 +31,8 @@ const RoomNameSettings = () => {
 
     return (
         <div>
-            <div className="mb-1"> Name </div>
-            <EditInput value={name} setValue={setName} placeholder="Name" onClick={save}/>
+            <div className="mb-1"> Название </div>
+            <EditInput value={name} setValue={setName} placeholder="Название" onClick={save}/>
         </div>
     )
 }
@@ -54,12 +54,12 @@ const RoomVisibilitySettings = observer(() => {
     return (
         <div>
             <div className="mb-1">
-                <div> Visibility </div>
+                <div> Видимость комнаты </div>
                 <div className="text-placeholder"> 
-                    If you make the room hidden, users won't be able to find it. 
+                    Вы можете скрыть комнату, чтобы другие пользователи не могли найти её. 
                 </div>
             </div>
-            <CheckBox label="Make Visible" value={settings.visibility} setValue={setVisibility}/>
+            <CheckBox label="Видимость" value={settings.visibility} setValue={setVisibility}/>
         </div>
     )
 })
@@ -75,14 +75,14 @@ const BrowseRoomSettingsModal = observer(() => {
 
     return (
         <Modal
-            title={`Room Settings | ${name}`}
+            title={`Настройки комнаты | ${name}`}
             isOpen={isOpenModal}
             close={close}
             width="90rem"
         >
             <div className={styles.settings}>
-                <div className="text-primary"> General </div>
-                <div className="text-placeholder"> You can change general settings here. </div>
+                <div className="text-primary"> Основное </div>
+                <div className="text-placeholder"> Здесь вы можете изменять настройки комнаты. </div>
                 <div className={styles.settings__items}>
                     <RoomNameSettings />
                     <RoomVisibilitySettings />

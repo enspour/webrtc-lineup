@@ -13,9 +13,9 @@ const Signup = () => {
             <SignupWithEmail />
 
             <div className={styles.login}>
-                <span>Do have account? </span>
+                <span>Есть аккаунт? </span>
                 <Link href="/login">
-                    <span className={styles.login__link}>Login</span>
+                    <span className={styles.login__link}>Авторизоваться</span>
                 </Link>
             </div>
         </div>

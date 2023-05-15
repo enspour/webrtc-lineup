@@ -29,7 +29,7 @@ const ConferenceAudioSettings = observer(({ conference }) => {
         request.start({ body });
     }
 
-    return <CheckBox label="Enable Audio" value={settings.enableAudio} setValue={setEnableAudio}/>
+    return <CheckBox label="Включить Аудио" value={settings.enableAudio} setValue={setEnableAudio}/>
 });
 
 const ConferenceVideoSettings = observer(({ conference }) => {
@@ -47,15 +47,15 @@ const ConferenceVideoSettings = observer(({ conference }) => {
         request.start({ body });
     }
 
-    return <CheckBox label="Enable Video" value={settings.enableVideo} setValue={setEnableVideo}/>
+    return <CheckBox label="Включить Видео" value={settings.enableVideo} setValue={setEnableVideo}/>
 });
 
 const ConferenceAudioVideoSettings = ({ conference }) => {
     return (
         <div>
             <div className="mb-1">
-                <div>Voice & Audio</div>
-                <div className="text-placeholder"> You can disable video or audio in conference</div>
+                <div>Видео & Аудио</div>
+                <div className="text-placeholder"> Вы можете выключить видео или аудио у конференции</div>
             </div>
             <div className={styles.settings__conference__videoaudio}>
                 <ConferenceAudioSettings conference={conference}/>
@@ -83,12 +83,12 @@ const ConferenceNameSettings = ({ conference }) => {
 
     return (
         <div>
-            <div className="mb-1"> Name </div>
+            <div className="mb-1"> Название </div>
 
             <EditInput 
                 value={name} 
                 setValue={setName} 
-                placeholder="Name" 
+                placeholder="Название" 
                 onClick={updateName}
             />
         </div>
@@ -113,12 +113,12 @@ const ConferenceDescriptionSettings = ({ conference }) => {
 
     return (
         <div>
-            <div className="mb-1"> Description </div>
+            <div className="mb-1"> Описание </div>
 
             <EditInput 
                 value={description} 
                 setValue={setDescription} 
-                placeholder="Description" 
+                placeholder="Описание" 
                 onClick={updateDescription}
             />
         </div>
@@ -136,14 +136,14 @@ const BrowseConferenceSettingsModal = observer(() => {
 
     return (
         <Modal
-            title={`Conference Settings | ${conference.name}`}
+            title={`Настройки конференции | ${conference.name}`}
             isOpen={isOpenModal}
             close={close}
             width="90rem"
         >
             <div className={styles.settings}> 
-                <div className="text-primary"> Conference </div>
-                <div className="text-placeholder"> You can change settings of conference here. </div>
+                <div className="text-primary"> Конференция </div>
+                <div className="text-placeholder"> Вы можете изменять настройки конференции. </div>
                 <div className={styles.settings__items}>
                     <ConferenceNameSettings conference={conference}/>
                     <ConferenceDescriptionSettings conference={conference}/>

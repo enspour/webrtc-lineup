@@ -12,9 +12,9 @@ const SearchEmptyText = () => {
 
     return (
         <div className={styles.search__empty__text}>
-            <div>Type in some text to find rooms. You can also use tags for a more precise search.</div>
+            <div>Введи текст и нажни на поиск, чтобы найти комнаты. Ты также можешь использовать теги для более точного поиска.</div>
             <div>
-                <span>Example:&nbsp;</span> 
+                <span>Пример:&nbsp;</span> 
                 <span className={styles.search__example} onClick={run}>#lineup Lineup</span>
             </div>
         </div>

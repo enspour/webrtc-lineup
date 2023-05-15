@@ -12,7 +12,7 @@ const SearchResult = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.search__empty__result}>
-                Sorry, the room could not be found, it may be hidden.
+                Извините, но комнаты не удалось найти, возможно, они скрыты.
             </div>
         )
     }

@@ -45,44 +45,44 @@ const SignupWithEmail = () => {
 
     return (
         <div className={styles.sing__up}>
-            <div className={styles.sing__up__title}>Signup</div>
+            <div className={styles.sing__up__title}>Создать аккаунт</div>
 
             <div className={styles.sing__up__inputs}>
                 <InputControl
                     type="text" 
-                    placeholder="Enter your name" 
+                    placeholder="Введите свое имя" 
                     value={name}
                     setValue={setName}
                 />
                 
                 <InputControl
                     type="text" 
-                    placeholder="Enter your email" 
+                    placeholder="Введите свой email" 
                     value={email}
                     setValue={setEmail}
                 />
                 
                 <InputControl
                     type="password" 
-                    placeholder="Enter your password"
+                    placeholder="Введите свой пароль"
                     value={password}
                     setValue={setPassword}
                 />
 
                 <InputControl
                     type="password" 
-                    placeholder="Confirm your password"
+                    placeholder="Подтвердите пароль"
                     value={confirmPassword}
                     setValue={setConfirmPassword}
                 />
             </div>
 
             <div className={styles.sing__up__remember__me}>
-                <CheckBox label="Remember me" value={rememberMe} setValue={setRememberMe}/>
+                <CheckBox label="Запомнить меня" value={rememberMe} setValue={setRememberMe}/>
             </div>
 
             <div className={styles.sing__up__btn}>
-                <FilledButton onClick={signup}> Signup </FilledButton>
+                <FilledButton onClick={signup}> Зарегистрироваться </FilledButton>
             </div>
         </div>
     )

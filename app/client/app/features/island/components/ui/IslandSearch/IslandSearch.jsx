@@ -12,7 +12,7 @@ const IslandSearch = () => {
 
     return (
         <div ref={ref} className={styles.search} onClick={() => setIsOpen(true)}>
-            <IslandSearchInput placeholder="Search" />
+            <IslandSearchInput placeholder="Поиск" />
             <IslandSearchHistory isOpen={isOpen} setIsOpen={setIsOpen}/>
         </div>
     )

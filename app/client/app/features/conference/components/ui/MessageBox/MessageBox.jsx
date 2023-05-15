@@ -61,7 +61,7 @@ const MessageBox = ({ setMessage, send }) => {
                 ref={messageInputRef}
                 className={styles.input} 
                 onInput={handleChangeText}
-                data-placeholder="Type a message"
+                data-placeholder="Введите сообщение"
                 contentEditable
             />
 

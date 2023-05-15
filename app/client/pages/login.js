@@ -9,7 +9,7 @@ export default function Page() {
 
 Page.getLayout = function getLayout(page) {
     return (
-        <WelcomeLayout title="Lineup | Login">
+        <WelcomeLayout title="Lineup | Войти в аккаунт">
             {page}
         </WelcomeLayout>
     )

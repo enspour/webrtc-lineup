@@ -86,7 +86,7 @@ const Tags = observer(() => {
 
     return (
         <div className={styles.room__tags}>
-            <div className="text-semibold text-16 text-primary mb-1">Tags</div>
+            <div className="text-semibold text-16 text-primary mb-1">Тэги</div>
             <div className={styles.room__tags__items}>
                 {
                     tags.map(tag => (
@@ -129,12 +129,12 @@ const JoinButton = () => {
         <div className={styles.room__btn__join}>
             <InputButtonGroup 
                 type="password" 
-                placeholder="Password" 
+                placeholder="Пароль" 
                 value={password} 
                 setValue={setPassword}
                 onClick={join}
             >
-                Join Now
+                Присоединиться
             </InputButtonGroup>  
         </div>
     )
@@ -149,7 +149,7 @@ const RoomModal = observer(() => {
 
     return (
         <Modal 
-            title="Join To Room"
+            title="Обзор комнаты"
             isOpen={isOpenRoom} 
             close={close}
             width="60rem"

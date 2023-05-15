@@ -14,13 +14,13 @@ const router = Router();
 
 router.post("/login", 
     loginValidator, 
-    validatorMiddleware("Invalid Credentials. Please check the entered data."), 
+    validatorMiddleware("Не удалось войти в аккаунт. Пожалуйста, проверьте введенные данные"), 
     asyncHandler(AuthController.login)
 );
 
 router.post("/signup", 
     signupValidator, 
-    validatorMiddleware("Invalid Credentials. Please check the entered data."), 
+    validatorMiddleware("Не удалось зарегистрироваться. Пожалуйста, проверьте введенные данные."), 
     asyncHandler(AuthController.signup)
 );
 

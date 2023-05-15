@@ -16,7 +16,7 @@ const AudioInputsSection = observer(() => {
 
     return (
         <div>
-            <div className={styles.inputs__section__title}> Microphone </div>
+            <div className={styles.inputs__section__title}> Микрофон </div>
 
             <div className={styles.inputs__section}>
                 <div className={styles.inputs__section__select}>
@@ -32,7 +32,7 @@ const AudioInputsSection = observer(() => {
                 </div>
 
                 <OutlinedButton onClick={() => services.user.Devices.checkAudioInputPermission()}>
-                    Permission
+                    Запросить доступ
                 </OutlinedButton>
             </div>
         </div>
@@ -47,7 +47,7 @@ const VideoInputsSection = observer(() => {
 
     return (
         <div>
-            <div className={styles.inputs__section__title}> Camera </div>
+            <div className={styles.inputs__section__title}> Камера </div>
 
             <div className={styles.inputs__section}>
                 <div className={styles.inputs__section__select}>
@@ -63,7 +63,7 @@ const VideoInputsSection = observer(() => {
                 </div>
 
                 <OutlinedButton onClick={() => services.user.Devices.checkVideoInputPermission()}>
-                    Permission
+                    Запросить доступ
                 </OutlinedButton>
             </div>
         </div>
@@ -76,10 +76,10 @@ const VideoAudioScreen = () => {
         <div className={styles.video__audio}>
             <div>
                 <div className="text-primary">
-                    Video & Audio
+                    Видео & Аудио
                 </div>
                 <div className="text-placeholder">
-                    Here section of your video & audio settings
+                    В этой секции вы можете настраивать микрофон и камеру.
                 </div>
             </div>
 

@@ -24,14 +24,14 @@ const Favorites = observer(() => {
     if (rooms.length === 0) {
         return (
             <div className={styles.favorites__empty__rooms}>
-                Your favorite rooms will be stored here.
+                Избранные комнаты будут храниться здесь.
             </div>
         )
     }
 
     return (
         <div className={styles.favorites}>
-            <div className={styles.favorites__title}>Favorites rooms</div>
+            <div className={styles.favorites__title}>Избранные комнаты</div>
 
             <div className={styles.favorites__rooms}>
                 { rooms.map(room => <RoomCard key={room.id} room={room} />) }

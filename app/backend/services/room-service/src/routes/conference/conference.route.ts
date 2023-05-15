@@ -19,7 +19,7 @@ const router = Router();
 router.post("/",
     guardMiddleware,
     createValidator,
-    validatorMiddleware("Incorrectly entered data. Please fill in the required fields."),
+    validatorMiddleware("Не удалось создать конференцию. Пожалуйста, проверьте введенные данные."),
     asyncHandler(ConferenceController.create)
 );
 
@@ -33,14 +33,14 @@ router.delete("/:id",
 router.post("/name",
     guardMiddleware,
     updateNameValidator,
-    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
+    validatorMiddleware("Не удалось изменить название конференции. Пожалуйста, проверьте введенные данные."),
     asyncHandler(ConferenceController.updateName)
 );
 
 router.post("/description",
     guardMiddleware,
     updateDescriptionValidator,
-    validatorMiddleware("Incorrectly entered data. Please check the correctness."),
+    validatorMiddleware("Не удалось изменить описание конференции. Пожалуйста, проверьте введенные данные."),
     asyncHandler(ConferenceController.updateDescription)
 );
 

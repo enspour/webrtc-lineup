@@ -23,7 +23,7 @@ const Notification = ({ notification }) => {
     return (
         <div className={styles.notification}>
             <div className={styles.notification__header}>
-                <div className={styles.notification__header__title}>Notification</div>
+                <div className={styles.notification__header__title}>Уведомление!</div>
 
                 <Svg 
                     url={CloseIcon} 

@@ -7,9 +7,9 @@ import styles from "./Profile.module.scss";
 const Profile = () => {
     return (
         <div className={styles.profile}>
-            <div className="text-primary">Account</div>
+            <div className="text-primary">Аккаунт</div>
             <div className="text-placeholder">
-                Here you can edit your public information and password.
+                Здесь вы можете изменять информацию о себе и пароль.
             </div>
 
             <ProfileCredentials />

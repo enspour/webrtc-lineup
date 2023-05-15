@@ -129,7 +129,7 @@ const Header = () => {
                 <FilledButton onClick={leave} height="3.5rem">
                     <div className={styles.header__leave}>
                         <Svg url={LeaveIcon} width="2.4" height=".9" color="var(--theme-color-secondary)"/>
-                        <span> Leave </span>
+                        <span> Покинуть </span>
                     </div>
                 </FilledButton>
             </div>

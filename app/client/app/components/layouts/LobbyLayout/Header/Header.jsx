@@ -20,9 +20,9 @@ const AccountMenu = ({ isOpen }) => {
     const openSettings = () => router.push("/settings");
 
     const AccountMenuItems = [
-        { id: 1, name: "Account", onClick: openAccount },
-        { id: 2, name: "Settings", onClick: openSettings },
-        { id: 3, name: "Logout", onClick: logout },
+        { id: 1, name: "Аккаунт", onClick: openAccount },
+        { id: 2, name: "Настройки", onClick: openSettings },
+        { id: 3, name: "Выйти", onClick: logout },
     ];
 
     return <Dropdown isOpen={isOpen} items={AccountMenuItems}/>;

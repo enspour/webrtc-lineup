@@ -10,7 +10,7 @@ import BrowseConferenceSettingsModal from "../../modals/BrowseConferenceSettings
 
 import styles from "./RoomLayout.module.scss"
 
-const RoomLayout = ({ title = "Lineup | Room", children }) => {
+const RoomLayout = ({ title = "Lineup | Комната", children }) => {
     return (
         <div>
             <Head>

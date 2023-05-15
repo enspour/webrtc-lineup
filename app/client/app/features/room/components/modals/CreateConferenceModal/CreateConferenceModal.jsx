@@ -51,36 +51,36 @@ const CreateConferenceModal = observer(() => {
 
     return (
         <Modal
-            title="Create Conference"
+            title="Создание конференции"
             isOpen={isOpenModal}
             close={close}
             width="40rem"
         >
             <div className={styles.modal}>
                 <div>
-                    <div>General</div>
+                    <div>Основное</div>
 
                     <div className="text-placeholder"> 
-                        Fill in the required fields to create a conference
+                        Заполните все необходимые поля, чтобы создать конференцию
                     </div>
                 </div>
 
                 <InputControl 
                     type="text" 
-                    placeholder="Name*" 
+                    placeholder="Название*" 
                     value={name} 
                     setValue={setName}
                 />
 
                 <InputControl 
                     type="text" 
-                    placeholder="Descriptions" 
+                    placeholder="Описание" 
                     value={description} 
                     setValue={setDescription}
                 />
 
                 <div className="w-50 m-auto mt-1">
-                    <FilledButton onClick={create}> Create </FilledButton>
+                    <FilledButton onClick={create}> Создать </FilledButton>
                 </div>
             </div>
         </Modal>
