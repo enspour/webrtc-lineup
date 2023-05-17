@@ -29,7 +29,9 @@ export default class IslandStore {
     }
 
     setHistory(history) {
-        this.history = history;
+        if (Array.isArray(history) && history.length === 2) {
+            this.history = history;
+        }
     }
 
     back() {
