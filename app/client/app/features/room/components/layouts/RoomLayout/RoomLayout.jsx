@@ -24,7 +24,9 @@ const RoomLayout = ({ title = "Lineup | Room", children }) => {
                 { children }
             </div>
 
-            <Footer />
+            <div className={styles.room__footer}>
+                <Footer />
+            </div>
 
             <CreateConferenceModal />
             <BrowseConferenceSettingsModal />

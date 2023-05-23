@@ -13,6 +13,10 @@ const Search = observer(() => {
     const status = services.island.Search.Status;
 
     useEffect(() => {
+        if (services.island.Search.Text) {
+            services.island.Search.update();
+        }
+
         return () => services.island.Search.clear();
     }, []);
 
