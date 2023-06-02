@@ -1,23 +1,15 @@
 import { Router, Application } from "express";
 
-import roomRoutes from "./room/room.route";
-import roomsRoutes from "./rooms/rooms.route";
-import conferenceRoutes from "./conference/conference.route";
-import conferencesRoutes from "./conferences/conferences.route";
-
-import servicesCommunicationRoutes from "@services-communication/routes";
+import publicRoutes from "./public";
+import privateRoutes from "./private";
 
 import NotFoundResponse from "core/server/responses/NotFound.response";
 
 const useRoutes = (app: Application) => {
     const router = Router();
     
-    router.use("/api/v1/room-service/room", roomRoutes);
-    router.use("/api/v1/room-service/rooms", roomsRoutes);
-    router.use("/api/v1/room-service/conference", conferenceRoutes);
-    router.use("/api/v1/room-service/conferences", conferencesRoutes);
-
-    router.use("/services-communication/room-service/", servicesCommunicationRoutes);
+    router.use("/api/v1/room-service/", publicRoutes);
+    router.use("/api/v1/room-service/private", privateRoutes);
 
     router.use("*", (req, res) => 
         new NotFoundResponse(`URL: ${req.originalUrl} is not found.`).send(res));

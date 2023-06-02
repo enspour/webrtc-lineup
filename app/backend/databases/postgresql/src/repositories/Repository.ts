@@ -13,6 +13,10 @@ export interface IRepository {
     findUserById(
         id: bigint
     ): Promise<User | null>;
+
+    findUserWithEmailById(
+        id: bigint
+    ): Promise<(User & { email: string }) | null>;
     
     findUserAuthByEmail(
         email: string
@@ -160,6 +164,12 @@ export default class Repository implements IRepository {
         id: bigint
     ): Promise<User | null> {
         return await this._repository.findUserById(id);
+    }
+
+    async findUserWithEmailById(
+        id: bigint
+    ): Promise<(User & { email: string }) | null> {
+        return await this._repository.findUserWithEmailById(id);
     }
 
     async findUserAuthByEmail(

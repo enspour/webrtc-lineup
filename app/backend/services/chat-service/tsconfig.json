@@ -14,7 +14,6 @@
       "@controllers/*": ["controllers/*"],
       "@middlewares/*": ["middlewares/*"],
       "@services/*": ["services/*"],
-      "@services-communication/*": ["services-communication/*"],
       "@cassandra/*": ["cassandra/*"],
     },
     "resolveJsonModule": true,
@@ -25,5 +24,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": [ "./src/**/*", "./cassandra/src/**/*", "src/cassandra", "../../databases/cassandra/Repositories"]
+  "include": [ "./src/**/*", "../../databases/cassandra/Repositories"]
 }

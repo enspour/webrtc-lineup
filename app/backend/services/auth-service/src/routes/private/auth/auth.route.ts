@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import AuthController from "../../controllers/Auth.controller";
+import AuthController from "@controllers/Auth.controller";
 
 import AsyncHandler from "core/server/AsyncHandler";
 

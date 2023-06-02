@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import UserService from "@services/User.service";
 import JWTService from "@services/JWT.service";
 
+import { accessTokenKeys } from "@loaders/jwt.keys";
+
 import { validatePassword, hashPassword } from "@utils/bcrypt";
 import { decodeAccessJWT } from "@utils/jwt";
 import { getCookie } from "@utils/cookie";
@@ -27,9 +29,9 @@ class AuthController {
                     user: {
                         id: userAuth.user.id.toString(),
                         name: userAuth.user.name,
-                        email: userAuth.email
                     }
                 }
+                
                 JWTService.setTokens(options, res);
                 return new SuccessResponse("Login is successful").send(res);
             }
@@ -53,7 +55,6 @@ class AuthController {
                 user: {
                     id: user.id.toString(),
                     name: user.name,
-                    email: user.email
                 }
             }
 
@@ -85,7 +86,19 @@ class AuthController {
     async me(req: Request, res: Response) {
         const token = getCookie("accessToken", req);
         const payload = decodeAccessJWT(token);
-        new SuccessResponse(payload).send(res);
+
+        const user = await UserService.findWithEmailById(BigInt(payload.user.id));
+        
+        if (user) {
+            return new SuccessResponse({ user }).send(res);
+        }
+
+        return new BadRequestResponse("Bad request").send(res);;
+    }
+
+    async accessTokenPublicKey(req: Request, res: Response) {
+        const publicKey = accessTokenKeys.publicKey;
+        new SuccessResponse({ key: publicKey }).send(res);
     }
 }
 

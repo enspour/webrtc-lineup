@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import RoomController from "@services-communication/controllers/Room.controller";
+import RoomController from "@controllers/Room.controller";
 
 import findOneValidator from "./validators/findOne.validator";
 import validatorMiddleware from "core/server/middlewares/validator.middleware";

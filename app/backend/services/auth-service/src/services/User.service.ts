@@ -5,6 +5,10 @@ class UserService {
         return await repository.findUserById(id);
     }
 
+    async findWithEmailById(id: bigint) {
+        return await repository.findUserWithEmailById(id);
+    }
+
     async findByEmail(email: string) {
         return await repository.findUserAuthByEmailWithUser(email);
     }

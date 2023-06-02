@@ -5,7 +5,7 @@ import { accessToken as keys } from "@loaders/jwt.keys";
 
 import { decodeAccessToken, verifyAccessToken } from "core/utils/jwt";
 
-const parseId = (req: http.IncomingMessage) => {
+const decodeAccessTokenByRequest = (req: http.IncomingMessage) => {
     try {
         const parsedCookies = cookie.parse(req.headers.cookie || "")
     
@@ -15,10 +15,9 @@ const parseId = (req: http.IncomingMessage) => {
             if (accessToken) {
                 const token = JSON.parse(accessToken);
                 const verified = verifyAccessToken(token, keys.publicKey);
-                
+
                 if (verified) {
-                    const payload = decodeAccessToken(token);
-                    return payload.user.id;
+                    return decodeAccessToken(token);
                 }
             }
         }
@@ -27,4 +26,4 @@ const parseId = (req: http.IncomingMessage) => {
     throw new Error("Unauthorized. Please authorize.");
 }
 
-export default parseId;
+export default decodeAccessTokenByRequest;

@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 
 import services from "@socket/services";
 
-import parseId from "@utils/parseId";
+import decodeAccessTokenByRequest from "@utils/decodeAccessTokenByRequest";
 
 class UserChannels {
     constructor(private socket: Socket, private id: string) {}
@@ -34,17 +34,25 @@ class UserChannels {
 
 export default class User {
     private id;
+    private name;
     private channels;
 
     constructor(
         private socket: Socket
     ) {
-        this.id = parseId(socket.request);
+        const { user } =  decodeAccessTokenByRequest(socket.request);
+
+        this.id = user.id;
+        this.name = user.name;
         this.channels = new UserChannels(socket, this.id);
     }
 
     get Id() {
         return this.id;
+    }
+
+    get Name() {
+        return this.name;
     }
 
     get SocketId() {

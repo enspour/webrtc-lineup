@@ -17,7 +17,6 @@ export interface JWTAccessOptions {
     user: {
         id: string,
         name: string,
-        email: string
     }
 }
 
@@ -46,15 +45,6 @@ export const issueAccessJWT = (options: JWTAccessOptions) => {
     });
 }
 
-export const verifyAccessJWT = (token: string) => {
-    const publicKey = accessTokenKeys.publicKey;
-    return verifyAccessToken(token, publicKey);
-}
-
-export const decodeAccessJWT = (token: string) => {
-    return decodeAccessToken(token);
-}
-
 export const issueRefreshJWT = (options: JWTRefreshOptions) => {
     const { user, jti } = options;
 
@@ -73,6 +63,11 @@ export const issueRefreshJWT = (options: JWTRefreshOptions) => {
     });
 }
 
+export const verifyAccessJWT = (token: string) => {
+    const publicKey = accessTokenKeys.publicKey;
+    return verifyAccessToken(token, publicKey);
+}
+
 export const verifyRefreshJWT = (token: string) => {
     const publicKey = refreshTokenKeys.publicKey;
 
@@ -82,6 +77,10 @@ export const verifyRefreshJWT = (token: string) => {
     } catch {
         return false;
     }
+}
+
+export const decodeAccessJWT = (token: string) => {
+    return decodeAccessToken(token);
 }
 
 export const decodeRefreshJWT = (token: string) => {

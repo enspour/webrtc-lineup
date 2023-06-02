@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 import RoomService from "@services/Room.service";
-import SignalService from "@services-communication/services/Signal.service";
+
+import SignalServiceAPI from "core/services-communications/api/SignalService.api";
 
 import { getUser } from "core/utils/user";
 
@@ -22,6 +23,18 @@ class RoomController {
         }
 
         new NotFoundResponse("Room is not found.").send(res);
+    }
+
+    async findOneWithAuth(req: Request, res: Response) {
+        const id = String(req.query.id);
+        const userId = String(req.query.user_id);
+
+        const room = await RoomService.findByIdWithAuth(id, BigInt(userId));
+        if (room) {
+            return new SuccessResponse({ room }).send(res);
+        }
+
+        new NotFoundResponse("Room is not found").send(res);
     }
 
     async create(req: Request, res: Response) {
@@ -87,7 +100,7 @@ class RoomController {
         if (count > 0) {
             const room = await RoomService.findByIdPrivilege(id);
             if (room) {
-                SignalService.updateRoomInformation(room);
+                SignalServiceAPI.updateRoomInformation(room);
             }
 
             return new SuccessResponse({ name }).send(res);
@@ -107,7 +120,7 @@ class RoomController {
         if (count > 0) {
             const room = await RoomService.findByIdPrivilege(id);
             if (room) {
-                SignalService.updateRoomInformation(room);
+                SignalServiceAPI.updateRoomInformation(room);
             }
             
             return new SuccessResponse({ visibility }).send(res);

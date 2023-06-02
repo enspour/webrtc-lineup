@@ -21,6 +21,23 @@ class JWTService {
         this.#setRefreshToken(options, res);
     }
 
+    clearTokens(res: Response) {
+        resetCookie("accessToken", res);
+        resetCookie("refreshToken", res);
+    }
+
+    refreshTokens(refreshToken: string, res: Response) {
+        const verified = verifyRefreshJWT(refreshToken);
+        
+        if (verified) {
+            const payload = decodeRefreshJWT(refreshToken);
+            this.setTokens(payload, res);
+            return true;
+        }
+
+        return false;
+    }
+
     #setAccessToken(options: JWTAccessOptions, res: Response) {
         const token = issueAccessJWT(options);
         const expiresAccessTokenMs = convertTimeToMs(jwtConfig.accessToken.expiresIn) || 0;
@@ -49,22 +66,6 @@ class JWTService {
             expires: expiresRefreshToken,
             maxAge: expiresRefreshTokenMs
         }, res);
-    }
-
-    clearTokens(res: Response) {
-        resetCookie("accessToken", res);
-        resetCookie("refreshToken", res);
-    }
-
-    refreshTokens(refreshToken: string, res: Response) {
-        const verified = verifyRefreshJWT(refreshToken);
-        if (verified) {
-            const payload = decodeRefreshJWT(refreshToken);
-            this.setTokens(payload, res);
-            return true;
-        }
-
-        return false;
     }
 }
 

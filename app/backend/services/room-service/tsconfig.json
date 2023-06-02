@@ -13,7 +13,6 @@
       "@services/*": ["services/*"],
       "@controllers/*": ["controllers/*"],
       "@middlewares/*": ["middlewares/*"],
-      "@services-communication/*": ["services-communication/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

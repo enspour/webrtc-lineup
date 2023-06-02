@@ -1,16 +1,16 @@
-import { loadPublicKeyAccessToken } from "core/utils/jwt";
-
-import servicesConfig from "@configs/services.config";
-
-const { auth } = servicesConfig;
+import AuthServiceAPI from "core/services-communications/api/AuthService.api";
 
 const accessToken = {
     publicKey: "",
 }
 
 const loadPublicKeyAccessJWT = async () => {
-    const key = await loadPublicKeyAccessToken(auth);
-    accessToken.publicKey = key;
+    const response = await AuthServiceAPI.loadPublicKeyAccessToken();
+    
+    if (response.status === 200) {
+        const data = await response.json();
+        accessToken.publicKey = data.body.key;
+    }
 }
 
 export {

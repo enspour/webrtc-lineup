@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { includes } from "lodash";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -26,6 +26,27 @@ export default class PrismaRepository implements IRepository {
         return await this.prismaClient.user.findUnique({
             where: { id }
         });
+    }
+
+    async findUserWithEmailById(
+        id: bigint
+    ): Promise<(User & { email: string }) | null> {
+        const user = await this.prismaClient.user.findUnique({
+            where: { id },
+            include: { 
+                auth: {
+                    select: {
+                        email: true
+                    }
+                } 
+            },
+        });
+
+        if (user && user.auth) {
+            return { ...user, email: user.auth.email };
+        }
+
+        return null;
     }
 
     async findUserAuthByEmail(

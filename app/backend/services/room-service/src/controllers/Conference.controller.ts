@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 
 import ConferenceService from "@services/Conference.service";
-import SignalService from "@services-communication/services/Signal.service";
+
+import SignalServiceAPI from "core/services-communications/api/SignalService.api";
 
 import { getUser } from "core/utils/user";
 
@@ -51,7 +52,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(roomId, conference);
+                SignalServiceAPI.updateConferenceInformation(roomId, conference);
             }
 
             return new SuccessResponse({ name }).send(res);
@@ -72,7 +73,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(roomId, conference);
+                SignalServiceAPI.updateConferenceInformation(roomId, conference);
             }
 
             return new SuccessResponse({ description }).send(res);
@@ -93,7 +94,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(roomId, conference);
+                SignalServiceAPI.updateConferenceInformation(roomId, conference);
             }
 
             return new SuccessResponse({ enable_audio: enableAudio }).send(res);
@@ -114,7 +115,7 @@ class ConferenceController {
         if (count > 0) {
             const conference = await ConferenceService.findByIdPrivilege(conferenceId);
             if (conference) {
-                SignalService.updateConferenceInformation(roomId, conference);
+                SignalServiceAPI.updateConferenceInformation(roomId, conference);
             }
             
             return new SuccessResponse({ enable_video: enableVideo }).send(res);
