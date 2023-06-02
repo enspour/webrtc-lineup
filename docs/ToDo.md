@@ -1,5 +1,13 @@
 [Go to readme](../README.md)
 
+# Alpha 1.0.2
+
+## Done: 
+- [x] Improved UI design
+- [x] Added docker compose deployment
+- [x] Improved structure of service
+- [x] Fixed bugs 
+
 # Alpha 1.0.1
 
 ## Done:

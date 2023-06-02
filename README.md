@@ -8,7 +8,7 @@
 - [Архитектура приложения](docs/Architecture.md)
 
 
-## Preview alpha 1.0.1 (white / dark themes)
+## Preview alpha 1.0.2 (white / dark themes)
 
 ### Main page
 
