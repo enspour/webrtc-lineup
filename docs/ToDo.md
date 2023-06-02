@@ -8,6 +8,8 @@
 - [x] Improved structure of service
 - [x] Fixed bugs 
 
+---
+
 # Alpha 1.0.1
 
 ## Done:
