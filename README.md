@@ -6,6 +6,7 @@
 - [To Do](docs/ToDo.md)
 - [Техническое задание](docs/TechnicalTask.md)
 - [Архитектура приложения](docs/Architecture.md)
+- [Базы данных приложения](docs/Databases.md)
 
 
 ## Preview alpha 1.0.2 (white / dark themes)

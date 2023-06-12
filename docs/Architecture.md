@@ -2,7 +2,7 @@
 
 # Architecture
 
-## Database
+## Databases
 - PostgreSQL
 - Cassandra
 
@@ -16,4 +16,4 @@
 
 ## Schema
 
-![Schema](assets/alpha-1.0.2/architecture.png)
+![Architecture schema](assets/alpha-1.0.2/architecture/architecture.png)
