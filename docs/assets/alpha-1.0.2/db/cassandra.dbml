@@ -1,0 +1,24 @@
+table user {
+  id bigint [pk]
+  name text [not null]
+}
+
+table messages {
+  id text [pk]
+  conference_id text [pk]
+  text text [not null]
+  owner_id bigint [ref: > user.id]
+
+  created_at timestamptz [not null, default: `now()`]
+  modified_at timestamptz [not null, default: `now()`]
+}
+
+table messages_by_conference_id {
+  id text [not null]
+  conference_id text [pk]
+  text text [not null]
+  owner_id bigint [ref: > user.id]
+
+  created_at timestamptz [pk, default: `now()`]
+  modified_at timestamptz [not null, default: `now()`]
+}
