@@ -1,5 +1,9 @@
 [Go to readme](../README.md)
 
+# Getting Started
+The script runs successfully on:
+- Ubuntu 23.04
+
 ## Set up the project with script 
 
 ``` bash
@@ -15,7 +19,7 @@ docker pull postgres:14.5-alpine
 docker pull cassandra:4.1
 ```
 
-2. Install all dependencies. **Start to run this command in base folder of project.**
+2. Install all dependencies. **Start to run this command in root folder of project.**
 
 ``` bash
 cd app/backend && npm install
@@ -25,7 +29,7 @@ cd app/backend && npm install
 cd ../client && npm install
 ```
 
-3. Creating ssh-keys for Auth Service. **Start to run this command in base folder of project.**
+3. Creating ssh-keys for Auth Service. **Start to run this command in root folder of project.**
 
 - Creating folders for keys
  
@@ -57,7 +61,7 @@ cd ../refreshToken && ssh-keygen -t rsa -b 4096 -m PEM -f jwtRS256.key
 openssl rsa -in jwtRS256.key -pubout -outform PEM -out jwtRS256.key.pub
 ```
 
-3. Setting environment variables. **Start to run this command in base folder of project.**
+3. Setting environment variables. **Start to run this command in root folder of project.**
 
 - Postgres settings
 
@@ -67,7 +71,7 @@ cd app/backend/databases/postgresql && echo "DATABASE_URL=postgresql://admin:mys
 
 4. Initialize prisma. 
 
-- Run postgresql in docker. **Start to run this command in base folder of project.**
+- Run postgresql in docker. **Start to run this command in root folder of project.**
 
 ``` bash
 docker run --rm \
@@ -78,7 +82,7 @@ docker run --rm \
     postgres:14.5-alpine
 ```
 
-- Generate and push db. **Start to run this command in base folder of project.**
+- Generate and push db. **Start to run this command in root folder of project.**
 
 ``` bash
 cd app/backend/databases/postgresql && npx prisma generate && npx prisma db push
