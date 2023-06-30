@@ -2,17 +2,15 @@
 
 # Architecture
 
-## Databases
-- PostgreSQL
-- Cassandra
-
 ## Services
 - Auth service
 - Room service
 - Signal service
 - Chat service
-- Client
-- Gateway
+
+## Databases
+- PostgreSQL
+- Cassandra
 
 ## Schema
 
