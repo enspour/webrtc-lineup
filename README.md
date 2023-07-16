@@ -10,7 +10,7 @@
 - [To Do](docs/ToDo.md)
 
 ## Demo video
-https://github.com/enspour/webrtc-lineup/assets/59515162/8eedfff0-d832-4083-958f-191ddf1ddd2d
+https://github.com/enspour/webrtc-lineup/assets/59515162/68999960-b87e-4ac3-85c2-3947b08ea941
 
 ## Tech Stack
 Backend:
