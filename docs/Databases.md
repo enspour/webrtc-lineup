@@ -4,7 +4,6 @@
 
 ## PostgreSQL
 
-### Schema
 ![PostgreSQL schema](assets/alpha-1.0.2/db/postgresql.png)
 
 ## Cassandra
